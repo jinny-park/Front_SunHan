@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FBE341"
     android:id="@+id/launch"
-    tools:context=".View.launcherActivity">
+    tools:context=".View.activity.launcherActivity">
 
     <ImageView
         android:id="@+id/launcherLogo"

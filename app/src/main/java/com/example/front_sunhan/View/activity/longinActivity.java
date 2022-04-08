@@ -1,4 +1,4 @@
-package com.example.front_sunhan.View;
+package com.example.front_sunhan.View.activity;
 
 import android.os.Bundle;
 

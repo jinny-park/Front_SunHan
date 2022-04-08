@@ -1,4 +1,4 @@
-package com.example.front_sunhan.View;
+package com.example.front_sunhan.View.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.view.Window;
 
 import com.example.front_sunhan.R;
 
@@ -24,7 +22,7 @@ public class launcherActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(launcherActivity.this,longinActivity.class);
+                Intent intent = new Intent(launcherActivity.this, longinActivity.class);
                 startActivity(intent);
                 finish();
             }
