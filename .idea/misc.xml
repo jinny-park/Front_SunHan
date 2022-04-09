@@ -6,6 +6,7 @@
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/drawable/button_border.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/drawable/login_border_button_kakao.xml" value="0.38229166666666664" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_community.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_community_detail.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_launcher.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_login.xml" value="0.36614583333333334" />
@@ -15,6 +16,7 @@
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_item.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mypage_profile.xml" value="0.36614583333333334" />
+        <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/mypage_item.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudioProjects/Front_SunHan/app/src/main/res/menu/bottom_menu.xml" value="0.36614583333333334" />
         <entry key="..\:/Front_SunHan/app/src/main/res/drawable/bottom_border.xml" value="0.25555555555555554" />
