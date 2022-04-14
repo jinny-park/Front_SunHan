@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
+            app:tint="#B8B8B8"
+            app:srcCompat="@drawable/back" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수원시 영통구 ..."
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="25dp"
+            app:srcCompat="@drawable/down" />
+
+    </LinearLayout>
+<!--
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="656dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="70dp" />
+
+-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

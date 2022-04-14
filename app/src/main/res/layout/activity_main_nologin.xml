@@ -25,46 +25,15 @@
         tools:layout_editor_absoluteY="100dp" />
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="129dp">
-
-        <TextView
-            android:id="@+id/hello"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="90dp"
-            android:text="안녕하세요, "
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="136dp" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="홍길동"
-            android:textColor="#003388"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/nim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="님!"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인 후 이용 가능합니다. "
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="137dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -79,7 +48,7 @@
             android:id="@+id/money01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="160dp"
             android:text="잔액: "
             android:textColor="@color/black"
             android:textSize="22sp"
@@ -91,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="25,500"
+            android:text="-"
             android:textColor="#003388"
             android:textSize="22sp" />
 
@@ -149,46 +118,20 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="590dp" />
 
-    <HorizontalScrollView
-        android:id="@+id/horScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="220dp"
-                android:layout_height="170dp"
-                android:layout_marginLeft="100dp"
-                android:gravity="center"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/credit_card" />
-
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="110dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/round_corner_medium"
-                android:backgroundTint="#CFCFCF"
-                android:text="+"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="45dp" />
-
-
-        </LinearLayout>
-
-
-
-    </HorizontalScrollView>
+    <TextView
+        android:layout_width="170dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:background="@drawable/round_corner_medium"
+        android:backgroundTint="#CFCFCF"
+        android:text="+"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="45dp"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="197dp"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
