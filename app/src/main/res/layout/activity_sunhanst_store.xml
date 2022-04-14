@@ -18,6 +18,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:scaleType="fitCenter"
             app:tint="#B8B8B8"
             app:srcCompat="@drawable/back" />
 
@@ -36,8 +37,9 @@
             android:layout_width="18dp"
             android:layout_height="20dp"
             android:layout_marginLeft="20dp"
+            android:scaleType="fitCenter"
             android:layout_marginTop="25dp"
-            app:srcCompat="@drawable/arrow_down" />
+            app:srcCompat="@drawable/down" />
 
     </LinearLayout>
 
@@ -91,10 +93,12 @@
 
             <ImageButton
                 android:id="@+id/imageButton"
-                android:layout_width="24dp"
+                android:layout_width="22dp"
                 android:layout_height="24dp"
-                android:scaleType="center"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
                 app:srcCompat="@drawable/location" />
+
 
             <TextView
                 android:id="@+id/textView10"
@@ -110,7 +114,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="30dp"
-                android:scaleType="center"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
                 app:srcCompat="@drawable/heart" />
 
             <TextView
@@ -127,7 +132,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="30dp"
-                android:scaleType="center"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
                 app:srcCompat="@drawable/link" />
 
             <TextView
