@@ -19,6 +19,15 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_mypage_toolbar.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_mypage_profile.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/mypage_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/border_left.xml" value="0.2421875" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/bottom_border.xml" value="0.2421875" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/edit_border.xml" value="0.2265625" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265625" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/round_corner.xml" value="0.8" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/round_corner_big.xml" value="0.2421875" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/round_corner_medium.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/upper_border.xml" value="0.2265625" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/yellow_button.xml" value="0.2265625" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/activity_delete_account.xml" value="0.1296875" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/activity_edit_profile.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/activity_launcher.xml" value="0.16666666666666666" />
@@ -30,6 +39,7 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/fragment_mypage.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/fragment_mypage_profile.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.264" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/fragment_sunhanst_store.xml" value="0.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/layout/mypage_item.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/menu/bottom_menu.xml" value="0.1" />
       </map>
