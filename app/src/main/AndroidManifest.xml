@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Front_SunHan">
         <activity
-            android:name=".View.activity.launcherActivity"
+            android:name=".View.activity.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.activity.longinActivity"
+            android:name=".View.activity.LonginActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.toolbarActivity"
+            android:name=".View.activity.ToolbarActivity"
             android:exported="true">
         </activity>
     </application>
