@@ -13,30 +13,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.front_sunhan.R;
 
-public class MyPageAddCardActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
-    Button addCard;
+    Button editProfileBtn;
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mypage_add_card);
-        toolbar = findViewById(R.id.add_card_toolbar);
-
-        addCard = findViewById(R.id.add_card_btn);
-        addCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyPageAddCardDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        setContentView(R.layout.activity_edit_profile);
+        toolbar = findViewById(R.id.edit_toolbar);
         setToolbar();
-
     }
-
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정

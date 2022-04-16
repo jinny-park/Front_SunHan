@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,22 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.DeleteAccountActivity;
+import com.example.front_sunhan.View.activity.EditProfileActivity;
 import com.example.front_sunhan.View.activity.LoginActivity;
 import com.example.front_sunhan.View.activity.ManageBlockActivity;
+import com.example.front_sunhan.View.activity.MyLogsActivity;
 import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
+import com.example.front_sunhan.View.activity.PolicyActivity;
 import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
 
 public class MyPageFragment extends Fragment {
     RecyclerView mypageRecyclerView;
+    Button profileEditBtn;
 
-//    RecyclerView mypageSettingsreRecyclerView;
-//    RecyclerView mypageMylogsRecyclerView;
-//    RecyclerView mypageEtcRecyclerView;
-
-//    ArrayList<MypageItem> list = new ArrayList<>();
-//    TextView res_name;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,7 +42,13 @@ public class MyPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mypage,null);
 
         setRecyclerview(view);
-
+        profileEditBtn = view.findViewById(R.id.modify_profile);
+        profileEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+            }
+        });
 
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
             @Override public void onItemClick(MypageAdapter.ViewHolder holder, View view, int position) {
@@ -61,6 +67,24 @@ public class MyPageFragment extends Fragment {
                         case 2:
                             Intent intent3 = new Intent(getActivity(), ManageBlockActivity.class);
                             startActivity(intent3);
+                            break;
+                        case 3: /*로그아웃 팝업*/
+
+                            break;
+                        case 4:
+                            Intent intent4 = new Intent(getActivity(), DeleteAccountActivity.class);
+                            startActivity(intent4);
+                            break;
+                        case 5:
+                            Intent intent5 = new Intent(getActivity(), MyLogsActivity.class);
+                            startActivity(intent5);
+                            break;
+                        case 6:
+                            Intent intent6 = new Intent(getActivity(), PolicyActivity.class);
+                            startActivity(intent6);
+                            break;
+                        case 7:
+                            break;
                     }
 
                 }
@@ -70,7 +94,6 @@ public class MyPageFragment extends Fragment {
         return view;
 
     }
-
 
     void setRecyclerview(View view){
         mypageRecyclerView = view.findViewById(R.id.recyclerview_mypage);

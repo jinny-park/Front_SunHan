@@ -17,12 +17,8 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ArrayList<MypageItem> mypageList = new ArrayList<>();
-//    ArrayList<MypageItem> mypageMylogsList = new ArrayList<>();
-//    ArrayList<MypageItem> mypageEtcList = new ArrayList<>();
-
     public static MypageAdapter mypageAdapter;
-//    public static MypageMylogsAdapter mypageMylogsAdapter;
-//    public static MypageEtcAdapter mypageEtcAdapter;
+
     Button kakao_btn;
     Button google_btn;
     Button naver_btn;
@@ -43,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
     void setList(){
         mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
-//        mypageMylogsAdapter = new MypageMylogsAdapter(getApplicationContext(), mypageMylogsList);
-//        mypageEtcAdapter = new MypageEtcAdapter(getApplicationContext(), mypageEtcList);
         setData();
     }
 
@@ -58,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mypageAdapter.addItem(new MypageItem("내 활동보기"));
 
-        mypageAdapter.addItem(new MypageItem("약관"));
-        mypageAdapter.addItem(new MypageItem("정책"));
+        mypageAdapter.addItem(new MypageItem("약관및정책"));
+        mypageAdapter.addItem(new MypageItem("버정정보 1.1"));
     }
 }

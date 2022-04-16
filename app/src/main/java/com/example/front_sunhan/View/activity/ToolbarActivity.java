@@ -1,5 +1,6 @@
 package com.example.front_sunhan.View.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -12,23 +13,18 @@ import com.example.front_sunhan.R;
 
 public class ToolbarActivity extends AppCompatActivity {
 
-    static Toolbar toolbar;
-    static ActionBar actionBar;
-    String toolbarName;
+     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
+        ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
+        actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
 
-    }
-
-    public void setToolbarName(String name){
-        getSupportActionBar().setTitle(name);
     }
 
     @Override
@@ -37,7 +33,7 @@ public class ToolbarActivity extends AppCompatActivity {
             case android.R.id.home:
                 //select back button
                 finish();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

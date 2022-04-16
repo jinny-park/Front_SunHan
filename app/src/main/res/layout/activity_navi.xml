@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="마이페이지"
             android:textSize="20dp"
             android:textColor="@color/black">
 
@@ -28,7 +27,7 @@
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="540dp"
+        android:layout_height="601dp"
         android:layout_marginBottom="85dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavi"

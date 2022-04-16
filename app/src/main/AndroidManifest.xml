@@ -46,6 +46,26 @@
             android:name=".View.activity.ManageBlockActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".View.activity.EditProfileActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.DeleteAccountActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.MyLogsActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.PolicyActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.SetAlarmActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
