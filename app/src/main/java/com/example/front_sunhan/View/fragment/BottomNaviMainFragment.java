@@ -10,19 +10,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.front_sunhan.R;
 
-public class HeartFragment extends Fragment {
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+public class BottomNaviMainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_likestore_list, null);
+        View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
         return view;
     }
-
 }

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.fragment.BottomNaviMainFragment;
 import com.example.front_sunhan.View.fragment.CommunityFragment;
 import com.example.front_sunhan.View.fragment.HeartFragment;
 import com.example.front_sunhan.View.fragment.MypageFragment;
@@ -19,6 +20,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     HeartFragment heartFragment;
     FindStoreFragment findStoreFragment;
     CommunityFragment communityFragment;
+    BottomNaviMainFragment bottomNaviMainFragment;
     NavigationBarView navigationBarView;
 
     @Override
@@ -30,11 +32,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
         heartFragment = new HeartFragment();
         findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
-
+        bottomNaviMainFragment = new BottomNaviMainFragment();
         navigationBarView = findViewById(R.id.bottomNavi);
 
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,findStoreFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).addToBackStack(null).commit();
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -50,6 +52,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         return true;
                     case R.id.action_mypage:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mypageFragment).commit();
+                        return true;
+                    case R.id.action_bottomnavi:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, bottomNaviMainFragment).commit();
                         return true;
                 }
                     return false;

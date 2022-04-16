@@ -12,7 +12,7 @@ import com.example.front_sunhan.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class popupActivity extends AppCompatActivity {
+public class PopupActivity extends AppCompatActivity {
     Dialog dilaog01;
 
     @Override
@@ -20,7 +20,7 @@ public class popupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_detail);
 
-        dilaog01 = new Dialog(popupActivity.this);       // Dialog 초기화
+        dilaog01 = new Dialog(PopupActivity.this);       // Dialog 초기화
         dilaog01.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dilaog01.setContentView(R.layout.community_popup_item);             // xml 레이아웃 파일과 연결
 

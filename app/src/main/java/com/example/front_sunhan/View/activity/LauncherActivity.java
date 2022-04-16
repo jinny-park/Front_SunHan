@@ -9,7 +9,7 @@ import android.os.Looper;
 
 import com.example.front_sunhan.R;
 
-public class launcherActivity extends AppCompatActivity {
+public class LauncherActivity extends AppCompatActivity {
     private static int TIME_OUT = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class launcherActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(launcherActivity.this, longinActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.front_sunhan.R;
 
-public class toolbarActivity extends AppCompatActivity {
+public class ToolbarActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ActionBar actionBar;
