@@ -3,83 +3,80 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- 툴바 -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical"-->
+<!--                tools:ignore="MissingConstraints">-->
 
-        <include layout="@layout/activity_toolbar"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <include layout="@layout/fragment_mypage_profile"/>
-
-<!--                <TextView-->
-<!--                    android:id="@+id/textView2"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="앱설정"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="20sp" />-->
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_mypage"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/button_border">
+                    android:layout_height="match_parent">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView6"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:text="내활동보기"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="20sp" />-->
+                        <include layout="@layout/fragment_mypage_profile" />
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerview_mylogs"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:background="@drawable/button_border">-->
+                        <!--                <TextView-->
+                        <!--                    android:id="@+id/textView2"-->
+                        <!--                    android:layout_width="match_parent"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:text="앱설정"-->
+                        <!--                    android:layout_margin="5dp"-->
+                        <!--                    android:textColor="@color/black"-->
+                        <!--                    android:textSize="20sp" />-->
 
-<!--                </androidx.recyclerview.widget.RecyclerView>-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_mypage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/button_border">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView7"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:text="기타"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="20sp" />-->
+                        </androidx.recyclerview.widget.RecyclerView>
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerview_etc"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/button_border"-->
-<!--                    android:layout_margin="5dp"/>-->
+                        <!--                <TextView-->
+                        <!--                    android:id="@+id/textView6"-->
+                        <!--                    android:layout_width="wrap_content"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:layout_margin="5dp"-->
+                        <!--                    android:text="내활동보기"-->
+                        <!--                    android:textColor="@color/black"-->
+                        <!--                    android:textSize="20sp" />-->
 
-            </LinearLayout>
+                        <!--                <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                    android:id="@+id/recyclerview_mylogs"-->
+                        <!--                    android:layout_width="match_parent"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:layout_margin="5dp"-->
+                        <!--                    android:background="@drawable/button_border">-->
 
-        </ScrollView>
+                        <!--                </androidx.recyclerview.widget.RecyclerView>-->
 
-    </LinearLayout>
+                        <!--                <TextView-->
+                        <!--                    android:id="@+id/textView7"-->
+                        <!--                    android:layout_width="wrap_content"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:layout_margin="5dp"-->
+                        <!--                    android:text="기타"-->
+                        <!--                    android:textColor="@color/black"-->
+                        <!--                    android:textSize="20sp" />-->
+
+                        <!--                <androidx.recyclerview.widget.RecyclerView-->
+                        <!--                    android:id="@+id/recyclerview_etc"-->
+                        <!--                    android:layout_width="match_parent"-->
+                        <!--                    android:layout_height="wrap_content"-->
+                        <!--                    android:background="@drawable/button_border"-->
+                        <!--                    android:layout_margin="5dp"/>-->
+                    </LinearLayout>
+
+                </ScrollView>
+<!--            </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
