@@ -24,24 +24,25 @@
 
             <TextView
                 android:id="@+id/mypage_item"
-                android:layout_width="354dp"
-                android:layout_height="wrap_content"
+                android:layout_width="335dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
                 android:contextClickable="true"
                 android:gravity="fill_vertical"
-                android:layout_weight="1"
                 android:minHeight="48dp"
                 android:text="   textview"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 tools:ignore="MissingConstraints" />
 
             <ImageView
                 android:id="@+id/mypage_item_arrow"
                 android:layout_width="30dp"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_weight="10"
                 android:minHeight="48dp"
                 app:srcCompat="@drawable/right_arrow" />
+
         </LinearLayout>
     </LinearLayout>
 

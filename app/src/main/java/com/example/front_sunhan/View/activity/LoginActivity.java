@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.R;
-import com.example.front_sunhan.View.adapter.MypageEtcAdapter;
-import com.example.front_sunhan.View.adapter.MypageMylogsAdapter;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 
 import java.util.ArrayList;
