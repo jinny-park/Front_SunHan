@@ -9,14 +9,14 @@ import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.fragment.BottomNaviMainFragment;
 import com.example.front_sunhan.View.fragment.CommunityFragment;
 import com.example.front_sunhan.View.fragment.HeartFragment;
-import com.example.front_sunhan.View.fragment.MypageFragment;
+import com.example.front_sunhan.View.fragment.MyPageFragment;
 import com.example.front_sunhan.View.fragment.FindStoreFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-    MypageFragment mypageFragment;
+    MyPageFragment myPageFragment;
     HeartFragment heartFragment;
     FindStoreFragment findStoreFragment;
     CommunityFragment communityFragment;
@@ -28,7 +28,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
 
-        mypageFragment = new MypageFragment();
+        myPageFragment = new MyPageFragment();
         heartFragment = new HeartFragment();
         findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
@@ -51,7 +51,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, communityFragment).commit();
                         return true;
                     case R.id.action_mypage:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mypageFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
                         return true;
                     case R.id.action_bottomnavi:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, bottomNaviMainFragment).commit();

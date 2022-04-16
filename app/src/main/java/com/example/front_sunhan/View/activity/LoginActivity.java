@@ -11,19 +11,18 @@ import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.adapter.MypageEtcAdapter;
 import com.example.front_sunhan.View.adapter.MypageMylogsAdapter;
-import com.example.front_sunhan.View.adapter.MypageSettingsAdapter;
-import com.example.front_sunhan.View.fragment.MypageFragment;
+import com.example.front_sunhan.View.adapter.MypageAdapter;
 
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-    ArrayList<MypageItem> mypageSettingsList = new ArrayList<>();
-    ArrayList<MypageItem> mypageMylogsList = new ArrayList<>();
-    ArrayList<MypageItem> mypageEtcList = new ArrayList<>();
+    ArrayList<MypageItem> mypageList = new ArrayList<>();
+//    ArrayList<MypageItem> mypageMylogsList = new ArrayList<>();
+//    ArrayList<MypageItem> mypageEtcList = new ArrayList<>();
 
-    public static MypageSettingsAdapter mypageSettingsAdapter;
-    public static MypageMylogsAdapter mypageMylogsAdapter;
-    public static MypageEtcAdapter mypageEtcAdapter;
+    public static MypageAdapter mypageAdapter;
+//    public static MypageMylogsAdapter mypageMylogsAdapter;
+//    public static MypageEtcAdapter mypageEtcAdapter;
     Button kakao_btn;
     Button google_btn;
     Button naver_btn;
@@ -43,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void setList(){
-        mypageSettingsAdapter = new MypageSettingsAdapter(getApplicationContext(), mypageSettingsList);
+        mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
 //        mypageMylogsAdapter = new MypageMylogsAdapter(getApplicationContext(), mypageMylogsList);
 //        mypageEtcAdapter = new MypageEtcAdapter(getApplicationContext(), mypageEtcList);
         setData();
@@ -51,15 +50,15 @@ public class LoginActivity extends AppCompatActivity {
 
     void setData(){
 
-        mypageSettingsAdapter.addItem(new MypageItem("알림설정"));
-        mypageSettingsAdapter.addItem(new MypageItem("아동급식카드등록"));
-        mypageSettingsAdapter.addItem(new MypageItem("차단관리"));
-        mypageSettingsAdapter.addItem(new MypageItem("로그아웃"));
-        mypageSettingsAdapter.addItem(new MypageItem("탈퇴하기"));
+        mypageAdapter.addItem(new MypageItem("알림설정"));
+        mypageAdapter.addItem(new MypageItem("아동급식카드등록"));
+        mypageAdapter.addItem(new MypageItem("차단관리"));
+        mypageAdapter.addItem(new MypageItem("로그아웃"));
+        mypageAdapter.addItem(new MypageItem("탈퇴하기"));
 
-        mypageSettingsAdapter.addItem(new MypageItem("내 활동보기"));
+        mypageAdapter.addItem(new MypageItem("내 활동보기"));
 
-        mypageSettingsAdapter.addItem(new MypageItem("약관"));
-        mypageSettingsAdapter.addItem(new MypageItem("정책"));
+        mypageAdapter.addItem(new MypageItem("약관"));
+        mypageAdapter.addItem(new MypageItem("정책"));
     }
 }

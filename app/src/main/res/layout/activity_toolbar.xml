@@ -12,9 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp"
         app:titleTextColor="@color/black"
         android:background="@drawable/bottom_border">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/back"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="15dp"
+            app:tint="#C6C6C6" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -34,6 +34,18 @@
             android:name=".View.activity.PopupActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".View.activity.MyPageAddCardActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.MyPageAddCardDetailActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".View.activity.ManageBlockActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
