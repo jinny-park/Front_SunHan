@@ -21,7 +21,7 @@ public class HeartFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_likestore_list, null);
+        View view = inflater.inflate(R.layout.fragment_likestore, null);
         return view;
     }
 
