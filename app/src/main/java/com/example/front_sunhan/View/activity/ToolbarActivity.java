@@ -12,8 +12,9 @@ import com.example.front_sunhan.R;
 
 public class ToolbarActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    ActionBar actionBar;
+    static Toolbar toolbar;
+    static ActionBar actionBar;
+    String toolbarName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +22,15 @@ public class ToolbarActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
+    public void setToolbarName(String name){
+        getSupportActionBar().setTitle(name);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
