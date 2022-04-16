@@ -1,5 +1,7 @@
 package com.example.front_sunhan.View.fragment;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,8 +73,9 @@ public class MyPageFragment extends Fragment {
                             startActivity(intent3);
                             break;
                         case 3: /*로그아웃 팝업*/
-
+                            showDialog();
                             break;
+
                         case 4:
                             Intent intent4 = new Intent(getActivity(), DeleteAccountActivity.class);
                             startActivity(intent4);
@@ -104,4 +109,22 @@ public class MyPageFragment extends Fragment {
         mypageRecyclerView.setAdapter(LoginActivity.mypageAdapter);
 
     }
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그아웃 하시겠습니까?") .
+                setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }) .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
+    }
+
+
+
+
 }
