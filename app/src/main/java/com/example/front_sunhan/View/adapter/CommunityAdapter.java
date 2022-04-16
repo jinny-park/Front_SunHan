@@ -40,7 +40,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Item
         return listData.size();
     }
 
-    void addItem(CommunityItem data) {
+    public void addItem(CommunityItem data) {
         // 외부에서 item을 추가시킬 함수입니다.
         listData.add(data);
     }

@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.LoginActivity;
 
 public class CommunityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
