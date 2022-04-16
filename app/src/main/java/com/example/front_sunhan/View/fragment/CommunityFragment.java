@@ -20,7 +20,7 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_community, null);
+        View view = inflater.inflate(R.layout.fragment_community, null);
         return view;
     }
 }

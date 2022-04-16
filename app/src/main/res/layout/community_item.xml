@@ -36,8 +36,8 @@
 
         <TextView
             android:id="@+id/uploadtime"
-            android:layout_width="32dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="250dp"
             android:text="12:10"
             android:textColor="#000000"
@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/commentnum"
-            android:layout_width="21dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="7dp"
             android:text="2"
