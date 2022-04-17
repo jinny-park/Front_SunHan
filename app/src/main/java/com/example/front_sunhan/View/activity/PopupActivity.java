@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.front_sunhan.R;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.front_sunhan.R;
 
 public class PopupActivity extends AppCompatActivity {
     Dialog dilaog01;
@@ -25,12 +25,13 @@ public class PopupActivity extends AppCompatActivity {
         dilaog01.setContentView(R.layout.community_popup_item);             // xml 레이아웃 파일과 연결
 
         // 버튼: 커스텀 다이얼로그 띄우기
-        findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
+       findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog01(); // 아래 showDialog01() 함수 호출
             }
         });
+
     }
 
     // dialog01을 디자인하는 함수
