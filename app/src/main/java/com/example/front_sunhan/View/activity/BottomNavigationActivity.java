@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.fragment.BottomNaviMainFragment;
 import com.example.front_sunhan.View.fragment.CommunityFragment;
-import com.example.front_sunhan.View.fragment.FindStoreFragment;
+import com.example.front_sunhan.View.fragment.FindRoadFragment;
 import com.example.front_sunhan.View.fragment.HeartFragment;
 import com.example.front_sunhan.View.fragment.MyPageFragment;
 import com.google.android.material.navigation.NavigationBarView;
@@ -19,7 +19,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
     MyPageFragment myPageFragment;
     HeartFragment heartFragment;
-    FindStoreFragment findStoreFragment;
+    FindRoadFragment findStoreFragment;
     CommunityFragment communityFragment;
     BottomNaviMainFragment bottomNaviMainFragment;
     NavigationBarView navigationBarView;
@@ -32,7 +32,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         myPageFragment = new MyPageFragment();
         heartFragment = new HeartFragment();
-        findStoreFragment = new FindStoreFragment();
+        findStoreFragment = new FindRoadFragment();
         communityFragment = new CommunityFragment();
         bottomNaviMainFragment = new BottomNaviMainFragment();
         navigationBarView = findViewById(R.id.bottomNavi);
