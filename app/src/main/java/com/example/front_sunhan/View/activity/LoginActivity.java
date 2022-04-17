@@ -7,15 +7,19 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.front_sunhan.Model.BlocekdItem;
 import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.adapter.ManageBlockAdapter;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     ArrayList<MypageItem> mypageList = new ArrayList<>();
+    ArrayList<BlocekdItem> blockedList = new ArrayList<>();
     public static MypageAdapter mypageAdapter;
+    public static ManageBlockAdapter manageBlockAdapter;
 
     Button kakao_btn;
     Button google_btn;
@@ -37,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void setList(){
         mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
+        manageBlockAdapter = new ManageBlockAdapter(getApplicationContext(),blockedList);
         setData();
     }
 
@@ -44,13 +49,21 @@ public class LoginActivity extends AppCompatActivity {
 
         mypageAdapter.addItem(new MypageItem("알림설정"));
         mypageAdapter.addItem(new MypageItem("아동급식카드등록"));
+        mypageAdapter.addItem(new MypageItem("내 활동보기"));
         mypageAdapter.addItem(new MypageItem("차단관리"));
         mypageAdapter.addItem(new MypageItem("로그아웃"));
         mypageAdapter.addItem(new MypageItem("탈퇴하기"));
-
-        mypageAdapter.addItem(new MypageItem("내 활동보기"));
-
         mypageAdapter.addItem(new MypageItem("약관및정책"));
         mypageAdapter.addItem(new MypageItem("버정정보 1.1"));
+
+        manageBlockAdapter.addItem(new BlocekdItem("귤이"));
+        manageBlockAdapter.addItem(new BlocekdItem("익명"));
+        manageBlockAdapter.addItem(new BlocekdItem("이"));
+        manageBlockAdapter.addItem(new BlocekdItem("박"));
+        manageBlockAdapter.addItem(new BlocekdItem("수박"));
+        manageBlockAdapter.addItem(new BlocekdItem("메론"));
+
+
+
     }
 }

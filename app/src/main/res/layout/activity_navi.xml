@@ -27,7 +27,7 @@
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="601dp"
+        android:layout_height="530dp"
         android:layout_marginBottom="85dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavi"

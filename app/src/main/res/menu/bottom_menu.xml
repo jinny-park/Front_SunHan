@@ -18,6 +18,7 @@
         android:id="@+id/action_bottomnavi"
         android:enabled="true"
         android:icon="@drawable/sunhan_logo"
+        android:iconTint="@color/white"
         android:title=" "/>
 
     <item
