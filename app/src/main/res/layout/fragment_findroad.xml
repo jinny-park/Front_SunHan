@@ -7,6 +7,9 @@
 
 
 <!--
+
+    네이버지도 API 넣어야함
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -14,6 +17,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="70dp" />
 
--->w
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
