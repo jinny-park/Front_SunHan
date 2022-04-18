@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -46,7 +46,6 @@ public class MyPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mypage,null);
 
         setRecyclerview(view);
-
         profileEditBtn = view.findViewById(R.id.modify_profile);
         profileEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,27 +61,27 @@ public class MyPageFragment extends Fragment {
                     System.out.println(position);
                     switch (position){
                         case 0:
-//                            Intent intent1 = new Intent(getActivity(), ManageBlockActivity.class);
-//                            startActivity(intent1);
+                            Intent intent1 = new Intent(getActivity(), ManageBlockActivity.class);
+                            startActivity(intent1);
                             break;
                         case 1:
                             Intent intent2 = new Intent(getActivity(), MyPageAddCardActivity.class);
                             startActivity(intent2);
                             break;
                         case 2:
-                            Intent intent3 = new Intent(getActivity(), MyLogsActivity.class);
+                            Intent intent3 = new Intent(getActivity(), ManageBlockActivity.class);
                             startActivity(intent3);
                             break;
-                        case 3:
-                            Intent intent4 = new Intent(getActivity(), ManageBlockActivity.class);
-                            startActivity(intent4);
-                            break;
-
-                        case 4:/*로그아웃 팝업*/
+                        case 3: /*로그아웃 팝업*/
                             showDialog();
                             break;
+
+                        case 4:
+                            Intent intent4 = new Intent(getActivity(), DeleteAccountActivity.class);
+                            startActivity(intent4);
+                            break;
                         case 5:
-                            Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
+                            Intent intent5 = new Intent(getActivity(), MyLogsActivity.class);
                             startActivity(intent5);
                             break;
                         case 6:
