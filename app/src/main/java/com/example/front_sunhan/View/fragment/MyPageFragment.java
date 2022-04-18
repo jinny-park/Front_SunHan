@@ -11,7 +11,6 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +31,6 @@ import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener
 public class MyPageFragment extends Fragment {
     RecyclerView mypageRecyclerView;
     Button profileEditBtn;
-
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

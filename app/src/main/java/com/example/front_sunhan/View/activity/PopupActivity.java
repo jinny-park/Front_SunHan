@@ -23,7 +23,7 @@ public class PopupActivity extends AppCompatActivity {
         dilaog01 = new Dialog(PopupActivity.this);       // Dialog 초기화
         dilaog01.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dilaog01.setContentView(R.layout.community_popup_item);             // xml 레이아웃 파일과 연결
-
+/*
         // 버튼: 커스텀 다이얼로그 띄우기
        findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +31,7 @@ public class PopupActivity extends AppCompatActivity {
                 showDialog01(); // 아래 showDialog01() 함수 호출
             }
         });
-
+ */
     }
 
     // dialog01을 디자인하는 함수
