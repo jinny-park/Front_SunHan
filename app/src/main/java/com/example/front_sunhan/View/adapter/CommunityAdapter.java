@@ -49,28 +49,28 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Item
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
-        private TextView textView1;
-        private TextView textView2;
-        private TextView textView3;
-        private TextView textView4;
+        private ImageView userprofile;
+        private TextView userid;
+        private TextView uploadtime;
+        private TextView content;
+        private TextView commentnum;
 
         ItemViewHolder(View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.userprofile);
-            textView1 = itemView.findViewById(R.id.userid);
-            textView2 = itemView.findViewById(R.id.uploadtime);
-            textView3 = itemView.findViewById(R.id.content);
-            textView4 = itemView.findViewById(R.id.commentnum);
+            userprofile = itemView.findViewById(R.id.userprofile);
+            userid = itemView.findViewById(R.id.userid);
+            uploadtime = itemView.findViewById(R.id.uploadtime);
+            content = itemView.findViewById(R.id.content);
+            commentnum = itemView.findViewById(R.id.commentnum);
         }
 
         void onBind(CommunityItem data) {
-            imageView.setImageResource(data.getProfile());
-            textView1.setText(data.getNickname());
-            textView2.setText(data.getWritetime());
-            textView3.setText(data.getContent());
-            textView4.setText(data.getWritenum());
+            userprofile.setImageResource(data.getProfile());
+            userid.setText(data.getNickname());
+            uploadtime.setText(data.getWritetime());
+            content.setText(data.getContent());
+            commentnum.setText(data.getWritenum());
         }
     }
 }
