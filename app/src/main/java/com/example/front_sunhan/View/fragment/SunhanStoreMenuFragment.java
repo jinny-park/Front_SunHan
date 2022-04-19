@@ -5,29 +5,58 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.MenuItem;
+import com.example.front_sunhan.Model.StoreItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.adapter.MenuAdapter;
+import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
+
+import java.util.ArrayList;
 
 
 public class SunhanStoreMenuFragment extends Fragment {
-    View view;
-    public SunhanStoreMenuFragment() {
-        // Required empty public constructor
+    public static MenuAdapter menuAdapter ;
+    ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
+    RecyclerView menuRecyclerView;
+
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
     }
 
-
-    public static SunhanStoreMenuFragment newInstance() {
-        SunhanStoreMenuFragment sunhanStoreMenuFragment = new SunhanStoreMenuFragment();
-        return sunhanStoreMenuFragment;
-    }
-
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sunhanst_store_menu, container, false);
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_sunhanst_store_menu, null);
+        menuAdapter = new MenuAdapter(getContext(), menuList);
+        setRecyclerview(view);
+        setData();
         return view;
+    }
+
+    void setRecyclerview(View view){
+        menuRecyclerView = view.findViewById(R.id.recyclerview_menu);
+        menuRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+        menuRecyclerView.setLayoutManager(recyclerViewManager);
+        menuRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        menuRecyclerView.setAdapter(menuAdapter);
+
+    }
+
+    void setData(){
+
+        menuAdapter.addItem(new MenuItem("순대국 감자탕", "6000"));
+        menuAdapter.addItem(new MenuItem("돼지 국밥", "7000"));
+        menuAdapter.addItem(new MenuItem("뼈해장국", "8000"));
+        menuAdapter.addItem(new MenuItem("수육", "9000"));
     }
 
 }

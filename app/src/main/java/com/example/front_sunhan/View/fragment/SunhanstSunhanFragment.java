@@ -45,11 +45,11 @@ public class SunhanstSunhanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_sunhan,null);
-        storeSunhanAdapter = new SunhanStoreAdapter(getContext(),  storeList);
+        storeSunhanAdapter = new SunhanStoreAdapter(getContext(), storeList);
         setRecyclerview(view);
         setData();
-        /*
-        storeAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
+/*
+        storeSunhanAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
             @Override public void onItemClick(MypageAdapter.ViewHolder holder, View view, int position) {
                 ToolbarActivity toolbarActivity = new ToolbarActivity();
                 if (position != RecyclerView.NO_POSITION) {
@@ -57,7 +57,7 @@ public class SunhanstSunhanFragment extends Fragment {
             }
         });
 
-         */
+ */
 
         return view;
 

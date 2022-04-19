@@ -109,7 +109,7 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
     public void addItem(StoreItem item){
         items.add(item);
     }
-    public void setarrayList(ArrayList<StoreItem> arrayList) {
+    public void setArrayList(ArrayList<StoreItem> arrayList) {
 
         this.items = arrayList;
     }
