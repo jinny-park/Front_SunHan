@@ -10,36 +10,38 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bottom_border"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/black"
-        android:background="@drawable/bottom_border">
+        app:titleTextColor="@color/black">
 
         <ImageView
             android:id="@+id/imageView11"
             android:layout_width="25dp"
             android:layout_height="25dp"
             app:srcCompat="@drawable/back"
+            app:tint="#C6C6C6"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="15dp"
-            app:tint="#C6C6C6" />
+            tools:layout_editor_absoluteY="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="찜한 가게"
-            android:textSize="20dp"
-            android:textColor="@color/black">
+            android:text="커뮤니티"
+            android:textColor="@color/black"
+            android:textSize="20dp">
 
         </TextView>
 
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="577dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="55dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,11 +50,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
             <LinearLayout
@@ -149,7 +153,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="379dp" />
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/community_detail_item" />
 
     </LinearLayout>
 

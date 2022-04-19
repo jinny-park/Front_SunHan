@@ -7,9 +7,15 @@ public class CommunityItem {
     private String content;
     private int writenum;
 
-    public int getProfile() {
-        return profile;
+    public CommunityItem(int profile, String nickname, String writetime, String content, int writenum) {
+        this.profile = profile;
+        this.nickname = nickname;
+        this.writetime = writetime;
+        this.content = content;
+        this.writenum = writenum;
     }
+
+    public int getProfile() { return profile; }
 
     public void setProfile(int profile) {
         this.profile = profile;

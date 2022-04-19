@@ -1,5 +1,7 @@
 package com.example.front_sunhan.View.adapter;
 
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,64 +16,58 @@ import com.example.front_sunhan.R;
 
 import java.util.ArrayList;
 
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ItemViewHolder> {
+public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder> {
 
-    // adapter에 들어갈 list 입니다.
-    private ArrayList<CommunityItem> listData = new ArrayList<>();
+    private ArrayList<CommunityItem> CommunityList;
 
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
-        // return 인자는 ViewHolder 입니다.
+    public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.community_item, parent, false);
-        return new ItemViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-        holder.onBind(listData.get(position));
+    public void onBindViewHolder(@NonNull CommunityAdapter.ViewHolder holder, int position) {
+        holder.onBind(CommunityList.get(position));
+    }
+
+    public void setCommunityList(ArrayList<CommunityItem> list){
+        this.CommunityList = list;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        // RecyclerView의 총 개수 입니다.
-        return listData.size();
+        return CommunityList.size();
     }
 
-    public void addItem(CommunityItem data) {
-        // 외부에서 item을 추가시킬 함수입니다.
-        listData.add(data);
-    }
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView profile;
+        TextView name;
+        TextView uptime;
+        TextView content;
+        TextView count;
 
-    // RecyclerView의 핵심인 ViewHolder 입니다.
-    // 여기서 subView를 setting 해줍니다.
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView userprofile;
-        private TextView userid;
-        private TextView uploadtime;
-        private TextView content;
-        private TextView commentnum;
-
-        ItemViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            userprofile = itemView.findViewById(R.id.userprofile);
-            userid = itemView.findViewById(R.id.userid);
-            uploadtime = itemView.findViewById(R.id.uploadtime);
-            content = itemView.findViewById(R.id.content);
-            commentnum = itemView.findViewById(R.id.commentnum);
+            profile = (ImageView) itemView.findViewById(R.id.userprofile);
+            name = (TextView) itemView.findViewById(R.id.userid);
+            uptime = (TextView) itemView.findViewById(R.id.uploadtime);
+            content = (TextView) itemView.findViewById(R.id.content);
+            count = (TextView) itemView.findViewById(R.id.commentnum);
         }
 
-        void onBind(CommunityItem data) {
-            userprofile.setImageResource(data.getProfile());
-            userid.setText(data.getNickname());
-            uploadtime.setText(data.getWritetime());
-            content.setText(data.getContent());
-            commentnum.setText(data.getWritenum());
+        void onBind(CommunityItem item){
+            profile.setImageResource(item.getProfile());
+            name.setText(item.getNickname());
+            uptime.setText(item.getWritetime());
+            content.setText(item.getContent());
+            count.setText(item.getWritenum());
         }
     }
+
+
 }
 

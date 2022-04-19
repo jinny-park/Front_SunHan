@@ -21,7 +21,7 @@
 
 
     <LinearLayout
-        android:layout_width="358dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/commnity_round_popup"
@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/userprofile"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_margin="1dp"
                 tools:srcCompat="@drawable/profile" />
 
@@ -46,11 +46,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="10dp"
                 android:clickable="false"
                 android:text="익명"
                 android:textColor="#000000"
-                android:textSize="16dp"
+                android:textSize="12dp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -58,28 +58,28 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="240dp"
+                android:layout_marginLeft="230dp"
                 tools:srcCompat="@drawable/more" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/content"
-            android:layout_width="339dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="왕 저도 가봐야겠어요"
             android:textColor="#000000"
-            android:textSize="14dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/uploadtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:text="03/17 12:10"
             android:textColor="#7A7A7A"
-            android:textSize="12dp" />
+            android:textSize="10dp" />
     </LinearLayout>
 </LinearLayout>
