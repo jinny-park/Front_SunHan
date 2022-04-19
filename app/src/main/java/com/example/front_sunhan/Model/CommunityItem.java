@@ -1,40 +1,42 @@
 package com.example.front_sunhan.Model;
 
 public class CommunityItem {
-    private int profile;
-    private String nickname;
-    private String writetime;
-    private String content;
-    private int writenum;
+    int userProfile;
+    String userId;
+    String uploadTime;
+    String content;
+    int commentNum;
 
-    public CommunityItem(int profile, String nickname, String writetime, String content, int writenum) {
-        this.profile = profile;
-        this.nickname = nickname;
-        this.writetime = writetime;
+    public CommunityItem(int userProfile, String userId, String uploadTime, String content, int commentNum) {
+        this.userProfile = userProfile;
+        this.userId = userId;
+        this.uploadTime = uploadTime;
         this.content = content;
-        this.writenum = writenum;
+        this.commentNum = commentNum;
     }
 
-    public int getProfile() { return profile; }
-
-    public void setProfile(int profile) {
-        this.profile = profile;
+    public int getUserProfile() {
+        return userProfile;
     }
 
-    public String getNickname() {
-        return nickname;
+    public void setUserProfile(int userProfile) {
+        this.userProfile = userProfile;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getWritetime() {
-        return writetime;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setWritetime(String writetime) {
-        this.writetime = writetime;
+    public String getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(String uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
     public String getContent() {
@@ -45,11 +47,11 @@ public class CommunityItem {
         this.content = content;
     }
 
-    public int getWritenum() {
-        return writenum;
+    public int getCommentNum() {
+        return commentNum;
     }
 
-    public void setWritenum(int writenum) {
-        this.writenum = writenum;
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
     }
 }

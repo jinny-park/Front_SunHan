@@ -67,11 +67,11 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.CommunityActivity"
+            android:name=".View.activity.MainActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MainActivity"
+            android:name=".View.activity.WriteActivity"
             android:exported="true">
         </activity>
     </application>
