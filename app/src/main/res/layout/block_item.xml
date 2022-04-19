@@ -2,22 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/blcck_id"
+            android:id="@+id/blocked_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="10"
-            android:gravity="center"
+            android:gravity="fill_vertical"
             android:text="gildong1"
             android:textColor="@color/black"
             android:textSize="20sp" />

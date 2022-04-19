@@ -21,7 +21,7 @@ public class MyLogsCommentFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_mylogs_comment, null);
 
-   return view;
+        return view;
     }
 
 }
