@@ -5,9 +5,9 @@ public class CommunityItem {
     String userId;
     String uploadTime;
     String content;
-    int commentNum;
+    String commentNum;
 
-    public CommunityItem(int userProfile, String userId, String uploadTime, String content, int commentNum) {
+    public CommunityItem(int userProfile, String userId, String uploadTime, String content, String commentNum) {
         this.userProfile = userProfile;
         this.userId = userId;
         this.uploadTime = uploadTime;
@@ -47,11 +47,11 @@ public class CommunityItem {
         this.content = content;
     }
 
-    public int getCommentNum() {
+    public String getCommentNum() {
         return commentNum;
     }
 
-    public void setCommentNum(int commentNum) {
+    public void setCommentNum(String commentNum) {
         this.commentNum = commentNum;
     }
 }

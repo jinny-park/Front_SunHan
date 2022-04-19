@@ -25,15 +25,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommunityFragment extends Fragment {
-    RecyclerView communityRecyclerView;
     public static CommunityAdapter communityAdapter ;
-    ArrayList<CommunityItem> cList = new ArrayList<>();
+    ArrayList<CommunityItem> cList = new ArrayList<CommunityItem>();
+    RecyclerView communityRecyclerView;
 
     Button writeBtn;
-
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -57,6 +53,12 @@ public class CommunityFragment extends Fragment {
         return view;
     }
 
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+    }
+
+
+
     void setRecyclerview(View view){
         communityRecyclerView = view.findViewById(R.id.recyleView_community);
         communityRecyclerView.setHasFixedSize(true);
@@ -67,6 +69,11 @@ public class CommunityFragment extends Fragment {
     }
 
     void setData(){
-        //communityAdapter.addItem(new CommunityItem(R.id.userProfile,"익명1", "12:10","맛있어요",0)); 오류남
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명1", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명2", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명4", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명3", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명2", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명1", "12:10","맛있어요","0"));
     }
 }

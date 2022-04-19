@@ -5,43 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!--    <androidx.appcompat.widget.Toolbar-->
-    <!--        android:id="@+id/toolbar"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@drawable/bottom_border"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:titleTextColor="@color/black">-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/imageView11"-->
-    <!--            android:layout_width="25dp"-->
-    <!--            android:layout_height="25dp"-->
-    <!--            app:srcCompat="@drawable/back"-->
-    <!--            app:tint="#C6C6C6"-->
-    <!--            tools:layout_editor_absoluteX="16dp"-->
-    <!--            tools:layout_editor_absoluteY="15dp" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:text="커뮤니티"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="20dp">-->
-
-    <!--        </TextView>-->
-
-    <!--    </androidx.appcompat.widget.Toolbar>-->
-
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="401dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/write_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -72,22 +41,19 @@
                 app:srcCompat="@drawable/down" />
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyleView_community"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_border">
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+            android:layout_height="match_parent">
 
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyleView_community"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="625dp"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyleView_community"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_border">
+            </androidx.recyclerview.widget.RecyclerView>
+        </ScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/write_btn"

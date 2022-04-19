@@ -1,8 +1,7 @@
 package com.example.front_sunhan.View.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
-import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
 
 import java.util.ArrayList;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder> {
-    ArrayList<CommunityItem> items=new ArrayList<CommunityItem>();
+    ArrayList<CommunityItem> items = new ArrayList<CommunityItem>();
     private Context context;
 
-    public OnClickMyPageItemListener listener;
+//    public OnClickCommunityItemListener listener;
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> items){
         this.context = context ;
@@ -34,22 +32,23 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
-        return new CommunityAdapter.ViewHolder(itemView);
+        return new CommunityAdapter.ViewHolder(itemView/*, (OnClickCommunityItemListener) this*/);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommunityAdapter.ViewHolder holder, int position) {
         CommunityItem item =items.get(position);
 
-        //holder.userProfile.setImageResource(items.get(position).getUserProfile());
+        holder.userProfile.setImageResource(items.get(position).getUserProfile());
         holder.userId.setText(items.get(position).getUserId());
-        holder.uploadTime.setText(items.get(position).getContent());
-        holder.content.setText(items.get(position).getUploadTime());
+        holder.uploadTime.setText(items.get(position).getUploadTime());
+        holder.content.setText(items.get(position).getContent());
         holder.commentNum.setText(items.get(position).getCommentNum());
     }
 
     @Override
     public int getItemCount() {
+//        Log.d("size", String.valueOf(items.size()));
         return items.size();
     }
 
@@ -60,7 +59,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         public TextView content;
         public TextView commentNum;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView/*, final OnClickCommunityItemListener listener*/) {
             super(itemView);
             userProfile = itemView.findViewById(R.id.userProfile);
             userId = itemView.findViewById(R.id.userId);
@@ -69,6 +68,16 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
             commentNum = itemView.findViewById(R.id.commentNum);
 
             itemView.setClickable(true);
+            /*itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(listener != null){
+                        listener.onItemClick(CommunityAdapter.ViewHolder.this, view, position);
+                    }
+                }
+            });*/
         }
 
     }
