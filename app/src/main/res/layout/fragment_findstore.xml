@@ -36,37 +36,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bottom_border"
+        tools:ignore="MissingConstraints">
 
-        <EditText
-            android:id="@+id/editSearch"
-            android:layout_width="360dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/round_corner_medium"
-            android:backgroundTint="#E3E3E3"
-            android:hint="가게 이름을 입력하세요." />
-
-        <View
-            android:id="@+id/view"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#BCBCBC"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="99dp" />
+            android:layout_height="wrap_content"
+            app:iconifiedByDefault="false"
+            app:queryHint="검색어를 입력하시오" />
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#999999"
-            android:dividerHeight="1dp">
-        </ListView>
 
+<!--        <FrameLayout-->
+<!--            android:id="@+id/find_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintVertical_weight="1"-->
+<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--            tools:ignore="MissingConstraints">-->
+<!--        </FrameLayout>-->
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

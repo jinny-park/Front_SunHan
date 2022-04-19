@@ -14,6 +14,7 @@ import com.example.front_sunhan.View.fragment.CommunityFragment;
 import com.example.front_sunhan.View.fragment.FindStoreFragment;
 import com.example.front_sunhan.View.fragment.HeartFragment;
 import com.example.front_sunhan.View.fragment.MyPageFragment;
+import com.example.front_sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     CommunityFragment communityFragment;
     BottomNaviMainFragment bottomNaviMainFragment;
     NavigationBarView navigationBarView;
+    SunhanstMainFragment sunhanstMainFragment ;
     Toolbar toolbar;
 
     @Override
@@ -36,6 +38,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
         bottomNaviMainFragment = new BottomNaviMainFragment();
+        sunhanstMainFragment = new SunhanstMainFragment();
         navigationBarView = findViewById(R.id.bottomNavi);
         toolbar = findViewById (R.id.toolbar);
 
@@ -59,7 +62,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
                         return true;
                     case R.id.action_bottomnavi:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, bottomNaviMainFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
                         return true;
                 }
                     return false;

@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_heart"
+                android:id="@+id/tabs_store"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
@@ -31,7 +31,7 @@
                 app:tabTextColor="#3a3a3a" />
 
             <FrameLayout
-                android:id="@+id/tabs_heart_container"
+                android:id="@+id/tabs_store_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
@@ -40,52 +40,5 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--        android:id="@+id/tabLayout"-->
-<!--        android:layout_width="380dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:tabIndicatorColor="#FF7B7B"-->
-<!--        app:tabSelectedTextColor="#707070"-->
-<!--        app:tabTextColor="#737373"-->
-<!--        tools:ignore="MissingConstraints">-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="선한 영향력 가게" />-->
-
-<!--        <com.google.android.material.tabs.TabItem-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="아동급식카드 가맹점" />-->
-<!--    </com.google.android.material.tabs.TabLayout>-->
-
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:id="@+id/viewpager"-->
-<!--        android:layout_width="370dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

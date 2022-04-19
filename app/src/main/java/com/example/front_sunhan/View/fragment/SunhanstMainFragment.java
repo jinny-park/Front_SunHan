@@ -32,8 +32,6 @@ public class SunhanstMainFragment extends Fragment {
     SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
 
-
-
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
@@ -44,15 +42,14 @@ public class SunhanstMainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
+
         sunhanstCardFragment = new SunhanstCardFragment();
         sunhanstSunhanFragment = new SunhanstSunhanFragment();
 
+        getFragmentManager().beginTransaction().replace(R.id.tabs_store_container, sunhanstCardFragment).commit();
         TabLayout tabs = view.findViewById(R.id.store_tapLayout);
         tabs.addTab(tabs.newTab().setText("아동급식가맹점"));
         tabs.addTab(tabs.newTab().setText("선한영향력가게"));
-
-
-        getFragmentManager().beginTransaction().replace(R.id.store_frame, sunhanstCardFragment).commit();
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -66,7 +63,7 @@ public class SunhanstMainFragment extends Fragment {
                 else {
                     selected = sunhanstSunhanFragment;
                 }
-                getFragmentManager().beginTransaction().replace(R.id.store_frame, selected).commit();
+                getFragmentManager().beginTransaction().replace(R.id.tabs_store_container, selected).commit();
             }
 
             @Override
