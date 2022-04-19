@@ -8,8 +8,12 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.LoginActivity;
 
 public class FindStoreFragment extends Fragment {
 /*
@@ -21,6 +25,8 @@ public class FindStoreFragment extends Fragment {
 
  */
 
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -29,6 +35,9 @@ public class FindStoreFragment extends Fragment {
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_findstore, null);
+
         return view;
+
     }
+
 }

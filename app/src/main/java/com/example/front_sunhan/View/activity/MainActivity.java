@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.front_sunhan.R;
 
@@ -29,22 +32,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        card_store = findViewById(R.id.card_store);
-        sunhan_store.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        community = findViewById(R.id.community);
-        community.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
-                startActivity(intent);
-            }
-        });
+//        card_store = findViewById(R.id.card_store);
+//        sunhan_store.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        community = findViewById(R.id.community);
+//        community.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
