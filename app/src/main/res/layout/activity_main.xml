@@ -136,7 +136,7 @@
         tools:layout_editor_absoluteY="500dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/community"
         android:layout_width="280dp"
         android:layout_height="64dp"
         android:background="@drawable/round_corner_medium"

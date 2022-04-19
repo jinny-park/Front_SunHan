@@ -11,15 +11,16 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.fragment.BottomNaviMainFragment;
 import com.example.front_sunhan.View.fragment.CommunityFragment;
-import com.example.front_sunhan.View.fragment.FindRoadFragment;
+import com.example.front_sunhan.View.fragment.FindStoreFragment;
 import com.example.front_sunhan.View.fragment.HeartFragment;
 import com.example.front_sunhan.View.fragment.MyPageFragment;
 import com.google.android.material.navigation.NavigationBarView;
+
 public class BottomNavigationActivity extends AppCompatActivity {
 
     MyPageFragment myPageFragment;
     HeartFragment heartFragment;
-    FindRoadFragment findStoreFragment;
+    FindStoreFragment findStoreFragment;
     CommunityFragment communityFragment;
     BottomNaviMainFragment bottomNaviMainFragment;
     NavigationBarView navigationBarView;
@@ -32,7 +33,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         myPageFragment = new MyPageFragment();
         heartFragment = new HeartFragment();
-        findStoreFragment = new FindRoadFragment();
+        findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
         bottomNaviMainFragment = new BottomNaviMainFragment();
         navigationBarView = findViewById(R.id.bottomNavi);
@@ -64,15 +65,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     return false;
             }
         });
-/*
-        //하단바 아래로 스크롤시 사라지게끔 구현
-        View decor_View = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decor_View.setSystemUiVisibility(uiOptions);
-
- */
     }
 
     void setToolbar(){
