@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sunhan_logo" />
 
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -22,8 +23,7 @@
         android:background="#BCBCBC"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="100dp" />
-
+        tools:layout_editor_absoluteY="99dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
