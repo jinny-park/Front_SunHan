@@ -1,40 +1,53 @@
 package com.example.front_sunhan.View.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CommunityDetailItem;
 import com.example.front_sunhan.R;
-import com.example.front_sunhan.View.fragment.CommunityDetailFragment;
+import com.example.front_sunhan.View.adapter.CommunityDetailAdapter;
+import com.example.front_sunhan.View.adapter.ManageBlockAdapter;
+import com.example.front_sunhan.View.adapter.MypageAdapter;
+import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
+
+import java.util.ArrayList;
 
 public class CommunityDetailActivity extends AppCompatActivity {
+    public static CommunityDetailAdapter communityDetailAdapter ;
+    ArrayList<CommunityDetailItem> dList = new ArrayList<>();
 
     Toolbar toolbar;
-//    CommunityDetailFragment CommunityDetailFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
-        ImageView userProfile = findViewById(R.id.userProfile);;
-        TextView userId = findViewById(R.id.userId);
-        TextView uploadTime = findViewById(R.id.uploadTime);
-        TextView content = findViewById(R.id.content);
-        TextView commentNum = findViewById(R.id.commentNum);
+
         toolbar = findViewById(R.id.commu_detail_toolbar);
         setToolbar();
+        setList();
+        RecyclerView recyclerView = findViewById(R.id.recyleView_community_comment);
+        recyclerView.setHasFixedSize(true);
 
-//        CommunityDetailFragment = new CommunityDetailFragment();
-
+        recyclerView.setAdapter(communityDetailAdapter);
     }
 
 
@@ -56,4 +69,23 @@ public class CommunityDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+//    void setRecyclerview(View view){
+//        communityDetailRecyclerView = view.findViewById(R.id.recyleView_community);
+//        communityDetailRecyclerView.setHasFixedSize(true);
+////        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+//        communityDetailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        communityDetailRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        communityDetailRecyclerView.setAdapter(communityDetailAdapter);
+//    }
+
+    void setList(){
+        communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(), dList);
+        setData();
+    }
+
+    void setData(){
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다","03/17","14:12"));
+    }
+
 }

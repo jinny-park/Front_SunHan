@@ -136,8 +136,12 @@
             app:srcCompat="@drawable/sunhan_ad" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyleView_community_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_border">
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
