@@ -15,10 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.CommunityDetailActivity;
+import com.example.front_sunhan.View.activity.DeleteAccountActivity;
 import com.example.front_sunhan.View.activity.EditProfileActivity;
 import com.example.front_sunhan.View.activity.LoginActivity;
+import com.example.front_sunhan.View.activity.ManageBlockActivity;
+import com.example.front_sunhan.View.activity.MyLogsActivity;
+import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
+import com.example.front_sunhan.View.activity.PolicyActivity;
+import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.activity.WriteActivity;
 import com.example.front_sunhan.View.adapter.CommunityAdapter;
+import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +58,22 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+        communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
+            @Override
+            public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
+                ToolbarActivity toolbarActivity = new ToolbarActivity();
+                if (position != RecyclerView.NO_POSITION) {
+                    System.out.println(position);
+                    for (int i = 0; i <= position; i++) {
+                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+                        intent.putExtra("position", position);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+            }
+            });
+
         return view;
     }
 
@@ -69,8 +93,8 @@ public class CommunityFragment extends Fragment {
     }
 
     void setData(){
-        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명1", "12:10","맛있어요","0"));
-        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명2", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명6", "12:10","맛있어요","0"));
+        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명5", "12:10","맛있어요","0"));
         communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명4", "12:10","맛있어요","0"));
         communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명3", "12:10","맛있어요","0"));
         communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명2", "12:10","맛있어요","0"));

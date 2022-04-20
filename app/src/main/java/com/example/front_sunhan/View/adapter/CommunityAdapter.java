@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
 
 import java.util.ArrayList;
 
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder> {
+public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder>
+    implements OnClickCommunityListener{
     ArrayList<CommunityItem> items = new ArrayList<CommunityItem>();
     private Context context;
-
-//    public OnClickCommunityItemListener listener;
+    public OnClickCommunityListener listener;
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> items){
         this.context = context ;
@@ -32,7 +33,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
-        return new CommunityAdapter.ViewHolder(itemView/*, (OnClickCommunityItemListener) this*/);
+        return new CommunityAdapter.ViewHolder(itemView, this);
     }
 
     @Override
@@ -44,6 +45,18 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         holder.uploadTime.setText(items.get(position).getUploadTime());
         holder.content.setText(items.get(position).getContent());
         holder.commentNum.setText(items.get(position).getCommentNum());
+    }
+
+    public void setOnClickCommunityListener(OnClickCommunityListener listener){
+
+        this.listener = listener;
+    }
+
+    @Override
+    public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
+        if(listener != null){
+            listener.onItemClick(holder,view,position);
+        }
     }
 
     @Override
@@ -59,7 +72,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         public TextView content;
         public TextView commentNum;
 
-        public ViewHolder(@NonNull View itemView/*, final OnClickCommunityItemListener listener*/) {
+        public ViewHolder(@NonNull View itemView, final OnClickCommunityListener listener) {
             super(itemView);
             userProfile = itemView.findViewById(R.id.userProfile);
             userId = itemView.findViewById(R.id.userId);
@@ -68,7 +81,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
             commentNum = itemView.findViewById(R.id.commentNum);
 
             itemView.setClickable(true);
-            /*itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
@@ -77,7 +91,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
                         listener.onItemClick(CommunityAdapter.ViewHolder.this, view, position);
                     }
                 }
-            });*/
+            });
         }
 
     }

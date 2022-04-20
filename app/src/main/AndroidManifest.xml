@@ -74,6 +74,10 @@
             android:name=".View.activity.WriteActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".View.activity.CommunityDetailActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
