@@ -52,9 +52,9 @@
                 <ImageView
                     android:id="@+id/userProfile"
                     android:layout_width="35dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
-                    tools:srcCompat="@drawable/profile" />
+                    app:srcCompat="@drawable/profile" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -91,7 +91,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    tools:srcCompat="@drawable/more" />
+                    app:srcCompat="@drawable/more" />
+
             </LinearLayout>
 
             <TextView
