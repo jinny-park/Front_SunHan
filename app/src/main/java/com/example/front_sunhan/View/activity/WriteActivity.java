@@ -1,15 +1,20 @@
 package com.example.front_sunhan.View.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.fragment.CommunityFragment;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -22,6 +27,16 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wirte_community);
         toolbar = findViewById(R.id.write_toolbar);
         setToolbar();
+        finishBtn = findViewById(R.id.write_btn);
+        finishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                CommunityFragment communityFragment = new CommunityFragment();
+//                transaction.replace(R.id.fragment_container, communityFragment);
+//                transaction.commit();
+            }
+        });
     }
 
     void setToolbar(){

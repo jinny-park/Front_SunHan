@@ -1,6 +1,7 @@
 package com.example.front_sunhan.View.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.CommunityDetailActivity;
 import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
 
 import java.util.ArrayList;
