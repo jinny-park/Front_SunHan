@@ -1,81 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/black">
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            app:srcCompat="@drawable/back"
-            app:tint="#C6C6C6"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="커뮤니티"
-            android:textColor="@color/black"
-            android:textSize="20dp">
-
-        </TextView>
-
-    </androidx.appcompat.widget.Toolbar>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="401dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:gravity="center"
-            android:text="영통구"
-            android:textColor="#000000"
-            android:textSize="16dp" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/community_down"
-            android:layout_width="17dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/down" />
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="영통구"
+                android:textColor="#000000"
+                android:textSize="16dp" />
 
+            <ImageView
+                android:id="@+id/down"
+                android:layout_width="17dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/down" />
+
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyleView_community"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_border">
+            </androidx.recyclerview.widget.RecyclerView>
+        </ScrollView>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/communityrecyleView"
-        android:layout_width="match_parent"
-        android:layout_height="625dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
     <Button
-        android:id="@+id/write_commu_btn"
+        android:id="@+id/write_btn"
         android:layout_width="wrap_content"
-        android:layout_height="47dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/yellow_button"
         android:text="글쓰기"
