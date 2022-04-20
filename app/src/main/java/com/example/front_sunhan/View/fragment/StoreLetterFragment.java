@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 import com.example.front_sunhan.R;
 
 
-public class SunhanStoreLetterFragment extends Fragment {
+public class StoreLetterFragment extends Fragment {
     View view;
-    public SunhanStoreLetterFragment() {
+    public StoreLetterFragment() {
         // Required empty public constructor
     }
 
 
-    public static SunhanStoreLetterFragment newInstance() {
-        SunhanStoreLetterFragment sunhanStoreLetterFragment = new SunhanStoreLetterFragment();
-        return sunhanStoreLetterFragment;
+    public static StoreLetterFragment newInstance() {
+        StoreLetterFragment storeLetterFragment = new StoreLetterFragment();
+        return storeLetterFragment;
     }
 
 

@@ -20,7 +20,7 @@ import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
 import java.util.ArrayList;
 
 
-public class SunhanStoreMenuFragment extends Fragment {
+public class StoreMenuFragment extends Fragment {
     public static MenuAdapter menuAdapter ;
     ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
     RecyclerView menuRecyclerView;

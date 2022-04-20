@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.front_sunhan.R;
 
-public class SunhanStoreInfoFragment extends Fragment {
+public class StoreInfoFragment extends Fragment {
     View view;
-    public SunhanStoreInfoFragment() {
+    public StoreInfoFragment() {
         // Required empty public constructor
     }
 
 
-    public static SunhanStoreInfoFragment newInstance() {
-        SunhanStoreInfoFragment sunhanStoreInfoFragment = new SunhanStoreInfoFragment();
-        return sunhanStoreInfoFragment;
+    public static StoreInfoFragment newInstance() {
+        StoreInfoFragment storeInfoFragment = new StoreInfoFragment();
+        return storeInfoFragment;
     }
 
 
