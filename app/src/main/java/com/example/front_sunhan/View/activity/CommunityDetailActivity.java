@@ -28,7 +28,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
     RecyclerView communityDetailRecyclerView;
     Toolbar toolbar;
-
+    View footer;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.commu_detail_toolbar);
         setToolbar();
+
+//        init();
 
         setList();
         RecyclerView recyclerView = findViewById(R.id.recyleView_community_detail);
@@ -45,7 +47,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(communityDetailAdapter);
 
     }
-
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
@@ -66,6 +67,14 @@ public class CommunityDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    public void init(){
+//        comment_list = findViewById(R.id.recyleView_community_detail);
+//        footer = getLayoutInflater().inflate(R.layout.community_comment_write_item, null, false);
+//        comment_list.addFooterView(footer);
+//        comment_edit = findViewById(R.id.jrv_comment_edit);
+//        Button commentinput_btn = footer.findViewById(R.id.jrv_commentinput_btn);
+//    }
+
     void setList(){
         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
         setData();
@@ -73,6 +82,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     void setData(){
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","저도 감자탕 좋아하는데 한번 가봐야겠네요"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","0000000000000000000000000000000000000000000000000000000"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
                 ,"03/17","14:12"));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
                 ,"03/17","14:12"));

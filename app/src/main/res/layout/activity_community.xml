@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -69,7 +69,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
                         android:text="익명"
                         android:textColor="#000000"
                         android:textSize="16dp"
@@ -88,9 +87,10 @@
 
                 <ImageView
                     android:id="@+id/popupMore"
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     tools:srcCompat="@drawable/more" />
             </LinearLayout>
 
@@ -137,12 +137,12 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="350dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyleView_community_detail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/button_border"></androidx.recyclerview.widget.RecyclerView>
         </ScrollView>

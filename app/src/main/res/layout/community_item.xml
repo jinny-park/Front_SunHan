@@ -19,9 +19,11 @@
 
         <ImageView
             android:id="@+id/userProfile"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:layout_margin="1dp"
             tools:srcCompat="@drawable/profile" />
 
         <TextView
@@ -32,6 +34,7 @@
             android:layout_weight="15"
             android:gravity="center|start"
             android:text="TextView"
+            android:layout_margin="5dp"
             android:textColor="#000000"
             android:textSize="16dp"
             android:textStyle="bold" />
