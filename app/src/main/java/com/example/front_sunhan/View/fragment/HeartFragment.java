@@ -1,5 +1,6 @@
 package com.example.front_sunhan.View.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +9,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.activity.StoreDetailActivity;
+import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
+import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.android.material.tabs.TabLayout;
 
 public class HeartFragment extends Fragment {

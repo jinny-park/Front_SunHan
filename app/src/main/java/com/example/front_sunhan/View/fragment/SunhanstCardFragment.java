@@ -25,10 +25,12 @@ import com.example.front_sunhan.View.activity.ManageBlockActivity;
 import com.example.front_sunhan.View.activity.MyLogsActivity;
 import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
 import com.example.front_sunhan.View.activity.PolicyActivity;
+import com.example.front_sunhan.View.activity.StoreDetailActivity;
 import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
+import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 
 import java.util.ArrayList;
 
@@ -50,16 +52,23 @@ public class SunhanstCardFragment extends Fragment {
         storeAdapter = new SunhanStoreAdapter(getContext(),  storeList);
         setRecyclerview(view);
         setData();
-        /*
-        storeAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
-            @Override public void onItemClick(MypageAdapter.ViewHolder holder, View view, int position) {
-                ToolbarActivity toolbarActivity = new ToolbarActivity();
-                if (position != RecyclerView.NO_POSITION) {
+
+        storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+            @Override
+            public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                String str_position = String.valueOf(position+1);
+                if(position!=RecyclerView.NO_POSITION){
+                    for(int i=0; i<=position; i++){
+                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                        intent.putExtra("position", str_position);
+                        startActivity(intent);
+                        break;
+                    }
                 }
             }
         });
 
-         */
+
 
         return view;
 

@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.Model.StoreItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.activity.EditProfileActivity;
 import com.example.front_sunhan.View.activity.LoginActivity;
-import com.example.front_sunhan.View.adapter.MypageAdapter;
+import com.example.front_sunhan.View.activity.StoreDetailActivity;
 import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
+import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class SunhanstMainFragment extends Fragment {
 
         return view;
     }
-/*
+    /*
     void setRecyclerview(View view){
         sunhanStoreRecyclerView = view.findViewById(R.id.recyclerview_store);
         sunhanStoreRecyclerView.setHasFixedSize(true);
@@ -89,6 +89,7 @@ public class SunhanstMainFragment extends Fragment {
         sunhanStoreRecyclerView.setAdapter(storeAdapter);
 
     }
+
 
     void setList(){
         storeAdapter = new SunhanStoreAdapter(getContext(), storeList);
