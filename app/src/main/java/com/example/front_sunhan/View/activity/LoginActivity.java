@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         mypageAdapter.addItem(new MypageItem("로그아웃"));
         mypageAdapter.addItem(new MypageItem("탈퇴하기"));
         mypageAdapter.addItem(new MypageItem("약관및정책"));
-        mypageAdapter.addItem(new MypageItem("버정정보 1.1"));
+        mypageAdapter.addItem(new MypageItem("버전정보 1.1"));
 
 
         manageBlockAdapter.addItem(new BlocekdItem("귤이"));

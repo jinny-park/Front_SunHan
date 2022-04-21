@@ -33,7 +33,7 @@ import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 import java.util.ArrayList;
 
 public class SunhanstSunhanFragment extends Fragment {
-    public static SunhanStoreAdapter storeAdapter ;
+    public static SunhanStoreAdapter storeSunhanAdapter;
     ArrayList<StoreItem> storeList=new ArrayList<StoreItem>();
     RecyclerView sunhanSunhanRecyclerView;
 
@@ -47,11 +47,11 @@ public class SunhanstSunhanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_sunhan,null);
-        storeAdapter = new SunhanStoreAdapter(getContext(), storeList);
+        storeSunhanAdapter = new SunhanStoreAdapter(getContext(), storeList);
         setRecyclerview(view);
         setData();
 
-        storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+        storeSunhanAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
             @Override
             public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
                 String str_position = String.valueOf(position+1);
@@ -76,19 +76,19 @@ public class SunhanstSunhanFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         sunhanSunhanRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanSunhanRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        sunhanSunhanRecyclerView.setAdapter(storeAdapter);
+        sunhanSunhanRecyclerView.setAdapter(storeSunhanAdapter);
 
     }
 
     void setData(){
 
-        storeAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+        storeSunhanAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
-        storeAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+        storeSunhanAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
                 "0314291234","11:30-22:00"));
-        storeAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+        storeSunhanAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
                 "0314295687","7:00-22:00"));
-        storeAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+        storeSunhanAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
     }
 
