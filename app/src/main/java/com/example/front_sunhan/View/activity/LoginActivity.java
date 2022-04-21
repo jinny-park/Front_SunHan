@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     public static SunhanStoreAdapter likedStoreAdapter1;
     public static SunhanStoreAdapter likedStoreAdapter2;
     public static CommunityAdapter communityAdapter;
-    public static SunhanStoreAdapter storeAdapter ;
+    public static SunhanStoreAdapter storeCardAdapter;
     public static SunhanStoreAdapter storeSunhanAdapter ;
 
     RecyclerView sunhanCardRecyclerView;
@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
         likedStoreAdapter1 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList1);
         likedStoreAdapter2 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList2);
         communityAdapter = new CommunityAdapter(getApplicationContext(),communityItemArrayList);
-        storeAdapter = new SunhanStoreAdapter(getApplicationContext(), storeList);
+        storeCardAdapter = new SunhanStoreAdapter(getApplicationContext(), storeList);
         storeSunhanAdapter =new SunhanStoreAdapter(getApplicationContext(),storeSunHanList);
         setData();
     }
@@ -237,13 +237,13 @@ public class LoginActivity extends AppCompatActivity {
         likedStoreAdapter2.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
-        storeAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+        storeCardAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
-        storeAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+        storeCardAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
                 "0314291234","11:30-22:00"));
-        storeAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+        storeCardAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
                 "0314295687","7:00-22:00"));
-        storeAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+        storeCardAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
         storeSunhanAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
