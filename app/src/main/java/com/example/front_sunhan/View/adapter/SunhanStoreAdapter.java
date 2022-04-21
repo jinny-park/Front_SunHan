@@ -19,6 +19,7 @@ import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 
 import java.util.ArrayList;
+
 /*
 public interface AdapterItemListener<T> {
     void onItemClicked(T item);

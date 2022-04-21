@@ -1,5 +1,6 @@
 package com.example.front_sunhan.View.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -28,10 +29,15 @@ public class BottomNavigationActivity extends AppCompatActivity {
     SunhanstMainFragment sunhanstMainFragment ;
     Toolbar toolbar;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
+
+        intent = getIntent();
+
 
         myPageFragment = new MyPageFragment();
         heartFragment = new HeartFragment();

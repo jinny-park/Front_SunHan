@@ -85,25 +85,37 @@
         app:layout_constraintStart_toStartOf="@+id/login_text"
         app:layout_constraintTop_toBottomOf="@+id/login_text" />
 
-    <Button
-        android:id="@+id/login_kakao"
-        android:layout_width="74dp"
-        android:layout_height="66dp"
+<!--    <Button-->
+<!--        android:id="@+id/login_kakao"-->
+<!--        android:layout_width="74dp"-->
+<!--        android:layout_height="66dp"-->
+<!--        android:layout_marginStart="40dp"-->
+<!--        android:layout_marginTop="90dp"-->
+<!--        android:layout_marginEnd="56dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:background="@drawable/login_border_button_kakao"-->
+<!--        android:text="Kakao"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/login_text"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.333"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/login_naver"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/login_text3"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+    <ImageButton
+        android:id="@+id/kakao_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/login_border_button_kakao"
-        android:text="Kakao"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/login_text"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/login_naver"
         app:layout_constraintTop_toBottomOf="@+id/login_text3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:srcCompat="@drawable/kakao_login_small" />
 
     <Button
         android:id="@+id/login_google"

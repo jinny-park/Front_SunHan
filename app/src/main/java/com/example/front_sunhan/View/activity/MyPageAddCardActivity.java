@@ -10,19 +10,34 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CardItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.adapter.CardAdapter;
+
+import java.util.ArrayList;
 
 public class MyPageAddCardActivity extends AppCompatActivity {
 
     Button addCard;
     Toolbar toolbar;
+    RecyclerView recyclerView;
+
+    ArrayList<CardItem> cardItemArrayList = new ArrayList<>();
+    static CardAdapter cardAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage_add_card);
         toolbar = findViewById(R.id.add_card_toolbar);
+        cardAdapter = new CardAdapter(getApplicationContext(),cardItemArrayList);
+
+        setRecyclerview();
+        setData();
 
         addCard = findViewById(R.id.add_card_btn);
         addCard.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +52,22 @@ public class MyPageAddCardActivity extends AppCompatActivity {
 
     }
 
+    void setRecyclerview(){
+        recyclerView = findViewById(R.id.cardRecycler);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false);
+        recyclerView.setLayoutManager(recyclerViewManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(cardAdapter);
+
+    }
+
+   void setData(){
+
+       cardAdapter.addItem(new CardItem("박","1264567891234","카드1","150000","19991234"));
+       cardAdapter.addItem(new CardItem("박","1264567891234","카드1","150000","19991234"));
+       cardAdapter.addItem(new CardItem("박","1264567891234","카드1","150000","19991234"));
+    }
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.front_sunhan">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Front_SunHan">
+        android:theme="@style/Theme.Front_SunHan"
+        android:name=".View.activity.kakaoApplication">
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="11b33a8e699d97bd408aa024de68650b" />
         <activity
             android:name=".View.activity.LauncherActivity"
             android:exported="true">
@@ -71,17 +75,35 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MainActivity"
+            android:name=".View.activity.WriteActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.WriteActivity"
+            android:name=".View.activity.MainActivity"
             android:exported="true">
         </activity>
         <activity
             android:name=".View.activity.CommunityDetailActivity"
             android:exported="true">
         </activity>
-    </application>
 
+
+
+
+
+        <!-- 여기 조심해주세요 -->
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao11b33a8e699d97bd408aa024de68650b" />
+            </intent-filter>
+        </activity>
+
+    </application>
 </manifest>

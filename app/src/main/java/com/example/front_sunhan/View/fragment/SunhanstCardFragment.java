@@ -80,7 +80,7 @@ public class SunhanstCardFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        sunhanCardRecyclerView.setAdapter(storeCardAdapter);
+        sunhanCardRecyclerView.setAdapter(storeAdapter);
 
     }
 

@@ -1,6 +1,22 @@
 package com.example.front_sunhan.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class StoreItem {
+
+    @Expose
+    @SerializedName("storeName") private String albumId;
+    @Expose
+    @SerializedName("storeAddrs") private String id;
+    @Expose
+    @SerializedName("storeNum") private String title;
+    @Expose
+    @SerializedName("storeTime") private String url;
+    @Expose
+    @SerializedName("thumbnailUrl") private String thumbnailUrl;
+
+
     String storeName;
     String storeAddrs;
     String storeNum;

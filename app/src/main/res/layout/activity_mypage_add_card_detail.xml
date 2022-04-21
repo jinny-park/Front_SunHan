@@ -25,9 +25,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/cardNameTxt"
@@ -48,7 +49,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:maxHeight="48dp"
-            android:text="카드 명" />
+            android:hint="카드 명" />
 
         <TextView
             android:id="@+id/cardNumTxt"
@@ -66,53 +67,39 @@
             android:layout_marginTop="36dp"
             android:background="@drawable/button_border"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="카드번호" />
+            android:inputType="number"
+            android:hint="카드번호" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/bdayTxt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:background="@drawable/upper_border"
-            android:orientation="vertical">
+            android:layout_marginTop="32dp"
+            android:text="생년월일을 입력해주세요."
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/add_card_radioBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="아동급식카드 이용 약관 동의 [필수]" />
-
-                <ImageButton
-                    android:id="@+id/add_card_doc"
-                    android:layout_width="10dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/right_arrow" />
-            </LinearLayout>
+        <EditText
+            android:id="@+id/bday"
+            android:layout_width="330dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button_border"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="생년월일" />
 
 
-            <Button
-                android:id="@+id/add_card_detail_btn"
-                android:layout_width="270dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="10"
-                android:layout_gravity="center"
-                android:background="@drawable/yellow_button"
-                android:text="추가하기" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/add_card_detail_btn"
+            android:layout_width="270dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="10"
+            android:background="@drawable/yellow_button"
+            android:text="추가하기" />
+
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

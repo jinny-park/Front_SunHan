@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -27,10 +29,18 @@ import com.example.front_sunhan.View.activity.PolicyActivity;
 import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.sdk.user.model.User;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
 
 public class MyPageFragment extends Fragment {
     RecyclerView mypageRecyclerView;
     Button profileEditBtn;
+    TextView userNickName;
+    TextView userId;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,6 +52,9 @@ public class MyPageFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_mypage,null);
+
+        userNickName= view.findViewById(R.id.name_mypage);
+        userNickName.setText(LoginActivity.userNickName);
 
         setRecyclerview(view);
         profileEditBtn = view.findViewById(R.id.modify_profile);
@@ -75,6 +88,7 @@ public class MyPageFragment extends Fragment {
 
                         case 4: /*로그아웃 팝업*/
                             showDialog();
+
                             break;
                         case 5:
                             Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
@@ -109,7 +123,6 @@ public class MyPageFragment extends Fragment {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그아웃 하시겠습니까?") .
                 setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 }) .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface dialogInterface, int i) {
@@ -119,8 +132,4 @@ public class MyPageFragment extends Fragment {
         AlertDialog msgDlg = msgBuilder.create();
         msgDlg.show();
     }
-
-
-
-
 }

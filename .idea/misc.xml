@@ -18,7 +18,7 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_detail_logs.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_detail_logs_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
-        <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_launcher.xml" value="0.4" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_launcher.xml" value="1.2" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_location_setting.xml" value="0.2234375" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_logs.xml" value="0.176" />
@@ -37,11 +37,15 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_sunhanst_main.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_toolbar.xml" value="0.25364583333333335" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/activity_wirte_community.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/ativity_opensource.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/block_item.xml" value="0.24850299401197604" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/card_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/community_comment_write_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/community_detail_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/community_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/detail_logs_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_community.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_find_store_recycler.xml" value="0.17916666666666667" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_findroad.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_findstore.xml" value="0.17916666666666667" />

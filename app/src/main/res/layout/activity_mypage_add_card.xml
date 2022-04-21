@@ -47,107 +47,118 @@
 <!--        tools:layout_editor_absoluteY="100dp"-->
 <!--        tools:ignore="MissingConstraints" />-->
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/add_card_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="아동급식카드추가"
-            android:textSize="20dp"
-            android:textColor="@color/black">
-        </TextView>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <ImageView
-        android:id="@+id/card"
-        android:layout_width="240dp"
-        android:layout_height="190dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="160dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/credit_card" />
-
     <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="410dp"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/add_card_money01"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/add_card_toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:text="잔액: "
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="136dp" />
+            android:background="@drawable/bottom_border"
+            tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/add_card_money02"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="25,500"
-            android:textColor="#003388"
-            android:textSize="22sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="아동급식카드추가"
+                android:textColor="@color/black"
+                android:textSize="20dp"></TextView>
 
-        <TextView
-            android:id="@+id/add_card_money03"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="원"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+        </androidx.appcompat.widget.Toolbar>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cardRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/card"-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="190dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="160dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/credit_card" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout5"-->
+<!--        android:layout_width="410dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/card">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/add_card_money01"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="120dp"-->
+<!--            android:text="잔액: "-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="22sp"-->
+<!--            tools:layout_editor_absoluteX="108dp"-->
+<!--            tools:layout_editor_absoluteY="136dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/add_card_money02"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:text="25,500"-->
+<!--            android:textColor="#003388"-->
+<!--            android:textSize="22sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/add_card_money03"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:text="원"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="22sp" />-->
+
+<!--    </LinearLayout>-->
 
     <Button
         android:id="@+id/add_card_btn"
         android:layout_width="280dp"
         android:layout_height="64dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/round_corner_medium"
         android:backgroundTint="#FDDB33"
         android:text="카드추가하기"
         android:textColorHint="@color/black"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/include2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/horScrollView"
+        app:layout_constraintVertical_bias="0.746"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="아동급식카드1"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <TextView-->
+<!--        android:id="@+id/hello"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        android:text="아동급식카드1"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="22sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/card"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
