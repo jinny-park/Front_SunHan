@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="265dp"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="가게정보"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:text="가게 정보"
         android:textColor="@color/black"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout8"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="상호명" />
+                android:text="상호명"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/textView18"
@@ -49,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:text="운영시간" />
+                android:text="운영시간"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/textView16"
@@ -57,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:text="휴무일" />
+                android:text="휴무일"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/textView15"
@@ -65,14 +64,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:text="전화번호" />
+                android:text="전화번호"
+                android:textSize="20dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -80,28 +80,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="돈애랑장터순대감자탕" />
+                android:text="돈애랑장터순대감자탕"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/storeTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="10:00 - 21:00" />
+                android:text="10:00 - 21:00"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/storeHoli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="월요일" />
+                android:text="월요일"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/storeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="031-429-9444" />
+                android:text="031-429-9444"
+                android:textSize="20dp"/>
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+</FrameLayout>

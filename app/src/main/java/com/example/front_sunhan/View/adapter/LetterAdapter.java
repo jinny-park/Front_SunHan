@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.LetterItem;
-import com.example.front_sunhan.Model.StoreItem;
+import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.R;
 //import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 
@@ -18,13 +18,14 @@ import java.util.ArrayList;
 
 public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder> {
 
-    ArrayList<LetterItem> items = new ArrayList<LetterItem>();
+    ArrayList<LetterItem> letterItems;
+    //ArrayList<LetterItem> letterItems = new ArrayList<LetterItem>();
     private Context context;
 //    public OnClickStoreItemListener listener;
 
     public LetterAdapter(Context context, ArrayList<LetterItem> items) {
         this.context = context;
-        this.items = items;
+        this.letterItems = items;
     }
 
     @NonNull
@@ -37,11 +38,11 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull LetterAdapter.ViewHolder holder, int position) {
-        LetterItem item = items.get(position);
-        //     holder.imageView.setImageResource(storeItemArrayList.get(position).image);
-        holder.letterName.setText(items.get(position).getLetterName());
-        holder.letterContent.setText(items.get(position).getLetterContent());
-        holder.letterDate.setText(items.get(position).getLetterDate());
+        LetterItem item = letterItems.get(position);
+        //holder.imageView.setImageResource(storeItemArrayList.get(position).image);
+        holder.letterName.setText(letterItems.get(position).getLetterName());
+        holder.letterContent.setText(letterItems.get(position).getLetterContent());
+        holder.letterDate.setText(letterItems.get(position).getLetterDate());
     }
 
     /*
@@ -60,7 +61,7 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
      */
     @Override
     public int getItemCount() {
-        return items.size();
+        return letterItems.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,23 +92,20 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
 
  */
         }
-/*
+    }
+
     public void addItem(LetterItem item){
-        items.add(item);
+        letterItems.add(item);
     }
     public void setArrayList(ArrayList<LetterItem> arrayList) {
-        this.items = arrayList;
+        this.letterItems = arrayList;
     }
 
     public LetterItem getItem(int position) {
-        return items.get(position);
+        return letterItems.get(position);
     }
 
     public void setItem(int position, LetterItem item) {
-        items.set(position, item);
-    }
-
- */
-
+        letterItems.set(position, item);
     }
 }

@@ -2,7 +2,10 @@ package com.example.front_sunhan.View.activity;
 
 //activity_sunhanst_store.xml
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,18 +67,33 @@ public class StoreDetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.store_detail_toolbar);
         setToolbar();
 
-        ImageView storePic = findViewById(R.id.store_pic);;
         TextView textStorename = findViewById(R.id.text_storename);
         TextView textStoreaddrs = findViewById(R.id.text_storeaddrs);
 
-        ImageButton imgStoreFindroad = findViewById(R.id.img_store_findroad);
-        TextView textStoreFindroad = findViewById(R.id.text_store_findroad);
+        ViewGroup findRoadLayout = (ViewGroup) findViewById(R.id.store_findroad);
+        ViewGroup heartLayout = (ViewGroup) findViewById(R.id.store_heart);
+        ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
 
-        ImageButton imgStoreHeart = findViewById(R.id.img_store_heart);
-        TextView textStoreHeart = findViewById(R.id.text_store_heart);
+        findRoadLayout.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                // 네이버 지도 API 사용하기
+                //Intent intent = new Intent(this, SubActivity.class);
+                //startActivity(intent);
+            }
+        });
 
-        ImageButton img_store_share = findViewById(R.id.img_store_share);
-        TextView text_store_share = findViewById(R.id.text_store_share);
+        heartLayout.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                // 가게 찜하기 ( 토스트메세지 + 가게 정보 )
+            }
+        });
+
+        shareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                //가게 링크 내보내기
+            }
+        });
+
 
         // 탭레이아웃
 
