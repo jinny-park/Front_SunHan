@@ -34,7 +34,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
     ArrayList<CommunityDetailItem> dcList = new ArrayList<>();
     Toolbar toolbar;
-    ImageView pop;
+    ImageView pop1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,15 @@ public class CommunityDetailActivity extends AppCompatActivity {
         recyclerView1.setLayoutManager(layoutManager);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(communityDetailAdapter);
+
+        pop1 = findViewById(R.id.popupMore);
+
+        pop1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
 //        RecyclerView recyclerView2 = findViewById(R.id.recyleView_community_comment);
 //        recyclerView2.setAdapter(communityDetailCommentAdapter);
@@ -100,17 +109,17 @@ public class CommunityDetailActivity extends AppCompatActivity {
     }
 
     void showDialog() {
-        CharSequence[] oItems = {"차단하기", "수정하기", "신고하기", "답댓글 달기", "삭제하기", "취소"};
+        CharSequence[] oItems = {"수정하기", "삭제하기", "취소"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("")
+                builder.setTitle("글 메뉴")
                         .setItems(oItems, new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Toast.makeText(getApplicationContext(),
-                                        oItems[which], Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(),
+//                                        oItems[which], Toast.LENGTH_LONG).show();
                             }
                         })
                         .setCancelable(false)
