@@ -1,12 +1,16 @@
 package com.example.front_sunhan.View.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,15 +24,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.front_sunhan.Model.CommunityDetailItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.adapter.CommunityDetailAdapter;
+import com.example.front_sunhan.View.adapter.CommunityDetailCommentAdapter;
 
 import java.util.ArrayList;
 
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
+    public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
-    RecyclerView communityDetailRecyclerView;
+    ArrayList<CommunityDetailItem> dcList = new ArrayList<>();
     Toolbar toolbar;
-    View footer;
+    ImageView pop;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +43,16 @@ public class CommunityDetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.commu_detail_toolbar);
         setToolbar();
 
-//        init();
 
         setList();
-        RecyclerView recyclerView = findViewById(R.id.recyleView_community_detail);
+        RecyclerView recyclerView1 = findViewById(R.id.recyleView_community_detail);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(communityDetailAdapter);
+        recyclerView1.setLayoutManager(layoutManager);
+        recyclerView1.setHasFixedSize(true);
+        recyclerView1.setAdapter(communityDetailAdapter);
+
+//        RecyclerView recyclerView2 = findViewById(R.id.recyleView_community_comment);
+//        recyclerView2.setAdapter(communityDetailCommentAdapter);
 
     }
 
@@ -67,16 +75,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public void init(){
-//        comment_list = findViewById(R.id.recyleView_community_detail);
-//        footer = getLayoutInflater().inflate(R.layout.community_comment_write_item, null, false);
-//        comment_list.addFooterView(footer);
-//        comment_edit = findViewById(R.id.jrv_comment_edit);
-//        Button commentinput_btn = footer.findViewById(R.id.jrv_commentinput_btn);
-//    }
-
     void setList(){
         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
+        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),dcList);
         setData();
     }
 
@@ -93,7 +94,27 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 ,"03/17","14:12"));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
                 ,"03/17","14:12"));
+        communityDetailCommentAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","와우"
+                ,"03/17","14:12"));
 
+    }
+
+    void showDialog() {
+        CharSequence[] oItems = {"차단하기", "수정하기", "신고하기", "답댓글 달기", "삭제하기", "취소"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("")
+                        .setItems(oItems, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Toast.makeText(getApplicationContext(),
+                                        oItems[which], Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setCancelable(false)
+                        .show();
     }
 
 }
