@@ -35,12 +35,11 @@ public class HeartFragment extends Fragment {
         likedStoreCardstFragment = new LikedStoreCardstFragment();
         likedStoreSunhanFragment = new LikedStoreSunhanFragment();
 
-        getFragmentManager().beginTransaction().replace(R.id.tabs_heart_container,likedStoreCardstFragment).commit();
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.tabs_my_container, tabFrag_myTicket).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.tabs_heart_container,likedStoreCardstFragment).commit();
+
 
         TabLayout tabs = view.findViewById(R.id.tabs_heart);
-//                findViewById(R.id.tabs_my);
         tabs.addTab(tabs.newTab().setText("선한영향력가게"));
         tabs.addTab(tabs.newTab().setText("아동급시가드가맹점"));
 
@@ -56,7 +55,7 @@ public class HeartFragment extends Fragment {
                     selected = likedStoreCardstFragment;
                 }
 
-                getFragmentManager().beginTransaction().replace(R.id.tabs_heart_container, selected).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.tabs_heart_container, selected).commit();
             }
 
             @Override

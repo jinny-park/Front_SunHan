@@ -53,9 +53,6 @@ public class MyPageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_mypage,null);
 
-        userNickName= view.findViewById(R.id.name_mypage);
-        userNickName.setText(LoginActivity.userNickName);
-
         setRecyclerview(view);
         profileEditBtn = view.findViewById(R.id.modify_profile);
         profileEditBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +64,8 @@ public class MyPageFragment extends Fragment {
 
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
             @Override public void onItemClick(MypageAdapter.ViewHolder holder, View view, int position) {
-                ToolbarActivity toolbarActivity = new ToolbarActivity();
                 if (position != RecyclerView.NO_POSITION) {
-                    System.out.println(position);
+
                     switch (position){
                         case 0:
                             break;
@@ -112,7 +108,7 @@ public class MyPageFragment extends Fragment {
 
     void setRecyclerview(View view){
         mypageRecyclerView = view.findViewById(R.id.recyclerview_mypage);
-        mypageRecyclerView.setHasFixedSize(true);
+        mypageRecyclerView.setHasFixedSize(false);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         mypageRecyclerView.setLayoutManager(recyclerViewManager);
         mypageRecyclerView.setItemAnimator(new DefaultItemAnimator());

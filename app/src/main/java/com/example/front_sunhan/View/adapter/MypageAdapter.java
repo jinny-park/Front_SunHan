@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.MypageItem;
@@ -38,8 +39,7 @@ public class MypageAdapter extends RecyclerView.Adapter<MypageAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull MypageAdapter.ViewHolder holder, int position) {
         MypageItem item =mypageItemArrayList.get(position);
-//        holder.imageView.setImageResource(mypageItemArrayList.get(position).image);
-        holder.textView.setText(mypageItemArrayList.get(position).getItemName());
+        holder.myPageName.setText(mypageItemArrayList.get(position).getItemName());
     }
 
     public void setOnClickMyPageItemListener(OnClickMyPageItemListener listener){
@@ -60,13 +60,13 @@ public class MypageAdapter extends RecyclerView.Adapter<MypageAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
-        ImageView imageView;
+
+        TextView myPageName;
 
         public ViewHolder(@NonNull View itemView , final OnClickMyPageItemListener listener) {
             super(itemView);
-//            imageView = itemView.findViewById(R.id.view_item);
-            textView = itemView.findViewById(R.id.mypage_item);
+
+            myPageName = itemView.findViewById(R.id.mypage_item_name);
 
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +79,7 @@ public class MypageAdapter extends RecyclerView.Adapter<MypageAdapter.ViewHolder
                     }
                 }
             });
-
-
         }
-
     }
 
     public void addItem(MypageItem item){

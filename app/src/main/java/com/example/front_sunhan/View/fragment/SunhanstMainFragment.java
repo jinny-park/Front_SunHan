@@ -46,7 +46,7 @@ public class SunhanstMainFragment extends Fragment {
         sunhanstCardFragment = new SunhanstCardFragment();
         sunhanstSunhanFragment = new SunhanstSunhanFragment();
 
-        getFragmentManager().beginTransaction().replace(R.id.tabs_store_container, sunhanstCardFragment).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container, sunhanstCardFragment).commit();
         TabLayout tabs = view.findViewById(R.id.store_tapLayout);
         tabs.addTab(tabs.newTab().setText("아동급식가맹점"));
         tabs.addTab(tabs.newTab().setText("선한영향력가게"));
@@ -63,7 +63,7 @@ public class SunhanstMainFragment extends Fragment {
                 else {
                     selected = sunhanstSunhanFragment;
                 }
-                getFragmentManager().beginTransaction().replace(R.id.tabs_store_container, selected).commit();
+                getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container, selected).commit();
             }
 
             @Override

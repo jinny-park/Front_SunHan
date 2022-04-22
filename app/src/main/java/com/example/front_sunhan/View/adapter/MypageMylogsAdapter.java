@@ -70,7 +70,7 @@ public class MypageMylogsAdapter extends RecyclerView.Adapter<MypageMylogsAdapte
         public ViewHolder(@NonNull View itemView /*, final OnCardItemClickListener listener*/) {
             super(itemView);
 //            imageView = itemView.findViewById(R.id.view_item);
-            textView = itemView.findViewById(R.id.mypage_item);
+//            textView = itemView.findViewById(R.id.mypage_item);
 
             itemView.setClickable(true);
 //            itemView.setOnClickListener(new View.OnClickListener() {

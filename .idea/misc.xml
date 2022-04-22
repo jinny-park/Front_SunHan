@@ -47,6 +47,7 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/detail_logs_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_community.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_find_store_recycler.xml" value="0.17916666666666667" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_find_store_result.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_findroad.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_findstore.xml" value="0.17916666666666667" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_likestore.xml" value="0.14921223354958293" />
@@ -59,54 +60,21 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.21917191719171916" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_mypage_profile.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_card.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.2" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store_letter.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store_menu.xml" value="0.20052083333333334" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_sunhan.xml" value="0.25364583333333335" />
+        <entry key="..\:/Front_SunHan/app/src/main/res/layout/menu_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/mypage_item.xml" value="0.264" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/setting_alram_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/store_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_community.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_location_setting.xml" value="0.17447916666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_logs.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_manage_block.xml" value="0.11510416666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_set_alarm.xml" value="0.16799999999999998" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.2" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_toolbar.xml" value="0.1734375" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_wirte_community.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_comment_write_item.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_detail_comment_item.xml" value="0.1734375" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_detail_item.xml" value="0.1734375" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_item.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_popup_item.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/community_popup_report_item.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/detail_logs_item.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_community.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_community_detail.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_find_store_result.xml" value="0.17604166666666668" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_findroad.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_findstore.xml" value="0.15760869565217392" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_likestore.xml" value="0.1" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_likestore_cardst.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_likestore_sunhan.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mylogs_comment.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mylogs_letter.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mylogs_post.xml" value="0.1" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.13043478260869565" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.1" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_card.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.2" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_store_letter.xml" value="0.264" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/fragment_sunhanst_sunhan.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/letter_item.xml" value="0.14990942028985507" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/letter_write_item.xml" value="0.196875" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/menu_item.xml" value="0.14990942028985507" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/mypage_item.xml" value="0.14990942028985507" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/store_item.xml" value="0.13043478260869565" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/border_left.xml" value="0.2421875" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHann/app/src/main/res/drawable/bottom_border.xml" value="0.2421875" />

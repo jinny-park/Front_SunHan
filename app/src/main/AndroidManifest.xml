@@ -90,7 +90,6 @@
 
 
 
-
         <!-- 여기 조심해주세요 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

@@ -6,29 +6,13 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="150dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints"
-        android:background="@drawable/bottom_border">
-
-        <ImageView
-            android:id="@+id/storeView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_gravity="center_vertical"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:background="@drawable/bottom_border"
             android:gravity="center">
-
 
             <TextView
                 android:id="@+id/storeName"
@@ -36,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="24dp"/>
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/storeAddrs"
@@ -45,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/storeNum"
@@ -54,7 +38,7 @@
                 android:layout_marginTop="4dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/storeTime"
@@ -63,7 +47,6 @@
                 android:layout_marginTop="4dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
         </LinearLayout>
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

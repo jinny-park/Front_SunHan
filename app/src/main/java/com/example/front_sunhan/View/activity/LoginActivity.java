@@ -76,11 +76,11 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     static String token;
-
     ImageButton kakao_btn;
     Button google_btn;
     Button naver_btn;
-    
+
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,33 +150,14 @@ public class LoginActivity extends AppCompatActivity {
 //        });
     }
 
-
     private void updateKakaoLoginUi() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
             public Unit invoke(User user, Throwable throwable) {
                 if ( user != null) {
-                     userId = Long.toString(user.getId());
-                     userNickName = user.getKakaoAccount().getProfile().getNickname();
-
                     Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                     startActivity(intent);
                     finish();
-
-                    Log.i("메인액티비티", "invoke : id = " + userId);
-                    Log.i("메인액티비티", "invoke : nickname = " + userNickName);
-
-                    //intent로 userId값 전달
-                    intent.putExtra("main_userid", userId);
-                    intent.putExtra("main_usernickname", userNickName);
-                    startActivity(intent);
-
-                    Log.i(TAG, "id " + user.getId()); // 유저의 고유 아이디를 불러옵니다.
-                    Log.i(TAG, "invoke: nickname=" + user.getKakaoAccount().getProfile().getNickname());
-                    // 유저의 닉네임을 불러옵니다.
-                    Log.i(TAG, "userimage " + user.getKakaoAccount().getProfile().getProfileImageUrl());
-                    // 유저의 이미지 URL을 불러옵니다.
-                    // 이 부분에는 로그인이 정상적으로 되었을 경우 어떤 일을 수행할 지 적으면 됩니다.
 
                 } else {
                     Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
@@ -219,6 +200,14 @@ public class LoginActivity extends AppCompatActivity {
         manageBlockAdapter.addItem(new BlocekdItem("수박"));
         manageBlockAdapter.addItem(new BlocekdItem("메론"));
 
+        likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+                "0314299444","10:00-21:00"));
+        likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+                "0314291234","11:30-22:00"));
+        likedStoreAdapter1.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+                "0314295687","7:00-22:00"));
+        likedStoreAdapter1.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+                "0314293333","9:00-21:30"));
         likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
         likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
