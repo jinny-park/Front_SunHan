@@ -27,6 +27,8 @@ import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.activity.WriteActivity;
 import com.example.front_sunhan.View.adapter.CommunityAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,8 @@ public class CommunityFragment extends Fragment {
     ArrayList<CommunityItem> cList = new ArrayList<CommunityItem>();
     RecyclerView communityRecyclerView;
 
-    Button writeBtn;
+//    Button writeBtn;
+    FloatingActionButton writeBtn;
 
     @Nullable
     @Override
