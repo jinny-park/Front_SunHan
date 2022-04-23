@@ -2,6 +2,7 @@ package com.example.front_sunhan.View.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.fragment.FindStoreFragment;
 
 public class ToolbarActivity extends AppCompatActivity {
 
@@ -28,12 +30,25 @@ public class ToolbarActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 //select back button
                 finish();
                 return true;
+                /* 액션바 수정중
+            case R.id.menu_search:
+                Intent intent=new Intent(getApplicationContext(), FindStoreFragment.class);
+                startActivity(intent);
+                return true;
+
+                 */
         }
         return super.onOptionsItemSelected(item);
     }
