@@ -43,8 +43,8 @@ public class ToolbarActivity extends AppCompatActivity {
                 finish();
                 return true;
                 /* 액션바 수정중
-            case R.id.menu_search:
-                Intent intent=new Intent(getApplicationContext(), FindStoreFragment.class);
+            case R.id.location_search:
+                Intent intent=new Intent(getApplicationContext(), LocationSettingActivity.class);
                 startActivity(intent);
                 return true;
 
