@@ -109,7 +109,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     }
 
     void showDialog() {
-        CharSequence[] oItems = {"수정하기", "삭제하기", "취소"};
+        CharSequence[] oItems = {"삭제하기", "신고하기", "취소"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("글 메뉴")
