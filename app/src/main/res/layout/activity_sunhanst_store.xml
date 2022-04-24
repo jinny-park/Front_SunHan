@@ -141,12 +141,13 @@
                     android:layout_marginLeft="30dp"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/img_store_share"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
+                        android:onClick="btnClick"
                         app:srcCompat="@drawable/link"/>
 
                     <TextView

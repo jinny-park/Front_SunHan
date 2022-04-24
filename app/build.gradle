@@ -47,7 +47,8 @@ dependencies {
 
     implementation "com.kakao.sdk:v2-story:2.2.0" // 카카오스토리
 
-    implementation "com.kakao.sdk:v2-link:2.2.0" // 메시지(카카오링크)
+    //implementation "com.kakao.sdk:v2-link:2.2.0" // 메시지(카카오링크)
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version:project.KAKAO_SDK_VERSION
 
     implementation "com.kakao.sdk:v2-navi:2.2.0" // 카카오내비
 }

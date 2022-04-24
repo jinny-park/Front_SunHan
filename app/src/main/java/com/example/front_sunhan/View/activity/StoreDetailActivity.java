@@ -4,6 +4,7 @@ package com.example.front_sunhan.View.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -29,6 +30,18 @@ import com.example.front_sunhan.View.fragment.SunhanstCardFragment;
 import com.example.front_sunhan.View.fragment.SunhanstSunhanFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import com.kakao.kakaolink.v2.KakaoLinkResponse;
+import com.kakao.kakaolink.v2.KakaoLinkService;
+import com.kakao.message.template.ButtonObject;
+import com.kakao.message.template.ContentObject;
+import com.kakao.message.template.FeedTemplate;
+import com.kakao.message.template.LinkObject;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.callback.ResponseCallback;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import java.util.ArrayList;
 
 public class StoreDetailActivity extends AppCompatActivity {
@@ -47,6 +60,45 @@ public class StoreDetailActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setTitle("가게 상세");
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
+    }
+
+    public void btnClick(View view){
+
+        TextView textStorename = findViewById(R.id.text_storename);
+        String strStore = textStorename.getText().toString();
+        strStore = getIntent().getStringExtra("strStore");
+        //가게 이름 저장한거
+
+        FeedTemplate params = FeedTemplate
+                .newBuilder(ContentObject.newBuilder("SUNHAN",
+                        "https://ifh.cc/g/GG1KNy.png",
+                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                .setMobileWebUrl("https://developers.kakao.com").build())
+                        .setDescrption(strStore+"\n가게를 확인해보세요!")
+                        .build())
+                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
+                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
+                        .setWebUrl("https://developers.kakao.com")
+                        .setMobileWebUrl("https://developers.kakao.com")
+                        .setAndroidExecutionParams("key1=value1")
+                        .setIosExecutionParams("key1=value1")
+                        .build()))
+                .build();
+
+        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+        serverCallbackArgs.put("user_id", "${current_user_id}");
+        serverCallbackArgs.put("product_id", "${shared_product_id}");
+
+
+        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {}
+
+            @Override
+            public void onSuccess(KakaoLinkResponse result) {
+            }
+        });
+
     }
 
     @Override
