@@ -10,99 +10,110 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
+import com.example.front_sunhan.View.interfaceListener.OnClickCommunityLogsListener;
+
 import androidx.recyclerview.widget.RecyclerView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class MypageMylogsAdapter extends RecyclerView.Adapter<MypageMylogsAdapter.ViewHolder>{
+public class MypageMylogsAdapter extends RecyclerView.Adapter<MypageMylogsAdapter.ViewHolder>
+        implements OnClickCommunityLogsListener {
 
     private Context context;
-    ArrayList<MypageItem> mypageItemArrayList;
-    public MypageMylogsAdapter(Context context, ArrayList<MypageItem> mypageItemArrayList){
+    ArrayList<CommunityItem> myLogsList;
+    public OnClickCommunityLogsListener listener;
+
+    public MypageMylogsAdapter(Context context, ArrayList<CommunityItem> myLogsList){
         this.context = context ;
-        this.mypageItemArrayList= mypageItemArrayList;
+        this.myLogsList= myLogsList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View itemView = layoutInflater.inflate(R.layout.mypage_item, parent, false);
-        return new ViewHolder(itemView /*,this*/);
+        View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
+        return new ViewHolder(itemView ,this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MypageItem item =mypageItemArrayList.get(position);
-//        holder.imageView.setImageResource(mypageItemArrayList.get(position).image);
-        holder.textView.setText(mypageItemArrayList.get(position).getItemName());
+        CommunityItem item = myLogsList.get(position);
+        holder.userProfile.setImageResource(myLogsList.get(position).getUserProfile());
+        holder.userId.setText(myLogsList.get(position).getUserId());
+        holder.uploadTime.setText(myLogsList.get(position).getUploadTime());
+        holder.content.setText(myLogsList.get(position).getContent());
+        holder.commentNum.setText(myLogsList.get(position).getCommentNum());
     }
 
-//    public void setOnCardItemClickListener(OnCardItemClickListener listener){
-//
-//        this.listener = listener;
-//    }
-//
-//    @Override
-//    public void onItemClick(ViewHolder holder, View view, int position) {
-//        if(listener != null){
-//            listener.onItemClick(holder,view,position);
-//        }
-//    }
-//
-//    @Override
-//    public void onCardClick(MyTicket_TicketList_Adapter.ViewHolder holder, View view, int position) {
-//
-//    }
+    public void setOnClickCommunityLogsListener(OnClickCommunityLogsListener listener) {
 
+        this.listener = listener;
+    }
+
+    @Override
+    public void onItemClick(MypageMylogsAdapter.ViewHolder holder, View view, int position) {
+        if (listener != null) {
+            listener.onItemClick(holder, view, position);
+        }
+    }
 
     @Override
     public int getItemCount() {
-        return mypageItemArrayList.size();
+        return myLogsList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
-        ImageView imageView;
+         ImageView userProfile;
+         TextView userId;
+         TextView uploadTime;
+         TextView content;
+         TextView commentNum;
 
-        public ViewHolder(@NonNull View itemView /*, final OnCardItemClickListener listener*/) {
+        public ViewHolder(@NonNull View itemView , final OnClickCommunityLogsListener listener) {
             super(itemView);
-//            imageView = itemView.findViewById(R.id.view_item);
-//            textView = itemView.findViewById(R.id.mypage_item);
+            userProfile = itemView.findViewById(R.id.userProfile);
+            userId = itemView.findViewById(R.id.userId);
+            uploadTime = itemView.findViewById(R.id.uploadTime);
+            content = itemView.findViewById(R.id.content);
+            commentNum = itemView.findViewById(R.id.commentNum);
 
             itemView.setClickable(true);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if(listener != null){
-//                        listener.onItemClick(ViewHolder.this, view, position);
-//                    }
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null) {
+                        listener.onItemClick(MypageMylogsAdapter.ViewHolder.this, view, position);
+                    }
+                }
+            });
 
 
         }
 
     }
 
-    public void addItem(MypageItem item){
-        mypageItemArrayList.add(item);
+    public void addItem(CommunityItem item){
+        myLogsList.add(item);
     }
-    public void setarrayList(ArrayList<MypageItem> arrayList) {
+    public void setarrayList(ArrayList<CommunityItem> arrayList) {
 
-        this.mypageItemArrayList = arrayList;
-    }
-
-    public MypageItem getItem(int position) {
-
-        return mypageItemArrayList.get(position);
+        this.myLogsList = arrayList;
     }
 
-    public void setItem(int position, MypageItem item) {
+    public CommunityItem getItem(int position) {
 
-        mypageItemArrayList.set(position, item);
+        return myLogsList.get(position);
+    }
+
+    public void setItem(int position, CommunityItem item) {
+
+        myLogsList.set(position, item);
     }
 }
