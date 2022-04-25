@@ -51,6 +51,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         setToolbar();
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).addToBackStack(null).commit();
+        navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -18,7 +18,7 @@
         android:id="@+id/action_bottomnavi"
         android:enabled="true"
         android:icon="@drawable/sunhan_logo"
-        android:title=" "/>
+        android:title=" " />
 
     <item
         android:id="@+id/action_community"
