@@ -35,6 +35,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
+
         return new CommunityAdapter.ViewHolder(itemView, this);
     }
 

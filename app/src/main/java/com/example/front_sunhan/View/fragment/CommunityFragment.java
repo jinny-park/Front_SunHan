@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
@@ -36,6 +37,7 @@ public class CommunityFragment extends Fragment {
     public static CommunityAdapter communityAdapter ;
     ArrayList<CommunityItem> cList = new ArrayList<CommunityItem>();
     RecyclerView communityRecyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 //    Button writeBtn;
     FloatingActionButton writeBtn;
@@ -48,8 +50,17 @@ public class CommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_community, null);
         communityAdapter = new CommunityAdapter(getContext(),  cList);
 
+        swipeRefreshLayout = view.findViewById(R.id.swip_community);
+
         setRecyclerview(view);
         setData();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         writeBtn = view.findViewById(R.id.write_btn);
         writeBtn.setOnClickListener(new View.OnClickListener() {
