@@ -1,10 +1,8 @@
 package com.example.front_sunhan.View.fragment;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +22,10 @@ import com.example.front_sunhan.View.activity.EditProfileActivity;
 import com.example.front_sunhan.View.activity.LoginActivity;
 import com.example.front_sunhan.View.activity.ManageBlockActivity;
 import com.example.front_sunhan.View.activity.MyLogsActivity;
-import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
+import com.example.front_sunhan.View.activity.CardCheckActivity;
 import com.example.front_sunhan.View.activity.PolicyActivity;
-import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
-import com.kakao.sdk.user.UserApiClient;
-import com.kakao.sdk.user.model.User;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
-import kotlin.jvm.functions.Function2;
 
 public class MyPageFragment extends Fragment {
     RecyclerView mypageRecyclerView;
@@ -70,7 +61,7 @@ public class MyPageFragment extends Fragment {
                         case 0:
                             break;
                         case 1:
-                            Intent intent2 = new Intent(getActivity(), MyPageAddCardActivity.class);
+                            Intent intent2 = new Intent(getActivity(), CardCheckActivity.class);
                             startActivity(intent2);
                             break;
                         case 2:

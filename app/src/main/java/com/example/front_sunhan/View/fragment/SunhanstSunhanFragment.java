@@ -1,37 +1,22 @@
 package com.example.front_sunhan.View.fragment;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.front_sunhan.Model.StoreItem;
 import com.example.front_sunhan.R;
-import com.example.front_sunhan.View.activity.DeleteAccountActivity;
-import com.example.front_sunhan.View.activity.EditProfileActivity;
 import com.example.front_sunhan.View.activity.LoginActivity;
-import com.example.front_sunhan.View.activity.ManageBlockActivity;
-import com.example.front_sunhan.View.activity.MyLogsActivity;
-import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
-import com.example.front_sunhan.View.activity.PolicyActivity;
 import com.example.front_sunhan.View.activity.StoreDetailActivity;
-import com.example.front_sunhan.View.activity.ToolbarActivity;
-import com.example.front_sunhan.View.adapter.MypageAdapter;
 import com.example.front_sunhan.View.adapter.SunhanStoreAdapter;
-import com.example.front_sunhan.View.interfaceListener.OnClickMyPageItemListener;
 import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
-
-import java.util.ArrayList;
 
 public class SunhanstSunhanFragment extends Fragment {
 

@@ -6,6 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/edit_toolbar"
             android:layout_width="match_parent"
@@ -23,50 +28,65 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/edit_profile_pic"
-        android:layout_width="148dp"
-        android:layout_height="181dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_toolbar"
-        tools:ignore="MissingConstraints"
-        android:src="@drawable/profile"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/edit_profile_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="75dp"
+            tools:ignore="MissingConstraints">
 
-    <EditText
-        android:id="@+id/edit_profile_name"
-        android:layout_width="298dp"
-        android:layout_height="49dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:width="300dp"
-        android:height="48dp"
-        android:background="@drawable/edit_border"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="홍길동"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_pic"
-        app:layout_constraintStart_toStartOf="@+id/edit_profile_pic"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_pic"
-        tools:ignore="MissingConstraints" />
+            <ImageView
+                android:id="@+id/edit_user_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile" />
+        </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/edit_profile_btn"
-        android:layout_width="269dp"
-        android:layout_height="47dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/yellow_button"
-        android:text="수정완료"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_name"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="@+id/edit_profile_name"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_name" />
+        <EditText
+            android:id="@+id/edit_profile_name"
+            android:layout_width="298dp"
+            android:layout_height="49dp"
+            android:width="300dp"
+            android:height="48dp"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:background="@drawable/edit_border"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="홍길동"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/edit_profile_btn"
+            android:layout_width="269dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:background="@drawable/yellow_button"
+            android:text="수정완료"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/edit_profile_pic"-->
+<!--        android:layout_width="148dp"-->
+<!--        android:layout_height="181dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_toolbar"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        android:src="@drawable/profile"/>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

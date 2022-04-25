@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
@@ -16,24 +16,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/card_name_item"
+                android:id="@+id/area_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
-                android:text="아동급식카드"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-            <TextView
-                android:id="@+id/card_account_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="1234567891234567"
+                android:text="지역"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
@@ -41,22 +32,11 @@
             <ImageView
                 android:id="@+id/card_img_item"
                 android:layout_width="220dp"
-                android:layout_height="170dp"
+                android:layout_height="95dp"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/credit_card"
                 tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/card_money_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="100000"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

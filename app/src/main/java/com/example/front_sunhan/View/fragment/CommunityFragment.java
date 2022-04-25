@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,18 +16,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.activity.CommunityDetailActivity;
-import com.example.front_sunhan.View.activity.DeleteAccountActivity;
-import com.example.front_sunhan.View.activity.EditProfileActivity;
-import com.example.front_sunhan.View.activity.LoginActivity;
-import com.example.front_sunhan.View.activity.ManageBlockActivity;
-import com.example.front_sunhan.View.activity.MyLogsActivity;
-import com.example.front_sunhan.View.activity.MyPageAddCardActivity;
-import com.example.front_sunhan.View.activity.PolicyActivity;
 import com.example.front_sunhan.View.activity.ToolbarActivity;
 import com.example.front_sunhan.View.activity.WriteActivity;
 import com.example.front_sunhan.View.adapter.CommunityAdapter;
 import com.example.front_sunhan.View.interfaceListener.OnClickCommunityListener;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

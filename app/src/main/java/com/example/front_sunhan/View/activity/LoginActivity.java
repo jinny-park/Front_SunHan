@@ -22,12 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.front_sunhan.Model.BlocekdItem;
+import com.example.front_sunhan.Model.CardCheckItem;
 import com.example.front_sunhan.Model.CommunityItem;
 import com.example.front_sunhan.Model.MypageItem;
 import com.example.front_sunhan.Model.Retrofit.GetDataService;
 import com.example.front_sunhan.Model.Retrofit.RetrofitInstance;
 import com.example.front_sunhan.Model.StoreItem;
 import com.example.front_sunhan.R;
+import com.example.front_sunhan.View.adapter.CardCheckAdapter;
 import com.example.front_sunhan.View.adapter.CommunityAdapter;
 import com.example.front_sunhan.View.adapter.ManageBlockAdapter;
 import com.example.front_sunhan.View.adapter.MypageAdapter;
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     ArrayList<StoreItem> storeSunHanList=new ArrayList<StoreItem>();
     ArrayList<CommunityItem> postItemList = new ArrayList<>();
     ArrayList<CommunityItem> commentItemList = new ArrayList<>();
+    ArrayList<CardCheckItem> cardCheckItemArrayList = new ArrayList<>();
 
     public static Context mContext  ;
     public static MypageAdapter mypageAdapter;
@@ -70,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     public static SunhanStoreAdapter storeSunhanAdapter ;
     public static MypageMylogsAdapter postLogsAdapter;
     public static MypageMylogsAdapter commentsLogsAdapter;
+    public static CardCheckAdapter cardCheckAdapter;
 
     RecyclerView sunhanCardRecyclerView;
     // 진행바
@@ -81,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     static String token;
-    ImageButton kakao_btn;
+    Button kakao_btn;
     Button google_btn;
     Button naver_btn;
 
@@ -93,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setList();
         mContext = getApplicationContext();
-        kakao_btn = (ImageButton) findViewById(R.id.kakao_login);
+        kakao_btn = findViewById(R.id.kakao_login);
         naver_btn = findViewById(R.id.login_naver);
 
 
@@ -104,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                     //로그인이 되었을 때 처리해야할 일
                     Log.i("user", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                     token= oAuthToken.getAccessToken();
-                    System.out.println(token);
                 }
                 if( throwable != null) {
                     //오류가 나왔을 떄 처리해야할 일
@@ -185,19 +188,33 @@ public class LoginActivity extends AppCompatActivity {
         storeSunhanAdapter =new SunhanStoreAdapter(getApplicationContext(),storeSunHanList);
         postLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),postItemList);
         commentsLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),commentItemList);
+        cardCheckAdapter = new CardCheckAdapter(getApplicationContext(), cardCheckItemArrayList);
         setData();
     }
 
     void setData(){
 
-        mypageAdapter.addItem(new MypageItem("알림설정"));
-        mypageAdapter.addItem(new MypageItem("아동급식카드등록"));
-        mypageAdapter.addItem(new MypageItem("내 활동보기"));
+        mypageAdapter.addItem(new MypageItem("아동급식카드잔액조회"));
+        mypageAdapter.addItem(new MypageItem("내활동보기"));
         mypageAdapter.addItem(new MypageItem("차단관리"));
         mypageAdapter.addItem(new MypageItem("로그아웃"));
         mypageAdapter.addItem(new MypageItem("탈퇴하기"));
         mypageAdapter.addItem(new MypageItem("약관및정책"));
-        mypageAdapter.addItem(new MypageItem("버전정보 1.1"));
+
+
+        cardCheckAdapter.addItem(new CardCheckItem("서울"));
+        cardCheckAdapter.addItem(new CardCheckItem("경기"));
+        cardCheckAdapter.addItem(new CardCheckItem("울산"));
+        cardCheckAdapter.addItem(new CardCheckItem("인천"));
+        cardCheckAdapter.addItem(new CardCheckItem("부산"));
+        cardCheckAdapter.addItem(new CardCheckItem("양산"));
+        cardCheckAdapter.addItem(new CardCheckItem("공주"));
+        cardCheckAdapter.addItem(new CardCheckItem("보령"));
+        cardCheckAdapter.addItem(new CardCheckItem("예산"));
+        cardCheckAdapter.addItem(new CardCheckItem("서천"));
+        cardCheckAdapter.addItem(new CardCheckItem("부여"));
+        cardCheckAdapter.addItem(new CardCheckItem("태안"));
+        cardCheckAdapter.addItem(new CardCheckItem("전국푸르미카드"));
 
 
         manageBlockAdapter.addItem(new BlocekdItem("귤이"));
@@ -270,7 +287,5 @@ public class LoginActivity extends AppCompatActivity {
         commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
                 "분들께 추천드립니다 ","3"));
         commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
-
-
     }
 }

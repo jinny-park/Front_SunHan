@@ -52,7 +52,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MyPageAddCardActivity"
+            android:name=".View.activity.CardCheckActivity"
             android:exported="true">
         </activity>
         <activity
