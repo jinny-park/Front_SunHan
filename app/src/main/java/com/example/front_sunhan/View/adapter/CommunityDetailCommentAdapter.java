@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CommentItem;
 import com.example.front_sunhan.Model.CommunityDetailItem;
 import com.example.front_sunhan.R;
 
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 
 public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<CommunityDetailCommentAdapter.ViewHolder> {
     private Context context;
-    ArrayList<CommunityDetailItem> CommunityDetailItemList;
+    ArrayList<CommentItem> CommunityDetailItemList;
 
-    public CommunityDetailCommentAdapter(Context context, ArrayList<CommunityDetailItem> arrayList){
+    public CommunityDetailCommentAdapter(Context context, ArrayList<CommentItem> arrayList){
         this.context = context ;
         this.CommunityDetailItemList= arrayList;
     }
@@ -34,7 +35,7 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
 
     @Override
     public void onBindViewHolder(@NonNull CommunityDetailCommentAdapter.ViewHolder holder, int position) {
-        CommunityDetailItem item =CommunityDetailItemList.get(position);
+        CommentItem item =CommunityDetailItemList.get(position);
 
         holder.userProfile.setImageResource(CommunityDetailItemList.get(position).getUserProfile());
         holder.userId.setText(CommunityDetailItemList.get(position).getUserId());
@@ -69,18 +70,18 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
 
     }
 
-    public void addItem(CommunityDetailItem item){ CommunityDetailItemList.add(item); }
-    public void setarrayList(ArrayList<CommunityDetailItem> arrayList) {
+    public void addItem(CommentItem item){ CommunityDetailItemList.add(item); }
+    public void setarrayList(ArrayList<CommentItem> arrayList) {
 
         this.CommunityDetailItemList = arrayList;
     }
 
-    public CommunityDetailItem getItem(int position) {
+    public CommentItem getItem(int position) {
 
         return CommunityDetailItemList.get(position);
     }
 
-    public void setItem(int position, CommunityDetailItem item) {
+    public void setItem(int position, CommentItem item) {
 
         CommunityDetailItemList.set(position, item);
     }

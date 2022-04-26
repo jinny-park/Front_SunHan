@@ -18,6 +18,7 @@ import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.activity.CommunityDetailActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder> {
     private Context context;
@@ -45,6 +46,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.content.setText(CommunityDetailItemList.get(position).getContent());
         holder.commentDate.setText(CommunityDetailItemList.get(position).getCommentDate());
         holder.commentTime.setText(CommunityDetailItemList.get(position).getCommentTime());
+        //holder.recyclerView.setRecycledViewPool((RecyclerView.RecycledViewPool) CommunityDetailItemList.get(position).getCommentItemList());
     }
 
 
@@ -60,6 +62,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         public TextView content;
         public TextView commentDate;
         public TextView commentTime;
+        public RecyclerView recyclerView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +71,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
             content = itemView.findViewById(R.id.content);
             commentDate = itemView.findViewById(R.id.commentDate);
             commentTime = itemView.findViewById(R.id.commentTime);
+            recyclerView = itemView.findViewById(R.id.recylerView_community_comment);
 
         }
 

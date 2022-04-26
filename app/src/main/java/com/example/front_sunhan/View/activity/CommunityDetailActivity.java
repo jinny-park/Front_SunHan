@@ -21,18 +21,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CommentItem;
 import com.example.front_sunhan.Model.CommunityDetailItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.adapter.CommunityDetailAdapter;
 import com.example.front_sunhan.View.adapter.CommunityDetailCommentAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
     public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
-    ArrayList<CommunityDetailItem> dcList = new ArrayList<>();
+    ArrayList<CommentItem> cList = new ArrayList<>();
+
     Toolbar toolbar;
     ImageView pop1;
 
@@ -45,8 +48,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
 
         setList();
+
         RecyclerView recyclerView1 = findViewById(R.id.recyleView_community_detail);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView1.setLayoutManager(layoutManager);
         recyclerView1.setHasFixedSize(true);
         recyclerView1.setAdapter(communityDetailAdapter);
@@ -86,26 +90,44 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     void setList(){
         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
-        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),dcList);
+        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),cList);
         setData();
     }
 
     void setData(){
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","저도 감자탕 좋아하는데 한번 가봐야겠네요"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","0000000000000000000000000000000000000000000000000000000"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
-        communityDetailCommentAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","와우"
-                ,"03/17","14:12"));
+                ,"03/17","14:12", CommunityCommentList()));
+        communityDetailCommentAdapter.addItem(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
 
+
+    }
+
+//    private List<CommunityDetailItem> CommunityDetailList() {
+//        List<CommunityDetailItem> itemList = new ArrayList<>();
+//        for (int i=0; i<10; i++) {
+//            CommunityDetailItem item = new CommunityDetailItem(R.drawable.profile,"익명","저도 감자탕 좋아하는데 한번 가봐야겠네요",
+//                    "03/17","14:12", CommunityCommentList());
+//            itemList.add(item);
+//        }
+//        return itemList;
+//    }
+
+    private List<CommentItem> CommunityCommentList() {
+        ArrayList<CommentItem> CommentList = new ArrayList<>();
+        CommentItem subItem = new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12");
+        CommentList.add(subItem);
+
+        return CommentList;
     }
 
     void showDialog() {
