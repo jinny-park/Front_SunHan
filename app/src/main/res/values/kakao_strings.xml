@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name = "kakao_app_key">11b33a8e699d97bd408aa024de68650b</string>
+<!--    <string name = "kakao_app_key">11b33a8e699d97bd408aa024de68650b</string> strings.xml과 겹쳐서 주석처리-->
     <string name ="kakao_scheme">kakao11b33a8e699d97bd408aa024de68650b</string>
     <string name="kakaolink_host">kakaolink</string>
 </resources>
