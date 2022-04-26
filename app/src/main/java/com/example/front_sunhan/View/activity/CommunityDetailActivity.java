@@ -32,9 +32,9 @@ import java.util.List;
 
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
-    public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
+//    public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
-    ArrayList<CommentItem> cList = new ArrayList<>();
+//    ArrayList<CommentItem> cList = new ArrayList<>();
 
     Toolbar toolbar;
     ImageView pop1;
@@ -90,24 +90,24 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     void setList(){
         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
-        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),cList);
+//        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),cList);
         setData();
     }
 
     void setData(){
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","저도 감자탕 좋아하는데 한번 가봐야겠네요"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","0000000000000000000000000000000000000000000000000000000"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"익명","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12", CommunityCommentList()));
-        communityDetailCommentAdapter.addItem(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한2","저도 감자탕 좋아하는데 한번 가봐야겠네요"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한3","0000000000000000000000000000000000000000000000000000000"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한4","오옹 맛있다니 가봐야겠다"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한5","오옹 맛있다니 가봐야겠다"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한6","오옹 맛있다니 가봐야겠다"
+                ,"03/17","14:12"));
+        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한7","오옹 맛있다니 가봐야겠다"
+                ,"03/17","14:12"));
+//        communityDetailCommentAdapter.addItem(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
 
 
     }

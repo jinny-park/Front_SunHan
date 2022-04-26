@@ -1,5 +1,6 @@
 package com.example.front_sunhan.View.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.front_sunhan.Model.CommentItem;
 import com.example.front_sunhan.Model.CommunityDetailItem;
 import com.example.front_sunhan.R;
 import com.example.front_sunhan.View.activity.CommunityDetailActivity;
@@ -23,6 +26,7 @@ import java.util.List;
 public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder> {
     private Context context;
     ArrayList<CommunityDetailItem> CommunityDetailItemList;
+    public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
 
     public CommunityDetailAdapter(Context context, ArrayList<CommunityDetailItem> arrayList){
         this.context = context ;
@@ -46,7 +50,27 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.content.setText(CommunityDetailItemList.get(position).getContent());
         holder.commentDate.setText(CommunityDetailItemList.get(position).getCommentDate());
         holder.commentTime.setText(CommunityDetailItemList.get(position).getCommentTime());
-        //holder.recyclerView.setRecycledViewPool((RecyclerView.RecycledViewPool) CommunityDetailItemList.get(position).getCommentItemList());
+//        holder.recyclerView.setRecycledViewPool(CommunityDetailItemList.get(position).getCommentItemList());
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        holder.recyclerView.setLayoutManager(layoutManager);
+        holder.recyclerView.setLayoutManager(layoutManager);
+        holder.recyclerView.setHasFixedSize(true);
+
+        ArrayList<CommentItem> arrayList = new ArrayList<>();
+
+        if (CommunityDetailItemList.get(position).getUserId().equals("선한2")) {
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+        }
+
+//        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(holder.recyclerView.getContext(), arrayList); //이코드 쓰면 오류
+        holder.recyclerView.setAdapter(communityDetailCommentAdapter);
+
     }
 
 
@@ -62,7 +86,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         public TextView content;
         public TextView commentDate;
         public TextView commentTime;
-        public RecyclerView recyclerView;
+        public RecyclerView recyclerView; //
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,7 +95,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
             content = itemView.findViewById(R.id.content);
             commentDate = itemView.findViewById(R.id.commentDate);
             commentTime = itemView.findViewById(R.id.commentTime);
-            recyclerView = itemView.findViewById(R.id.recylerView_community_comment);
+            recyclerView = itemView.findViewById(R.id.recylerView_community_comment); //
 
         }
 

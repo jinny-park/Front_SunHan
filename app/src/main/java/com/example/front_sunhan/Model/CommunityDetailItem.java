@@ -8,15 +8,15 @@ public class CommunityDetailItem {
     String content;
     String commentDate;
     String commentTime;
-    List<CommentItem> commentItemList;
+//    List<CommentItem> commentItemList;
 
-    public CommunityDetailItem(int userProfile, String userId, String content, String commentDate, String commentTime, List<CommentItem> commentItemList) {
+    public CommunityDetailItem(int userProfile, String userId, String content, String commentDate, String commentTime/*, List<CommentItem> commentItemList*/) {
         this.userProfile = userProfile;
         this.userId = userId;
         this.content = content;
         this.commentDate = commentDate;
         this.commentTime = commentTime;
-        this.commentItemList = commentItemList;
+//        this.commentItemList = commentItemList;
     }
 
     public int getUserProfile() {
@@ -59,11 +59,11 @@ public class CommunityDetailItem {
         this.commentTime = commentTime;
     }
 
-    public List<CommentItem> getCommentItemList() {
-        return commentItemList;
-    }
-
-    public void setCommentItemList(List<CommentItem> commentItemList) {
-        this.commentItemList = commentItemList;
-    }
+//    public List<CommentItem> getCommentItemList() {
+//        return commentItemList;
+//    }
+//
+//    public void setCommentItemList(List<CommentItem> commentItemList) {
+//        this.commentItemList = commentItemList;
+//    }
 }
