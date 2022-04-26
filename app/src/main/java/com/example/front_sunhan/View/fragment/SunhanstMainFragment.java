@@ -69,16 +69,19 @@ public class SunhanstMainFragment extends Fragment {
                 Fragment selected = null;
                 if(position == 0){
                     selected = sunhanstCardFragment;
-                    /* 아동급식카드 탭바 선택할경우 비활성화
-
                     LinearLayout tabStrip = ((LinearLayout)tabs2.getChildAt(0));
                     tabStrip.setEnabled(false);
                     for(int i = 0; i < tabStrip.getChildCount(); i++) {
                         tabStrip.getChildAt(i).setClickable(false);
-                    }*/
+                    }
                 }
                 else {
                     selected = sunhanstSunhanFragment;
+                    LinearLayout tabStrip = ((LinearLayout)tabs2.getChildAt(0));
+                    tabStrip.setEnabled(true);
+                    for(int i = 0; i < tabStrip.getChildCount(); i++) {
+                        tabStrip.getChildAt(i).setClickable(true);
+                    }
                 }
                 getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container, selected).commit();
             }
