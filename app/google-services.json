@@ -1,0 +1,100 @@
+{
+  "project_info": {
+    "project_number": "729356725042",
+    "project_id": "sunhan-af4dc",
+    "storage_bucket": "sunhan-af4dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729356725042:android:2e687c5c6948d9fad8452b",
+        "android_client_info": {
+          "package_name": "com.capsaicin.sunhan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729356725042-jevn1t43pugkmveters4k01iturmiaca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capsaicin.sunhan",
+            "certificate_hash": "57034e6a8cc1b1f0f53fbfa60858e3df7a10ed71"
+          }
+        },
+        {
+          "client_id": "729356725042-k9nvdtqo66m90os5tbcerg2hmn6cvmd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capsaicin.sunhan",
+            "certificate_hash": "785935270ade5e38b736871c3e1c9d14945761b0"
+          }
+        },
+        {
+          "client_id": "729356725042-mvbegd8i2rceertm3ju8v5b3mlpao85u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capsaicin.sunhan",
+            "certificate_hash": "07178897ca7632285240c2d29207ae09577a80b4"
+          }
+        },
+        {
+          "client_id": "729356725042-nmg2nbofc1dkivfh7qc0cf3lucsep3fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAmxOoXLokpbWec-osq9JUvChpmJZey0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729356725042-nmg2nbofc1dkivfh7qc0cf3lucsep3fd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729356725042:android:43a7c231b14bd2c5d8452b",
+        "android_client_info": {
+          "package_name": "com.example.front_sunhan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729356725042-iagjnmb0bo4ejf57vie89708499ltuvp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.front_sunhan",
+            "certificate_hash": "07178897ca7632285240c2d29207ae09577a80b4"
+          }
+        },
+        {
+          "client_id": "729356725042-nmg2nbofc1dkivfh7qc0cf3lucsep3fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAmxOoXLokpbWec-osq9JUvChpmJZey0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729356725042-nmg2nbofc1dkivfh7qc0cf3lucsep3fd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.front_sunhan">
+    package="com.capsaicin.sunhan">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -11,12 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Front_SunHan"
-        android:name=".View.activity.kakaoApplication">
+        android:name="com.capsaicin.sunhan.View.activity.kakaoApplication">
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="11b33a8e699d97bd408aa024de68650b" />
         <activity
-            android:name=".View.activity.LauncherActivity"
+            android:name="com.capsaicin.sunhan.View.activity.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,67 +32,67 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.activity.StoreDetailActivity"
+            android:name="com.capsaicin.sunhan.View.activity.StoreDetailActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.LoginActivity"
+            android:name="com.capsaicin.sunhan.View.activity.LoginActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.ToolbarActivity"
+            android:name="com.capsaicin.sunhan.View.activity.ToolbarActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.BottomNavigationActivity"
+            android:name="com.capsaicin.sunhan.View.activity.BottomNavigationActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.PopupActivity"
+            android:name="com.capsaicin.sunhan.View.activity.PopupActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.CardCheckActivity"
+            android:name="com.capsaicin.sunhan.View.activity.CardCheckActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MyPageAddCardDetailActivity"
+            android:name="com.capsaicin.sunhan.View.activity.MyPageAddCardDetailActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.ManageBlockActivity"
+            android:name="com.capsaicin.sunhan.View.activity.ManageBlockActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.EditProfileActivity"
+            android:name="com.capsaicin.sunhan.View.activity.EditProfileActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.DeleteAccountActivity"
+            android:name="com.capsaicin.sunhan.View.activity.DeleteAccountActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MyLogsActivity"
+            android:name="com.capsaicin.sunhan.View.activity.MyLogsActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.PolicyActivity"
+            android:name="com.capsaicin.sunhan.View.activity.PolicyActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.SetAlarmActivity"
+            android:name="com.capsaicin.sunhan.View.activity.SetAlarmActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.WriteActivity"
+            android:name="com.capsaicin.sunhan.View.activity.WriteActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.MainActivity"
+            android:name="com.capsaicin.sunhan.View.activity.MainActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".View.activity.CommunityDetailActivity"
+            android:name="com.capsaicin.sunhan.View.activity.CommunityDetailActivity"
             android:exported="true">
         </activity>
 
