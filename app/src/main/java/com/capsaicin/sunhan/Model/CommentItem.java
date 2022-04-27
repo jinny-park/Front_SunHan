@@ -4,14 +4,12 @@ public class CommentItem {
     int userProfile;
     String userId;
     String content;
-    String commentDate;
     String commentTime;
 
-    public CommentItem(int userProfile, String userId, String content, String commentDate, String commentTime) {
+    public CommentItem(int userProfile, String userId, String content, String commentTime) {
         this.userProfile = userProfile;
         this.userId = userId;
         this.content = content;
-        this.commentDate = commentDate;
         this.commentTime = commentTime;
     }
 
@@ -37,14 +35,6 @@ public class CommentItem {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(String commentDate) {
-        this.commentDate = commentDate;
     }
 
     public String getCommentTime() {

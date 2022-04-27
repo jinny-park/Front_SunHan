@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<CommunityDetailCommentAdapter.ViewHolder> {
     private Context context;
-    ArrayList<CommentItem> CommunityDetailItemList;
+    ArrayList<CommentItem> CommunityCommentItemList;
 
     public CommunityDetailCommentAdapter(Context context, ArrayList<CommentItem> arrayList){
         this.context = context ;
-        this.CommunityDetailItemList= arrayList;
+        this.CommunityCommentItemList= arrayList;
     }
 
     @NonNull
@@ -34,54 +34,37 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
 
     @Override
     public void onBindViewHolder(@NonNull CommunityDetailCommentAdapter.ViewHolder holder, int position) {
-        CommentItem item =CommunityDetailItemList.get(position);
+        CommentItem item =CommunityCommentItemList.get(position);
 
-        holder.userProfile.setImageResource(CommunityDetailItemList.get(position).getUserProfile());
-        holder.userId.setText(CommunityDetailItemList.get(position).getUserId());
-        holder.content.setText(CommunityDetailItemList.get(position).getContent());
-        holder.commentDate.setText(CommunityDetailItemList.get(position).getCommentDate());
-        holder.commentTime.setText(CommunityDetailItemList.get(position).getCommentTime());
-    }
-
-
-
-    @Override
-    public int getItemCount() {
-        return CommunityDetailItemList.size();
+        holder.cuserProfile.setImageResource(CommunityCommentItemList.get(position).getUserProfile());
+        holder.cuserId.setText(CommunityCommentItemList.get(position).getUserId());
+        holder.ccontent.setText(CommunityCommentItemList.get(position).getContent());
+        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommentTime());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView userProfile;
-        public TextView userId;
-        public TextView content;
-        public TextView commentDate;
-        public TextView commentTime;
+        public ImageView cuserProfile;
+        public TextView cuserId;
+        public TextView ccontent;
+        public TextView ccommentTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            userProfile = itemView.findViewById(R.id.userProfile);
-            userId = itemView.findViewById(R.id.userId);
-            content = itemView.findViewById(R.id.content);
-            commentDate = itemView.findViewById(R.id.commentDate);
-            commentTime = itemView.findViewById(R.id.commentTime);
+            cuserProfile = itemView.findViewById(R.id.cuserProfile);
+            cuserId = itemView.findViewById(R.id.cuserId);
+            ccontent = itemView.findViewById(R.id.ccontent);
+            ccommentTime = itemView.findViewById(R.id.cuploadTime);
 
         }
 
     }
 
-    public void addItem(CommentItem item){ CommunityDetailItemList.add(item); }
-    public void setarrayList(ArrayList<CommentItem> arrayList) {
-
-        this.CommunityDetailItemList = arrayList;
+    @Override
+    public int getItemCount() {
+        return CommunityCommentItemList.size();
     }
-
-    public CommentItem getItem(int position) {
-
-        return CommunityDetailItemList.get(position);
-    }
-
-    public void setItem(int position, CommentItem item) {
-
-        CommunityDetailItemList.set(position, item);
-    }
+    public void addItem(CommentItem item){ CommunityCommentItemList.add(item); }
+    public void setarrayList(ArrayList<CommentItem> arrayList) { this.CommunityCommentItemList = arrayList; }
+    public CommentItem getItem(int position) { return CommunityCommentItemList.get(position); }
+    public void setItem(int position, CommentItem item) { CommunityCommentItemList.set(position, item); }
 }

@@ -44,7 +44,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.content.setText(CommunityDetailItemList.get(position).getContent());
         holder.commentDate.setText(CommunityDetailItemList.get(position).getCommentDate());
         holder.commentTime.setText(CommunityDetailItemList.get(position).getCommentTime());
-//        holder.recyclerView.setRecycledViewPool(CommunityDetailItemList.get(position).getCommentItemList());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.recyclerView.setLayoutManager(layoutManager);
@@ -54,24 +53,17 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         ArrayList<CommentItem> arrayList = new ArrayList<>();
 
         if (CommunityDetailItemList.get(position).getUserId().equals("선한2")) {
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
-            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
+            arrayList.add(new CommentItem(R.drawable.profile,"익명","와우","03/17 14:12"));
         }
 
-//        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(holder.recyclerView.getContext(), arrayList); //이코드 쓰면 오류
+        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(holder.recyclerView.getContext(), arrayList); //이코드 쓰면 오류
         holder.recyclerView.setAdapter(communityDetailCommentAdapter);
 
-    }
-
-
-
-    @Override
-    public int getItemCount() {
-        return CommunityDetailItemList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -95,19 +87,12 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
 
     }
 
+    @Override
+    public int getItemCount() {
+        return CommunityDetailItemList.size();
+    }
     public void addItem(CommunityDetailItem item){ CommunityDetailItemList.add(item); }
-    public void setarrayList(ArrayList<CommunityDetailItem> arrayList) {
-
-        this.CommunityDetailItemList = arrayList;
-    }
-
-    public CommunityDetailItem getItem(int position) {
-
-        return CommunityDetailItemList.get(position);
-    }
-
-    public void setItem(int position, CommunityDetailItem item) {
-
-        CommunityDetailItemList.set(position, item);
-    }
+    public void setarrayList(ArrayList<CommunityDetailItem> arrayList) { this.CommunityDetailItemList = arrayList; }
+    public CommunityDetailItem getItem(int position) { return CommunityDetailItemList.get(position); }
+    public void setItem(int position, CommunityDetailItem item) { CommunityDetailItemList.set(position, item); }
 }

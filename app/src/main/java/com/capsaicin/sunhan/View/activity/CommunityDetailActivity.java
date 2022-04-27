@@ -24,9 +24,7 @@ import java.util.List;
 
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
-//    public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     ArrayList<CommunityDetailItem> dList = new ArrayList<>();
-//    ArrayList<CommentItem> cList = new ArrayList<>();
 
     Toolbar toolbar;
     ImageView pop1;
@@ -56,9 +54,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
             }
         });
 
-//        RecyclerView recyclerView2 = findViewById(R.id.recyleView_community_comment);
-//        recyclerView2.setAdapter(communityDetailCommentAdapter);
-
     }
 
     void setToolbar(){
@@ -82,7 +77,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     void setList(){
         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
-//        communityDetailCommentAdapter = new CommunityDetailCommentAdapter(getApplicationContext(),cList);
         setData();
     }
 
@@ -99,27 +93,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 ,"03/17","14:12"));
         communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한7","오옹 맛있다니 가봐야겠다"
                 ,"03/17","14:12"));
-//        communityDetailCommentAdapter.addItem(new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12"));
 
 
-    }
-
-//    private List<CommunityDetailItem> CommunityDetailList() {
-//        List<CommunityDetailItem> itemList = new ArrayList<>();
-//        for (int i=0; i<10; i++) {
-//            CommunityDetailItem item = new CommunityDetailItem(R.drawable.profile,"익명","저도 감자탕 좋아하는데 한번 가봐야겠네요",
-//                    "03/17","14:12", CommunityCommentList());
-//            itemList.add(item);
-//        }
-//        return itemList;
-//    }
-
-    private List<CommentItem> CommunityCommentList() {
-        ArrayList<CommentItem> CommentList = new ArrayList<>();
-        CommentItem subItem = new CommentItem(R.drawable.profile,"익명","와우","03/17","14:12");
-        CommentList.add(subItem);
-
-        return CommentList;
     }
 
     void showDialog() {
