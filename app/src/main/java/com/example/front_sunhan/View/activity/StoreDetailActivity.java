@@ -189,7 +189,4 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     }
 
-
-
-
 }
