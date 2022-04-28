@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +27,10 @@ public class LocationSettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_setting);
 
-        ViewGroup locationLayout = (ViewGroup) findViewById(R.id.location_layout);
+        textView = findViewById(R.id.location_text);
+        Button location_btn=findViewById(R.id.location_btn);
 
-        locationLayout.setOnClickListener(new View.OnClickListener() {
+        location_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startLocationService();
@@ -73,6 +75,7 @@ public class LocationSettingActivity extends Activity {
             }
         } catch(SecurityException e){
             e.printStackTrace();
+            //Toast.makeText(getApplicationContext(), "내 위치 없음", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -84,7 +87,9 @@ public class LocationSettingActivity extends Activity {
             textView.setText(message);
         }
         public void onProviderDisabled(String provider){}
+
         public void onProviderEnabled(String provider){}
+
         public void onStatusChanged(String provider, int status, Bundle extras){}
     }
 }
