@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class HeartFragment extends Fragment {

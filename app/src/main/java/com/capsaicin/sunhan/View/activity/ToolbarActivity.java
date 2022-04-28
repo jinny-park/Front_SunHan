@@ -1,5 +1,6 @@
 package com.capsaicin.sunhan.View.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,13 +41,10 @@ public class ToolbarActivity extends AppCompatActivity {
                 //select back button
                 finish();
                 return true;
-                /* 액션바 수정중
             case R.id.location_search:
                 Intent intent=new Intent(getApplicationContext(), LocationSettingActivity.class);
                 startActivity(intent);
                 return true;
-
-                 */
         }
         return super.onOptionsItemSelected(item);
     }

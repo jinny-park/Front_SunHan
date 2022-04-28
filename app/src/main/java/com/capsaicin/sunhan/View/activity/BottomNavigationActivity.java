@@ -2,6 +2,8 @@ package com.capsaicin.sunhan.View.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -46,8 +48,8 @@ public class BottomNavigationActivity extends AppCompatActivity {
         bottomNaviMainFragment = new BottomNaviMainFragment();
         sunhanstMainFragment = new SunhanstMainFragment();
         navigationBarView = findViewById(R.id.bottomNavi);
-        toolbar = findViewById (R.id.toolbar);
 
+        toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).addToBackStack(null).commit();
@@ -81,8 +83,23 @@ public class BottomNavigationActivity extends AppCompatActivity {
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle("메인툴바");
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
+    }
+
+//    public void setActionBarTitle(String title) {
+//        setSupportActionBar (toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setTitle(title);
+//        }
+//    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
     @Override
@@ -92,7 +109,13 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 //select back button
                 finish();
                 return true;
+            case R.id.location_search:
+                Intent intent=new Intent(getApplicationContext(), LocationSettingActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
