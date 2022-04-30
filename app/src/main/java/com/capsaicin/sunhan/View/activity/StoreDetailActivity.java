@@ -5,6 +5,8 @@ package com.capsaicin.sunhan.View.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -104,12 +106,22 @@ public class StoreDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+/*    ImageView heart_img;
+    ImageView heart_full_img;
+
+    private int likeCount=0;
+    private String likeAction="";*/
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sunhanst_store);
         toolbar = findViewById(R.id.store_detail_toolbar);
         setToolbar();
+
+        heart_img=findViewById(R.id.heart_img);
+        heart_full_img=findViewById(R.id.heart_full_img);
 
         TextView textStorename = findViewById(R.id.text_storename);
         TextView textStoreaddrs = findViewById(R.id.text_storeaddrs);
@@ -118,23 +130,31 @@ public class StoreDetailActivity extends AppCompatActivity {
         ViewGroup heartLayout = (ViewGroup) findViewById(R.id.store_heart);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
 
+        /*heart_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(likeAction == ""){
+                    likeCount += 1;
+                    likeAction = "liked";
+                    heart_img.setVisibility(View.VISIBLE);
+                    heart_full_img.setVisibility(View.INVISIBLE);
+
+                } else if (likeAction == "liked"){
+                    likeCount -= 1;
+                    likeAction = "";
+                    heart_img.setVisibility(View.INVISIBLE);
+                    heart_full_img.setVisibility(View.VISIBLE);
+                }
+            }
+        });*/
+
+
+
         findRoadLayout.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 // 네이버 지도 API 사용하기
                 //Intent intent = new Intent(this, SubActivity.class);
                 //startActivity(intent);
-            }
-        });
-
-        heartLayout.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                // 가게 찜하기 ( 토스트메세지 + 가게 정보 )
-            }
-        });
-
-        shareLayout.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                //가게 링크 내보내기
             }
         });
 
@@ -180,5 +200,26 @@ public class StoreDetailActivity extends AppCompatActivity {
         });
 
     }
+
+    int imageIndex=0;
+    ImageView heart_img;
+    ImageView heart_full_img;
+
+    public void onHeartClicked(View v){
+        changeImage();
+    }
+    public void changeImage(){
+        if (imageIndex == 0) {
+            heart_img.setVisibility(View.VISIBLE);
+            heart_full_img.setVisibility(View.INVISIBLE);
+            imageIndex = 1;
+        } else if (imageIndex== 1) {
+            heart_img.setVisibility(View.INVISIBLE);
+            heart_full_img.setVisibility(View.VISIBLE);
+            imageIndex = 0;
+        }
+
+    }
+
 
 }

@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,11 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.capsaicin.sunhan.R;
 
+import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -36,8 +41,26 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class LocationSettingActivity extends Activity {
+public class LocationSettingActivity extends AppCompatActivity {
     private GpsTracker gpsTracker;
+
+    Toolbar toolbar;
+    void setToolbar(){
+        setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
+        ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle("가게 상세");
+        actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -50,6 +73,8 @@ public class LocationSettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_setting);
 
+        toolbar = findViewById(R.id.location_toolbar);
+        setToolbar();
 
         if (!checkLocationServicesStatus()) {
 
@@ -71,8 +96,8 @@ public class LocationSettingActivity extends Activity {
 
                 gpsTracker = new GpsTracker(LocationSettingActivity.this);
 
-                double latitude = gpsTracker.getLatitude();
-                double longitude = gpsTracker.getLongitude();
+                double latitude = gpsTracker.getLatitude(); //위도
+                double longitude = gpsTracker.getLongitude(); //경도
 
                 String address = getCurrentAddress(latitude, longitude);
                 textview_address.setText(address);
@@ -82,7 +107,6 @@ public class LocationSettingActivity extends Activity {
         });
     }
 
-
     /*
      * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.
      */
@@ -91,7 +115,8 @@ public class LocationSettingActivity extends Activity {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
-        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+        super.onRequestPermissionsResult(permsRequestCode, permissions, grandResults);
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
 
@@ -108,12 +133,11 @@ public class LocationSettingActivity extends Activity {
             }
 
 
-            if ( check_result ) {
+            if (check_result) {
 
                 //위치 값을 가져올 수 있음
                 ;
-            }
-            else {
+            } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
@@ -123,7 +147,7 @@ public class LocationSettingActivity extends Activity {
                     finish();
 
 
-                }else {
+                } else {
 
                     Toast.makeText(LocationSettingActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
 

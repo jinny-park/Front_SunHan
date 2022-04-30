@@ -55,6 +55,24 @@
             tools:layout_editor_absoluteY="108dp" />
     </LinearLayout>-->
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/location_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_border"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="위치"
+            android:textSize="20dp"
+            android:textColor="@color/black">
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/location_text"
         android:layout_width="wrap_content"
