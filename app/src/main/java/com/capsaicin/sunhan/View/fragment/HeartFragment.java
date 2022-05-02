@@ -37,7 +37,7 @@ public class HeartFragment extends Fragment {
 
         TabLayout tabs = view.findViewById(R.id.tabs_heart);
         tabs.addTab(tabs.newTab().setText("선한영향력가게"));
-        tabs.addTab(tabs.newTab().setText("아동급시가드가맹점"));
+        tabs.addTab(tabs.newTab().setText("아동급식카드가맹점"));
 
        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

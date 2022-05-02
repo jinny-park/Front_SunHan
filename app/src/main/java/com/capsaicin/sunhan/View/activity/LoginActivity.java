@@ -332,14 +332,7 @@ public class LoginActivity extends AppCompatActivity {
         manageBlockAdapter.addItem(new BlocekdItem("수박"));
         manageBlockAdapter.addItem(new BlocekdItem("메론"));
 
-        likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
-                "0314299444","10:00-21:00"));
-        likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
-                "0314291234","11:30-22:00"));
-        likedStoreAdapter1.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
-                "0314295687","7:00-22:00"));
-        likedStoreAdapter1.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
-                "0314293333","9:00-21:30"));
+        //찜한가게 카드 가맹점
         likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
         likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
@@ -349,6 +342,7 @@ public class LoginActivity extends AppCompatActivity {
         likedStoreAdapter1.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
+        //찜한가게 선한가게
         likedStoreAdapter2.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
         likedStoreAdapter2.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
@@ -358,6 +352,7 @@ public class LoginActivity extends AppCompatActivity {
         likedStoreAdapter2.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
+        //가게 메인화면 카드 가맹점
         storeCardAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
         storeCardAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
@@ -367,6 +362,7 @@ public class LoginActivity extends AppCompatActivity {
         storeCardAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
+        //가게 메인화면 선한가게
         storeSunhanAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
                 "0314299444","10:00-21:00"));
         storeSunhanAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",

@@ -21,7 +21,7 @@ import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.MenuAdapter;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
-import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
+//import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
@@ -46,7 +46,7 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     StoreInfoFragment storeInfoFragment;
     StoreLetterFragment storeLetterFragment;
-    StoreMenuFragment storeMenuFragment;
+    //StoreMenuFragment storeMenuFragment;
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
@@ -161,15 +161,15 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         // 탭레이아웃
 
-        storeMenuFragment = new StoreMenuFragment();
+        //storeMenuFragment = new StoreMenuFragment();
         storeInfoFragment = new StoreInfoFragment();
         storeLetterFragment = new StoreLetterFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeMenuFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeInfoFragment).commit();
 
         TabLayout tabs = findViewById(R.id.store_detail_tapLayout);
 
-        tabs.addTab(tabs.newTab().setText("메뉴"));
+        //tabs.addTab(tabs.newTab().setText("메뉴"));
         tabs.addTab(tabs.newTab().setText("정보"));
         tabs.addTab(tabs.newTab().setText("감사편지"));
 
@@ -181,14 +181,14 @@ public class StoreDetailActivity extends AppCompatActivity {
                 Fragment selected = null;
 
                 if(position == 0){
-                    selected = storeMenuFragment;
-                }
-                else if(position==1) {
                     selected = storeInfoFragment;
                 }
-                else if(position==2){
+                else if(position==1) {
                     selected = storeLetterFragment;
                 }
+                /*else if(position==2){
+                    selected = storeMenuFragment;
+                }*/
                 getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, selected).commit();
             }
 
