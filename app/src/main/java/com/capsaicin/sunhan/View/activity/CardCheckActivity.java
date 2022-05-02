@@ -3,9 +3,13 @@ package com.capsaicin.sunhan.View.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,82 +19,137 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
+import com.capsaicin.sunhan.View.adapter.CardCheckSpinnerAdpater;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardCheckListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardCheckActivity extends AppCompatActivity {
 
-    Button addCard;
     Toolbar toolbar;
-    RecyclerView recyclerView;
+    private final String TAG = this.getClass().getSimpleName();
 
+    private List<String> list = new ArrayList<>();
+    private Spinner spinner;
+    private CardCheckSpinnerAdpater adapter ;
+    private String selectedItem;
+    private int cardPosition;
+    Button cardCheckBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_check);
         toolbar = findViewById(R.id.add_card_toolbar);
-        setRecyclerview();
+        cardCheckBtn = findViewById(R.id.card_check_btn);
+        spinner = findViewById(R.id.spinner);
 
-        LoginActivity.cardCheckAdapter.setOnClickCardCheckListener(new OnClickCardCheckListener() {
-            @Override public void onItemClick(CardCheckAdapter.ViewHolder holder, View view, int position) {
-                if (position != RecyclerView.NO_POSITION) {
-                    switch (position){
+        list.add("서울");
+        list.add("경기");
+        list.add("울산");
+        list.add("인천");
+        list.add("부산");
+        list.add("양산");
+        list.add("공주");
+        list.add("보령");
+        list.add("예산");
+        list.add("서천");
+        list.add("부여");
+        list.add("태안");
+        list.add("전국푸르미카드");
+
+        // 스피너에 붙일 어댑터 초기화
+        adapter = new CardCheckSpinnerAdpater(this, list);
+        spinner.setAdapter(adapter);
+
+        // 스피너 클릭 리스너
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 어댑터에서 정의한 메서드를 통해 스피너에서 선택한 아이템의 이름을 받아온다
+                selectedItem = adapter.getItem();
+                switch (position){
                         case 0:
-                            Intent intent0 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.shinhancard.com/mob/MOBFM064N/MOBFM064R01.shc?crustMenuId=ms254"));
-                            startActivity(intent0);
-                            finish();
+                            cardPosition = 0;
                             break;
                         case 1:
-                            Intent intent1 =new Intent(Intent.ACTION_VIEW, Uri.parse("https://gdream.gg.go.kr/"));
-                            startActivity(intent1);
-                            finish();
+                            cardPosition = 1;
                             break;
                         case 2:
-                            Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ulsan.nhdream.co.kr/"));
-                            startActivity(intent2);
-                            finish();
+                            cardPosition = 2;
                             break;
                         case 3:
-                            Intent intent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.purmeecard.com/index2.jsp"));
-                            startActivity(intent3);
-                            finish();
+                            cardPosition = 3;
                             break;
-
                         case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11:
-                            Intent intent4 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.heemang.or.kr"));
-                            startActivity(intent4);
-                            finish();
+                            cardPosition = 4;
                             break;
                         case 12:
-                            Intent intent5 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.purmeekorea.co.kr"));
-                            startActivity(intent5);
-                            finish();
-                            break;
-
-                        default:
-                            Intent intent6 = new Intent(getApplicationContext(),CardCheckActivity.class);
-                            startActivity(intent6);
-                            finish();
+                            cardPosition = 5;
                             break;
                     }
+                 // 어댑터에서 정의하는 게 귀찮다면 아래처럼 구할 수도 있다
+                // getItemAtPosition()의 리턴형은 Object이므로 String 캐스팅이 필요하다
+                String otherItem = (String) spinner.getItemAtPosition(position);
+                Log.e(TAG, "getItemAtPosition() - 선택한 아이템 : " + otherItem);
+            }
 
-                }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //
             }
         });
 
+        cardCheckBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (cardPosition){
+                    case 0:
+                        Intent intent0 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.shinhancard.com/mob/MOBFM064N/MOBFM064R01.shc?crustMenuId=ms254"));
+                        startActivity(intent0);
+                        finish();
+                        break;
+                    case 1:
+                        Intent intent1 =new Intent(Intent.ACTION_VIEW, Uri.parse("https://gdream.gg.go.kr/"));
+                        startActivity(intent1);
+                        finish();
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ulsan.nhdream.co.kr/"));
+                        startActivity(intent2);
+                        finish();
+                        break;
+                    case 3:
+                        Intent intent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.purmeecard.com/index2.jsp"));
+                        startActivity(intent3);
+                        finish();
+                        break;
+
+                    case 4:
+                        Intent intent4 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.heemang.or.kr"));
+                        startActivity(intent4);
+                        finish();
+                        break;
+                    case 5:
+                        Intent intent5 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.purmeekorea.co.kr"));
+                        startActivity(intent5);
+                        finish();
+                        break;
+
+                    default:
+                        Intent intent6 = new Intent(getApplicationContext(),CardCheckActivity.class);
+                        startActivity(intent6);
+                        finish();
+                        break;
+                }
+
+            }
+        });
 
         setToolbar();
-
-    }
-
-    void setRecyclerview(){
-        recyclerView = findViewById(R.id.cardRecycler);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager recyclerViewManager = new GridLayoutManager(getApplicationContext(),3);
-        recyclerView.setLayoutManager(recyclerViewManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(LoginActivity.cardCheckAdapter);
 
     }
 

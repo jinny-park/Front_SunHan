@@ -1,9 +1,12 @@
 package com.capsaicin.sunhan.View.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -25,6 +28,7 @@ public class SunhanstMainFragment extends Fragment {
 
     SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
+    ImageView addImage;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -36,6 +40,15 @@ public class SunhanstMainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
+
+        addImage = view.findViewById(R.id.img_sunhan_donate);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://xn--o39akkz01az4ip7f4xzwoa.com/"));
+                startActivity(intent);
+            }
+        });
 
         sunhanstCardFragment = new SunhanstCardFragment();
         sunhanstSunhanFragment = new SunhanstSunhanFragment();

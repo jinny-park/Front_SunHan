@@ -37,11 +37,24 @@
             android:textSize="24sp"
             android:text="지역별 잔액 조회하기"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cardRecycler"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/custom_spinner_background"/>
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <Button
+            android:id="@+id/card_check_btn"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="잔액확인하기"
+            android:background="@drawable/yellow_button"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

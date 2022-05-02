@@ -70,11 +70,18 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/setting_alram_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/store_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/drawable/custom_spinner_background.xml" value="0.23796296296296296" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_card_check.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_login.xml" value="0.1296875" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_navi.xml" value="0.16574074074074074" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_letter.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_post.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.18125" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/spinner_inner_view.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/spinner_outer_view.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/menu/toolbar_menu.xml" value="0.18125" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_community.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Front_SunHan/app/src/main/res/layout/activity_location_setting.xml" value="0.264" />

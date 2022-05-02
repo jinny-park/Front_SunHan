@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 if(oAuthToken != null) {
                     //로그인이 되었을 때 처리해야할 일
-                    Log.i("user", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
+                    Log.i("Kakao User", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                     token= oAuthToken.getAccessToken();
                 }
                 if( throwable != null) {
@@ -157,31 +157,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-//
-//        progressDoalog = new ProgressDialog(getApplicationContext());
-//        progressDoalog.setMessage("Loading....");
-//        progressDoalog.show();
-//
-//        // 레트로핏 인스턴스 생성을 해줍니다.
-//        // enqueue로 비동기 통신을 싱행합니다.
-//        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-//        Call<ArrayList<StoreItem>> call = service.getAllStores();
-//        //통신완료후 이벤트 처리를 위한 콜백 리스너 등록
-//        call.enqueue(new Callback<ArrayList<StoreItem>>() {
-//            // 정상으로 통신 성공시
-//            @Override
-//            public void onResponse(Call<ArrayList<StoreItem>> call, Response<ArrayList<StoreItem>> response) {
-//                progressDoalog.dismiss();
-//                generateDataList(response.body());
-//            }
-//            // 통신 실패시(예외발생, 인터넷끊김 등의 이유)
-//            @Override
-//            public void onFailure(Call<ArrayList<StoreItem>> call, Throwable t) {
-//                progressDoalog.dismiss();
-//                Toast.makeText(getApplicationContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private void updateKakaoLoginUi() {
@@ -348,21 +323,6 @@ public class LoginActivity extends AppCompatActivity {
         mypageAdapter.addItem(new MypageItem("로그아웃"));
         mypageAdapter.addItem(new MypageItem("탈퇴하기"));
         mypageAdapter.addItem(new MypageItem("약관및정책"));
-
-
-        cardCheckAdapter.addItem(new CardCheckItem("서울"));
-        cardCheckAdapter.addItem(new CardCheckItem("경기"));
-        cardCheckAdapter.addItem(new CardCheckItem("울산"));
-        cardCheckAdapter.addItem(new CardCheckItem("인천"));
-        cardCheckAdapter.addItem(new CardCheckItem("부산"));
-        cardCheckAdapter.addItem(new CardCheckItem("양산"));
-        cardCheckAdapter.addItem(new CardCheckItem("공주"));
-        cardCheckAdapter.addItem(new CardCheckItem("보령"));
-        cardCheckAdapter.addItem(new CardCheckItem("예산"));
-        cardCheckAdapter.addItem(new CardCheckItem("서천"));
-        cardCheckAdapter.addItem(new CardCheckItem("부여"));
-        cardCheckAdapter.addItem(new CardCheckItem("태안"));
-        cardCheckAdapter.addItem(new CardCheckItem("전국푸르미카드"));
 
 
         manageBlockAdapter.addItem(new BlocekdItem("귤이"));
