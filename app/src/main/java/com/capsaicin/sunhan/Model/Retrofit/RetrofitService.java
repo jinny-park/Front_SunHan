@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 public interface RetrofitService {
 
     // @GET( EndPoint-자원위치(URI) )
-    @GET("posts/{post}")
-    Call<TokenItem> getToken(@Path("post") String post);
+    @GET("posts/{token}")
+    Call<TokenItem> getToken(@Path("token") String token);
 
 }
