@@ -18,6 +18,7 @@ import com.capsaicin.sunhan.Model.BlocekdItem;
 import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth; // firebase 인증 객체
     private int RC_SIGN_IN=123;
-
+    static public RetrofitInstance tokenRetrofitInstance ;
 
 
     @SuppressLint("WrongViewCast")
@@ -104,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         kakao_btn = findViewById(R.id.kakao_login);
         google_btn = findViewById(R.id.google_login);
-
+        tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
 
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
@@ -130,6 +131,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(LoginClient.getInstance().isKakaoTalkLoginAvailable(LoginActivity.this)){
                     LoginClient.getInstance().loginWithKakaoTalk(LoginActivity.this, callback);
+
+                   if(tokenRetrofitInstance!=null) {
+
+                   }
+
                 } else {
                     LoginClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
                 }
