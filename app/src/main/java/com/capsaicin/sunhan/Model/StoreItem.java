@@ -6,21 +6,19 @@ import com.google.gson.annotations.SerializedName;
 public class StoreItem {
 
     @Expose
-    @SerializedName("storeName") private String albumId;
+    @SerializedName("name") private String storeName;
     @Expose
-    @SerializedName("storeAddrs") private String id;
+    @SerializedName("address") private String storeAddrs;
     @Expose
-    @SerializedName("storeNum") private String title;
+    @SerializedName("phoneNumber") private String storeNum;
     @Expose
-    @SerializedName("storeTime") private String url;
-    @Expose
-    @SerializedName("thumbnailUrl") private String thumbnailUrl;
+    @SerializedName("openingHours") private String storeTime;
 
-
+/*
     String storeName;
     String storeAddrs;
     String storeNum;
-    String storeTime;
+    String storeTime;*/
 
     public StoreItem(String storeName, String storeAddrs, String storeNum, String storeTime) {
         this.storeName = storeName;
