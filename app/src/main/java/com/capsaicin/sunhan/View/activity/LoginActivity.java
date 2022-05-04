@@ -19,7 +19,9 @@ import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.StoreItem;
+import com.capsaicin.sunhan.Model.TokenItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
@@ -46,10 +48,20 @@ import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
 
 public class LoginActivity extends AppCompatActivity {
     ArrayList<MypageItem> mypageList = new ArrayList<>();
@@ -84,7 +96,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    public static String token;
+    public static String token="Bearer ";
+    public static String accessToken="";
+    public static String refreshToken="";
     Button kakao_btn;
     private SignInButton google_btn; // 구글 로그인 버튼
     Button naver_btn;
@@ -93,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth; // firebase 인증 객체
     private int RC_SIGN_IN=123;
-    static public RetrofitInstance tokenRetrofitInstance ;
-
+    private RetrofitInstance tokenRetrofitInstance ;
+    private RetrofitServiceApi retrofitServiceApi;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -105,7 +119,8 @@ public class LoginActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         kakao_btn = findViewById(R.id.kakao_login);
         google_btn = findViewById(R.id.google_login);
-        tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
+
+
 
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
@@ -113,7 +128,52 @@ public class LoginActivity extends AppCompatActivity {
                 if(oAuthToken != null) {
                     //로그인이 되었을 때 처리해야할 일
                     Log.i("Kakao User", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
-                    token= oAuthToken.getAccessToken();
+                    token += oAuthToken.getAccessToken();
+
+//                    tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("http://192.168.219.101:4000/api/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    retrofitServiceApi = retrofit.create(RetrofitServiceApi.class);
+
+                        Call<TokenItem> call = retrofitServiceApi.getkakaoToken(token);
+                        call.enqueue(new Callback<TokenItem>() {
+                            @Override
+                            public void onResponse(Call<TokenItem> call, Response<TokenItem> response) {
+                                if (response.isSuccessful()) {
+                                    TokenItem result = response.body();
+                                    result.toString();
+                                    Log.d("인증 후 토큰 발급", result.toString());
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<TokenItem> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+//                        RetrofitInstance.getRetrofitService().getkakaoToken("Bearer "+token).enqueue(new Callback<TokenItem>() {
+//                            @Override
+//                            public void onResponse(Call<TokenItem> call, Response<TokenItem> response) {
+//                                if (response.isSuccessful()) {
+//                                    TokenItem result = response.body();
+//                                    result.toString();
+//                                    Log.d("인증 후 토큰 발급", result.toString());
+//                                } else {
+//                                    Log.d("REST FAILED MESSAGE", response.message());
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<TokenItem> call, Throwable t) {
+//                                Log.d("REST ERROR!", t.getMessage());
+//                            }
+//                        });
+
                 }
                 if( throwable != null) {
                     //오류가 나왔을 떄 처리해야할 일
@@ -132,15 +192,12 @@ public class LoginActivity extends AppCompatActivity {
                 if(LoginClient.getInstance().isKakaoTalkLoginAvailable(LoginActivity.this)){
                     LoginClient.getInstance().loginWithKakaoTalk(LoginActivity.this, callback);
 
-                   if(tokenRetrofitInstance!=null) {
-
-                   }
-
                 } else {
                     LoginClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
                 }
             }
         });
+
 
         // [START config_signin]
         // Configure Google Sign In
@@ -162,14 +219,90 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-
     }
+
+//    private void loadKakaoToken() {
+//        retrofitServiceApi.getkakaoToken().enqueue(new Callback<TokenItem>() {
+//            @Override
+//            public void onResponse(Call<TokenItem> call, retrofit2.Response<TokenItem> response) {
+//                if (response.isSuccessful()) {
+//                   TokenItem result = response.body();
+//                   result.toString();
+//                    Log.d("인증 후 토큰 발급", result.toString());
+//                } else {
+//                    Log.d("REST FAILED MESSAGE", response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TokenItem> call, Throwable t) {
+//                Log.d("REST ERROR!", t.getMessage());
+//            }
+//        });
+//    }
+
+//    private void loadGoogleToken() {
+//        retrofitServiceApi.getGoogleToken().enqueue(new Callback<TokenItem>() {
+//            @Override
+//            public void onResponse(Call<TokenItem> call, retrofit2.Response<TokenItem> response) {
+//                if (response.isSuccessful()) {
+//                    TokenItem result = response.body();
+//                    result.toString();
+//                    Log.d("인증 후 토큰 발급", result.toString());
+//                } else {
+//                    Log.d("REST FAILED MESSAGE", response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TokenItem> call, Throwable t) {
+//                Log.d("REST ERROR!", t.getMessage());
+//            }
+//        });
+//    }
+
+//                    OkHttpClient.Builder client = new OkHttpClient.Builder();
+//                    client.addInterceptor(new Interceptor() {
+//                        @Override public Response intercept(Interceptor.Chain chain) throws IOException {
+//                            Request original = chain.request();
+//                            Request request = original.newBuilder() .
+//                                    addHeader("authorization", "Bearer "+token) .
+//                                    method(original.method(), original.body()) .build();
+//                            return chain.proceed(request);
+//                        }
+//                    } );
+//                    OkHttpClient httpClient = client.build();
+//                    Retrofit retrofit = new Retrofit.Builder() .
+//                            baseUrl("http://192.168.219.101:4000/") .
+//                            addConverterFactory(GsonConverterFactory.create()) .
+//                            client(httpClient) .
+//                            build();
+//                    retrofitServiceApi= retrofit.create(RetrofitServiceApi.class);
+//                    retrofitServiceApi.getToken(token).enqueue(new Callback<TokenItem>() {
+//                        @Override
+//                        public void onResponse(Call<TokenItem> call, retrofit2.Response<TokenItem> response) {
+//                            if (response.isSuccessful()) {
+//                                    TokenItem result = response.body();
+//                                     result.toString();
+//                                      Log.i("인증 후 토큰 발급", result.toString());
+//                            } else {
+//                                        Log.d("REST FAILED MESSAGE", response.message());
+//                                 }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<TokenItem> call, Throwable t) {
+//                            Log.d("REST ERROR!", t.getMessage());
+//                        }
+//                    });
+
 
     private void updateKakaoLoginUi() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
             public Unit invoke(User user, Throwable throwable) {
                 if ( user != null) {
+
                     Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                     startActivity(intent);
                     finish();
@@ -204,6 +337,28 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                token = account.getIdToken();
+                tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
+                if(tokenRetrofitInstance!=null) {
+
+                    RetrofitInstance.getRetrofitService().getGoogleToken("Bearer "+account.getIdToken()).enqueue(new Callback<TokenItem>() {
+                        @Override
+                        public void onResponse(Call<TokenItem> call, Response<TokenItem> response) {
+                            if (response.isSuccessful()) {
+                                TokenItem result = response.body();
+                                result.toString();
+                                Log.d("인증 후 토큰 발급", result.toString());
+                            } else {
+                                Log.d("REST FAILED MESSAGE", response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<TokenItem> call, Throwable t) {
+                            Log.d("REST ERROR!", t.getMessage());
+                        }
+                    });
+                }
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -215,13 +370,17 @@ public class LoginActivity extends AppCompatActivity {
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d(TAG, "firebaseAuthWithGoogleID:" + acct.getId());
+        Log.d(TAG, "firebaseAuthWithGoogleIDToken:" + acct.getIdToken());
+        Log.d(TAG, "firebaseAuthWithGoogleName:" + acct.getDisplayName());
+        Log.d(TAG, "firebaseAuthWithGoogleName:" + acct.getEmail());
         token=acct.getIdToken();
         Log.d(TAG, "googleToken:" + token);
+
+
         // [START_EXCLUDE silent]
         //showProgressDialog();
         // [END_EXCLUDE]
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -239,14 +398,13 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                                             if (task.isSuccessful()) {
                                                 String idToken = task.getResult().getToken();
-                                                // Send token to your backend via HTTPS
-                                                // ...
                                             } else {
                                                 // Handle error -> task.getException();
                                             }
                                         }
                                     });
                             //updateUI(user);
+
                             Intent intent = new Intent(getApplicationContext(),BottomNavigationActivity.class);
                             startActivity(intent);
                             finish();

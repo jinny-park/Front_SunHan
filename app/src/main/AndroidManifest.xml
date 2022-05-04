@@ -4,17 +4,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Front_SunHan"
         android:name="com.capsaicin.sunhan.View.activity.kakaoApplication">
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="11b33a8e699d97bd408aa024de68650b" />
+            android:value="@string/kakao_app_key" />
         <activity
             android:name="com.capsaicin.sunhan.View.activity.LauncherActivity"
             android:exported="true">
