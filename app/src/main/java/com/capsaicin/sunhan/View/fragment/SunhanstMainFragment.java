@@ -1,8 +1,11 @@
 package com.capsaicin.sunhan.View.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +16,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.StoreItem;
+import com.capsaicin.sunhan.Model.StoreResponse;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.kakao.sdk.auth.model.OAuthToken;
 
 import java.util.ArrayList;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SunhanstMainFragment extends Fragment {
@@ -29,6 +44,9 @@ public class SunhanstMainFragment extends Fragment {
     SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
     ImageView addImage;
+
+    private RetrofitInstance storeRetrofitInstance ;
+    private RetrofitServiceApi retrofitServiceApi;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -47,6 +65,28 @@ public class SunhanstMainFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://xn--o39akkz01az4ip7f4xzwoa.com/"));
                 startActivity(intent);
+            }
+
+        });
+
+
+        storeRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("storeId");
+
+        call.enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                //response 체크하는거
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
+                } else {
+                    Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: onFailure - " + t.getMessage());
             }
         });
 

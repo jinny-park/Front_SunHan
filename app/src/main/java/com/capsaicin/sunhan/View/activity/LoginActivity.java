@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
     public static MypageMylogsAdapter commentsLogsAdapter;
     public static CardCheckAdapter cardCheckAdapter;
 
-
     private static final String TAG = "LoginActivity";
 
     public static String token;
@@ -128,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("Kakao User", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                     token = oAuthToken.getAccessToken();
                         if(tokenRetrofitInstance!=null){
-                            Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("Bearer "+token);
+                            Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("eBearr "+token);
                             call.enqueue(new Callback<TokenResponse>() {
                                 @Override
                                 public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
