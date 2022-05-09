@@ -78,14 +78,17 @@ public class SunhanstMainFragment extends Fragment {
             public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
                 //response 체크하는거
                 if (!response.isSuccessful()) {
+                    StoreResponse result = response.body();
                     Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
                 } else {
+                    StoreResponse result = response.body();
                     Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
                 }
             }
 
             @Override
             public void onFailure(Call<StoreResponse> call, Throwable t) {
+                //check ip address
                 Log.d(TAG, "onFailure: onFailure - " + t.getMessage());
             }
         });
