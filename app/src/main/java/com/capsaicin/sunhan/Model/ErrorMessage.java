@@ -2,27 +2,21 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TokenResponse {
+public class ErrorMessage {
 
     @SerializedName("message")
     private String message;
 
-    @SerializedName("data")
-    TokenItem tokenItem;
+
+    // Getter Methods
 
     public String getMessage() {
         return message;
     }
 
+    // Setter Methods
+
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public TokenItem getTokenItem() {
-        return tokenItem;
-    }
-
-    public void setTokenItem(TokenItem tokenItem) {
-        this.tokenItem = tokenItem;
     }
 }

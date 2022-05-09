@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -22,6 +24,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
+import com.capsaicin.sunhan.Model.TokenResponse;
+import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.DeleteAccountActivity;
@@ -33,7 +40,12 @@ import com.capsaicin.sunhan.View.activity.CardCheckActivity;
 import com.capsaicin.sunhan.View.activity.PolicyActivity;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickMyPageItemListener;
+import com.google.gson.Gson;
 import com.kakao.sdk.user.UserApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 //import com.kakao.usermgmt.UserManagement;
 //import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
@@ -41,8 +53,17 @@ public class MyPageFragment extends Fragment {
     private static final String TAG = "Logout";
     RecyclerView mypageRecyclerView;
     Button profileEditBtn;
-    TextView userNickName;
-    TextView userId;
+    public static TextView userNickName;
+    public static TextView userId;
+    public static TextView userEmail;
+    public static ImageView userImage;
+    String imageUri;
+
+    MyPageFragment myPageFragment ;
+
+    private RetrofitInstance tokenRetrofitInstance ;
+    private RetrofitServiceApi retrofitServiceApi;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,14 +76,53 @@ public class MyPageFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_mypage,null);
+        tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
+        userNickName = view.findViewById(R.id.name_mypage);
+        userEmail = view.findViewById(R.id.email_mypage);
+        userImage = view.findViewById(R.id.info_user_profile);
+        myPageFragment = new MyPageFragment();
 
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            UserResponse result = response.body();
+                            userNickName.setText(result.getUserItem().getNickname());
+                            userEmail.setText(result.getUserItem().getEmail());
+                            imageUri=result.getUserItem().getAvatarUrl();
+                            Uri uri = Uri.parse(result.getUserItem().getAvatarUrl());
+                            Glide.with(getActivity()).load(uri).into(userImage);
+//                            userImage.setImageURI(uri);
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
         setRecyclerview(view);
         profileEditBtn = view.findViewById(R.id.modify_profile);
         profileEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+                if(LoginActivity.userAccessToken==null){
+
+                }else{
+                    Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                    intent.putExtra("nickName",userNickName.getText());
+                    intent.putExtra("profilePic",imageUri);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -124,6 +184,7 @@ public class MyPageFragment extends Fragment {
         mypageRecyclerView.setAdapter(LoginActivity.mypageAdapter);
 
     }
+
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그아웃 하시겠습니까?") .
                 setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -133,11 +194,15 @@ public class MyPageFragment extends Fragment {
                             if (error != null) {
 //                                Log.e(TAG, "로그아웃 실패, SDK에서 토큰 삭제됨", error);
                             }else{
-                                LoginActivity.token = null;
-                                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                Log.w(TAG, "invoke: " + LoginActivity.token);
+                                LoginActivity.userAccessToken = null;
+                                LoginActivity.userRefreshToken = null;
+                                userNickName.setText("로그인을 해주세요");
+                                userEmail.setText("");
+                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
+
+//                                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                startActivity(intent);
                             }
                             return null;
                         });

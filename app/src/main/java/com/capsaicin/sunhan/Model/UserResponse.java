@@ -2,13 +2,13 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TokenResponse {
+public class UserResponse {
 
     @SerializedName("message")
     private String message;
 
     @SerializedName("data")
-    TokenItem tokenItem;
+    UserItem userItem;
 
     public String getMessage() {
         return message;
@@ -18,11 +18,12 @@ public class TokenResponse {
         this.message = message;
     }
 
-    public TokenItem getTokenItem() {
-        return tokenItem;
+    public UserItem getUserItem() {
+        return userItem;
     }
 
-    public void setTokenItem(TokenItem tokenItem) {
-        this.tokenItem = tokenItem;
+    public void setUserItem(UserItem userItem) {
+        this.userItem = userItem;
     }
+
 }

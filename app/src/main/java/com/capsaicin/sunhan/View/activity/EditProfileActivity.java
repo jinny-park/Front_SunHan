@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,14 +18,18 @@ import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    Button editProfileBtn;
     Toolbar toolbar;
     CardView profile;
     ImageView profile_img;
-
+    String imageUri;
+    Intent intent;
+    TextView edit_profile_name;
+    Button edit_profile_btn;
+    MyPageFragment myPageFragment = new MyPageFragment();
     private static final int REQUEST_CODE = 0;
 
 
@@ -36,6 +41,14 @@ public class EditProfileActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.edit_toolbar);
         profile = findViewById(R.id.edit_profile_pic);
         profile_img = findViewById(R.id.edit_user_profile);
+        edit_profile_name = findViewById(R.id.edit_profile_name);
+        edit_profile_btn = findViewById(R.id.edit_profile_btn);
+
+        intent = getIntent();
+        edit_profile_name.setText(intent.getStringExtra("nickName"));
+        imageUri = intent.getStringExtra("profilePic");
+        Uri uri = Uri.parse(imageUri);
+        Glide.with(getApplicationContext()).load(uri).into(profile_img);
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +57,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent,REQUEST_CODE);
+            }
+        });
+
+        edit_profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
             }
         });
 

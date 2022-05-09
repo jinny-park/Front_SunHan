@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.capsaicin.sunhan.Model.BlocekdItem;
 import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
+import com.capsaicin.sunhan.Model.ErrorResponse;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
@@ -30,6 +31,7 @@ import com.capsaicin.sunhan.View.adapter.ManageBlockAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageMylogsAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -125,16 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                     //로그인이 되었을 때 처리해야할 일
                     Log.i("Kakao User", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                     token = oAuthToken.getAccessToken();
-
-//                    tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
-
-//                    Retrofit retrofit = new Retrofit.Builder()
-//                            .baseUrl("http://192.168.219.101:4000/api/")
-//                            .addConverterFactory(GsonConverterFactory.create())
-//                            .build();
-//                    retrofitServiceApi = retrofit.create(RetrofitServiceApi.class);
-
-
                         if(tokenRetrofitInstance!=null){
                             Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("Bearer "+token);
                             call.enqueue(new Callback<TokenResponse>() {
@@ -181,6 +173,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        google_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
 
         // [START config_signin]
         // Configure Google Sign In
@@ -196,12 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        google_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+
     }
 
     private void updateKakaoLoginUi() {
@@ -242,44 +235,10 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+
                 token = account.getIdToken();
 
-                FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-                mUser.getIdToken(true)
-                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                            public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                if (task.isSuccessful()) {
-                                    String idToken = task.getResult().getToken();
-                                    // Send token to your backend via HTTPS
-                                    // ...
-                                } else {
-                                    // Handle error -> task.getException();
-                                }
-                            }
-                        });
 
-
-//                tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
-//                if(tokenRetrofitInstance!=null) {
-//
-//                    RetrofitInstance.getRetrofitService().getGoogleToken("Bearer "+account.getIdToken()).enqueue(new Callback<TokenItem>() {
-//                        @Override
-//                        public void onResponse(Call<TokenItem> call, Response<TokenItem> response) {
-//                            if (response.isSuccessful()) {
-//                                TokenItem result = response.body();
-//                                result.toString();
-//                                Log.d("인증 후 토큰 발급", result.toString());
-//                            } else {
-//                                Log.d("REST FAILED MESSAGE", response.message());
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<TokenItem> call, Throwable t) {
-//                            Log.d("REST ERROR!", t.getMessage());
-//                        }
-//                    });
-//                }
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -301,6 +260,7 @@ public class LoginActivity extends AppCompatActivity {
         //showProgressDialog();
         // [END_EXCLUDE]
 
+
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -310,40 +270,35 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                             //토큰 보내기.?.?
                             user.getIdToken(true)
                                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                                             if (task.isSuccessful()) {
                                                 String idToken = task.getResult().getToken();
-
-                                                Retrofit retrofit = new Retrofit.Builder()
-                                                        .baseUrl("http://192.168.219.101:4000/api/")
-                                                        .addConverterFactory(GsonConverterFactory.create())
-                                                        .build();
-
-                                                retrofitServiceApi = retrofit.create(RetrofitServiceApi.class);
-                                                Log.d("google idToken", idToken);
-
-                                                Call<TokenResponse> call = retrofitServiceApi.getGoogleToken("Bearer "+idToken);
-                                                call.enqueue(new Callback<TokenResponse>() {
-                                                    @Override
-                                                    public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                                                        if (response.isSuccessful()) {
-                                                            TokenResponse result = response.body();
-                                                            result.toString();
-                                                            Log.d("인증 후 토큰 발급", result.toString());
-                                                        } else {
-                                                            Log.d("REST FAILED MESSAGE", response.message());
+                                                Log.d(TAG, "googleToken2:" + idToken);
+                                                if(tokenRetrofitInstance!=null){
+                                                    Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getgoogleToken("Bearer "+ token);
+                                                    call.enqueue(new Callback<TokenResponse>() {
+                                                        @Override
+                                                        public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                                                            if (response.isSuccessful()) {
+                                                                TokenResponse result = response.body();
+                                                                userAccessToken = result.getTokenItem().getAccessToken();
+                                                                userRefreshToken = result.getTokenItem().getRefreshToken();
+                                                                Log.d("성공", new Gson().toJson(response.body()));
+                                                                Log.d("userAccessToken", userAccessToken);
+                                                            } else {
+                                                                Log.d("실패", new Gson().toJson(response.errorBody()));
+                                                            }
                                                         }
-                                                    }
 
-                                                    @Override
-                                                    public void onFailure(Call<TokenResponse> call, Throwable t) {
-                                                        Log.d("REST ERROR!", t.getMessage());
-                                                    }
-                                                });
+                                                        @Override
+                                                        public void onFailure(Call<TokenResponse> call, Throwable t) {
+                                                            Log.d("REST ERROR!", t.getMessage());
+                                                        }
+                                                    });
+                                                }
                                             } else {
                                                 // Handle error -> task.getException();
                                             }
