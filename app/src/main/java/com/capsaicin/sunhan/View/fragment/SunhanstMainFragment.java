@@ -45,6 +45,17 @@ public class SunhanstMainFragment extends Fragment {
     SunhanstSunhanFragment sunhanstSunhanFragment;
     ImageView addImage;
 
+    public static String storeId;
+    public static String storeName;
+    public static String storeAddrs;
+    public static String storeNum;
+    public static String storeTime;
+    public static String storeCategory;
+    public static String storeOffer;
+    public static String storeTarget;
+    public static ArrayList <Object> storeReviews;
+
+
     private RetrofitInstance storeRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
 
@@ -71,7 +82,7 @@ public class SunhanstMainFragment extends Fragment {
 
 
         storeRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
-        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("storeId");
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("id");
 
         call.enqueue(new Callback<StoreResponse>() {
             @Override
@@ -79,10 +90,33 @@ public class SunhanstMainFragment extends Fragment {
                 //response 체크하는거
                 if (!response.isSuccessful()) {
                     StoreResponse result = response.body();
+                    /*storeId= result.getStoreItem().getStoreId();
+                    storeName= result.getStoreItem().getStoreName();
+                    storeAddrs= result.getStoreItem().getStoreAddrs();
+                    storeNum= result.getStoreItem().getStoreNum();
+                    storeTime= result.getStoreItem().getStoreTime();
+                    storeCategory= result.getStoreItem().getStoreCategory();
+                    storeOffer= result.getStoreItem().getStoreOffer();
+                    storeTarget= result.getStoreItem().getStoreTarget();
+                    storeReviews= result.getStoreItem().getStoreReviews();
+*/
                     Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
+                    /*Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);*/
                 } else {
                     StoreResponse result = response.body();
+                    /*storeId= result.getStoreItem().getStoreId();
+                    storeName= result.getStoreItem().getStoreName();
+                    storeAddrs= result.getStoreItem().getStoreAddrs();
+                    storeNum= result.getStoreItem().getStoreNum();
+                    storeTime= result.getStoreItem().getStoreTime();
+                    storeCategory= result.getStoreItem().getStoreCategory();
+                    storeOffer= result.getStoreItem().getStoreOffer();
+                    storeTarget= result.getStoreItem().getStoreTarget();
+                    storeReviews= result.getStoreItem().getStoreReviews();*/
                     Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
+                    /*Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);*/
                 }
             }
 
