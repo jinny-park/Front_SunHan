@@ -82,7 +82,7 @@ public class SunhanstMainFragment extends Fragment {
 
 
         storeRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
-        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("id");
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("id"); //인터페이스의 get @path 안의 변수명과 일치해야함
 
         call.enqueue(new Callback<StoreResponse>() {
             @Override
@@ -98,11 +98,11 @@ public class SunhanstMainFragment extends Fragment {
                     storeCategory= result.getStoreItem().getStoreCategory();
                     storeOffer= result.getStoreItem().getStoreOffer();
                     storeTarget= result.getStoreItem().getStoreTarget();
-                    storeReviews= result.getStoreItem().getStoreReviews();
-*/
+                    storeReviews= result.getStoreItem().getStoreReviews();*/
+
                     Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
-                    /*Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
-                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);*/
+                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
                 } else {
                     StoreResponse result = response.body();
                     /*storeId= result.getStoreItem().getStoreId();
@@ -113,10 +113,11 @@ public class SunhanstMainFragment extends Fragment {
                     storeCategory= result.getStoreItem().getStoreCategory();
                     storeOffer= result.getStoreItem().getStoreOffer();
                     storeTarget= result.getStoreItem().getStoreTarget();
-                    storeReviews= result.getStoreItem().getStoreReviews();*/
+                    storeReviews= result.getStoreItem().getStoreReviews();
+*/
                     Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
-                    /*Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
-                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);*/
+                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
                 }
             }
 

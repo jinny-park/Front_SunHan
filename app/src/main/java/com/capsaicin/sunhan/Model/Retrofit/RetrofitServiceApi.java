@@ -1,5 +1,7 @@
 package com.capsaicin.sunhan.Model.Retrofit;
 
+import com.capsaicin.sunhan.Model.ChildrenResponse;
+import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.Model.TokenItem;
@@ -28,5 +30,13 @@ public interface RetrofitServiceApi {
 //    Call<DeleteRespo>
 
     @GET("api/sunhans/{id}")
-    Call<StoreResponse> getStore(@Path("id") String id);
+    Call<StoreResponse> getStore(@Path("id") String storeId);
+
+    @GET("api/children/{id}")
+    Call<ChildrenResponse> getChildren(@Path("id") String storeId);
+
+    @GET("api/reviews/{id}")
+    Call<LetterResponse> getLetter(@Path("id") String storeId);
+    /*@GET("api/reviews")
+    Call<LetterResponse> getLetter(@Header("authorization") String token);*/
 }
