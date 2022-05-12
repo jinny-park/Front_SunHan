@@ -39,11 +39,11 @@ public class MypageMylogsAdapter extends RecyclerView.Adapter<MypageMylogsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CommunityItem item = myLogsList.get(position);
-        holder.userProfile.setImageResource(myLogsList.get(position).getUserProfile());
-        holder.userId.setText(myLogsList.get(position).getUserId());
-        holder.uploadTime.setText(myLogsList.get(position).getUploadTime());
-        holder.content.setText(myLogsList.get(position).getContent());
-        holder.commentNum.setText(myLogsList.get(position).getCommentNum());
+        //holder.userProfile.setImageResource(myLogsList.get(position).getUserProfile());
+        holder.userId.setText(myLogsList.get(position).getCommuId());
+        holder.uploadTime.setText(myLogsList.get(position).getCommuIsCreateAt());
+        holder.content.setText(myLogsList.get(position).getCommuContent());
+        holder.commentNum.setText(myLogsList.get(position).getCommuIsCommentCount());
     }
 
     public void setOnClickCommunityLogsListener(OnClickCommunityLogsListener listener) {

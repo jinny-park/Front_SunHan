@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.Model.Retrofit;
 
 import com.capsaicin.sunhan.Model.ChildrenResponse;
+import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.StoreResponse;
@@ -39,4 +40,7 @@ public interface RetrofitServiceApi {
     Call<LetterResponse> getLetter(@Path("id") String storeId);
     /*@GET("api/reviews")
     Call<LetterResponse> getLetter(@Header("authorization") String token);*/
+
+    @GET("api/posts/{id}")
+    Call<CommunityResponse> getCommunity(@Path("id") String commuId); //수정해야함
 }

@@ -21,7 +21,7 @@ public class RetrofitInstance {
     public static RetrofitInstance retrofitInstance;
     public static RetrofitServiceApi retrofitService;
     // BaseUrl등록
-    private static final String BASE_URL = "http://10.0.2.2:4000/";
+    private static final String BASE_URL = "http://10.0.2.15:4000/";
 
     private RetrofitInstance(){
         Retrofit retrofit = new retrofit2.Retrofit.Builder()

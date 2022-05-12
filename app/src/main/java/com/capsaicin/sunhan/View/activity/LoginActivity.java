@@ -433,24 +433,24 @@ public class LoginActivity extends AppCompatActivity {
         storeSunhanAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
                 "0314293333","9:00-21:30"));
 
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
-                "고 사장님도 친절해요~","0"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
-                "습니다","4"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
-                "또 갈게요 ~","1"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
-                "분들께 추천드립니다 ","3"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
-
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
-                "고 사장님도 친절해요~","0"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
-                "습니다","4"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
-                "또 갈게요 ~","1"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
-                "분들께 추천드립니다 ","3"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
+//                "고 사장님도 친절해요~","0"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
+//                "습니다","4"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
+//                "또 갈게요 ~","1"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
+//                "분들께 추천드립니다 ","3"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
+//
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
+//                "고 사장님도 친절해요~","0"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
+//                "습니다","4"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
+//                "또 갈게요 ~","1"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
+//                "분들께 추천드립니다 ","3"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
     }
 }

@@ -1,57 +1,96 @@
 package com.capsaicin.sunhan.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class CommunityItem {
-    int userProfile;
-    String userId;
-    String uploadTime;
-    String content;
-    String commentNum;
 
-    public CommunityItem(int userProfile, String userId, String uploadTime, String content, String commentNum) {
-        this.userProfile = userProfile;
-        this.userId = userId;
-        this.uploadTime = uploadTime;
-        this.content = content;
-        this.commentNum = commentNum;
+    @SerializedName("writer") Object commuWriter;
+    @SerializedName("_id") private String commuId;
+    @SerializedName("content") private String commuContent;
+    @SerializedName("isDeleted") private Boolean commuIsDeleted;
+    @SerializedName("commentCount") private int commuIsCommentCount;
+    @SerializedName("createAt") private String commuIsCreateAt;
+    @SerializedName("updateAt") private String commuIsUpdateAt;
+
+    public CommunityItem(Object commuWriter, String commuId, String commuContent, Boolean commuIsDeleted, int commuIsCommentCount, String commuIsCreateAt, String commuIsUpdateAt) {
+        this.commuWriter = commuWriter;
+        this.commuId = commuId;
+        this.commuContent = commuContent;
+        this.commuIsDeleted = commuIsDeleted;
+        this.commuIsCommentCount = commuIsCommentCount;
+        this.commuIsCreateAt = commuIsCreateAt;
+        this.commuIsUpdateAt = commuIsUpdateAt;
     }
 
-    public int getUserProfile() {
-        return userProfile;
+    public Object getCommuWriter() {
+        return commuWriter;
     }
 
-    public void setUserProfile(int userProfile) {
-        this.userProfile = userProfile;
+    public void setCommuWriter(Object commuWriter) {
+        this.commuWriter = commuWriter;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getCommuId() {
+        return commuId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCommuId(String commuId) {
+        this.commuId = commuId;
     }
 
-    public String getUploadTime() {
-        return uploadTime;
+    public String getCommuContent() {
+        return commuContent;
     }
 
-    public void setUploadTime(String uploadTime) {
-        this.uploadTime = uploadTime;
+    public void setCommuContent(String commuContent) {
+        this.commuContent = commuContent;
     }
 
-    public String getContent() {
-        return content;
+    public Boolean getCommuIsDeleted() {
+        return commuIsDeleted;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCommuIsDeleted(Boolean commuIsDeleted) {
+        this.commuIsDeleted = commuIsDeleted;
     }
 
-    public String getCommentNum() {
-        return commentNum;
+    public int getCommuIsCommentCount() {
+        return commuIsCommentCount;
     }
 
-    public void setCommentNum(String commentNum) {
-        this.commentNum = commentNum;
+    public void setCommuIsCommentCount(int commuIsCommentCount) {
+        this.commuIsCommentCount = commuIsCommentCount;
+    }
+
+    public String getCommuIsCreateAt() {
+        return commuIsCreateAt;
+    }
+
+    public void setCommuIsCreateAt(String commuIsCreateAt) {
+        this.commuIsCreateAt = commuIsCreateAt;
+    }
+
+    public String getCommuIsUpdateAt() {
+        return commuIsUpdateAt;
+    }
+
+    public void setCommuIsUpdateAt(String commuIsUpdateAt) {
+        this.commuIsUpdateAt = commuIsUpdateAt;
+    }
+
+    @Override
+    public String toString() {
+        return "CommentItem{" +
+                "commuWriter=" + commuWriter +
+                ", commuId='" + commuId + '\'' +
+                ", commuContent='" + commuContent + '\'' +
+                ", commuIsDeleted=" + commuIsDeleted +
+                ", commuIsCommentCount=" + commuIsCommentCount +
+                ", commuIsCreateAt='" + commuIsCreateAt + '\'' +
+                ", commuIsUpdateAt='" + commuIsUpdateAt + '\'' +
+                '}';
     }
 }
