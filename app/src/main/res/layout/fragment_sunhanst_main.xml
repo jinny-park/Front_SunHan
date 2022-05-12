@@ -38,68 +38,24 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/sunhan_ad1" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/food_tapLayout"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:background="#fff"
-                android:elevation="1dp"
-                app:layout_anchorGravity="center"
-                app:tabGravity="fill"
-                app:tabIndicatorHeight="3dp"
-                app:tabMode="fixed" />
+<!--            <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/food_tapLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="#fff"-->
+<!--                android:elevation="1dp"-->
+<!--                app:layout_anchorGravity="center"-->
+<!--                app:tabGravity="fill"-->
+<!--                app:tabIndicatorHeight="3dp"-->
+<!--                app:tabMode="fixed" />-->
 
             <FrameLayout
                 android:id="@+id/tabs_store_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            </FrameLayout>
         </LinearLayout>
 </FrameLayout>
-
-<!--<com.google.android.material.tabs.TabLayout-->
-<!--android:id="@+id/tabLayout3"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="70dp"-->
-<!--android:layout_marginTop="10dp"-->
-<!--android:layout_marginLeft="10dp"-->
-<!--android:layout_marginBottom="10dp"-->
-<!--app:tabMode="scrollable">-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="한식" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="분식" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="카페" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="양식" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="편의점" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="중식" />-->
-
-<!--<com.google.android.material.tabs.TabItem-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="일식" />-->
-
-<!--</com.google.android.material.tabs.TabLayout>-->

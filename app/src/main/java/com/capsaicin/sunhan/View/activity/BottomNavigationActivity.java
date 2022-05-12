@@ -1,36 +1,25 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
-import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.fragment.BottomNaviMainFragment;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
 import com.capsaicin.sunhan.View.fragment.HeartFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.gson.Gson;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
@@ -38,7 +27,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
     HeartFragment heartFragment;
     FindStoreFragment findStoreFragment;
     CommunityFragment communityFragment;
-    BottomNaviMainFragment bottomNaviMainFragment;
     NavigationBarView navigationBarView;
     SunhanstMainFragment sunhanstMainFragment ;
     Toolbar toolbar;
@@ -60,14 +48,16 @@ public class BottomNavigationActivity extends AppCompatActivity {
         heartFragment = new HeartFragment();
         findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
-        bottomNaviMainFragment = new BottomNaviMainFragment();
         sunhanstMainFragment = new SunhanstMainFragment();
+
+
+
         navigationBarView = findViewById(R.id.bottomNavi);
 
         toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,sunhanstMainFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).addToBackStack(null).commit();
         navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

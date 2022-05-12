@@ -7,11 +7,38 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recyclerview_sunhanstore"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constrainedHeight="true"
-    android:layout_margin="5dp">
-</androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/food_tapLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity=""
+            android:background="#fff"
+            android:elevation="1dp"
+            app:layout_anchorGravity="center"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed" />
+        <FrameLayout
+            android:id="@+id/tabs_sunhan_store_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </FrameLayout>
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerview_sunhanstore"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_margin="5dp"-->
+<!--            app:layout_constrainedHeight="true">-->
+<!--            -->
+<!--        </androidx.recyclerview.widget.RecyclerView>-->
+    </LinearLayout>
+
 </FrameLayout>

@@ -47,11 +47,11 @@ public class ManageBlockActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.manage_block_toolbar);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         setToolbar();
-        progressDialog = new ProgressDialog(ManageBlockActivity.this);
-        progressDialog.setMessage("Loading....");
-        progressDialog.show();
 
         if(LoginActivity.userAccessToken!=null) {
+            progressDialog = new ProgressDialog(ManageBlockActivity.this);
+            progressDialog.setMessage("Loading....");
+            progressDialog.show();
             if (tokenRetrofitInstance != null) {
                 Call<BlockListResponse> call = RetrofitInstance.getRetrofitService().getBlockedList("Bearer " + LoginActivity.userAccessToken);
                 call.enqueue(new Callback<BlockListResponse>() {
