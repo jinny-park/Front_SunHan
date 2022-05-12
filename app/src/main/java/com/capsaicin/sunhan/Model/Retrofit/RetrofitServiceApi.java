@@ -1,21 +1,32 @@
 package com.capsaicin.sunhan.Model.Retrofit;
 
+import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.ChildrenResponse;
+import com.capsaicin.sunhan.Model.ErrorResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
+import com.capsaicin.sunhan.Model.NickNameItem;
+import com.capsaicin.sunhan.Model.ProfileChangeResponse;
+import com.capsaicin.sunhan.Model.Response;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.Model.TokenItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
+import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
-import com.capsaicin.sunhan.Model.ErrorResponse;
+import com.kakao.sdk.user.model.User;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RetrofitServiceApi {
@@ -26,8 +37,9 @@ public interface RetrofitServiceApi {
     Call<TokenResponse> getgoogleToken(@Header("authorization") String token);
     @GET("api/users")
     Call<UserResponse> getUser(@Header("authorization") String token);
-//    @DELETE("users")
-//    Call<DeleteRespo>
+
+    @DELETE("users")
+    Call<UserDeleteResponse> deleteUser(@Header("authorization") String token);
 
     @GET("api/sunhans/{id}")
     Call<StoreResponse> getStore(@Path("id") String storeId);
@@ -39,4 +51,16 @@ public interface RetrofitServiceApi {
     Call<LetterResponse> getLetter(@Path("id") String storeId);
     /*@GET("api/reviews")
     Call<LetterResponse> getLetter(@Header("authorization") String token);*/
+
+
+    @PATCH("api/users")
+    Call<ProfileChangeResponse> changeNickname(@Header("authorization") String token, @Body NickNameItem nickNameItem);
+
+    @Multipart
+    @PATCH("api/users") //프로필 사진 업데이트
+    Call<ProfileChangeResponse> changePicture (@Header("authorization") String token, @Part MultipartBody.Part image);
+
+    @GET("api/users/block")//유저 차단 리스트
+    Call<BlockListResponse> getBlockedList (@Header("authorization") String token);
+
 }

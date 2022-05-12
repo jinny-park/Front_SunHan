@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.BlocekdItem;
+import com.capsaicin.sunhan.Model.BlockedItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickBlockedItemListener;
 
@@ -20,12 +20,12 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
         implements OnClickBlockedItemListener {
 
     private Context context;
-    ArrayList<BlocekdItem> blocekdItemsList;
+    private ArrayList<BlockedItem> blocekdItemsList;
     public OnClickBlockedItemListener listener;
 
-    public ManageBlockAdapter(Context context, ArrayList<BlocekdItem> arrayList){
+    public ManageBlockAdapter(Context context, ArrayList<BlockedItem> list){
         this.context = context ;
-        this.blocekdItemsList= arrayList;
+        this.blocekdItemsList= list;
     }
 
     @NonNull
@@ -38,9 +38,9 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ManageBlockAdapter.ViewHolder holder, int position) {
-        BlocekdItem item =blocekdItemsList.get(position);
+        BlockedItem item =blocekdItemsList.get(position);
 //     holder.imageView.setImageResource(mypageItemArrayList.get(position).image);
-        holder.textView.setText(blocekdItemsList.get(position).getUserNickname());
+        holder.textView.setText(blocekdItemsList.get(position).getNickname());
     }
 
     public void setOnClickBlockedItemListener(OnClickBlockedItemListener listener){
@@ -98,20 +98,20 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
 
     }
 
-    public void addItem(BlocekdItem item){
+    public void addItem(BlockedItem item){
         blocekdItemsList.add(item);
     }
-    public void setarrayList(ArrayList<BlocekdItem> arrayList) {
+    public void setarrayList(ArrayList<BlockedItem> arrayList) {
 
         this.blocekdItemsList = arrayList;
     }
 
-    public BlocekdItem getItem(int position) {
+    public BlockedItem getItem(int position) {
 
         return blocekdItemsList.get(position);
     }
 
-    public void setItem(int position, BlocekdItem item) {
+    public void setItem(int position, BlockedItem item) {
 
         blocekdItemsList.set(position, item);
     }

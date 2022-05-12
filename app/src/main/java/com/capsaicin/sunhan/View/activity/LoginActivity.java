@@ -1,7 +1,6 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +11,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.BlocekdItem;
+import com.capsaicin.sunhan.Model.BlockedItem;
 import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
-import com.capsaicin.sunhan.Model.ErrorResponse;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.StoreItem;
-import com.capsaicin.sunhan.Model.TokenItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
@@ -31,7 +27,6 @@ import com.capsaicin.sunhan.View.adapter.ManageBlockAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageMylogsAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
-import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -52,24 +47,16 @@ import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
 
 public class LoginActivity extends AppCompatActivity {
     ArrayList<MypageItem> mypageList = new ArrayList<>();
-    ArrayList<BlocekdItem> blockedItemsList = new ArrayList<>();
     ArrayList<StoreItem> storeItemArrayList1= new ArrayList<>();
     ArrayList<StoreItem> storeItemArrayList2= new ArrayList<>();
     ArrayList<CommunityItem> communityItemArrayList= new ArrayList<>();
@@ -81,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public static Context mContext  ;
     public static MypageAdapter mypageAdapter;
-    public static ManageBlockAdapter manageBlockAdapter;
     public static SunhanStoreAdapter likedStoreAdapter1;
     public static SunhanStoreAdapter likedStoreAdapter2;
     public static CommunityAdapter communityAdapter;
@@ -96,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
     public static String token;
     public static String userAccessToken;
     public static String userRefreshToken;
-
     Button kakao_btn;
     private SignInButton google_btn; // 구글 로그인 버튼
     Button naver_btn;
@@ -127,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("Kakao User", oAuthToken.getAccessToken() + " " + oAuthToken.getRefreshToken());
                     token = oAuthToken.getAccessToken();
                         if(tokenRetrofitInstance!=null){
-                            Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("eBearr "+token);
+                            Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("Bearer "+token);
                             call.enqueue(new Callback<TokenResponse>() {
                                 @Override
                                 public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
@@ -165,10 +150,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(LoginClient.getInstance().isKakaoTalkLoginAvailable(LoginActivity.this)){
                     LoginClient.getInstance().loginWithKakaoTalk(LoginActivity.this, callback);
-
                 } else {
                     LoginClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
                 }
+
             }
         });
 
@@ -364,7 +349,6 @@ public class LoginActivity extends AppCompatActivity {
 
     void setList(){
         mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
-        manageBlockAdapter = new ManageBlockAdapter (getApplicationContext(),blockedItemsList);
         likedStoreAdapter1 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList1);
         likedStoreAdapter2 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList2);
         communityAdapter = new CommunityAdapter(getApplicationContext(),communityItemArrayList);
@@ -385,13 +369,6 @@ public class LoginActivity extends AppCompatActivity {
         mypageAdapter.addItem(new MypageItem("탈퇴하기"));
         mypageAdapter.addItem(new MypageItem("약관및정책"));
 
-
-        manageBlockAdapter.addItem(new BlocekdItem("귤이"));
-        manageBlockAdapter.addItem(new BlocekdItem("익명"));
-        manageBlockAdapter.addItem(new BlocekdItem("이"));
-        manageBlockAdapter.addItem(new BlocekdItem("박"));
-        manageBlockAdapter.addItem(new BlocekdItem("수박"));
-        manageBlockAdapter.addItem(new BlocekdItem("메론"));
 
         //찜한가게 카드 가맹점
         likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",

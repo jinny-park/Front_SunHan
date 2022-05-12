@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.TokenResponse;
@@ -57,7 +63,7 @@ public class MyPageFragment extends Fragment {
     public static TextView userId;
     public static TextView userEmail;
     public static ImageView userImage;
-    String imageUri;
+    public static String imageUrl;
 
     MyPageFragment myPageFragment ;
 
@@ -83,6 +89,22 @@ public class MyPageFragment extends Fragment {
         userImage = view.findViewById(R.id.info_user_profile);
         myPageFragment = new MyPageFragment();
 
+        setRecyclerview(view);
+        profileEditBtn = view.findViewById(R.id.modify_profile);
+        profileEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(LoginActivity.userAccessToken==null){
+
+                }else{
+                    Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                    intent.putExtra("nickName",userNickName.getText());
+                    intent.putExtra("profilePic",imageUrl);
+                    startActivity(intent);
+                }
+            }
+        });
+
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
@@ -93,10 +115,11 @@ public class MyPageFragment extends Fragment {
                             UserResponse result = response.body();
                             userNickName.setText(result.getUserItem().getNickname());
                             userEmail.setText(result.getUserItem().getEmail());
-                            imageUri=result.getUserItem().getAvatarUrl();
-                            Uri uri = Uri.parse(result.getUserItem().getAvatarUrl());
-                            Glide.with(getActivity()).load(uri).into(userImage);
+                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
+                            Log.d("imageUrl", imageUrl);
 //                            userImage.setImageURI(uri);
+                            Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
+//                           Glide.with(getActivity()).load(uri).into(userImage);
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -110,21 +133,6 @@ public class MyPageFragment extends Fragment {
                 });
             }
         }
-        setRecyclerview(view);
-        profileEditBtn = view.findViewById(R.id.modify_profile);
-        profileEditBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(LoginActivity.userAccessToken==null){
-
-                }else{
-                    Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                    intent.putExtra("nickName",userNickName.getText());
-                    intent.putExtra("profilePic",imageUri);
-                    startActivity(intent);
-                }
-            }
-        });
 
 
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
@@ -196,9 +204,11 @@ public class MyPageFragment extends Fragment {
                             }else{
                                 LoginActivity.userAccessToken = null;
                                 LoginActivity.userRefreshToken = null;
+                                LoginActivity.token = null;
                                 userNickName.setText("로그인을 해주세요");
                                 userEmail.setText("");
-                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
+                                userImage.setImageResource(R.drawable.profile);
+//                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
 
 //                                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
 //                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
