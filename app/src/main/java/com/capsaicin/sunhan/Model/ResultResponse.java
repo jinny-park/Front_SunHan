@@ -2,7 +2,7 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class ResultResponse {
     @SerializedName("message")
     private String message;
 

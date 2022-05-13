@@ -32,6 +32,8 @@ public class CommunityFragment extends Fragment {
     RecyclerView communityRecyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 
+    public static CommunityFragment communityFragment;
+
 //    Button writeBtn;
     FloatingActionButton writeBtn;
 
@@ -86,7 +88,14 @@ public class CommunityFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    public static CommunityFragment getInstance(){
 
+        if(communityFragment==null){
+            communityFragment = new CommunityFragment();
+        }
+
+        return communityFragment;
+    }
 
     void setRecyclerview(View view){
         communityRecyclerView = view.findViewById(R.id.recyleView_community);

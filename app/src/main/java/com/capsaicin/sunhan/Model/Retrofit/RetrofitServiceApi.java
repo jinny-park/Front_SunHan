@@ -1,21 +1,17 @@
 package com.capsaicin.sunhan.Model.Retrofit;
 
+import com.capsaicin.sunhan.Model.AddressItem;
 import com.capsaicin.sunhan.Model.BlockListResponse;
+import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.ChildrenResponse;
-import com.capsaicin.sunhan.Model.ErrorResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
-import com.capsaicin.sunhan.Model.Response;
-import com.capsaicin.sunhan.Model.StoreItem;
+import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.StoreResponse;
-import com.capsaicin.sunhan.Model.TokenItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
-import com.kakao.sdk.user.model.User;
-
-import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -23,11 +19,12 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitServiceApi {
 
@@ -63,4 +60,9 @@ public interface RetrofitServiceApi {
     @GET("api/users/block")//유저 차단 리스트
     Call<BlockListResponse> getBlockedList (@Header("authorization") String token);
 
+    @GET("api/children")//가맹점 거리순 리스트(회원전용)
+    Call<CardStoreResponse> getChildrenStoreList (@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort);
+
+    @POST("api/users/address")
+    Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 }

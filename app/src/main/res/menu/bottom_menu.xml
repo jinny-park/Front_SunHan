@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <item
-        android:id="@+id/action_heart"
-        android:enabled="true"
-        android:icon="@drawable/heart"
-        android:title="찜한 가게"/>
-
     <item
         android:id="@+id/action_findstore"
         android:enabled="true"
         android:icon="@drawable/search"
         android:title="가게 찾기"/>
+    <item
+        android:id="@+id/action_heart"
+        android:enabled="true"
+        android:icon="@drawable/heart"
+        android:title="찜한 가게"/>
 
     <item
         android:id="@+id/action_bottomnavi"

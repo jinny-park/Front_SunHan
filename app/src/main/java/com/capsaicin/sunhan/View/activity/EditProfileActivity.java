@@ -114,15 +114,8 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 nickNameItem.setNickname(edit_profile_name.getText().toString());
 
-                File path = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES);
-                imageFile = new File(imagePath);
-                if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
-                    imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
-                }
-                imageRequestBody = RequestBody.create(MediaType.parse("image/jpg"), imageFile);
-                filePart = MultipartBody.Part.createFormData("image", imageFile.getName() ,imageRequestBody);
-
+//                File path = Environment.getExternalStoragePublicDirectory(
+//                        Environment.DIRECTORY_PICTURES);
                 if(LoginActivity.userAccessToken!=null){
                     if(tokenRetrofitInstance!=null){
                         Call<ProfileChangeResponse> call = RetrofitInstance.getRetrofitService().changeNickname("Bearer "+LoginActivity.userAccessToken, nickNameItem);
@@ -144,24 +137,33 @@ public class EditProfileActivity extends AppCompatActivity {
                             }
                         });
 
-                        Call<ProfileChangeResponse> call2 = RetrofitInstance.getRetrofitService().changePicture("Bearer "+LoginActivity.userAccessToken, filePart);
-                        call2.enqueue(new Callback<ProfileChangeResponse>() {
-                            @Override
-                            public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
-                                if (response.isSuccessful()) {
-                                    ProfileChangeResponse result = response.body();
-                                    changePicture();
-                                    Log.d("프로필사진변경성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("프로필 온리스폰스 실패", response.message());
-                                }
+                        if(imagePath!=null){
+                            imageFile = new File(imagePath);
+                            if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
+                                imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
                             }
+                            imageRequestBody = RequestBody.create(MediaType.parse("image/jpg"), imageFile);
+                            filePart = MultipartBody.Part.createFormData("image", imageFile.getName() ,imageRequestBody);
 
-                            @Override
-                            public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
-                                Log.d("프로필 실패", t.getMessage());
-                            }
-                        });
+                            Call<ProfileChangeResponse> call2 = RetrofitInstance.getRetrofitService().changePicture("Bearer "+LoginActivity.userAccessToken, filePart);
+                            call2.enqueue(new Callback<ProfileChangeResponse>() {
+                                @Override
+                                public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        ProfileChangeResponse result = response.body();
+                                        changePicture();
+                                        Log.d("프로필사진변경성공", new Gson().toJson(response.body()));
+                                    } else {
+                                        Log.d("프로필 온리스폰스 실패", response.message());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
+                                    Log.d("프로필 실패", t.getMessage());
+                                }
+                            });
+                        }
 
                     }
                 }

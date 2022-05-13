@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.capsaicin.sunhan.Model.BlockedItem;
 import com.capsaicin.sunhan.Model.CardCheckItem;
+import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -22,11 +23,17 @@ import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
+import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.adapter.ManageBlockAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageMylogsAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
+import com.capsaicin.sunhan.View.fragment.CommunityFragment;
+import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
+import com.capsaicin.sunhan.View.fragment.HeartFragment;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -65,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     ArrayList<CommunityItem> postItemList = new ArrayList<>();
     ArrayList<CommunityItem> commentItemList = new ArrayList<>();
     ArrayList<CardCheckItem> cardCheckItemArrayList = new ArrayList<>();
-
+    ArrayList<CardStoreItem> cardStoreItems = new ArrayList<>();
     public static Context mContext  ;
     public static MypageAdapter mypageAdapter;
     public static SunhanStoreAdapter likedStoreAdapter1;
@@ -76,6 +83,13 @@ public class LoginActivity extends AppCompatActivity {
     public static MypageMylogsAdapter postLogsAdapter;
     public static MypageMylogsAdapter commentsLogsAdapter;
     public static CardCheckAdapter cardCheckAdapter;
+    public static CardStoreAdapter cardStoreAdapter;
+
+    public static MyPageFragment myPageFragment;
+    public static HeartFragment heartFragment;
+    public static FindStoreFragment findStoreFragment;
+    public static CommunityFragment communityFragment;
+    public static SunhanstMainFragment sunhanstMainFragment ;
 
     private static final String TAG = "LoginActivity";
 
@@ -98,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setList();
+        init();
         mContext = getApplicationContext();
         kakao_btn = findViewById(R.id.kakao_login);
         google_btn = findViewById(R.id.google_login);
@@ -347,7 +361,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    void setList(){
+    void init(){
         mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
         likedStoreAdapter1 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList1);
         likedStoreAdapter2 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList2);
@@ -357,6 +371,13 @@ public class LoginActivity extends AppCompatActivity {
         postLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),postItemList);
         commentsLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),commentItemList);
         cardCheckAdapter = new CardCheckAdapter(getApplicationContext(), cardCheckItemArrayList);
+        cardStoreAdapter = new CardStoreAdapter(getApplicationContext(),cardStoreItems);
+
+        myPageFragment = new MyPageFragment();
+       heartFragment = new HeartFragment();
+       findStoreFragment = new FindStoreFragment();
+       communityFragment = new CommunityFragment();
+       sunhanstMainFragment = new SunhanstMainFragment();
         setData();
     }
 
@@ -370,64 +391,64 @@ public class LoginActivity extends AppCompatActivity {
         mypageAdapter.addItem(new MypageItem("약관및정책"));
 
 
-        //찜한가게 카드 가맹점
-        likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
-                "0314299444","10:00-21:00"));
-        likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
-                "0314291234","11:30-22:00"));
-        likedStoreAdapter1.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
-                "0314295687","7:00-22:00"));
-        likedStoreAdapter1.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
-                "0314293333","9:00-21:30"));
-
-        //찜한가게 선한가게
-        likedStoreAdapter2.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
-                "0314299444","10:00-21:00"));
-        likedStoreAdapter2.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
-                "0314291234","11:30-22:00"));
-        likedStoreAdapter2.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
-                "0314295687","7:00-22:00"));
-        likedStoreAdapter2.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
-                "0314293333","9:00-21:30"));
-
-        //가게 메인화면 카드 가맹점
-        storeCardAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
-                "0314299444","10:00-21:00"));
-        storeCardAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
-                "0314291234","11:30-22:00"));
-        storeCardAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
-                "0314295687","7:00-22:00"));
-        storeCardAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
-                "0314293333","9:00-21:30"));
-
-        //가게 메인화면 선한가게
-        storeSunhanAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
-                "0314299444","10:00-21:00"));
-        storeSunhanAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
-                "0314291234","11:30-22:00"));
-        storeSunhanAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
-                "0314295687","7:00-22:00"));
-        storeSunhanAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
-                "0314293333","9:00-21:30"));
-
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
-                "고 사장님도 친절해요~","0"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
-                "습니다","4"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
-                "또 갈게요 ~","1"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
-                "분들께 추천드립니다 ","3"));
-        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
-
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
-                "고 사장님도 친절해요~","0"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
-                "습니다","4"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
-                "또 갈게요 ~","1"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
-                "분들께 추천드립니다 ","3"));
-        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
+//        //찜한가게 카드 가맹점
+//        likedStoreAdapter1.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+//                "0314299444","10:00-21:00"));
+//        likedStoreAdapter1.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+//                "0314291234","11:30-22:00"));
+//        likedStoreAdapter1.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+//                "0314295687","7:00-22:00"));
+//        likedStoreAdapter1.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+//                "0314293333","9:00-21:30"));
+//
+//        //찜한가게 선한가게
+//        likedStoreAdapter2.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+//                "0314299444","10:00-21:00"));
+//        likedStoreAdapter2.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+//                "0314291234","11:30-22:00"));
+//        likedStoreAdapter2.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+//                "0314295687","7:00-22:00"));
+//        likedStoreAdapter2.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+//                "0314293333","9:00-21:30"));
+//
+//        //가게 메인화면 카드 가맹점
+//        storeCardAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+//                "0314299444","10:00-21:00"));
+//        storeCardAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+//                "0314291234","11:30-22:00"));
+//        storeCardAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+//                "0314295687","7:00-22:00"));
+//        storeCardAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+//                "0314293333","9:00-21:30"));
+//
+//        //가게 메인화면 선한가게
+//        storeSunhanAdapter.addItem(new StoreItem("돈애랑장터순대국감자탕", "경기 수원시 영통구 동문3길 10",
+//                "0314299444","10:00-21:00"));
+//        storeSunhanAdapter.addItem(new StoreItem("낙원갈비집", "경기 수원시 영통구 1243 1층",
+//                "0314291234","11:30-22:00"));
+//        storeSunhanAdapter.addItem(new StoreItem("서브웨이", "경기 수원시 영통구 광교산로 22",
+//                "0314295687","7:00-22:00"));
+//        storeSunhanAdapter.addItem(new StoreItem("맘스터치", "경기 수원시 영통구 광교산로 154",
+//                "0314293333","9:00-21:30"));
+//
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
+//                "고 사장님도 친절해요~","0"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
+//                "습니다","4"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
+//                "또 갈게요 ~","1"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
+//                "분들께 추천드립니다 ","3"));
+//        postLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
+//
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
+//                "고 사장님도 친절해요~","0"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
+//                "습니다","4"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
+//                "또 갈게요 ~","1"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
+//                "분들께 추천드립니다 ","3"));
+//        commentsLogsAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
     }
 }

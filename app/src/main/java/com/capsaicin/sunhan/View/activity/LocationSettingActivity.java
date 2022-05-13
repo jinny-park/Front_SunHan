@@ -1,23 +1,16 @@
 package com.capsaicin.sunhan.View.activity;
 
-import android.app.Activity;
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,22 +22,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.capsaicin.sunhan.Model.AddressItem;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
 
-import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.runtime.Permission;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import com.capsaicin.sunhan.Model.ResultResponse;
+
 
 public class LocationSettingActivity extends AppCompatActivity {
     private GpsTracker gpsTracker;
-
+    private RetrofitInstance tokenRetrofitInstance ;
+    private AddressItem addressItem;
     Toolbar toolbar;
+    public static double lat;
+    public static double lng;
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
@@ -72,6 +73,7 @@ public class LocationSettingActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_setting);
+        tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
         toolbar = findViewById(R.id.location_toolbar);
         setToolbar();
@@ -99,6 +101,32 @@ public class LocationSettingActivity extends AppCompatActivity {
                 double latitude = gpsTracker.getLatitude(); //위도
                 double longitude = gpsTracker.getLongitude(); //경도
 
+                lat = latitude; // 사용자의 위도경도 스태틱으로 넣어줌 -> 위도경도를 api 요청시 필요할 때 사용
+                lng = longitude; // 사용자의 위도경도
+                addressItem = new AddressItem (latitude,longitude);
+
+               if(LoginActivity.userAccessToken!=null){
+                if(tokenRetrofitInstance!=null){
+                    Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress("Bearer "+LoginActivity.userAccessToken,addressItem);
+                    call.enqueue(new Callback<ResultResponse>() {
+                        @Override
+                        public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                            if (response.isSuccessful()) {
+                                ResultResponse result = response.body();
+                                Log.d("성공", new Gson().toJson(response.body()));
+                            } else {
+                                Log.d("REST FAILED MESSAGE", response.message());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResultResponse> call, Throwable t) {
+                            Log.d("REST ERROR!", t.getMessage());
+                        }
+                    });
+                }
+            }
+
                 String address = getCurrentAddress(latitude, longitude);
                 textview_address.setText(address);
 
@@ -106,6 +134,31 @@ public class LocationSettingActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void sendAddress(AddressItem addressItem){
+//
+//        if(LoginActivity.userAccessToken!=null){
+//            if(tokenRetrofitInstance!=null){
+//                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress(LoginActivity.userAccessToken,addressItem);
+//                call.enqueue(new Callback<ResultResponse>() {
+//                    @Override
+//                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            ResultResponse result = response.body();
+//                            Log.d("성공", new Gson().toJson(response.body()));
+//                        } else {
+//                            Log.d("REST FAILED MESSAGE", response.message());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+//                        Log.d("REST ERROR!", t.getMessage());
+//                    }
+//                });
+//            }
+//        }
+//    }
 
     /*
      * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.

@@ -26,13 +26,13 @@ public interface AdapterItemListener<T> {
 public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.ViewHolder>
         implements OnClickStoreItemListener{
 
-    ArrayList<StoreItem> items=new ArrayList<StoreItem>();
+    ArrayList<StoreItem> cardStoreList=new ArrayList<StoreItem>();
     private Context context;
     public OnClickStoreItemListener listener;
 
     public SunhanStoreAdapter(Context context, ArrayList<StoreItem> items){
         this.context = context ;
-        this.items= items;
+        this.cardStoreList= items;
     }
 
     @NonNull
@@ -45,12 +45,12 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SunhanStoreAdapter.ViewHolder holder, int position) {
-        StoreItem item =items.get(position);
+        StoreItem item =cardStoreList.get(position);
    //     holder.imageView.setImageResource(storeItemArrayList.get(position).image);
-        holder.storeName.setText(items.get(position).getStoreName());
-        holder.storeAddrs.setText(items.get(position).getStoreAddrs());
-        holder.storeNum.setText(items.get(position).getStoreNum());
-        holder.storeTime.setText(items.get(position).getStoreTime());
+        holder.storeName.setText(cardStoreList.get(position).getStoreName());
+        holder.storeAddrs.setText(cardStoreList.get(position).getStoreAddrs());
+        holder.storeNum.setText(cardStoreList.get(position).getStoreNum());
+        holder.storeTime.setText(cardStoreList.get(position).getStoreTime());
     }
     public void setOnClickStoreItemListener(OnClickStoreItemListener listener){
         this.listener = listener;
@@ -65,7 +65,7 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return cardStoreList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -100,19 +100,23 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
 
     }
 
+    public void addList(ArrayList <StoreItem> list){
+        cardStoreList.addAll(list);
+    }
+
     public void addItem(StoreItem item){
-        items.add(item);
+        cardStoreList.add(item);
     }
     public void setArrayList(ArrayList<StoreItem> arrayList) {
-        this.items = arrayList;
+        this.cardStoreList = arrayList;
     }
 
     public StoreItem getItem(int position) {
-        return items.get(position);
+        return cardStoreList.get(position);
     }
 
     public void setItem(int position, StoreItem item) {
-        items.set(position, item);
+        cardStoreList.set(position, item);
     }
 
 }

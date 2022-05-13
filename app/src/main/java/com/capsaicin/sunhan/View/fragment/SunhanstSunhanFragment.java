@@ -9,8 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
 import com.google.android.material.tabs.TabLayout;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SunhanstSunhanFragment extends Fragment {
 
@@ -19,6 +23,8 @@ public class SunhanstSunhanFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+
+    public static SunhanstSunhanFragment sunhanstSunhanFragment;
 
     @Nullable
     @Override
@@ -93,6 +99,14 @@ public class SunhanstSunhanFragment extends Fragment {
 
         return view;
 
+    }
+
+    public static SunhanstSunhanFragment getInstance(){
+
+        if(sunhanstSunhanFragment==null){
+            sunhanstSunhanFragment = new SunhanstSunhanFragment();
+        }
+        return sunhanstSunhanFragment;
     }
 
 //    void setRecyclerview(View view){

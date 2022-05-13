@@ -65,7 +65,7 @@ public class MyPageFragment extends Fragment {
     public static ImageView userImage;
     public static String imageUrl;
 
-    MyPageFragment myPageFragment ;
+    static public MyPageFragment myPageFragment ;
 
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
@@ -73,6 +73,8 @@ public class MyPageFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+
     }
 
     @SuppressLint("ResourceType")
@@ -182,6 +184,15 @@ public class MyPageFragment extends Fragment {
 //            ((BottomNavigationActivity) activity).setActionBarTitle("마이페이지");
 //        }
 //    }
+
+    public static MyPageFragment getInstance(){
+
+        if(myPageFragment==null){
+            myPageFragment = new MyPageFragment();
+        }
+
+        return myPageFragment;
+    }
 
     void setRecyclerview(View view){
         mypageRecyclerView = view.findViewById(R.id.recyclerview_mypage);

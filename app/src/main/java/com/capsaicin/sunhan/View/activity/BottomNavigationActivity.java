@@ -2,6 +2,7 @@ package com.capsaicin.sunhan.View.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,12 +24,13 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-    MyPageFragment myPageFragment;
-    HeartFragment heartFragment;
-    FindStoreFragment findStoreFragment;
-    CommunityFragment communityFragment;
+//    MyPageFragment myPageFragment;
+//    HeartFragment heartFragment;
+//    FindStoreFragment findStoreFragment;
+//    CommunityFragment communityFragment;
+
+//    SunhanstMainFragment sunhanstMainFragment ;
     NavigationBarView navigationBarView;
-    SunhanstMainFragment sunhanstMainFragment ;
     Toolbar toolbar;
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
@@ -44,11 +46,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        myPageFragment = new MyPageFragment();
-        heartFragment = new HeartFragment();
-        findStoreFragment = new FindStoreFragment();
-        communityFragment = new CommunityFragment();
-        sunhanstMainFragment = new SunhanstMainFragment();
+//        myPageFragment = new MyPageFragment();
+//        heartFragment = new HeartFragment();
+//        findStoreFragment = new FindStoreFragment();
+//        communityFragment = new CommunityFragment();
+//        sunhanstMainFragment = new SunhanstMainFragment();
 
 
 
@@ -57,26 +59,27 @@ public class BottomNavigationActivity extends AppCompatActivity {
         toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, FindStoreFragment.getInstance()).commit();
         navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_heart:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, heartFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, HeartFragment.getInstance()).commit();
                         return true;
                     case R.id.action_findstore:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, findStoreFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, FindStoreFragment.getInstance()).commit();
                         return true;
                     case R.id.action_community:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, CommunityFragment.getInstance()).commit();
                         return true;
                     case R.id.action_mypage:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, MyPageFragment.getInstance()).commit();
                         return true;
                     case R.id.action_bottomnavi:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, SunhanstMainFragment.getInstance()).commit();
                         return true;
                 }
                     return false;
@@ -117,7 +120,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
             case R.id.location_search:
                 Intent intent=new Intent(getApplicationContext(), LocationSettingActivity.class);
                 startActivity(intent);
-                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -41,9 +41,10 @@ public class SunhanstMainFragment extends Fragment {
     ArrayList<StoreItem> storeList=new ArrayList<StoreItem>();
     RecyclerView sunhanStoreRecyclerView;
 
-    SunhanstCardFragment sunhanstCardFragment;
+    private SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
     ImageView addImage;
+    public static SunhanstMainFragment sunhanstMainFragment;
 
     public static String storeId;
     public static String storeName;
@@ -59,8 +60,10 @@ public class SunhanstMainFragment extends Fragment {
     private RetrofitInstance storeRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
 
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -69,6 +72,10 @@ public class SunhanstMainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
+
+        sunhanstCardFragment = SunhanstCardFragment.getSunhanstCardFragment();
+        sunhanstSunhanFragment = SunhanstSunhanFragment.getInstance();
+        getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container,sunhanstCardFragment).commit();
 
         addImage = view.findViewById(R.id.img_sunhan_donate);
         addImage.setOnClickListener(new View.OnClickListener() {
@@ -128,11 +135,7 @@ public class SunhanstMainFragment extends Fragment {
             }
         });
 
-        sunhanstCardFragment = new SunhanstCardFragment();
-        sunhanstSunhanFragment = new SunhanstSunhanFragment();
-
-        getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container, sunhanstCardFragment).commit();
-        TabLayout tabs1 = view.findViewById(R.id.store_tapLayout);
+       TabLayout tabs1 = view.findViewById(R.id.store_tapLayout);
         tabs1.addTab(tabs1.newTab().setText("아동급식가맹점"));
         tabs1.addTab(tabs1.newTab().setText("선한영향력가게"));
 
@@ -143,7 +146,6 @@ public class SunhanstMainFragment extends Fragment {
 //        tabs2.addTab(tabs2.newTab().setText("일식"));
 //        tabs2.addTab(tabs2.newTab().setText("양식"));
 //        tabs2.addTab(tabs2.newTab().setText("디저트"));
-
 
         tabs1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -218,6 +220,16 @@ public class SunhanstMainFragment extends Fragment {
 //        });
 
         return view;
+    }
+
+
+    public static SunhanstMainFragment getInstance(){
+
+        if(sunhanstMainFragment==null){
+            sunhanstMainFragment = new SunhanstMainFragment();
+        }
+
+        return sunhanstMainFragment;
     }
     /*
     void setRecyclerview(View view){
