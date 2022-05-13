@@ -21,7 +21,7 @@ public class HeartFragment extends Fragment {
 
     LikedStoreCardstFragment likedStoreCardstFragment;
     LikedStoreSunhanFragment likedStoreSunhanFragment;
-    public static HeartFragment heartFragment;
+
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
@@ -69,13 +69,5 @@ public class HeartFragment extends Fragment {
         return view;
     }
 
-    public static HeartFragment getInstance(){
-
-        if(heartFragment==null){
-            heartFragment = new HeartFragment();
-        }
-
-        return heartFragment;
-    }
 
 }

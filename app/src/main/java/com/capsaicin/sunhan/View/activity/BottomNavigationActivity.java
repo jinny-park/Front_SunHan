@@ -24,12 +24,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-//    MyPageFragment myPageFragment;
-//    HeartFragment heartFragment;
-//    FindStoreFragment findStoreFragment;
-//    CommunityFragment communityFragment;
+    MyPageFragment myPageFragment;
+    HeartFragment heartFragment;
+    FindStoreFragment findStoreFragment;
+    CommunityFragment communityFragment;
+    SunhanstMainFragment sunhanstMainFragment ;
 
-//    SunhanstMainFragment sunhanstMainFragment ;
     NavigationBarView navigationBarView;
     Toolbar toolbar;
     private RetrofitInstance tokenRetrofitInstance ;
@@ -46,11 +46,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-//        myPageFragment = new MyPageFragment();
-//        heartFragment = new HeartFragment();
-//        findStoreFragment = new FindStoreFragment();
-//        communityFragment = new CommunityFragment();
-//        sunhanstMainFragment = new SunhanstMainFragment();
+        myPageFragment = new MyPageFragment();
+        heartFragment = new HeartFragment();
+        findStoreFragment = new FindStoreFragment();
+        communityFragment = new CommunityFragment();
+        sunhanstMainFragment = new SunhanstMainFragment();
 
 
 
@@ -59,27 +59,24 @@ public class BottomNavigationActivity extends AppCompatActivity {
         toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, FindStoreFragment.getInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
+
         navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_heart:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, HeartFragment.getInstance()).commit();
-                        return true;
-                    case R.id.action_findstore:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, FindStoreFragment.getInstance()).commit();
-                        return true;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, heartFragment).commit();
                     case R.id.action_community:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, CommunityFragment.getInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, communityFragment).commit();
                         return true;
                     case R.id.action_mypage:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, MyPageFragment.getInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
                         return true;
                     case R.id.action_bottomnavi:
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, SunhanstMainFragment.getInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
                         return true;
                 }
                     return false;
@@ -94,13 +91,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
 
-//    public void setActionBarTitle(String title) {
-//        setSupportActionBar (toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setTitle(title);
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

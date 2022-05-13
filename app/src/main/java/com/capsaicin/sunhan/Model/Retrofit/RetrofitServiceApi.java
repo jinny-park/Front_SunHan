@@ -39,8 +39,8 @@ public interface RetrofitServiceApi {
     @DELETE("users")
     Call<UserDeleteResponse> deleteUser(@Header("authorization") String token);
 
-    @GET("api/sunhans/{id}")
-    Call<StoreResponse> getStore(@Path("id") String storeId);
+//    @GET("api/sunhans/{id}")
+//    Call<StoreResponse> getStore(@Path("id") String storeId);
 
     @GET("api/children/{id}")
     Call<ChildrenResponse> getChildren(@Path("id") String storeId);

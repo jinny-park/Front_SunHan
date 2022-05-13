@@ -44,7 +44,6 @@ public class SunhanstMainFragment extends Fragment {
     private SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
     ImageView addImage;
-    public static SunhanstMainFragment sunhanstMainFragment;
 
     public static String storeId;
     public static String storeName;
@@ -60,7 +59,6 @@ public class SunhanstMainFragment extends Fragment {
     private RetrofitInstance storeRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
 
-
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
@@ -73,8 +71,10 @@ public class SunhanstMainFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
 
-        sunhanstCardFragment = SunhanstCardFragment.getSunhanstCardFragment();
-        sunhanstSunhanFragment = SunhanstSunhanFragment.getInstance();
+        sunhanstCardFragment = new SunhanstCardFragment();
+        sunhanstSunhanFragment = new SunhanstSunhanFragment();
+
+        getChildFragmentManager().beginTransaction().add(R.id.tabs_store_container,sunhanstCardFragment).commit();
         getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container,sunhanstCardFragment).commit();
 
         addImage = view.findViewById(R.id.img_sunhan_donate);
@@ -88,52 +88,52 @@ public class SunhanstMainFragment extends Fragment {
         });
 
 
-        storeRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
-        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("id"); //인터페이스의 get @path 안의 변수명과 일치해야함
-
-        call.enqueue(new Callback<StoreResponse>() {
-            @Override
-            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                //response 체크하는거
-                if (!response.isSuccessful()) {
-                    StoreResponse result = response.body();
-                    /*storeId= result.getStoreItem().getStoreId();
-                    storeName= result.getStoreItem().getStoreName();
-                    storeAddrs= result.getStoreItem().getStoreAddrs();
-                    storeNum= result.getStoreItem().getStoreNum();
-                    storeTime= result.getStoreItem().getStoreTime();
-                    storeCategory= result.getStoreItem().getStoreCategory();
-                    storeOffer= result.getStoreItem().getStoreOffer();
-                    storeTarget= result.getStoreItem().getStoreTarget();
-                    storeReviews= result.getStoreItem().getStoreReviews();*/
-
-                    Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
-                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
-                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
-                } else {
-                    StoreResponse result = response.body();
-                    /*storeId= result.getStoreItem().getStoreId();
-                    storeName= result.getStoreItem().getStoreName();
-                    storeAddrs= result.getStoreItem().getStoreAddrs();
-                    storeNum= result.getStoreItem().getStoreNum();
-                    storeTime= result.getStoreItem().getStoreTime();
-                    storeCategory= result.getStoreItem().getStoreCategory();
-                    storeOffer= result.getStoreItem().getStoreOffer();
-                    storeTarget= result.getStoreItem().getStoreTarget();
-                    storeReviews= result.getStoreItem().getStoreReviews();
-*/
-                    Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
-                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
-                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<StoreResponse> call, Throwable t) {
-                //check ip address
-                Log.d(TAG, "onFailure: onFailure - " + t.getMessage());
-            }
-        });
+//        storeRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
+//        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getStore("id"); //인터페이스의 get @path 안의 변수명과 일치해야함
+//
+//        call.enqueue(new Callback<StoreResponse>() {
+//            @Override
+//            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+//                //response 체크하는거
+//                if (!response.isSuccessful()) {
+//                    StoreResponse result = response.body();
+//                    /*storeId= result.getStoreItem().getStoreId();
+//                    storeName= result.getStoreItem().getStoreName();
+//                    storeAddrs= result.getStoreItem().getStoreAddrs();
+//                    storeNum= result.getStoreItem().getStoreNum();
+//                    storeTime= result.getStoreItem().getStoreTime();
+//                    storeCategory= result.getStoreItem().getStoreCategory();
+//                    storeOffer= result.getStoreItem().getStoreOffer();
+//                    storeTarget= result.getStoreItem().getStoreTarget();
+//                    storeReviews= result.getStoreItem().getStoreReviews();*/
+//
+//                    Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
+//                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+//                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
+//                } else {
+//                    StoreResponse result = response.body();
+//                    /*storeId= result.getStoreItem().getStoreId();
+//                    storeName= result.getStoreItem().getStoreName();
+//                    storeAddrs= result.getStoreItem().getStoreAddrs();
+//                    storeNum= result.getStoreItem().getStoreNum();
+//                    storeTime= result.getStoreItem().getStoreTime();
+//                    storeCategory= result.getStoreItem().getStoreCategory();
+//                    storeOffer= result.getStoreItem().getStoreOffer();
+//                    storeTarget= result.getStoreItem().getStoreTarget();
+//                    storeReviews= result.getStoreItem().getStoreReviews();
+//*/
+//                    Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
+//                    Log.d("result", storeId+"\n"+storeName+"\n"+storeAddrs+"\n"+storeNum+"\n"+storeTime+"\n"+
+//                            storeCategory+"\n"+storeOffer+"\n"+storeTarget+"\n"+storeReviews);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StoreResponse> call, Throwable t) {
+//                //check ip address
+//                Log.d(TAG, "onFailure: onFailure - " + t.getMessage());
+//            }
+//        });
 
        TabLayout tabs1 = view.findViewById(R.id.store_tapLayout);
         tabs1.addTab(tabs1.newTab().setText("아동급식가맹점"));
@@ -222,15 +222,6 @@ public class SunhanstMainFragment extends Fragment {
         return view;
     }
 
-
-    public static SunhanstMainFragment getInstance(){
-
-        if(sunhanstMainFragment==null){
-            sunhanstMainFragment = new SunhanstMainFragment();
-        }
-
-        return sunhanstMainFragment;
-    }
     /*
     void setRecyclerview(View view){
         sunhanStoreRecyclerView = view.findViewById(R.id.recyclerview_store);

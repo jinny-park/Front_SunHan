@@ -77,6 +77,43 @@ public class MyPageFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("온스타트","레트로핏 전");
+        if(LoginActivity.userAccessToken!=null){
+            Log.d("온스타트","토큰");
+            if(tokenRetrofitInstance!=null){
+                Log.d("온스타트","레트로핏 시작");
+                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            UserResponse result = response.body();
+                            userNickName.setText(result.getUserItem().getNickname());
+                            userEmail.setText(result.getUserItem().getEmail());
+                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
+                            Log.d("imageUrl", imageUrl);
+//                            userImage.setImageURI(uri);
+                            Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
+//                           Glide.with(getActivity()).load(uri).into(userImage);
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
+
+    }
+
     @SuppressLint("ResourceType")
     @Nullable
     @Override
@@ -107,34 +144,6 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
-                call.enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                        if (response.isSuccessful()) {
-                            UserResponse result = response.body();
-                            userNickName.setText(result.getUserItem().getNickname());
-                            userEmail.setText(result.getUserItem().getEmail());
-                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
-                            Log.d("imageUrl", imageUrl);
-//                            userImage.setImageURI(uri);
-                            Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
-//                           Glide.with(getActivity()).load(uri).into(userImage);
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
-            }
-        }
 
 
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
@@ -175,23 +184,6 @@ public class MyPageFragment extends Fragment {
 
         return view;
 
-    }
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        FragmentActivity activity = getActivity();
-//        if (activity != null) {
-//            ((BottomNavigationActivity) activity).setActionBarTitle("마이페이지");
-//        }
-//    }
-
-    public static MyPageFragment getInstance(){
-
-        if(myPageFragment==null){
-            myPageFragment = new MyPageFragment();
-        }
-
-        return myPageFragment;
     }
 
     void setRecyclerview(View view){

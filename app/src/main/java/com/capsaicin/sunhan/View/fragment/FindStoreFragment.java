@@ -22,7 +22,6 @@ public class FindStoreFragment extends Fragment {
     private SearchAdapter adapter;      // 리스트뷰에 연결할 아답터
     private ArrayList<String> arraylist;
     private SearchView searchView;
-    public static FindStoreFragment findStoreFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +41,5 @@ public class FindStoreFragment extends Fragment {
 
         return view;
 
-    }
-
-    public static FindStoreFragment getInstance(){
-
-        if(findStoreFragment==null){
-            findStoreFragment = new FindStoreFragment();
-        }
-
-        return findStoreFragment;
     }
 }

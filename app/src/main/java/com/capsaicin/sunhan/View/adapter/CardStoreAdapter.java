@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +22,21 @@ import java.util.ArrayList;
 public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.ViewHolder>
         implements OnClickCardStoreItemListener {
 
-   public static CardStoreAdapter cardStoreAdapter;
     ArrayList<CardStoreItem> cardStoreList=new ArrayList<CardStoreItem>();
     private Context context;
     public OnClickCardStoreItemListener listener;
 
     public CardStoreAdapter(Context context, ArrayList<CardStoreItem> items){
+        Log.d("어댑터생성자 ","들어옴" );
         this.context = context ;
         this.cardStoreList= items;
+        notifyItemRangeInserted(cardStoreList.size(),items.size());
     }
 
     @NonNull
     @Override
     public CardStoreAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("온크리에이트뷰홀더 ","들어옴" );
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.store_item, parent, false);
         return new CardStoreAdapter.ViewHolder(itemView ,this);
@@ -42,6 +45,7 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
     @Override
     public void onBindViewHolder(@NonNull CardStoreAdapter.ViewHolder holder, int position) {
         CardStoreItem item =cardStoreList.get(position);
+        Log.d("온바인드홀더 ", cardStoreList.get(position).getName());
         //     holder.imageView.setImageResource(storeItemArrayList.get(position).image);
         holder.storeName.setText(cardStoreList.get(position).getName());
         holder.storeAddrs.setText(cardStoreList.get(position).getAddress());
@@ -60,16 +64,19 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
         }
     }
 
-    public static CardStoreAdapter getCardStoreAdapter(){
-            return cardStoreAdapter;
-    }
-
-
-
     @Override
     public int getItemCount() {
         return cardStoreList.size();
     }
+
+//    @Override
+//    public int getItemCount() {
+//        if (cardStoreList.size() == 0) {
+//            return 1;
+//        } else {
+//            return cardStoreList.size();
+//        }
+//    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView storeName;
@@ -80,6 +87,7 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
 
         public ViewHolder(@NonNull View itemView , final OnClickCardStoreItemListener listener) {
             super(itemView);
+            Log.d("뷰홀더 ","들어옴" );
             storeName = itemView.findViewById(R.id.storeName);
             storeAddrs = itemView.findViewById(R.id.storeAddrs);
             storeNum = itemView.findViewById(R.id.storeNum);
@@ -104,6 +112,8 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
 
     public void addList(ArrayList <CardStoreItem> list){
         cardStoreList.addAll(list);
+        notifyItemRangeInserted(cardStoreList.size(),list.size());
+        Log.d("addList ",list.toString());
     }
 
     public void addItem(CardStoreItem item){

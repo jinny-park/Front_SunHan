@@ -24,8 +24,6 @@ public class SunhanstSunhanFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public static SunhanstSunhanFragment sunhanstSunhanFragment;
-
     @Nullable
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
@@ -101,13 +99,6 @@ public class SunhanstSunhanFragment extends Fragment {
 
     }
 
-    public static SunhanstSunhanFragment getInstance(){
-
-        if(sunhanstSunhanFragment==null){
-            sunhanstSunhanFragment = new SunhanstSunhanFragment();
-        }
-        return sunhanstSunhanFragment;
-    }
 
 //    void setRecyclerview(View view){
 //        sunhanSunhanRecyclerView = view.findViewById(R.id.recyclerview_sunhanstore);

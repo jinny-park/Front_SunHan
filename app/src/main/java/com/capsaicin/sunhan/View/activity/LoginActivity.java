@@ -134,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                         TokenResponse result = response.body();
                                         userAccessToken = result.getTokenItem().getAccessToken();
                                         userRefreshToken = result.getTokenItem().getRefreshToken();
+                                        updateKakaoLoginUi();
                                         Log.d("성공", new Gson().toJson(response.body()));
                                         Log.d("userAccessToken", userAccessToken);
                                     } else {
@@ -153,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.w(TAG, "invoke: " + throwable.getLocalizedMessage());
 
                 }
-                updateKakaoLoginUi();
                 return null;
             }
         };
