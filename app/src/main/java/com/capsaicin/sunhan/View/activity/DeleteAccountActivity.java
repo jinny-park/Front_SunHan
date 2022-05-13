@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -51,7 +52,19 @@ public class DeleteAccountActivity extends AppCompatActivity {
                             public void onResponse(Call<UserDeleteResponse> call, Response<UserDeleteResponse> response) {
                                 if (response.isSuccessful()) {
                                     UserDeleteResponse result = response.body();
-                                    showDialog();
+                                    AlertDialog.Builder dlg = new AlertDialog.Builder(DeleteAccountActivity.this);
+                                    dlg.setMessage("탈퇴가 완료되었습니다. "); // 메시지
+                                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //토스트 메시지
+                                            LoginActivity.userAccessToken = null;
+                                            LoginActivity.userRefreshToken = null;
+                                            Intent intent = new Intent(getApplication(), BottomNavigationActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    dlg.show();
                                     Log.d("탈퇴성공", result.getMessage());
                                 } else {
                                     Log.d("REST FAILED MESSAGE", response.message());
@@ -70,26 +83,6 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
     }
 
-    void showDialog() {
-        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getApplicationContext()).setMessage("탈퇴가 완료되었습니다.") .
-                setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-
-                        UserApiClient.getInstance().logout(error -> {
-                            if (error != null) {
-                            }else{
-                                LoginActivity.userAccessToken = null;
-                                LoginActivity.userRefreshToken = null;
-                                Intent intent = new Intent(getApplication(), LoginActivity.class);
-                                startActivity(intent);
-                            }
-                            return null;
-                        });
-                    }
-                });
-        AlertDialog msgDlg = msgBuilder.create();
-        msgDlg.show();
-    }
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
