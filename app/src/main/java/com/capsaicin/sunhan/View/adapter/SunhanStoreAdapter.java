@@ -26,13 +26,14 @@ public interface AdapterItemListener<T> {
 public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.ViewHolder>
         implements OnClickStoreItemListener{
 
-    ArrayList<StoreItem> cardStoreList=new ArrayList<StoreItem>();
+    ArrayList<StoreItem> storeItemArrayList;
     private Context context;
     public OnClickStoreItemListener listener;
 
     public SunhanStoreAdapter(Context context, ArrayList<StoreItem> items){
         this.context = context ;
-        this.cardStoreList= items;
+        this.storeItemArrayList = items;
+        notifyItemRangeInserted(storeItemArrayList.size(),items.size());
     }
 
     @NonNull
@@ -45,12 +46,12 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SunhanStoreAdapter.ViewHolder holder, int position) {
-        StoreItem item =cardStoreList.get(position);
+        StoreItem item = storeItemArrayList.get(position);
    //     holder.imageView.setImageResource(storeItemArrayList.get(position).image);
-        holder.storeName.setText(cardStoreList.get(position).getStoreName());
-        holder.storeAddrs.setText(cardStoreList.get(position).getStoreAddrs());
-        holder.storeNum.setText(cardStoreList.get(position).getStoreNum());
-        holder.storeTime.setText(cardStoreList.get(position).getStoreTime());
+        holder.storeName.setText(storeItemArrayList.get(position).getName());
+        holder.storeAddrs.setText(storeItemArrayList.get(position).getAddress());
+        holder.storeNum.setText(storeItemArrayList.get(position).getPhoneNumber());
+        holder.storeTime.setText(storeItemArrayList.get(position).getOpeningHours());
     }
     public void setOnClickStoreItemListener(OnClickStoreItemListener listener){
         this.listener = listener;
@@ -65,7 +66,7 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
 
     @Override
     public int getItemCount() {
-        return cardStoreList.size();
+        return storeItemArrayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -101,22 +102,23 @@ public class SunhanStoreAdapter extends RecyclerView.Adapter<SunhanStoreAdapter.
     }
 
     public void addList(ArrayList <StoreItem> list){
-        cardStoreList.addAll(list);
+        storeItemArrayList.addAll(list);
+        notifyItemRangeInserted(storeItemArrayList.size(),list.size());
     }
 
     public void addItem(StoreItem item){
-        cardStoreList.add(item);
+        storeItemArrayList.add(item);
     }
     public void setArrayList(ArrayList<StoreItem> arrayList) {
-        this.cardStoreList = arrayList;
+        this.storeItemArrayList = arrayList;
     }
 
     public StoreItem getItem(int position) {
-        return cardStoreList.get(position);
+        return storeItemArrayList.get(position);
     }
 
     public void setItem(int position, StoreItem item) {
-        cardStoreList.set(position, item);
+        storeItemArrayList.set(position, item);
     }
 
 }

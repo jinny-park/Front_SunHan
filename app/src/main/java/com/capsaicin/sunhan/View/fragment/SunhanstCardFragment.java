@@ -50,8 +50,10 @@ public class SunhanstCardFragment extends Fragment {
     ProgressBar progressBar;
     NestedScrollView nestedScrollView;
     private RetrofitInstance tokenRetrofitInstance ;
-    CardStoreAdapter cardStoreAdapter ;
+   CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
+    CardStoreResponse cardStoreResponse;
+    public static int distinguish; // 가맹점인 선한영향력인지 구분
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -77,6 +79,8 @@ public class SunhanstCardFragment extends Fragment {
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+
        initData(0);
 
 
@@ -96,28 +100,10 @@ public class SunhanstCardFragment extends Fragment {
             }
         });
 
-//        cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-//            @Override
-//            public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-//                String str_position = String.valueOf(position+1);
-//                if(position!=RecyclerView.NO_POSITION){
-//                    Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-//                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-//                        startActivity(intent);
-////                    for(int i=0; i<=position; i++){
-////                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-////                        intent.putExtra("position", str_position);
-////                        startActivity(intent);
-////                        break;
-////                    }
-//                }
-//            }
-//        });
-
-
         return view;
 
     }
+
 
     private void initData(int page)
     {
@@ -130,10 +116,23 @@ public class SunhanstCardFragment extends Fragment {
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            CardStoreResponse result = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
+                            cardStoreResponse = response.body();
+                            cardStoreAdapter = new CardStoreAdapter(getActivity(),cardStoreResponse.getData());
                             sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
-//                            cardStoreAdapter.addList(result.getData());
+                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                                @Override
+                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                        intent.putExtra("whichStore", 0);
+                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
@@ -165,6 +164,19 @@ public class SunhanstCardFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             CardStoreResponse result = response.body();
                             cardStoreAdapter.addList(result.getData());
+                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                                @Override
+                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                        intent.putExtra("whichStore", 0);
+                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);

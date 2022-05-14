@@ -17,9 +17,6 @@ public class StoreInfoFragment extends Fragment {
     TextView storeHoli;
     TextView storeNum;
 
-    public StoreInfoFragment() {
-        // Required empty public constructor
-    }
 
     public static StoreInfoFragment newInstance() {
         StoreInfoFragment storeInfoFragment = new StoreInfoFragment();

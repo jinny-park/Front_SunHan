@@ -87,8 +87,11 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.18125" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_category.xml" value="0.21458333333333332" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_store_detail.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_card.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_category.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_sunhan.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/network_security_config.xml" value="0.1" />
         <entry key="..\:/SunHan/app/src/main/res/layout/spinner_inner_view.xml" value="0.25364583333333335" />

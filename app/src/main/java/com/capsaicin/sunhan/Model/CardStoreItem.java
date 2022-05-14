@@ -30,9 +30,16 @@ public class CardStoreItem {
     private String category;
     @SerializedName("detailCategory")
     private String detailCategory;
-//    @SerializedName("reviews")
-//    ArrayList< LetterItem > reviews = new ArrayList ();
+    @SerializedName("reviews")
+    ArrayList< CardStoreLetter > reviews = new ArrayList ();
 
+    public ArrayList<CardStoreLetter> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<CardStoreLetter> reviews) {
+        this.reviews = reviews;
+    }
 
     public String get_id() {
         return _id;

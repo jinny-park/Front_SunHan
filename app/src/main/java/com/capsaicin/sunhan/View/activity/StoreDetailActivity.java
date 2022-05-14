@@ -2,7 +2,10 @@ package com.capsaicin.sunhan.View.activity;
 
 //activity_sunhanst_store.xml
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,14 +19,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.CardStoreResponse;
+import com.capsaicin.sunhan.Model.ChildrenStoreDetailResponse;
 import com.capsaicin.sunhan.Model.MenuItem;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.MenuAdapter;
+import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 //import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
 import com.google.android.material.tabs.TabLayout;
 
+import com.google.gson.Gson;
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
 import com.kakao.message.template.ButtonObject;
@@ -38,6 +48,10 @@ import java.util.Map;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class StoreDetailActivity extends AppCompatActivity {
     public static MenuAdapter menuAdapter;
     ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
@@ -46,8 +60,11 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     StoreInfoFragment storeInfoFragment;
     StoreLetterFragment storeLetterFragment;
-    //StoreMenuFragment storeMenuFragment;
-
+    ChildrenStoreInfoFragment childrenStoreInfoFragment;
+    private RetrofitInstance tokenRetrofitInstance ;
+    String _id ;
+    int whichStore;
+    Bundle bundle;
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
@@ -61,6 +78,7 @@ public class StoreDetailActivity extends AppCompatActivity {
         TextView textStorename = findViewById(R.id.text_storename);
         String strStore = textStorename.getText().toString();
         strStore = getIntent().getStringExtra("strStore");
+
         //가게 이름 저장한거
 
         FeedTemplate params = FeedTemplate
@@ -122,6 +140,10 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         heart_img=findViewById(R.id.heart_img);
         heart_full_img=findViewById(R.id.heart_full_img);
+        tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();//싱글톤
+        Intent intent = getIntent();
+        _id = intent.getStringExtra("_id");
+        whichStore = intent.getIntExtra("whichStore",0);
 
         TextView textStorename = findViewById(R.id.text_storename);
         TextView textStoreaddrs = findViewById(R.id.text_storeaddrs);
@@ -161,15 +183,20 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         // 탭레이아웃
 
-        //storeMenuFragment = new StoreMenuFragment();
         storeInfoFragment = new StoreInfoFragment();
         storeLetterFragment = new StoreLetterFragment();
+        childrenStoreInfoFragment = new ChildrenStoreInfoFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeInfoFragment).commit();
+        getData();
+
+        if(whichStore==0)
+            getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, childrenStoreInfoFragment).commit();
+        else
+            getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeInfoFragment).commit();
+
 
         TabLayout tabs = findViewById(R.id.store_detail_tapLayout);
 
-        //tabs.addTab(tabs.newTab().setText("메뉴"));
         tabs.addTab(tabs.newTab().setText("정보"));
         tabs.addTab(tabs.newTab().setText("감사편지"));
 
@@ -181,14 +208,14 @@ public class StoreDetailActivity extends AppCompatActivity {
                 Fragment selected = null;
 
                 if(position == 0){
-                    selected = storeInfoFragment;
+                    if(whichStore ==0) //0일 경우 가맹점 정보 프래그먼트
+                        selected = childrenStoreInfoFragment;
+                    else // 1일경우 선한영향력정보 프래그먼트 -> 두개 정보다 달라서 따로 만듦
+                        selected = storeInfoFragment;
                 }
                 else if(position==1) {
                     selected = storeLetterFragment;
                 }
-                /*else if(position==2){
-                    selected = storeMenuFragment;
-                }*/
                 getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, selected).commit();
             }
 
@@ -200,6 +227,55 @@ public class StoreDetailActivity extends AppCompatActivity {
         });
 
     }
+
+
+    private void getData()
+    {
+        if(tokenRetrofitInstance!=null && whichStore==0){
+                Call<ChildrenStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreDetail(_id);
+                call.enqueue(new Callback<ChildrenStoreDetailResponse>() {
+                    @Override
+                    public void onResponse(Call<ChildrenStoreDetailResponse> call, Response<ChildrenStoreDetailResponse> response) {
+                        if (response.isSuccessful()) {
+                            ChildrenStoreDetailResponse result = response.body();
+                            String weektime =result.getCardStoreItem().getWeekdayStartTime()+"-"+result.getCardStoreItem().getWeekdayEndTime();
+                            String weekendtime = result.getCardStoreItem().getWeekendStartTime()+"-"+result.getCardStoreItem().getWeekendEndTime();
+                            String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
+
+                            ChildrenStoreInfoFragment.storeName.setText(result.getCardStoreItem().getName());
+                            ChildrenStoreInfoFragment.weekdayTime.setText(weektime);
+                            ChildrenStoreInfoFragment.weekendTime.setText(weekendtime);
+                            ChildrenStoreInfoFragment.holidayTime.setText(holidaytime);
+                            ChildrenStoreInfoFragment.address.setText(result.getCardStoreItem().getAddress());
+                            ChildrenStoreInfoFragment.phone.setText(result.getCardStoreItem().getPhoneNumber());
+
+//                            bundle = new Bundle();
+//                            bundle.putParcelableArrayList("letterList",(ArrayList<? extends Parcelable>)result.getCardStoreItem().getReviews());
+//                            bundle.putString("name",result.getCardStoreItem().getName());
+//                            bundle.putString("address",result.getCardStoreItem().getAddress());
+//                            bundle.putString("phone",result.getCardStoreItem().getPhoneNumber());
+//                            bundle.putString("weekStart",result.getCardStoreItem().getWeekdayStartTime());
+//                            bundle.putString("weekEnd",result.getCardStoreItem().getWeekdayEndTime());
+//                            bundle.putString("weekendStart",result.getCardStoreItem().getWeekendStartTime());
+//                            bundle.putString("weekendEnd",result.getCardStoreItem().getWeekendEndTime());
+//                            bundle.putString("HolidayStart",result.getCardStoreItem().getHolydayStartTime());
+//                            bundle.putString("HolidayEnd",result.getCardStoreItem().getHolydayEndTime());
+//                            storeInfoFragment.setArguments(bundle);
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+
+                            Log.d("가맹점상세정보실패", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ChildrenStoreDetailResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
+
 
     int imageIndex=0;
     ImageView heart_img;

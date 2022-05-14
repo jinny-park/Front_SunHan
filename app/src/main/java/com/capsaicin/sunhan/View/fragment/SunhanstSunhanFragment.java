@@ -19,10 +19,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SunhanstSunhanFragment extends Fragment {
 
     RecyclerView sunhanSunhanRecyclerView;
-    SunhanstCategoryFragment sunhanCategoryFragment;
+    SunhanstCategoryFragment sunhanCategoryFragment1;
+    SunhanstCategoryFragment sunhanCategoryFragment2;
+    SunhanstCategoryFragment sunhanCategoryFragment3;
+    SunhanstCategoryFragment sunhanCategoryFragment4;
+    SunhanstCategoryFragment sunhanCategoryFragment5;
+    SunhanstCategoryFragment sunhanCategoryFragment6;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
+    public static String category = "한식";
 
     @Nullable
     @Override
@@ -30,7 +36,12 @@ public class SunhanstSunhanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_sunhan,null);
-        sunhanCategoryFragment = new SunhanstCategoryFragment();
+        sunhanCategoryFragment1 = new SunhanstCategoryFragment();
+        sunhanCategoryFragment2 = new SunhanstCategoryFragment();
+        sunhanCategoryFragment3 = new SunhanstCategoryFragment();
+        sunhanCategoryFragment4 = new SunhanstCategoryFragment();
+        sunhanCategoryFragment5 = new SunhanstCategoryFragment();
+        sunhanCategoryFragment6 = new SunhanstCategoryFragment();
 //        setRecyclerview(view);
 
         TabLayout tabs2 = view.findViewById(R.id.food_tapLayout);
@@ -41,6 +52,8 @@ public class SunhanstSunhanFragment extends Fragment {
         tabs2.addTab(tabs2.newTab().setText("카페/디저트"));
         tabs2.addTab(tabs2.newTab().setText("기타"));
 
+        getChildFragmentManager().beginTransaction().replace(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment1 ).commit();
+
         tabs2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab2) {
@@ -48,22 +61,30 @@ public class SunhanstSunhanFragment extends Fragment {
 
                 Fragment selected = null;
                 if(position == 0){
-                    selected = sunhanCategoryFragment;
+                    category = "한식";
+                    selected = sunhanCategoryFragment1;
                 }
                 else if(position==1){
-                    selected = sunhanCategoryFragment;
+                    category = "중식";
+                    selected = sunhanCategoryFragment2;
                 }
                 else if(position==2){
-                    selected = sunhanCategoryFragment;
+                    category = "일식";
+                    selected = sunhanCategoryFragment3;
+
                 }
                 else if(position==3){
-                    selected = sunhanCategoryFragment;
+                    category = "양식";
+                    selected = sunhanCategoryFragment4;
                 }
                 else if(position==4){
-                    selected = sunhanCategoryFragment;
+                    category = "카페/디저트";
+                    selected = sunhanCategoryFragment5;
+
                 }
                 else {
-                    selected = sunhanCategoryFragment;
+                    category = "기타";
+                    selected = sunhanCategoryFragment6;
                 }
                 getChildFragmentManager().beginTransaction().replace(R.id.tabs_sunhan_store_container, selected).commit();
             }

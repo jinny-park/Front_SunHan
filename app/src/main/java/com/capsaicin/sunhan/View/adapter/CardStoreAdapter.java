@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.ViewHolder>
         implements OnClickCardStoreItemListener {
 
-    ArrayList<CardStoreItem> cardStoreList=new ArrayList<CardStoreItem>();
+    ArrayList<CardStoreItem> cardStoreList;
     private Context context;
     public OnClickCardStoreItemListener listener;
 
@@ -46,11 +46,10 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
     public void onBindViewHolder(@NonNull CardStoreAdapter.ViewHolder holder, int position) {
         CardStoreItem item =cardStoreList.get(position);
         Log.d("온바인드홀더 ", cardStoreList.get(position).getName());
-        //     holder.imageView.setImageResource(storeItemArrayList.get(position).image);
         holder.storeName.setText(cardStoreList.get(position).getName());
         holder.storeAddrs.setText(cardStoreList.get(position).getAddress());
         holder.storeNum.setText(cardStoreList.get(position).getPhoneNumber());
-        String time = cardStoreList.get(position).getWeekdayStartTime()+cardStoreList.get(position).getWeekdayEndTime();
+        String time = cardStoreList.get(position).getWeekdayStartTime()+" - "+cardStoreList.get(position).getWeekdayEndTime();
         holder.storeTime.setText(time);
     }
     public void setOnClickCardStoreItemListener(OnClickCardStoreItemListener listener){
@@ -69,21 +68,12 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
         return cardStoreList.size();
     }
 
-//    @Override
-//    public int getItemCount() {
-//        if (cardStoreList.size() == 0) {
-//            return 1;
-//        } else {
-//            return cardStoreList.size();
-//        }
-//    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView storeName;
         TextView storeAddrs;
         TextView storeNum;
         TextView storeTime;
-        //ImageView storeImage;
 
         public ViewHolder(@NonNull View itemView , final OnClickCardStoreItemListener listener) {
             super(itemView);
@@ -98,7 +88,6 @@ public class CardStoreAdapter extends RecyclerView.Adapter<CardStoreAdapter.View
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-
                     if(listener != null){
                         listener.onItemClick(CardStoreAdapter.ViewHolder.this, view, position);
                     }
