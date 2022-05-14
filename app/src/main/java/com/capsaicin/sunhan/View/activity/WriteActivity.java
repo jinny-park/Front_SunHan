@@ -10,12 +10,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
 
 public class WriteActivity extends AppCompatActivity {
 
     Button finishBtn;
     Toolbar toolbar;
+
+    private RetrofitInstance tokenRetrofitInstance ;
+    private RetrofitServiceApi retrofitServiceApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +32,11 @@ public class WriteActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                CommunityFragment communityFragment = new CommunityFragment();
-//                transaction.replace(R.id.fragment_container, communityFragment);
-//                transaction.commit();
+                if(LoginActivity.userAccessToken!=null){
+                    if(tokenRetrofitInstance!=null){
+
+                    }
+                }
             }
         });
     }

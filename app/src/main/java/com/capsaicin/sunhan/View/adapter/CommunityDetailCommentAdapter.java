@@ -36,10 +36,10 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
     public void onBindViewHolder(@NonNull CommunityDetailCommentAdapter.ViewHolder holder, int position) {
         CommentItem item =CommunityCommentItemList.get(position);
 
-        holder.cuserProfile.setImageResource(CommunityCommentItemList.get(position).getUserProfile());
-        holder.cuserId.setText(CommunityCommentItemList.get(position).getUserId());
-        holder.ccontent.setText(CommunityCommentItemList.get(position).getContent());
-        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommentTime());
+//        holder.cuserProfile.setImageResource(CommunityCommentItemList.get(position).getUserProfile());
+        holder.cuserId.setText(CommunityCommentItemList.get(position).getCommuId());
+        holder.ccontent.setText(CommunityCommentItemList.get(position).getCommuContent());
+        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommuIsCreateAt());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

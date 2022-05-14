@@ -49,7 +49,6 @@ import retrofit2.Response;
 
 public class CommunityFragment extends Fragment {
     public static CommunityAdapter communityAdapter ;
-    ArrayList<CommunityItem> cList = new ArrayList<CommunityItem>();
     RecyclerView communityRecyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -171,7 +170,7 @@ public class CommunityFragment extends Fragment {
 //        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
+                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
 //                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
                 call.enqueue(new Callback<CommunityResponse>() {
                     @Override
@@ -219,7 +218,7 @@ public class CommunityFragment extends Fragment {
 //        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
+                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<CommunityResponse>() {
                     @Override
                     public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {

@@ -5,6 +5,7 @@ import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.ChildrenResponse;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
+import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
@@ -88,5 +89,8 @@ public interface RetrofitServiceApi {
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 
     @GET("api/posts")
-    Call<CommunityResponse> getCommunityList(@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort); //수정해야함
+    Call<CommunityResponse> getCommunityList(@Header("authorization") String token, @Query("page")int page);
+
+    @GET("api/comments")
+    Call<CommunityDetailResponse> getCommunityDetailList(@Header("authorization") String token, @Query("page")int page);
 }

@@ -2,32 +2,53 @@ package com.capsaicin.sunhan.View.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
+import com.capsaicin.sunhan.Model.CommunityDetailResponse;
+import com.capsaicin.sunhan.Model.CommunityResponse;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityDetailAdapter;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
-    ArrayList<CommunityDetailItem> dList = new ArrayList<>();
+    RecyclerView commuDetailRecycleView;
 
     Toolbar toolbar;
     ImageView pop1;
+
+    int page;
+    ProgressBar progressBar;
+
+    private RetrofitInstance commuDetailRetrofitInstance ;
+    private RetrofitServiceApi retrofitServiceApi;//
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +57,19 @@ public class CommunityDetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.commu_detail_toolbar);
         setToolbar();
 
+        page = 1;
 
-        setList();
 
-        RecyclerView recyclerView1 = findViewById(R.id.recyleView_community_detail);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView1.setLayoutManager(layoutManager);
-        recyclerView1.setHasFixedSize(true);
-        recyclerView1.setAdapter(communityDetailAdapter);
+//        setList();
+
+        commuDetailRecycleView = findViewById(R.id.recyleView_community_detail);
+        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(this);
+        commuDetailRecycleView.setLayoutManager(recyclerViewManager);
+        commuDetailRecycleView.setHasFixedSize(true);
+        commuDetailRecycleView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView1.setAdapter(communityDetailAdapter);
+
+        initData(0);
 
         pop1 = findViewById(R.id.popupMore);
 
@@ -75,30 +101,40 @@ public class CommunityDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void setList(){
-        communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),dList);
-        setData();
-    }
+    private void initData(int page)
+    {
+//        if(LoginActivity.userAccessToken!=null){
+        if(commuDetailRetrofitInstance!=null){
+            Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
+            Call<CommunityDetailResponse> call = RetrofitInstance.getRetrofitService().getCommunityDetailList("Bearer "+LoginActivity.userAccessToken,page);
 
-    void setData(){
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한2","저도 감자탕 좋아하는데 한번 가봐야겠네요"
-                ,"03/17","14:12"));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한3","0000000000000000000000000000000000000000000000000000000"
-                ,"03/17","14:12"));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한4","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한5","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한6","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
-        communityDetailAdapter.addItem(new CommunityDetailItem(R.drawable.profile,"선한7","오옹 맛있다니 가봐야겠다"
-                ,"03/17","14:12"));
+            call.enqueue(new Callback<CommunityDetailResponse>() {
+                @Override
+                public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
+                    if (response.isSuccessful()) {
+                        progressBar.setVisibility(View.GONE);
+                        CommunityDetailResponse result = response.body();
+                        communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
+                        commuDetailRecycleView.setAdapter(communityDetailAdapter);
+                        Log.d("성공", new Gson().toJson(response.body()));
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
 
-
+                @Override
+                public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+        }
+//        }
     }
 
     void showDialog() {
-        CharSequence[] oItems = {"삭제하기", "신고하기", "취소"};
+        CharSequence[] oItems = {"삭제하기", "신고하기", "수정하기", "취소"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("글 메뉴")
