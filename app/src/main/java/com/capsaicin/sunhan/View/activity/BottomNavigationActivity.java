@@ -75,8 +75,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
                         return true;
                     case R.id.action_bottomnavi:
-
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
+                        return true;
+                    case R.id.action_findstore:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, findStoreFragment).commit();
                         return true;
                 }
                     return false;
