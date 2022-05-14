@@ -16,13 +16,22 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+
+
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        final View myLayout = findViewById(R.id.launch);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
+
+                Intent intent;
+                if(LoginActivity.userAccessToken!=null){
+                    intent = new Intent(LauncherActivity.this, BottomNavigationActivity.class);
+                }
+                else{
+                    intent = new Intent(LauncherActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }

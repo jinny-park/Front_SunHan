@@ -144,6 +144,17 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        userNickName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(LoginActivity.userAccessToken==null){
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
 
 
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {

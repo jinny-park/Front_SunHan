@@ -66,8 +66,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+
                     case R.id.action_heart:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, heartFragment).commit();
+                        return true;
                     case R.id.action_community:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, communityFragment).commit();
                         return true;
