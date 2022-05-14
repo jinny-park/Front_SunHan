@@ -150,9 +150,9 @@ public class SunhanstCategoryFragment extends Fragment {
                                 String str_position = String.valueOf(position+1);
                                 if(position!=RecyclerView.NO_POSITION){
                                     Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                    //intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                    intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                     intent.putExtra("whichStore", 1);
-                                    //Log.d("아이디", storeAdapter.getItem(position).get_id());
+                                    Log.d("아이디", storeAdapter.getItem(position).get_id());
                                     startActivity(intent);
                                 }
                             }
@@ -234,9 +234,9 @@ public class SunhanstCategoryFragment extends Fragment {
                                     String str_position = String.valueOf(position+1);
                                     if(position!=RecyclerView.NO_POSITION){
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        //intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                        intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                         intent.putExtra("whichStore", 1);
-                                        //Log.d("아이디", storeAdapter.getItem(position).get_id());
+                                        Log.d("아이디", storeAdapter.getItem(position).get_id());
                                         startActivity(intent);
                                     }
                                 }
