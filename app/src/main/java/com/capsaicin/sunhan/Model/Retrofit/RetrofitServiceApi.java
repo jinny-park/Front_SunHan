@@ -36,7 +36,7 @@ public interface RetrofitServiceApi {
     @GET("api/users")
     Call<UserResponse> getUser(@Header("authorization") String token);
 
-    @DELETE("users")
+    @DELETE("api/users")
     Call<UserDeleteResponse> deleteUser(@Header("authorization") String token);
 
 //    @GET("api/sunhans/{id}")
