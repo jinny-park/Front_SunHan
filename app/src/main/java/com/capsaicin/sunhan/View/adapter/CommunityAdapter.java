@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.R;
@@ -19,18 +21,21 @@ import java.util.ArrayList;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder>
         implements OnClickCommunityListener {
-    ArrayList<CommunityItem> items = new ArrayList<CommunityItem>();
+    ArrayList<CommunityItem> communityList = new ArrayList<CommunityItem>();
     private Context context;
     public OnClickCommunityListener listener;
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> items) {
+        Log.d("어댑터생성자 ","들어옴" );
         this.context = context;
-        this.items = items;
+        this.communityList = items;
+        notifyItemRangeInserted(communityList.size(),items.size());
     }
 
     @NonNull
     @Override
     public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("온크리에이트뷰홀더 ","들어옴" );
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
 
@@ -39,13 +44,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull CommunityAdapter.ViewHolder holder, int position) {
-        CommunityItem item = items.get(position);
-
+        CommunityItem item = communityList.get(position);
+        Log.d("온바인드홀더 ", communityList.get(position).getCommuId());
         //holder.userProfile.setImageResource(items.get(position).getUserProfile());
-        holder.userId.setText(items.get(position).getCommuId());
-        holder.uploadTime.setText(items.get(position).getCommuIsCreateAt());
-        holder.content.setText(items.get(position).getCommuContent());
-        holder.commentNum.setText(items.get(position).getCommuIsCommentCount());
+        holder.userId.setText(communityList.get(position).getCommuId());
+        holder.uploadTime.setText(communityList.get(position).getCommuIsCreateAt());
+        holder.content.setText(communityList.get(position).getCommuContent());
+        //holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount()); //오류남
     }
 
     public void setOnClickCommunityListener(OnClickCommunityListener listener) {
@@ -63,7 +68,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     @Override
     public int getItemCount() {
 //        Log.d("size", String.valueOf(items.size()));
-        return items.size();
+        return communityList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -97,18 +102,24 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
     }
 
-    public void addItem(CommunityItem item){ items.add(item); }
+    public void addList(ArrayList <CommunityItem> list){
+        communityList.addAll(list);
+        notifyItemRangeInserted(communityList.size(),list.size());
+        Log.d("addList ",list.toString());
+    }
+
+    public void addItem(CommunityItem item){ communityList.add(item); }
     public void setarrayList(ArrayList<CommunityItem> arrayList) {
 
-        this.items = arrayList;
+        this.communityList = arrayList;
     }
 
     public CommunityItem getItem(int position) {
-        return items.get(position);
+        return communityList.get(position);
     }
 
     public void setItem(int position, CommunityItem item) {
-        items.set(position, item);
+        communityList.set(position, item);
     }
 
 }

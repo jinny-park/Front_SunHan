@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -25,8 +28,10 @@ import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
+import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.ToolbarActivity;
 import com.capsaicin.sunhan.View.activity.WriteActivity;
+import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,6 +50,8 @@ public class CommunityFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     public static CommunityFragment communityFragment;
+    int page;
+    ProgressBar progressBar;
 
     //    Button writeBtn;
     FloatingActionButton writeBtn;
@@ -66,12 +73,24 @@ public class CommunityFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_community, null);
-        communityAdapter = new CommunityAdapter(getContext(),  cList);
+        commuRetrofitInstance= RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
+        progressBar = view.findViewById(R.id.progress_bar);
+
+        page = 1;
+
+
+        communityRecyclerView = view.findViewById(R.id.recyleView_community);
+        communityRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+        communityRecyclerView.setLayoutManager(recyclerViewManager);
+        communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        communityRecyclerView.setAdapter(communityAdapter);
 
         swipeRefreshLayout = view.findViewById(R.id.swip_community);
 
-        setRecyclerview(view);
+//        setRecyclerview(view);
 //        setData();
+        initData(0);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,50 +107,37 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        commuRetrofitInstance= RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
-        Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunity("id"); //인터페이스의 get @path 안의 변수명과 일치해야함
-
-        call.enqueue(new Callback<CommunityResponse>() {
-            @Override
-            public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {
-                //response 체크하는거
-                if (!response.isSuccessful()) {
-                    CommunityResponse result = response.body();
-
-                    Log.d(TAG, "onResponse: onResponse 실패 - " + new Gson().toJson(response.errorBody()));
-                    Log.d("result", commuWriter+"\n"+commuId+"\n"+commuContent+"\n"+commuIsDeleted+"\n"+
-                            commuIsCommentCount+"\n"+ commuIsCreateAt+"\n"+commuIsUpdateAt);
-                } else {
-                    CommunityResponse result = response.body();
-
-                    Log.d(TAG, "onResponse: onResponse 성공 - " + new Gson().toJson(response.body()));
-                    Log.d("result", commuWriter+"\n"+commuId+"\n"+commuContent+"\n"+commuIsDeleted+"\n"+
-                            commuIsCommentCount+"\n"+ commuIsCreateAt+"\n"+commuIsUpdateAt);
-                }
-            }
+        communityRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onFailure(Call<CommunityResponse> call, Throwable t) {
-                //check ip address
-                Log.d(TAG, "onFailure: onFailure - " + t.getMessage());
-            }
-        });
-
-        communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
-            @Override
-            public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
-                ToolbarActivity toolbarActivity = new ToolbarActivity();
-                String str_position = String.valueOf(position + 1); //
-                if (position != RecyclerView.NO_POSITION) {
-                    for (int i = 0; i <= position; i++) {
-                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-                        intent.putExtra("position", str_position); //
-                        startActivity(intent);
-                        break;
-                    }
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItemPosition = ((LinearLayoutManager) communityRecyclerView.getLayoutManager()).
+                        findLastCompletelyVisibleItemPosition();
+                int itemTotalCount = communityRecyclerView.getAdapter().getItemCount() - 1;
+                if(lastVisibleItemPosition == itemTotalCount) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    getData(page);
+                    page++;
                 }
             }
         });
+
+//        communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
+//            @Override
+//            public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
+//                ToolbarActivity toolbarActivity = new ToolbarActivity();
+//                String str_position = String.valueOf(position + 1); //
+//                if (position != RecyclerView.NO_POSITION) {
+//                    for (int i = 0; i <= position; i++) {
+//                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+//                        intent.putExtra("position", str_position); //
+//                        startActivity(intent);
+//                        break;
+//                    }
+//                }
+//            }
+//        });
 
         return view;
     }
@@ -149,24 +155,76 @@ public class CommunityFragment extends Fragment {
         return communityFragment;
     }
 
-    void setRecyclerview(View view){
-        communityRecyclerView = view.findViewById(R.id.recyleView_community);
-        communityRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-        communityRecyclerView.setLayoutManager(recyclerViewManager);
-        communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        communityRecyclerView.setAdapter(communityAdapter);
+//    void setRecyclerview(View view){
+//        communityRecyclerView = view.findViewById(R.id.recyleView_community);
+//        communityRecyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+//        communityRecyclerView.setLayoutManager(recyclerViewManager);
+//        communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        communityRecyclerView.setAdapter(communityAdapter);
+//    }
+
+    private void initData(int page)
+    {
+        if(LoginActivity.userAccessToken!=null){
+            if(commuRetrofitInstance!=null){
+                Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
+                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
+//                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
+                call.enqueue(new Callback<CommunityResponse>() {
+                    @Override
+                    public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {
+                        if (response.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            CommunityResponse result = response.body();
+                            communityAdapter = new CommunityAdapter(getActivity(),result.getData());
+                            communityRecyclerView.setAdapter(communityAdapter);
+//                            cardStoreAdapter.addList(result.getData());
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommunityResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
     }
 
-//    void setData(){
-//        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","돈애랑 장터 순대국 감자탕 먹고 왔습니다! 완전 맛있\n" +
-//                "고 사장님도 친절해요~","0"));
-//        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:07","낙원갈비집 주차도 편리하고 아이랑 맛있게 먹고 왔\n" +
-//                "습니다","4"));
-//        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "12:10","영통버거 칭구들이랑 먹었어요 사장님 감사합니다 \n" +
-//                "또 갈게요 ~","1"));
-//        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:56","일리터 카페 조용하고 커피도 고소해요! 영통구 주민\n" +
-//                "분들께 추천드립니다 ","3"));
-//        communityAdapter.addItem(new CommunityItem(R.drawable.profile,"익명", "09:10","영통버거 사장님 친절하세요.. 감사해요..","1"));
-//    }
+
+    private void getData(int page)
+    {
+        if(LoginActivity.userAccessToken!=null){
+            if(commuRetrofitInstance!=null){
+                Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
+                Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
+                call.enqueue(new Callback<CommunityResponse>() {
+                    @Override
+                    public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {
+                        if (response.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            CommunityResponse result = response.body();
+                            communityAdapter.addList(result.getData());
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommunityResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
+    }
 }

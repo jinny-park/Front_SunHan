@@ -2,9 +2,11 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class CommunityResponse {
     @SerializedName("message") private String message;
-    @SerializedName("data") CommunityItem communityItem;
+    @SerializedName("data") ArrayList< CommunityItem > data = new ArrayList <> ();
 
     public String getMessage() {
         return message;
@@ -14,11 +16,11 @@ public class CommunityResponse {
         this.message = message;
     }
 
-    public CommunityItem getCommunityItem() {
-        return communityItem;
+    public ArrayList<CommunityItem> getData() {
+        return data;
     }
 
-    public void setCommunityItem(CommunityItem communityItem) {
-        this.communityItem = communityItem;
+    public void setData(ArrayList<CommunityItem> data) {
+        this.data = data;
     }
 }

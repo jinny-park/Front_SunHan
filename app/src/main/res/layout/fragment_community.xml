@@ -10,9 +10,6 @@
         android:id="@+id/swip_community"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyleView_community"
@@ -20,7 +17,11 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white">
             </androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 <!--    <Button-->
 <!--        android:id="@+id/write_btn"-->

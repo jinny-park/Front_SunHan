@@ -67,6 +67,6 @@ public interface RetrofitServiceApi {
     @POST("api/users/address")
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 
-    @GET("api/posts/{id}")
-    Call<CommunityResponse> getCommunity(@Path("id") String commuId); //수정해야함
+    @GET("api/posts")
+    Call<CommunityResponse> getCommunityList(@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort); //수정해야함
 }
