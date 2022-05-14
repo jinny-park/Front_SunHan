@@ -4,11 +4,9 @@ package com.capsaicin.sunhan.View.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,18 +17,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.CardStoreResponse;
-import com.capsaicin.sunhan.Model.ChildrenStoreDetailResponse;
+import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.MenuItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.MenuAdapter;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 //import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
 import com.google.android.material.tabs.TabLayout;
 
 import com.google.gson.Gson;
@@ -62,67 +57,9 @@ public class StoreDetailActivity extends AppCompatActivity {
     StoreLetterFragment storeLetterFragment;
     ChildrenStoreInfoFragment childrenStoreInfoFragment;
     private RetrofitInstance tokenRetrofitInstance ;
-    String _id ;
+    String id ;
     int whichStore;
     Bundle bundle;
-    void setToolbar(){
-        setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
-        ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle("가게 상세");
-        actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
-    }
-
-    public void btnClick(View view){
-
-        TextView textStorename = findViewById(R.id.text_storename);
-        String strStore = textStorename.getText().toString();
-        strStore = getIntent().getStringExtra("strStore");
-
-        //가게 이름 저장한거
-
-        FeedTemplate params = FeedTemplate
-                .newBuilder(ContentObject.newBuilder("SUNHAN",
-                        "https://ifh.cc/g/GG1KNy.png",
-                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
-                                .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption(strStore+"\n가게를 확인해보세요!")
-                        .build())
-                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
-                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                        .setWebUrl("https://developers.kakao.com")
-                        .setMobileWebUrl("https://developers.kakao.com")
-                        .setAndroidExecutionParams("key1=value1")
-                        .setIosExecutionParams("key1=value1")
-                        .build()))
-                .build();
-
-        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
-        serverCallbackArgs.put("user_id", "${current_user_id}");
-        serverCallbackArgs.put("product_id", "${shared_product_id}");
-
-
-        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {}
-
-            @Override
-            public void onSuccess(KakaoLinkResponse result) {
-            }
-        });
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                //select back button
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 /*    ImageView heart_img;
     ImageView heart_full_img;
@@ -142,7 +79,7 @@ public class StoreDetailActivity extends AppCompatActivity {
         heart_full_img=findViewById(R.id.heart_full_img);
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();//싱글톤
         Intent intent = getIntent();
-        _id = intent.getStringExtra("_id");
+        id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
 
         TextView textStorename = findViewById(R.id.text_storename);
@@ -232,12 +169,13 @@ public class StoreDetailActivity extends AppCompatActivity {
     private void getData()
     {
         if(tokenRetrofitInstance!=null && whichStore==0){
-                Call<ChildrenStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreDetail(_id);
-                call.enqueue(new Callback<ChildrenStoreDetailResponse>() {
+            Log.d("상세정보 id", id);
+                Call<CardStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreDetail(id);
+                call.enqueue(new Callback<CardStoreDetailResponse>() {
                     @Override
-                    public void onResponse(Call<ChildrenStoreDetailResponse> call, Response<ChildrenStoreDetailResponse> response) {
+                    public void onResponse(Call<CardStoreDetailResponse> call, Response<CardStoreDetailResponse> response) {
                         if (response.isSuccessful()) {
-                            ChildrenStoreDetailResponse result = response.body();
+                            CardStoreDetailResponse result = response.body();
                             String weektime =result.getCardStoreItem().getWeekdayStartTime()+"-"+result.getCardStoreItem().getWeekdayEndTime();
                             String weekendtime = result.getCardStoreItem().getWeekendStartTime()+"-"+result.getCardStoreItem().getWeekendEndTime();
                             String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
@@ -269,13 +207,72 @@ public class StoreDetailActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ChildrenStoreDetailResponse> call, Throwable t) {
+                    public void onFailure(Call<CardStoreDetailResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
             }
         }
 
+
+    void setToolbar(){
+        setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
+        ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle("가게 상세");
+        actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
+    }
+
+    public void btnClick(View view){
+
+        TextView textStorename = findViewById(R.id.text_storename);
+        String strStore = textStorename.getText().toString();
+        strStore = getIntent().getStringExtra("strStore");
+
+        //가게 이름 저장한거
+
+        FeedTemplate params = FeedTemplate
+                .newBuilder(ContentObject.newBuilder("SUNHAN",
+                        "https://ifh.cc/g/GG1KNy.png",
+                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                .setMobileWebUrl("https://developers.kakao.com").build())
+                        .setDescrption(strStore+"\n가게를 확인해보세요!")
+                        .build())
+                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
+                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
+                        .setWebUrl("https://developers.kakao.com")
+                        .setMobileWebUrl("https://developers.kakao.com")
+                        .setAndroidExecutionParams("key1=value1")
+                        .setIosExecutionParams("key1=value1")
+                        .build()))
+                .build();
+
+        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+        serverCallbackArgs.put("user_id", "${current_user_id}");
+        serverCallbackArgs.put("product_id", "${shared_product_id}");
+
+
+        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {}
+
+            @Override
+            public void onSuccess(KakaoLinkResponse result) {
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                //select back button
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     int imageIndex=0;
     ImageView heart_img;

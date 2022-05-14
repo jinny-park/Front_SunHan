@@ -33,7 +33,7 @@ public class HeartFragment extends Fragment {
         likedStoreSunhanFragment = new LikedStoreSunhanFragment();
 
 
-        getChildFragmentManager().beginTransaction().replace(R.id.tabs_heart_container,likedStoreCardstFragment).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.tabs_heart_container,likedStoreSunhanFragment).commit();
 
 
         TabLayout tabs = view.findViewById(R.id.tabs_heart);

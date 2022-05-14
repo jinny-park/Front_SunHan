@@ -2,14 +2,12 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
-public class ChildrenStoreDetailResponse {
+public class ScrapsSunHanResponse {
 
     @SerializedName("message")
     private String message;
     @SerializedName("data")
-    CardStoreItem cardStoreItem;
+    private ScrapsSunHanItem scrapsItem;
 
     public String getMessage() {
         return message;
@@ -19,11 +17,11 @@ public class ChildrenStoreDetailResponse {
         this.message = message;
     }
 
-    public CardStoreItem getCardStoreItem() {
-        return cardStoreItem;
+    public ScrapsSunHanItem getScrapsItem() {
+        return scrapsItem;
     }
 
-    public void setCardStoreItem(CardStoreItem cardStoreItem) {
-        this.cardStoreItem = cardStoreItem;
+    public void setScrapsItem(ScrapsSunHanItem scrapsItem) {
+        this.scrapsItem = scrapsItem;
     }
 }

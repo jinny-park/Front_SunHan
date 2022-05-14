@@ -58,7 +58,7 @@ public class SunhanstCategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sunhanst_category,null);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         progressBar = view.findViewById(R.id.progress_bar_category);
-
+        progressBar.setVisibility(View.VISIBLE);
         page = 1;
 
         categoryRecycler = view.findViewById(R.id.recyclerview_sunhanstore_category);
@@ -72,6 +72,7 @@ public class SunhanstCategoryFragment extends Fragment {
 
 
         categoryRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -118,7 +119,7 @@ public class SunhanstCategoryFragment extends Fragment {
                                     }
                                 }
                             });
-                            Log.d("선한영향력성공", new Gson().toJson(response.body()));
+                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -226,8 +227,7 @@ public class SunhanstCategoryFragment extends Fragment {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
                             StoreResponse result = response.body();
-                            storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
-                            categoryRecycler.setAdapter(storeAdapter);
+                            storeAdapter.addList(result.getData());
                             storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
                                 @Override
                                 public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {

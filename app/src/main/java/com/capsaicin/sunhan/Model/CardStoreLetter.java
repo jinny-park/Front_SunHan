@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class CardStoreLetter {
 
     @SerializedName("writer")
-    UserItem userItem;
+    WriterItem writerItem;
     @SerializedName("childrenId")
     private String childrenId;
     @SerializedName("content")
@@ -19,12 +19,12 @@ public class CardStoreLetter {
     @SerializedName("_id")
     private String _id;
 
-    public UserItem getUserItem() {
-        return userItem;
+    public WriterItem getWriterItem() {
+        return writerItem;
     }
 
-    public void setUserItem(UserItem userItem) {
-        this.userItem = userItem;
+    public void setWriterItem(WriterItem writerItem) {
+        this.writerItem = writerItem;
     }
 
     public String getChildrenId() {

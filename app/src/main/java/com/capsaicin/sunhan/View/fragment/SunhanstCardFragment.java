@@ -51,7 +51,6 @@ public class SunhanstCardFragment extends Fragment {
     ArrayList<CardStoreItem> cardStoreList=new ArrayList();
     RecyclerView sunhanCardRecyclerView;
     ProgressBar progressBar;
-    NestedScrollView nestedScrollView;
     private RetrofitInstance tokenRetrofitInstance ;
    CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;

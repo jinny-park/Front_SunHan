@@ -4,12 +4,14 @@ import com.capsaicin.sunhan.Model.AddressItem;
 import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.ChildrenResponse;
-import com.capsaicin.sunhan.Model.ChildrenStoreDetailResponse;
+import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
+import com.capsaicin.sunhan.Model.ScrapChildResponse;
+import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
@@ -51,6 +53,11 @@ public interface RetrofitServiceApi {
     /*@GET("api/reviews")
     Call<LetterResponse> getLetter(@Header("authorization") String token);*/
 
+    @GET("api/scraps") // 선한영향력 찜한가게
+    Call<ScrapsSunHanResponse> getSunHanScraps(@Header("authorization") String token, @Query("type") String type);
+
+    @GET("api/scraps") //가맹점 찜한가게
+    Call<ScrapChildResponse> getChildrenScraps(@Header("authorization") String token, @Query("type") String type);
 
     @PATCH("api/users")
     Call<ProfileChangeResponse> changeNickname(@Header("authorization") String token, @Body NickNameItem nickNameItem);
@@ -69,7 +76,7 @@ public interface RetrofitServiceApi {
     Call<CardStoreResponse> getChildrenStoreListNoUser (@Query("page")int page, @Query("sort") String sort, @Query("lat") double lat, @Query("lng") double lng);
 
     @GET("api/children/{id}") //가맹점 상세정보(회원 비회원 둘다)
-    Call<ChildrenStoreDetailResponse> getChildrenStoreDetail(@Path("id") String _id);
+    Call<CardStoreDetailResponse> getChildrenStoreDetail(@Path("id") String id);
 
     @GET("api/sunhans")//선한영향력가게 거리순 리스트(회원전용)
     Call<StoreResponse> getSunHanStoreList (@Header("authorization") String token, @Query("page")int page,@Query("category") String category ,@Query("sort") String sort);
