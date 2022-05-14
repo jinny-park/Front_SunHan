@@ -11,11 +11,11 @@ public class CommunityItem {
     @SerializedName("_id") private String commuId;
     @SerializedName("content") private String commuContent;
     @SerializedName("isDeleted") private Boolean commuIsDeleted;
-    @SerializedName("commentCount") private int commuIsCommentCount;
+    @SerializedName("commentCount") private String commuIsCommentCount;
     @SerializedName("createAt") private String commuIsCreateAt;
     @SerializedName("updateAt") private String commuIsUpdateAt;
 
-    public CommunityItem(Object commuWriter, String commuId, String commuContent, Boolean commuIsDeleted, int commuIsCommentCount, String commuIsCreateAt, String commuIsUpdateAt) {
+    public CommunityItem(Object commuWriter, String commuId, String commuContent, Boolean commuIsDeleted, String commuIsCommentCount, String commuIsCreateAt, String commuIsUpdateAt) {
         this.commuWriter = commuWriter;
         this.commuId = commuId;
         this.commuContent = commuContent;
@@ -57,11 +57,11 @@ public class CommunityItem {
         this.commuIsDeleted = commuIsDeleted;
     }
 
-    public int getCommuIsCommentCount() {
+    public String getCommuIsCommentCount() {
         return commuIsCommentCount;
     }
 
-    public void setCommuIsCommentCount(int commuIsCommentCount) {
+    public void setCommuIsCommentCount(String commuIsCommentCount) {
         this.commuIsCommentCount = commuIsCommentCount;
     }
 

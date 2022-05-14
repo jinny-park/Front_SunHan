@@ -50,7 +50,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         holder.userId.setText(communityList.get(position).getCommuId());
         holder.uploadTime.setText(communityList.get(position).getCommuIsCreateAt());
         holder.content.setText(communityList.get(position).getCommuContent());
-        //holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount()); //오류남
+        holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount());
     }
 
     public void setOnClickCommunityListener(OnClickCommunityListener listener) {

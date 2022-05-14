@@ -2,6 +2,7 @@ package com.capsaicin.sunhan.View.fragment;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +30,7 @@ import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
+import com.capsaicin.sunhan.View.activity.EditProfileActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.ToolbarActivity;
 import com.capsaicin.sunhan.View.activity.WriteActivity;
@@ -36,6 +39,7 @@ import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.kakao.sdk.user.UserApiClient;
 
 import java.util.ArrayList;
 
@@ -56,13 +60,13 @@ public class CommunityFragment extends Fragment {
     //    Button writeBtn;
     FloatingActionButton writeBtn;
 
-    public static ArrayList < Object > commuWriter;
-    public static String commuId;
-    public static String commuContent;
-    public static Boolean commuIsDeleted;
-    public static int commuIsCommentCount;
-    public static String commuIsCreateAt;
-    public static String commuIsUpdateAt;
+//    public static ArrayList < Object > commuWriter;
+//    public static String commuId;
+//    public static String commuContent;
+//    public static Boolean commuIsDeleted;
+//    public static int commuIsCommentCount;
+//    public static String commuIsCreateAt;
+//    public static String commuIsUpdateAt;
 
     private RetrofitInstance commuRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;//
@@ -103,7 +107,14 @@ public class CommunityFragment extends Fragment {
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), WriteActivity.class));
+                if(LoginActivity.userAccessToken==null){
+                    showDialog();
+                }else{
+                    Intent intent = new Intent(getActivity(), WriteActivity.class);
+//                    intent.putExtra("nickName",userNickName.getText());
+//                    intent.putExtra("profilePic",imageUrl);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -155,18 +166,9 @@ public class CommunityFragment extends Fragment {
         return communityFragment;
     }
 
-//    void setRecyclerview(View view){
-//        communityRecyclerView = view.findViewById(R.id.recyleView_community);
-//        communityRecyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-//        communityRecyclerView.setLayoutManager(recyclerViewManager);
-//        communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        communityRecyclerView.setAdapter(communityAdapter);
-//    }
-
     private void initData(int page)
     {
-        if(LoginActivity.userAccessToken!=null){
+//        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
@@ -179,7 +181,21 @@ public class CommunityFragment extends Fragment {
                             CommunityResponse result = response.body();
                             communityAdapter = new CommunityAdapter(getActivity(),result.getData());
                             communityRecyclerView.setAdapter(communityAdapter);
-//                            cardStoreAdapter.addList(result.getData());
+                            communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
+                                @Override
+                                public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
+                                    ToolbarActivity toolbarActivity = new ToolbarActivity();
+                                    String str_position = String.valueOf(position + 1); //
+                                    if (position != RecyclerView.NO_POSITION) {
+                                        for (int i = 0; i <= position; i++) {
+                                            Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+                                            intent.putExtra("position", str_position); //
+                                            startActivity(intent);
+                                            break;
+                                        }
+                                    }
+                                }
+                            });
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
@@ -194,13 +210,13 @@ public class CommunityFragment extends Fragment {
                     }
                 });
             }
-        }
+//        }
     }
 
 
     private void getData(int page)
     {
-        if(LoginActivity.userAccessToken!=null){
+//        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page,null);
@@ -211,6 +227,21 @@ public class CommunityFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             CommunityResponse result = response.body();
                             communityAdapter.addList(result.getData());
+                            communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
+                                @Override
+                                public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
+                                    ToolbarActivity toolbarActivity = new ToolbarActivity();
+                                    String str_position = String.valueOf(position + 1); //
+                                    if (position != RecyclerView.NO_POSITION) {
+                                        for (int i = 0; i <= position; i++) {
+                                            Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+                                            intent.putExtra("position", str_position); //
+                                            startActivity(intent);
+                                            break;
+                                        }
+                                    }
+                                }
+                            });
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
@@ -225,6 +256,17 @@ public class CommunityFragment extends Fragment {
                     }
                 });
             }
-        }
+//        }
+    }
+
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그인 후 이용해주세요.") .
+                setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 }
