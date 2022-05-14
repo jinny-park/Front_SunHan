@@ -3,6 +3,7 @@ package com.capsaicin.sunhan.View.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     Button kakao_btn;
     private SignInButton google_btn; // 구글 로그인 버튼
     Button naver_btn;
+    Button no_user_login;
 
     //구글 로그인 관련련
     private GoogleSignInClient mGoogleSignInClient;
@@ -112,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         kakao_btn = findViewById(R.id.kakao_login);
         google_btn = findViewById(R.id.google_login);
+        no_user_login=findViewById(R.id.no_user_login);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
@@ -171,6 +174,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
+            }
+        });
+
+        no_user_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LocationSettingActivity.class);
+                startActivity(intent);
+
             }
         });
 

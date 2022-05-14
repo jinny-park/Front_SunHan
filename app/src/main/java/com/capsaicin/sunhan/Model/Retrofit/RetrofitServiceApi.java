@@ -65,12 +65,17 @@ public interface RetrofitServiceApi {
     @GET("api/children")//가맹점 거리순 리스트(회원전용)
     Call<CardStoreResponse> getChildrenStoreList (@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort);
 
+    @GET("api/children/guest")//가맹점 거리순 리스트(비회원 전용)
+    Call<CardStoreResponse> getChildrenStoreListNoUser (@Query("page")int page, @Query("sort") String sort, @Query("lat") double lat, @Query("lng") double lng);
+
     @GET("api/children/{id}") //가맹점 상세정보(회원 비회원 둘다)
     Call<ChildrenStoreDetailResponse> getChildrenStoreDetail(@Path("id") String _id);
 
     @GET("api/sunhans")//선한영향력가게 거리순 리스트(회원전용)
     Call<StoreResponse> getSunHanStoreList (@Header("authorization") String token, @Query("page")int page,@Query("category") String category ,@Query("sort") String sort);
 
+    @GET("api/sunhans/guest")//선한영향력 거리순 리스트(비회원 전용)
+    Call<StoreResponse> getSunHanStoreListNoUser (@Query("page")int page, @Query("category") String category, @Query("sort") String sort, @Query("lat") double lat, @Query("lng") double lng);
 
     @POST("api/users/address")
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
