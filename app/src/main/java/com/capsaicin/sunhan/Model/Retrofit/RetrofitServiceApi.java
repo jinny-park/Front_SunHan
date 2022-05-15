@@ -92,6 +92,21 @@ public interface RetrofitServiceApi {
     @GET("api/sunhans/guest")//선한영향력 거리순 리스트(비회원 전용)
     Call<StoreResponse> getSunHanStoreListNoUser (@Query("page")int page, @Query("category") String category, @Query("sort") String sort, @Query("lat") double lat, @Query("lng") double lng);
 
+
+    @GET("api/children/search")//아동급식카드 가맹점 찾기 (회원)
+    Call<CardStoreResponse> getChildrenFindList (@Header("authorization") String token, @Query("name")String name, @Query("page")int page);
+    @GET("api/children/search/guest")//아동급식카드 가맹점 찾기 (비회원)
+    Call<CardStoreResponse> getChildrenFindListNoUser (@Query("name")String name, @Query("page")int page, @Query("lat") double lat, @Query("lng") double lng);
+
+    @GET("api/sunhans/search")//선한가게 찾기 (회원)
+    Call<StoreResponse> getSunHanFindList (@Header("authorization") String token, @Query("name")String name, @Query("page")int page);
+    @GET("api/sunhans/search/guest")//선한가게 찾기 (비회원)
+    Call<StoreResponse> getSunHanFindListNoUser (@Query("name")String name, @Query("page")int page, @Query("lat") double lat, @Query("lng") double lng);
+
+
+
+
+
     @POST("api/users/address")
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 

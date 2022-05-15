@@ -67,8 +67,8 @@
                 android:id="@+id/text_storename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginRight="24dp"
                 android:text="돈애랑장터순대국감자탕"
                 android:textAlignment="center"
@@ -80,8 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:text="경기 수원시 영통구 동문3길 10"
                 android:textAlignment="center" />
 
