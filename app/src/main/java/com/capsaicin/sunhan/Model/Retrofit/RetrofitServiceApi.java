@@ -8,6 +8,7 @@ import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
+import com.capsaicin.sunhan.Model.ModifypostResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
@@ -94,15 +95,18 @@ public interface RetrofitServiceApi {
     @POST("api/users/address")
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 
-    @GET("api/posts")
+    @GET("api/posts") //커뮤니티 글
     Call<CommunityResponse> getCommunityList(@Header("authorization") String token, @Query("page")int page);
 
-    @GET("api/comments")
+    @GET("api/comments") //커뮤니티 댓글
     Call<CommunityDetailResponse> getCommunityDetailList(@Header("authorization") String token, @Query("page")int page);
 
     @GET("api/posts/{id}") //커뮤니티 상세화면
     Call<CommunityDetailResponse> getCommunityDetail(@Path("id") String id);
 
-    @POST("api/posts")
-    Call<WritepostResponse> writePost(@Header("authorization") String token, @Body WritepostItem writepostItem);
+    @POST("api/posts") //커뮤니티 글쓰기
+    Call<WritepostResponse> writePost(@Header("authorization") String token, @Body String content);
+
+    @PATCH("api/posts/{id}") //커뮤니티 글 수정
+    Call<ModifypostResponse> modifyPost(@Path("id") String id);
 }

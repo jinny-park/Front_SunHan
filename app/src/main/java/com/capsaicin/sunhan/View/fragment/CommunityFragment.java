@@ -100,6 +100,7 @@ public class CommunityFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                initData(0);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

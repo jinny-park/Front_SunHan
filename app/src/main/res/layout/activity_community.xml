@@ -129,7 +129,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/sunhan_add"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             app:srcCompat="@drawable/sunhan_ad1" />

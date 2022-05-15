@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,6 +43,8 @@ public class WriteActivity extends AppCompatActivity {
     CommunityFragment communityFragment;
     WritepostItem writepostItem;
 
+    public static String id ;
+
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
 
@@ -56,28 +59,38 @@ public class WriteActivity extends AppCompatActivity {
         communityFragment = new CommunityFragment();
         writepostItem = new WritepostItem();
 
+
+        Intent intent = getIntent();
+        id = "1234";
+
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                finish();
+                String content = writeContent.getText().toString().trim();
+                if(content.isEmpty()){
+                    writeContent.setError("내용을 작성해주세요.");
+                } else {
+                    savePost(content);
+                    finish();
+                }
             }
         });
     }
 
-    void uploadPost(){
+    private void savePost(String content){
+        Log.d("확인1", id);
+        Call<WritepostResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, content);
+        Log.d("확인2", id);
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
-                call.enqueue(new Callback<UserResponse>() {
+                call.enqueue(new Callback<WritepostResponse>() {
                     @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    public void onResponse(Call<WritepostResponse> call, Response<WritepostResponse> response) {
                         if (response.isSuccessful()) {
-                            UserResponse result = response.body();
-//                            communityFragment..setText(result.getUserItem().getNickname());
-                            finish();
+                            Log.d("확인3", id);
+                            WritepostResponse result = response.body();
                             Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -85,14 +98,38 @@ public class WriteActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                    public void onFailure(Call<WritepostResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
             }
         }
-
     }
+
+//    void uploadPost(){
+//        if(LoginActivity.userAccessToken!=null){
+//            if(tokenRetrofitInstance!=null){
+//                Call<WritepostResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, writepostItem);
+//                call.enqueue(new Callback<WritepostResponse>() {
+//                    @Override
+//                    public void onResponse(Call<WritepostResponse> call, Response<WritepostResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            WritepostResponse result = response.body();
+//                            Log.d("글 올리기 성공", new Gson().toJson(response.body()));
+//                        } else {
+//                            Log.d("REST FAILED MESSAGE", response.message());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<WritepostResponse> call, Throwable t) {
+//                        Log.d("REST ERROR!", t.getMessage());
+//                    }
+//                });
+//            }
+//        }
+//
+//    }
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정

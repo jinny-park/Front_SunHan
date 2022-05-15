@@ -1,15 +1,20 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -50,6 +55,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
     TextView content;
     TextView commentNum;
 
+    ImageView addImage;
+
+    Dialog dilaog01;
+
     CommunityFragment communityFragment;
 
     public static String id ;
@@ -74,9 +83,14 @@ public class CommunityDetailActivity extends AppCompatActivity {
         content = findViewById(R.id.detail_content);
         commentNum = findViewById(R.id.detail_commentNum);
 
-
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
+
+        dilaog01 = new Dialog(CommunityDetailActivity.this);       // Dialog 초기화
+        dilaog01.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
+        dilaog01.setContentView(R.layout.dialog);
+
+
 
         page = 1;
 
@@ -98,8 +112,18 @@ public class CommunityDetailActivity extends AppCompatActivity {
         pop1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                dialog();
             }
+        });
+
+        addImage = findViewById(R.id.sunhan_add);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://xn--o39akkz01az4ip7f4xzwoa.com/"));
+                startActivity(intent);
+            }
+
         });
 
     }
@@ -168,25 +192,41 @@ public class CommunityDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void dialog() {
+        dilaog01.show();
 
+        Button modify_btn = dilaog01.findViewById(R.id.modify_btn);
+        modify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                dilaog01.dismiss();
+            }
+        });
 
-    void showDialog() {
-        CharSequence[] oItems = {"삭제하기", "신고하기", "수정하기", "취소"};
+        Button delete_btn = dilaog01.findViewById(R.id.delete_btn);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dilaog01.dismiss();
+            }
+        });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("글 메뉴")
-                        .setItems(oItems, new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-//                                Toast.makeText(getApplicationContext(),
-//                                        oItems[which], Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setCancelable(false)
-                        .show();
+        Button report_btn = dilaog01.findViewById(R.id.report_btn);
+        report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dilaog01.dismiss();
+            }
+        });
+
+        Button cancle_btn = dilaog01.findViewById(R.id.cancle_btn);
+        cancle_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dilaog01.dismiss();;
+            }
+        });
     }
 
     void setToolbar(){
