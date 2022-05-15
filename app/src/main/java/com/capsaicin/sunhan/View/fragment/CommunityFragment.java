@@ -32,6 +32,7 @@ import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.EditProfileActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
+import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.activity.ToolbarActivity;
 import com.capsaicin.sunhan.View.activity.WriteActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
@@ -60,12 +61,12 @@ public class CommunityFragment extends Fragment {
     FloatingActionButton writeBtn;
 
 //    public static ArrayList < Object > commuWriter;
-//    public static String commuId;
-//    public static String commuContent;
-//    public static Boolean commuIsDeleted;
-//    public static int commuIsCommentCount;
-//    public static String commuIsCreateAt;
-//    public static String commuIsUpdateAt;
+    public static String commuId;
+    public static String commuContent;
+    public static Boolean commuIsDeleted;
+    public static int commuIsCommentCount;
+    public static String commuIsCreateAt;
+    public static String commuIsUpdateAt;
 
     private RetrofitInstance commuRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;//
@@ -78,6 +79,7 @@ public class CommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_community, null);
         commuRetrofitInstance= RetrofitInstance.getRetrofitInstance(); //싱글톤 객체
         progressBar = view.findViewById(R.id.progress_bar);
+
 
         page = 1;
 
@@ -110,8 +112,6 @@ public class CommunityFragment extends Fragment {
                     showDialog();
                 }else{
                     Intent intent = new Intent(getActivity(), WriteActivity.class);
-//                    intent.putExtra("nickName",userNickName.getText());
-//                    intent.putExtra("profilePic",imageUrl);
                     startActivity(intent);
                 }
             }
@@ -183,15 +183,12 @@ public class CommunityFragment extends Fragment {
                             communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
                                 @Override
                                 public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
-                                    ToolbarActivity toolbarActivity = new ToolbarActivity();
-                                    String str_position = String.valueOf(position + 1); //
-                                    if (position != RecyclerView.NO_POSITION) {
-                                        for (int i = 0; i <= position; i++) {
-                                            Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-                                            intent.putExtra("position", str_position); //
-                                            startActivity(intent);
-                                            break;
-                                        }
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+                                        intent.putExtra("_id", communityAdapter.getItem(position).getCommuId());
+                                        Log.d("아이디", communityAdapter.getItem(position).getCommuId());
+                                        startActivity(intent);
                                     }
                                 }
                             });
@@ -229,15 +226,13 @@ public class CommunityFragment extends Fragment {
                             communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
                                 @Override
                                 public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
-                                    ToolbarActivity toolbarActivity = new ToolbarActivity();
-                                    String str_position = String.valueOf(position + 1); //
-                                    if (position != RecyclerView.NO_POSITION) {
-                                        for (int i = 0; i <= position; i++) {
-                                            Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-                                            intent.putExtra("position", str_position); //
-                                            startActivity(intent);
-                                            break;
-                                        }
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
+                                        intent.putExtra("_id", communityAdapter.getItem(position).getCommuId());
+                                        Log.d("아이디", communityAdapter.getItem(position).getCommuId());
+
+                                        startActivity(intent);
                                     }
                                 }
                             });
@@ -257,6 +252,7 @@ public class CommunityFragment extends Fragment {
             }
 //        }
     }
+
 
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그인 후 이용해주세요.") .

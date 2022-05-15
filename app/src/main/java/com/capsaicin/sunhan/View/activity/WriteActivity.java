@@ -1,23 +1,46 @@
 package com.capsaicin.sunhan.View.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
+import com.capsaicin.sunhan.Model.UserResponse;
+import com.capsaicin.sunhan.Model.WritepostItem;
+import com.capsaicin.sunhan.Model.WritepostResponse;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.fragment.CommunityFragment;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.google.gson.Gson;
+
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WriteActivity extends AppCompatActivity {
 
     Button finishBtn;
     Toolbar toolbar;
+    EditText writeContent;
+    CommunityFragment communityFragment;
+    WritepostItem writepostItem;
 
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
@@ -27,18 +50,48 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wirte_community);
         toolbar = findViewById(R.id.write_toolbar);
+
+        writeContent = findViewById(R.id.write_content);
+
+        communityFragment = new CommunityFragment();
+        writepostItem = new WritepostItem();
+
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(LoginActivity.userAccessToken!=null){
-                    if(tokenRetrofitInstance!=null){
 
-                    }
-                }
+                finish();
             }
         });
+    }
+
+    void uploadPost(){
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            UserResponse result = response.body();
+//                            communityFragment..setText(result.getUserItem().getNickname());
+                            finish();
+                            Log.d("글 올리기 성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
+        }
+
     }
 
     void setToolbar(){

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CommunityDetailResponse {
     @SerializedName("message") private String message;
-    @SerializedName("data") ArrayList< CommunityDetailItem > data = new ArrayList <> ();
+    @SerializedName("data") CommunityItem communityItem;
 
     public String getMessage() {
         return message;
@@ -16,11 +16,11 @@ public class CommunityDetailResponse {
         this.message = message;
     }
 
-    public ArrayList<CommunityDetailItem> getData() {
-        return data;
+    public CommunityItem getCommunityItem() {
+        return communityItem;
     }
 
-    public void setData(ArrayList<CommunityDetailItem> data) {
-        this.data = data;
+    public void setCommunityDetailItem(CommunityItem communityItem) {
+        this.communityItem = communityItem;
     }
 }

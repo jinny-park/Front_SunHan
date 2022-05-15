@@ -18,6 +18,8 @@ import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
+import com.capsaicin.sunhan.Model.WritepostItem;
+import com.capsaicin.sunhan.Model.WritepostResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -97,4 +99,10 @@ public interface RetrofitServiceApi {
 
     @GET("api/comments")
     Call<CommunityDetailResponse> getCommunityDetailList(@Header("authorization") String token, @Query("page")int page);
+
+    @GET("api/posts/{id}") //커뮤니티 상세화면
+    Call<CommunityDetailResponse> getCommunityDetail(@Path("id") String id);
+
+    @POST("api/posts")
+    Call<WritepostResponse> writePost(@Header("authorization") String token, @Body WritepostItem writepostItem);
 }

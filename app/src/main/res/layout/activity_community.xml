@@ -63,7 +63,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/userId"
+                        android:id="@+id/detail_userId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -73,7 +73,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/uploadTime"
+                        android:id="@+id/detail_uploadTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -93,7 +93,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/content"
+                android:id="@+id/detail_content"
                 android:layout_width="339dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -117,7 +117,7 @@
                     app:srcCompat="@drawable/speechbubble" />
 
                 <TextView
-                    android:id="@+id/commentNum"
+                    android:id="@+id/detail_commentNum"
                     android:layout_width="21dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="7dp"

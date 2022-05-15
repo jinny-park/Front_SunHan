@@ -90,6 +90,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
 
     }
 
+
     public void addList(ArrayList <CommunityDetailItem> list){
         CommunityDetailItemList.addAll(list);
         notifyItemRangeInserted(CommunityDetailItemList.size(),list.size());

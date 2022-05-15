@@ -54,26 +54,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/write_toolbar">
 
-        <EditText
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:background="@android:color/transparent"
-            android:hint="제목"
-            android:textSize="18dp"
-            app:layout_constrainedHeight="false"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#C6C6C6" />
 
         <EditText
-            android:id="@+id/content"
+            android:id="@+id/write_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"

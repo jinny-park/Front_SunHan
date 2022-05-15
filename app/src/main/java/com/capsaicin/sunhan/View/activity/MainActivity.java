@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
 //        card_store = findViewById(R.id.card_store);
 //        sunhan_store.setOnClickListener(new View.OnClickListener(){
 //            @Override
