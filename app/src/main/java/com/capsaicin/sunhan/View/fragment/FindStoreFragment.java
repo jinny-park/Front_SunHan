@@ -72,8 +72,7 @@ public class FindStoreFragment extends Fragment {
         findChildrenResultFragment = new FindChildrenResultFragment();
         findSunhanResultFragment = new FindSunhanResultFragment();
 
-        getChildFragmentManager().beginTransaction().add(R.id.tabs_find_container,findChildrenResultFragment).commit();
-        getChildFragmentManager().beginTransaction().replace(R.id.tabs_find_container,findSunhanResultFragment).commit();
+      getChildFragmentManager().beginTransaction().replace(R.id.tabs_find_container,findChildrenResultFragment).commit();
 
         TabLayout tabs1 = view.findViewById(R.id.findstore_tapLayout);
         tabs1.addTab(tabs1.newTab().setText("아동급식가맹점"));
