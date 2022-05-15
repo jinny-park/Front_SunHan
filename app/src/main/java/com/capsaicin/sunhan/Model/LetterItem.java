@@ -5,50 +5,75 @@ import com.google.gson.annotations.SerializedName;
 
 public class LetterItem {
 
-    @SerializedName("writer") private String letterName;
-    @SerializedName("_id") private String _id;
-    @SerializedName("sunhanId") private String sunhanId;
-    @SerializedName("content") private String letterContent;
-    @SerializedName("blockNumber") private String blockNumber;
-    @SerializedName("createAt") private String letterDate;
-    @SerializedName("updateAt") private String updateAt;
 
+    @SerializedName("writer")
+    WriterItem writerItem;
+    @SerializedName("sunhanId")
+    private String sunhanId;
+    @SerializedName("content")
+    private String content;
+    @SerializedName("blockNumber")
+    private float blockNumber;
+    @SerializedName("createAt")
+    private String createAt;
+    @SerializedName("updateAt")
+    private String updateAt;
+    @SerializedName("_id")
+    private String _id;
 
-    public LetterItem(String letterName, String letterContent, String letterDate) {
-        this.letterName = letterName;
-        this.letterContent = letterContent;
-        this.letterDate=letterDate;
-        this._id=_id;
-        this.sunhanId=sunhanId;
-        this.blockNumber=blockNumber;
-        this.updateAt=updateAt;
+    public WriterItem getWriterItem() {
+        return writerItem;
     }
 
-    public String getLetterName() {
-        return letterName;
+    public void setWriterItem(WriterItem writerItem) {
+        this.writerItem = writerItem;
     }
-    public void setLetterName(String letterName) { this.letterName = letterName; }
 
-    public String getLetterContent() {
-        return letterContent;
+    public String getSunhanId() {
+        return sunhanId;
     }
-    public void setLetterContent(String letterContent) { this.letterContent = letterContent; }
 
-    public String getLetterDate() {
-        return letterDate;
+    public void setSunhanId(String sunhanId) {
+        this.sunhanId = sunhanId;
     }
-    public void setLetterDate(String letterDate) { this.letterDate = letterDate; }
 
-    public String getUpdateAt() {        return updateAt;    }
-    public void setUpdateAt(String updateAt) {        this.updateAt = updateAt;    }
+    public String getContent() {
+        return content;
+    }
 
-    public String getBlockNumber() {        return blockNumber;    }
-    public void setBlockNumber(String blockNumber) {        this.blockNumber = blockNumber; }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-    public String getSunhanId() {        return sunhanId;    }
-    public void setSunhanId(String sunhanId) {        this.sunhanId = sunhanId;    }
+    public float getBlockNumber() {
+        return blockNumber;
+    }
 
-    public String get_id() {        return _id;    }
-    public void set_id(String _id) {        this._id = _id;    }
+    public void setBlockNumber(float blockNumber) {
+        this.blockNumber = blockNumber;
+    }
 
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 }

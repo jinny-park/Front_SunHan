@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.MenuItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.MenuAdapter;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
@@ -57,9 +58,14 @@ public class StoreDetailActivity extends AppCompatActivity {
     StoreLetterFragment storeLetterFragment;
     ChildrenStoreInfoFragment childrenStoreInfoFragment;
     private RetrofitInstance tokenRetrofitInstance ;
-    String id ;
-    int whichStore;
-    Bundle bundle;
+
+    //상세페이지의 두 하위 프래그먼트에서 쓰일 에정
+    public static String id ;
+    public static int whichStore;
+
+
+    TextView storeName ;
+    TextView storeAddress;
 
 /*    ImageView heart_img;
     ImageView heart_full_img;
@@ -74,6 +80,9 @@ public class StoreDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sunhanst_store);
         toolbar = findViewById(R.id.store_detail_toolbar);
         setToolbar();
+
+        storeName = findViewById(R.id.text_storename);
+        storeAddress = findViewById(R.id.text_storeaddrs);
 
         heart_img=findViewById(R.id.heart_img);
         heart_full_img=findViewById(R.id.heart_full_img);
@@ -145,13 +154,20 @@ public class StoreDetailActivity extends AppCompatActivity {
                 Fragment selected = null;
 
                 if(position == 0){
-                    if(whichStore ==0) //0일 경우 가맹점 정보 프래그먼트
+                    if(whichStore ==0) { //0일 경우 가맹점 정보 프래그먼트
+
                         selected = childrenStoreInfoFragment;
-                    else // 1일경우 선한영향력정보 프래그먼트 -> 두개 정보다 달라서 따로 만듦
+                    }
+                    else{
+                        // 1일경우 선한영향력정보 프래그먼트 -> 두개 정보다 달라서 따로 만듦
                         selected = storeInfoFragment;
+                    }
+
+
                 }
                 else if(position==1) {
                     selected = storeLetterFragment;
+
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, selected).commit();
             }
@@ -181,24 +197,13 @@ public class StoreDetailActivity extends AppCompatActivity {
                             String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
 
                             ChildrenStoreInfoFragment.storeName.setText(result.getCardStoreItem().getName());
+                            storeName.setText(result.getCardStoreItem().getName());
                             ChildrenStoreInfoFragment.weekdayTime.setText(weektime);
                             ChildrenStoreInfoFragment.weekendTime.setText(weekendtime);
                             ChildrenStoreInfoFragment.holidayTime.setText(holidaytime);
                             ChildrenStoreInfoFragment.address.setText(result.getCardStoreItem().getAddress());
+                            storeAddress.setText(result.getCardStoreItem().getAddress());
                             ChildrenStoreInfoFragment.phone.setText(result.getCardStoreItem().getPhoneNumber());
-
-//                            bundle = new Bundle();
-//                            bundle.putParcelableArrayList("letterList",(ArrayList<? extends Parcelable>)result.getCardStoreItem().getReviews());
-//                            bundle.putString("name",result.getCardStoreItem().getName());
-//                            bundle.putString("address",result.getCardStoreItem().getAddress());
-//                            bundle.putString("phone",result.getCardStoreItem().getPhoneNumber());
-//                            bundle.putString("weekStart",result.getCardStoreItem().getWeekdayStartTime());
-//                            bundle.putString("weekEnd",result.getCardStoreItem().getWeekdayEndTime());
-//                            bundle.putString("weekendStart",result.getCardStoreItem().getWeekendStartTime());
-//                            bundle.putString("weekendEnd",result.getCardStoreItem().getWeekendEndTime());
-//                            bundle.putString("HolidayStart",result.getCardStoreItem().getHolydayStartTime());
-//                            bundle.putString("HolidayEnd",result.getCardStoreItem().getHolydayEndTime());
-//                            storeInfoFragment.setArguments(bundle);
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
 
@@ -211,7 +216,38 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
-            }
+            } else if(tokenRetrofitInstance!=null && whichStore==1){
+            Call<SunHanStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getSunHansStoreDetail(id);
+            call.enqueue(new Callback<SunHanStoreDetailResponse>() {
+                @Override
+                public void onResponse(Call<SunHanStoreDetailResponse> call, Response<SunHanStoreDetailResponse> response) {
+                    if (response.isSuccessful()) {
+                        SunHanStoreDetailResponse result = response.body();
+
+                        storeName.setText(result.getSunHanDetailItem().getName());
+                        storeAddress.setText(result.getSunHanDetailItem().getAddress());
+                        StoreInfoFragment.sunhan_Name.setText(result.getSunHanDetailItem().getName());
+                        StoreInfoFragment.sunhan_addr.setText(result.getSunHanDetailItem().getAddress());
+                        StoreInfoFragment.sunhan_phone.setText(result.getSunHanDetailItem().getPhoneNumber());
+                        StoreInfoFragment.sunhan_time.setText(result.getSunHanDetailItem().getOpeningHours());
+                        StoreInfoFragment.sunhan_target.setText(result.getSunHanDetailItem().getTatget());
+                        StoreInfoFragment.sunhan_offer.setText(result.getSunHanDetailItem().getOffer());
+
+                        Log.d("성공", new Gson().toJson(response.body()));
+                    } else {
+
+                        Log.d("가맹점상세정보실패", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SunHanStoreDetailResponse> call, Throwable t) {
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+
+
+        }
         }
 
 

@@ -4,144 +4,166 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:text="가맹점 정보"
-            android:textColor="@color/black"
-            android:textSize="24dp"/>
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/linearLayout9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:textColor="@color/black"
+                android:text="가맹점 정보" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/text_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:textColor="@color/black"
-                    android:text="가게이름"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:id="@+id/detail_store_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:text="전화번호"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:text="주소"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:id="@+id/detail_store_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:text="평일운영"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:text="주말운영"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:text="공휴일운영"
-                    android:textSize="20dp"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:orientation="vertical">
+                    android:textSize="20dp"
+                    android:text="가게이름: " />
 
                 <TextView
                     android:id="@+id/children_storeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text=""
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="가게번호: " />
 
                 <TextView
                     android:id="@+id/children_storeNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="가게주소: " />
 
                 <TextView
                     android:id="@+id/children_storeAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textSize="20dp"/>
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/weekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="평일운영: " />
 
                 <TextView
                     android:id="@+id/children_store_weekday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/weekend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="주말운영: " />
 
                 <TextView
                     android:id="@+id/children_store_weekend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/holiday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="공휴일운영 :" />
 
                 <TextView
                     android:id="@+id/children_store_holiday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textSize="20dp"/>
-
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>

@@ -14,6 +14,7 @@ import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.ScrapChildResponse;
 import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.StoreResponse;
+import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
@@ -78,6 +79,9 @@ public interface RetrofitServiceApi {
 
     @GET("api/children/{id}") //가맹점 상세정보(회원 비회원 둘다)
     Call<CardStoreDetailResponse> getChildrenStoreDetail(@Path("id") String id);
+
+    @GET("api/sunhans/{id}") //선한영향력 상세정보(회원 비회원 둘다)
+    Call<SunHanStoreDetailResponse> getSunHansStoreDetail(@Path("id") String id);
 
     @GET("api/sunhans")//선한영향력가게 거리순 리스트(회원전용)
     Call<StoreResponse> getSunHanStoreList (@Header("authorization") String token, @Query("page")int page,@Query("category") String category ,@Query("sort") String sort);

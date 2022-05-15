@@ -38,9 +38,9 @@ public class MyLogsLetterAdapter extends RecyclerView.Adapter<MyLogsLetterAdapte
     public void onBindViewHolder(@NonNull MyLogsLetterAdapter.ViewHolder holder, int position) {
         LetterItem item = letterItems.get(position);
         //holder.imageView.setImageResource(storeItemArrayList.get(position).image);
-        holder.letterName.setText(letterItems.get(position).getLetterName());
-        holder.letterContent.setText(letterItems.get(position).getLetterContent());
-        holder.letterDate.setText(letterItems.get(position).getLetterDate());
+        holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
+        holder.letterContent.setText(letterItems.get(position).getContent());
+        holder.letterDate.setText(letterItems.get(position).getCreateAt());
     }
 
     /*
