@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/activity_toolbar" />
 
@@ -35,28 +35,27 @@
         <View
             android:id="@+id/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/store_detail_tapLayout"
+            android:layout_height="209dp"
             android:layout_below="@+id/store_detail_toolbar"
+            android:layout_alignBottom="@+id/store_detail_tapLayout"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="61dp"
             android:background="#FF9D6F" />
 
         <LinearLayout
             android:id="@+id/store_detail"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/store_detail_toolbar"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="60dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_big"
             android:backgroundTint="@color/white"
             android:elevation="18dp"
@@ -66,9 +65,11 @@
 
             <TextView
                 android:id="@+id/text_storename"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:text="돈애랑장터순대국감자탕"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -78,6 +79,8 @@
                 android:id="@+id/text_storeaddrs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:text="경기 수원시 영통구 동문3길 10"
                 android:textAlignment="center" />
@@ -85,14 +88,15 @@
             <LinearLayout
                 android:id="@+id/store_detailfunc"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="18dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/store_findroad"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -101,7 +105,7 @@
                         android:layout_height="24dp"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/location"/>
+                        app:srcCompat="@drawable/location" />
 
 
                     <TextView
@@ -118,7 +122,7 @@
                 <RelativeLayout
                     android:id="@+id/store_heart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:orientation="horizontal">
 
@@ -127,19 +131,19 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
+                        android:onClick="onHeartClicked"
                         android:scaleType="fitCenter"
                         android:visibility="visible"
-                        android:onClick="onHeartClicked"
-                        app:srcCompat="@drawable/heart"/>
+                        app:srcCompat="@drawable/heart" />
 
                     <ImageView
                         android:id="@+id/heart_full_img"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
-                        android:visibility="invisible"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/heart_full"/>
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/heart_full" />
 
                     <TextView
                         android:id="@+id/text_store_heart"
@@ -154,7 +158,7 @@
                 <LinearLayout
                     android:id="@+id/store_share"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:orientation="horizontal">
 
@@ -163,9 +167,9 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
-                        android:scaleType="fitCenter"
                         android:onClick="btnClick"
-                        app:srcCompat="@drawable/link"/>
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/link" />
 
                     <TextView
                         android:id="@+id/text_store_share"
@@ -180,7 +184,16 @@
 
             </LinearLayout>
         </LinearLayout>
-        </RelativeLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/store_detail_tapLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/store_detail"
+            android:layout_marginTop="20dp"
+            android:background="#fff"
+            android:elevation="1dp" />
+    </RelativeLayout>
 <!--
         <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -195,15 +208,7 @@
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/store_detail_tapLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/store_detail"
-        android:background="#fff"
-        android:elevation="1dp" />
-
-    <FrameLayout
+        <FrameLayout
             android:id="@+id/tabs_storedetail_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
