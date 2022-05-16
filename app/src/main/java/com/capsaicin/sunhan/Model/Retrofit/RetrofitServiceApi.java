@@ -7,8 +7,12 @@ import com.capsaicin.sunhan.Model.ChildrenResponse;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
+import com.capsaicin.sunhan.Model.CommunityWritingPost;
+import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.ModifypostResponse;
+import com.capsaicin.sunhan.Model.MyCommentLogsResponse;
+import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
@@ -41,7 +45,7 @@ public interface RetrofitServiceApi {
     Call<TokenResponse> getkakaoToken(@Header("authorization") String token);
     @GET("api/auth/google")
     Call<TokenResponse> getgoogleToken(@Header("authorization") String token);
-    @GET("api/users")
+    @GET("api/users") // 유저정보 받아오기
     Call<UserResponse> getUser(@Header("authorization") String token);
 
     @DELETE("api/users")
@@ -64,7 +68,7 @@ public interface RetrofitServiceApi {
     @GET("api/scraps") //가맹점 찜한가게
     Call<ScrapChildResponse> getChildrenScraps(@Header("authorization") String token, @Query("type") String type);
 
-    @PATCH("api/users")
+    @PATCH("api/users") // 닉네임 업데이트
     Call<ProfileChangeResponse> changeNickname(@Header("authorization") String token, @Body NickNameItem nickNameItem);
 
     @Multipart
@@ -73,6 +77,12 @@ public interface RetrofitServiceApi {
 
     @GET("api/users/block")//유저 차단 리스트
     Call<BlockListResponse> getBlockedList (@Header("authorization") String token);
+
+    @GET("api/users/posts") //내가 쓴 게시글
+    Call<MyPostLogsResponse> getMyPosts(@Header("authorization") String token, @Query("page")int page);
+
+    @GET("api/users/comments") //내가 쓴 댓글글
+     Call<MyCommentLogsResponse> getMyComments(@Header("authorization") String token, @Query("page")int page);
 
     @GET("api/children")//가맹점 거리순 리스트(회원전용)
     Call<CardStoreResponse> getChildrenStoreList (@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort);
@@ -107,7 +117,7 @@ public interface RetrofitServiceApi {
 
 
 
-    @POST("api/users/address")
+    @POST("api/users/address") // 위도 경도 보내기
     Call<ResultResponse> postAddress(@Header("authorization") String token, @Body AddressItem addressItem);
 
     @GET("api/posts") //커뮤니티 글
@@ -120,7 +130,7 @@ public interface RetrofitServiceApi {
     Call<CommunityDetailResponse> getCommunityDetail(@Path("id") String id);
 
     @POST("api/posts") //커뮤니티 글쓰기
-    Call<WritepostResponse> writePost(@Header("authorization") String token, @Body String content);
+    Call<CommunityWritingResponse> writePost(@Header("authorization") String token, @Body CommunityWritingPost post);
 
     @PATCH("api/posts/{id}") //커뮤니티 글 수정
     Call<ModifypostResponse> modifyPost(@Path("id") String id);

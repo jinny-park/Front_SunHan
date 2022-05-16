@@ -15,6 +15,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.capsaicin.sunhan.Model.CommunityWritingPost;
+import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
@@ -42,6 +44,7 @@ public class WriteActivity extends AppCompatActivity {
     EditText writeContent;
     CommunityFragment communityFragment;
     WritepostItem writepostItem;
+    CommunityWritingPost communityWritingPost;
 
     public static String id ;
 
@@ -58,6 +61,8 @@ public class WriteActivity extends AppCompatActivity {
 
         communityFragment = new CommunityFragment();
         writepostItem = new WritepostItem();
+        communityWritingPost = new CommunityWritingPost();
+        tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
 
 
         Intent intent = getIntent();
@@ -68,29 +73,30 @@ public class WriteActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = writeContent.getText().toString().trim();
-                if(content.isEmpty()){
+
+                communityWritingPost.setContent(writeContent.getText().toString());
+//                String content = writeContent.getText().toString().trim();
+                if(communityWritingPost.getContent().isEmpty()){
                     writeContent.setError("내용을 작성해주세요.");
                 } else {
-                    savePost(content);
+                    savePost(communityWritingPost);
                     finish();
                 }
             }
         });
     }
 
-    private void savePost(String content){
+    private void savePost(CommunityWritingPost content){
         Log.d("확인1", id);
-        Call<WritepostResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, content);
-        Log.d("확인2", id);
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                call.enqueue(new Callback<WritepostResponse>() {
+                Call<CommunityWritingResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, content);
+                call.enqueue(new Callback<CommunityWritingResponse>() {
                     @Override
-                    public void onResponse(Call<WritepostResponse> call, Response<WritepostResponse> response) {
+                    public void onResponse(Call<CommunityWritingResponse> call, Response<CommunityWritingResponse> response) {
                         if (response.isSuccessful()) {
                             Log.d("확인3", id);
-                            WritepostResponse result = response.body();
+                            CommunityWritingResponse result = response.body();
                             Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -98,7 +104,7 @@ public class WriteActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<WritepostResponse> call, Throwable t) {
+                    public void onFailure(Call<CommunityWritingResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });

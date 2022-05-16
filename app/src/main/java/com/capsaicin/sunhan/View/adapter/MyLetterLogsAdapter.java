@@ -14,28 +14,28 @@ import com.capsaicin.sunhan.R;
 
 import java.util.ArrayList;
 
-public class MyLogsLetterAdapter extends RecyclerView.Adapter<MyLogsLetterAdapter.ViewHolder> {
+public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapter.ViewHolder> {
 
     ArrayList<LetterItem> letterItems;
     //ArrayList<LetterItem> letterItems = new ArrayList<LetterItem>();
     private Context context;
 //    public OnClickStoreItemListener listener;
 
-    public MyLogsLetterAdapter(Context context, ArrayList<LetterItem> items) {
+    public MyLetterLogsAdapter(Context context, ArrayList<LetterItem> items) {
         this.context = context;
         this.letterItems = items;
     }
 
     @NonNull
     @Override
-    public MyLogsLetterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyLetterLogsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.letter_item, parent, false);
-        return new MyLogsLetterAdapter.ViewHolder(itemView/* ,this*/);
+        return new MyLetterLogsAdapter.ViewHolder(itemView/* ,this*/);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyLogsLetterAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyLetterLogsAdapter.ViewHolder holder, int position) {
         LetterItem item = letterItems.get(position);
         //holder.imageView.setImageResource(storeItemArrayList.get(position).image);
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
