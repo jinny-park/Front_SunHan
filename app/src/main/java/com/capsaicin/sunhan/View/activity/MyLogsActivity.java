@@ -67,8 +67,6 @@ public class MyLogsActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 

@@ -3,7 +3,6 @@ package com.capsaicin.sunhan.View.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.capsaicin.sunhan.Model.BlockedItem;
 import com.capsaicin.sunhan.Model.CardCheckItem;
-import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -24,11 +21,8 @@ import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
-import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
-import com.capsaicin.sunhan.View.adapter.ManageBlockAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
-import com.capsaicin.sunhan.View.adapter.MypageMylogsAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
@@ -77,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
     public static SunhanStoreAdapter likedStoreAdapter1;
     public static SunhanStoreAdapter likedStoreAdapter2;
     public static CommunityAdapter communityAdapter;
-    public static MypageMylogsAdapter postLogsAdapter;
-    public static MypageMylogsAdapter commentsLogsAdapter;
     public static CardCheckAdapter cardCheckAdapter;
 
 
@@ -374,8 +366,6 @@ public class LoginActivity extends AppCompatActivity {
         likedStoreAdapter1 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList1);
         likedStoreAdapter2 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList2);
         communityAdapter = new CommunityAdapter(getApplicationContext(),communityItemArrayList);
-        postLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),postItemList);
-        commentsLogsAdapter = new MypageMylogsAdapter(getApplicationContext(),commentItemList);
         cardCheckAdapter = new CardCheckAdapter(getApplicationContext(), cardCheckItemArrayList);
 
         myPageFragment = new MyPageFragment();

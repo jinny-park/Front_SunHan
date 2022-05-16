@@ -13,15 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.activity.LoginActivity;
-import com.capsaicin.sunhan.View.adapter.MyLogsLetterAdapter;
+import com.capsaicin.sunhan.View.adapter.MyLetterLogsAdapter;
 
 import java.util.ArrayList;
 
 public class MyLogsLetterFragment extends Fragment {
 
     ArrayList<LetterItem> list = new ArrayList<>();
-    public static MyLogsLetterAdapter letterLogsAdapter;
+    public static MyLetterLogsAdapter letterLogsAdapter;
     RecyclerView letterRecyclerView;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

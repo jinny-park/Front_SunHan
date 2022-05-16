@@ -95,9 +95,7 @@ public class MyPageFragment extends Fragment {
                             userEmail.setText(result.getUserItem().getEmail());
                             imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
                             Log.d("imageUrl", imageUrl);
-//                            userImage.setImageURI(uri);
                             Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
-//                           Glide.with(getActivity()).load(uri).into(userImage);
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -167,21 +165,61 @@ public class MyPageFragment extends Fragment {
                             startActivity(intent2);
                             break;
                         case 1:
-                            Intent intent3 = new Intent(getActivity(), MyLogsActivity.class);
-                            startActivity(intent3);
+                            if(LoginActivity.userAccessToken!=null){
+                                Intent intent3 = new Intent(getActivity(), MyLogsActivity.class);
+                                startActivity(intent3);
+                            }else{
+                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                                dlg.show();
+                            }
                             break;
                         case 2:
-                            Intent intent4 = new Intent(getActivity(), ManageBlockActivity.class);
-                            startActivity(intent4);
+                            if(LoginActivity.userAccessToken!=null){
+                                Intent intent4 = new Intent(getActivity(), ManageBlockActivity.class);
+                                startActivity(intent4);
+                            }else{
+                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                                dlg.show();
+                            }
                             break;
                         case 3: /*로그아웃 팝업*/
-                            showDialog();
+                            if(LoginActivity.userAccessToken!=null){
+                                showDialog();
+                            }else{
+                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                                dlg.show();
+                            }
+
                             break;
 
                         case 4:
-                            Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
-                            startActivity(intent5);
-
+                            if(LoginActivity.userAccessToken!=null){
+                                Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
+                                startActivity(intent5);
+                            }else{
+                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                                dlg.show();
+                            }
                             break;
                         case 5:
                             Intent intent6 = new Intent(getActivity(), PolicyActivity.class);
