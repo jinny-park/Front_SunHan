@@ -2,6 +2,8 @@ package com.capsaicin.sunhan.View.activity;
 
 //activity_sunhanst_store.xml
 
+import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.MenuItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.ScrapChildResponse;
+import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
+import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.MenuAdapter;
@@ -62,7 +68,6 @@ public class StoreDetailActivity extends AppCompatActivity {
     //상세페이지의 두 하위 프래그먼트에서 쓰일 에정
     public static String id ;
     public static int whichStore;
-
 
     TextView storeName ;
     TextView storeAddress;
@@ -133,7 +138,7 @@ public class StoreDetailActivity extends AppCompatActivity {
         storeLetterFragment = new StoreLetterFragment();
         childrenStoreInfoFragment = new ChildrenStoreInfoFragment();
 
-        getData();
+        getDetailData();
 
         if(whichStore==0)
             getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, childrenStoreInfoFragment).commit();
@@ -182,7 +187,7 @@ public class StoreDetailActivity extends AppCompatActivity {
     }
 
 
-    private void getData()
+    private void getDetailData()
     {
         if(tokenRetrofitInstance!=null && whichStore==0){
             Log.d("상세정보 id", id);
@@ -248,7 +253,7 @@ public class StoreDetailActivity extends AppCompatActivity {
 
 
         }
-        }
+    }
 
 
     void setToolbar(){
@@ -310,24 +315,129 @@ public class StoreDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    int imageIndex=0;
+
     ImageView heart_img;
     ImageView heart_full_img;
 
-    public void onHeartClicked(View v){
+    int imageIndex=0; //TODO: 얘를 0으로 하면 안되고 찜한 상태의 가게인지 아닌지 받아와야함
+
+
+    public void onEmptyHeartClicked(View v){
         changeImage();
+        // imageIndex ==0 -> imageIndex==1
+        // 빈 하트를 눌렀을 때 스크랩 등록
+        getHeartOnData();
+
     }
+
+    public void onFullHeartClicked(View v){
+        changeImage();
+        // imageIndex ==1 -> imageIndex==0
+        // 찬 하트를 눌렀을때 스크랩 취소
+        getHeartOffData();
+    }
+
     public void changeImage(){
         if (imageIndex == 0) {
-            heart_img.setVisibility(View.VISIBLE);
-            heart_full_img.setVisibility(View.INVISIBLE);
-            imageIndex = 1;
-        } else if (imageIndex== 1) {
             heart_img.setVisibility(View.INVISIBLE);
             heart_full_img.setVisibility(View.VISIBLE);
+            imageIndex = 1;
+        } else if (imageIndex== 1) {
+            heart_img.setVisibility(View.VISIBLE);
+            heart_full_img.setVisibility(View.INVISIBLE);
             imageIndex = 0;
         }
 
+    }
+
+    private void getHeartOnData()
+    {
+        if(tokenRetrofitInstance!=null && whichStore==0){
+            Log.d("id", id);
+            Call<ScrapOnOffResponse> call = RetrofitInstance.getRetrofitService().getChildrenScrapsOn("Bearer "+LoginActivity.userAccessToken,storeId, "children");
+            call.enqueue(new Callback<ScrapOnOffResponse>() {
+                @Override
+                public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
+                    if (response.isSuccessful()) {
+                        ScrapOnOffResponse result = response.body();
+                        //TODO: 찜한 가게 목록 리사이클러뷰에 item 추가해야함
+                        Log.d("찜한 아동 급식 가게 등록", new Gson().toJson(response.body()));
+                    } else {
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ScrapOnOffResponse> call, Throwable t) {
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+
+            });
+        } else if(tokenRetrofitInstance!=null && whichStore==1){
+            Call<ScrapOnOffResponse> call = RetrofitInstance.getRetrofitService().getSunHanScrapsOn("Bearer "+LoginActivity.userAccessToken, storeId, "sunhan");
+            call.enqueue(new Callback<ScrapOnOffResponse>() {
+                @Override
+                public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
+                    if (response.isSuccessful()) {
+                        ScrapOnOffResponse result = response.body();
+                        Log.d("찜한 선한 가게 등록", new Gson().toJson(response.body()));
+                    } else {
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ScrapOnOffResponse> call, Throwable t) {
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+
+
+        }
+    }
+
+    private void getHeartOffData()
+    {
+        if(tokenRetrofitInstance!=null && whichStore==0){
+            Log.d("상세정보 id", id);
+            Call<ScrapOnOffResponse> call = RetrofitInstance.getRetrofitService().getChildrenScrapsOff("Bearer "+LoginActivity.userAccessToken, storeId,"children");
+            call.enqueue(new Callback<ScrapOnOffResponse>() {
+                @Override
+                public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
+                    if (response.isSuccessful()) {
+                        ScrapOnOffResponse result = response.body();
+                        Log.d("찜한 아동가맹점 가게 취소", new Gson().toJson(response.body()));
+                    } else {
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ScrapOnOffResponse> call, Throwable t) {
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+        } else if(tokenRetrofitInstance!=null && whichStore==1){
+            Call<ScrapOnOffResponse> call = RetrofitInstance.getRetrofitService().getSunHanScrapsOff("Bearer "+LoginActivity.userAccessToken,storeId, "sunhan");
+            call.enqueue(new Callback<ScrapOnOffResponse>() {
+                @Override
+                public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
+                    if (response.isSuccessful()) {
+                        ScrapOnOffResponse result = response.body();
+                        Log.d("찜한 선한 가게 취소", new Gson().toJson(response.body()));
+                    } else {
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ScrapOnOffResponse> call, Throwable t) {
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+
+
+        }
     }
 
 

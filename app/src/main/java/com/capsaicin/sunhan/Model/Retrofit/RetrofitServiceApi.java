@@ -17,6 +17,7 @@ import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.ScrapChildResponse;
+import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
 import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
@@ -62,11 +63,23 @@ public interface RetrofitServiceApi {
     /*@GET("api/reviews")
     Call<LetterResponse> getLetter(@Header("authorization") String token);*/
 
+
+
     @GET("api/scraps") // 선한영향력 찜한가게
     Call<ScrapsSunHanResponse> getSunHanScraps(@Header("authorization") String token, @Query("type") String type);
+    @GET("api/scraps")//선한영향력 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getSunHanScrapsOn(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
+    @GET("api/scraps")//선한영향력 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getSunHanScrapsOff(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
 
-    @GET("api/scraps") //가맹점 찜한가게
+    @GET("api/scraps") //아동급식가맹점 찜한가게
     Call<ScrapChildResponse> getChildrenScraps(@Header("authorization") String token, @Query("type") String type);
+    @GET("api/scraps")//아동급식가맹점 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getChildrenScrapsOn(@Header("authorization") String token, @Query("id") String storeId, @Query("type") String type);
+    @GET("api/scraps")//선한영향력 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getChildrenScrapsOff(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
+
+
 
     @PATCH("api/users") // 닉네임 업데이트
     Call<ProfileChangeResponse> changeNickname(@Header("authorization") String token, @Body NickNameItem nickNameItem);
