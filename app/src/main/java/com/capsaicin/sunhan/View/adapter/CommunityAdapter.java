@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.StoreItem;
@@ -47,7 +48,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         CommunityItem item = communityList.get(position);
         Log.d("온바인드홀더 ", communityList.get(position).getCommuId());
         //holder.userProfile.setImageResource(items.get(position).getUserProfile());
-        holder.userId.setText(communityList.get(position).getCommuId());
+        Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+communityList.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).circleCrop().into(holder.userProfile);
+        holder.userId.setText(communityList.get(position).getWriterItem().getNickname());
         holder.uploadTime.setText(communityList.get(position).getCommuIsCreateAt());
         holder.content.setText(communityList.get(position).getCommuContent());
         holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount());
@@ -72,7 +74,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //        public ImageView userProfile;
+        ImageView userProfile;
         TextView userId;
         TextView uploadTime;
         TextView content;
@@ -80,7 +82,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
         public ViewHolder(@NonNull View itemView, final OnClickCommunityListener listener) {
             super(itemView);
-//            userProfile = itemView.findViewById(R.id.userProfile);
+            userProfile = itemView.findViewById(R.id.userProfile);
             userId = itemView.findViewById(R.id.userId);
             uploadTime = itemView.findViewById(R.id.uploadTime);
             content = itemView.findViewById(R.id.content);

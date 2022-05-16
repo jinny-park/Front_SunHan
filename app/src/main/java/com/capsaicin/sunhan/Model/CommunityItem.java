@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class CommunityItem {
 
-    @SerializedName("writer") Object commuWriter;
+    @SerializedName("writer") WriterItem writerItem;
     @SerializedName("_id") private String commuId;
     @SerializedName("content") private String commuContent;
     @SerializedName("isDeleted") private Boolean commuIsDeleted;
@@ -15,22 +15,12 @@ public class CommunityItem {
     @SerializedName("createAt") private String commuIsCreateAt;
     @SerializedName("updateAt") private String commuIsUpdateAt;
 
-    public CommunityItem(Object commuWriter, String commuId, String commuContent, Boolean commuIsDeleted, String commuIsCommentCount, String commuIsCreateAt, String commuIsUpdateAt) {
-        this.commuWriter = commuWriter;
-        this.commuId = commuId;
-        this.commuContent = commuContent;
-        this.commuIsDeleted = commuIsDeleted;
-        this.commuIsCommentCount = commuIsCommentCount;
-        this.commuIsCreateAt = commuIsCreateAt;
-        this.commuIsUpdateAt = commuIsUpdateAt;
+    public WriterItem getWriterItem() {
+        return writerItem;
     }
 
-    public Object getCommuWriter() {
-        return commuWriter;
-    }
-
-    public void setCommuWriter(Object commuWriter) {
-        this.commuWriter = commuWriter;
+    public void setWriterItem(WriterItem writerItem) {
+        this.writerItem = writerItem;
     }
 
     public String getCommuId() {
@@ -81,16 +71,16 @@ public class CommunityItem {
         this.commuIsUpdateAt = commuIsUpdateAt;
     }
 
-    @Override
-    public String toString() {
-        return "CommentItem{" +
-                "commuWriter=" + commuWriter +
-                ", commuId='" + commuId + '\'' +
-                ", commuContent='" + commuContent + '\'' +
-                ", commuIsDeleted=" + commuIsDeleted +
-                ", commuIsCommentCount=" + commuIsCommentCount +
-                ", commuIsCreateAt='" + commuIsCreateAt + '\'' +
-                ", commuIsUpdateAt='" + commuIsUpdateAt + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "CommentItem{" +
+//                "commuWriter=" + WriterItem +
+//                ", commuId='" + commuId + '\'' +
+//                ", commuContent='" + commuContent + '\'' +
+//                ", commuIsDeleted=" + commuIsDeleted +
+//                ", commuIsCommentCount=" + commuIsCommentCount +
+//                ", commuIsCreateAt='" + commuIsCreateAt + '\'' +
+//                ", commuIsUpdateAt='" + commuIsUpdateAt + '\'' +
+//                '}';
+//    }
 }

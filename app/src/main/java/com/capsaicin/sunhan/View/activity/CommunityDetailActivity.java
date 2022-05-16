@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
@@ -50,6 +51,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ImageView pop1;
+    ImageView userProfile;
     TextView userId;
     TextView uploadTime;
     TextView content;
@@ -78,6 +80,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         setToolbar();
 
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
+        userProfile = findViewById(R.id.detail_userProfile);
         userId = findViewById(R.id.detail_userId);
         uploadTime = findViewById(R.id.detail_uploadTime);
         content = findViewById(R.id.detail_content);
@@ -171,7 +174,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         CommunityDetailResponse result = response.body();
 
 //                        CommunityFragment.commuId.setText(result.getCommunityDetailItem().getCommuId());
-                        userId.setText(result.getCommunityItem().getCommuId());
+                        Glide.with(getApplicationContext()).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getCommunityItem().getWriterItem().getAvatarUrl()).error(R.drawable.profile).circleCrop().into(userProfile);
+                        userId.setText(result.getCommunityItem().getWriterItem().getNickname());
                         uploadTime.setText(result.getCommunityItem().getCommuIsCreateAt());
                         content.setText(result.getCommunityItem().getCommuContent());
                         commentNum.setText(result.getCommunityItem().getCommuIsCommentCount());
