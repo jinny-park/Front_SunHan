@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -44,7 +46,7 @@ public class FindChildrenResultFragment extends Fragment {
     CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     CardStoreResponse cardStoreResponse;
-    public static int distinguish; // 가맹점인 선한영향력인지 구분
+    public static String name;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,6 +62,7 @@ public class FindChildrenResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_find_children_result,null);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         page = 1;
 
@@ -70,7 +73,20 @@ public class FindChildrenResultFragment extends Fragment {
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        initData(0);
+        ImageButton button=(ImageButton) view.findViewById(R.id.btn_search);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText findStore=(EditText)view.findViewById(R.id.search_view);
+                name=findStore.getText().toString();
+                Log.d("name","검색어는 "+name);
+                initData(0);
+
+
+            }
+        });
 
         sunhanCardRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -97,7 +113,7 @@ public class FindChildrenResultFragment extends Fragment {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindList("Bearer "+LoginActivity.userAccessToken,FindStoreFragment.name, page);
+                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindList("Bearer "+LoginActivity.userAccessToken,name, page);
                 call.enqueue(new Callback<CardStoreResponse>() {
                     @Override
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
@@ -137,7 +153,7 @@ public class FindChildrenResultFragment extends Fragment {
         } else if (LoginActivity.userAccessToken==null){
             if(tokenRetrofitInstance!=null){
                 Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindListNoUser(FindStoreFragment.name, page, lat, lng);
+                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindListNoUser(name, page, lat, lng);
                 call.enqueue(new Callback<CardStoreResponse>() {
                     @Override
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
@@ -183,7 +199,7 @@ public class FindChildrenResultFragment extends Fragment {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindList("Bearer "+LoginActivity.userAccessToken,FindStoreFragment.name,page);
+                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindList("Bearer "+LoginActivity.userAccessToken,name,page);
                 call.enqueue(new Callback<CardStoreResponse>() {
                     @Override
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
@@ -221,7 +237,7 @@ public class FindChildrenResultFragment extends Fragment {
         } else if (LoginActivity.userAccessToken==null){
             if(tokenRetrofitInstance!=null){
                 Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindListNoUser(FindStoreFragment.name, page, lat, lng);
+                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenFindListNoUser(name, page, lat, lng);
                 call.enqueue(new Callback<CardStoreResponse>() {
                     @Override
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {

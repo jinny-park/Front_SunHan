@@ -1,10 +1,14 @@
 package com.capsaicin.sunhan.View.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -24,7 +28,6 @@ public class FindStoreFragment extends Fragment {
     private SearchAdapter adapter;      // 리스트뷰에 연결할 아답터
     private ArrayList<String> arraylist;
     private SearchView searchView;
-    public static String name = "치킨";
 
     private FindChildrenResultFragment findChildrenResultFragment;
     private FindSunhanResultFragment findSunhanResultFragment;
@@ -38,37 +41,19 @@ public class FindStoreFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_findstore, null);
-        /*searchView = view.findViewById(R.id.search_view);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        /*ImageButton button=(ImageButton) view.findViewById(R.id.btn_search);
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // onQueryTextSubmit의  query에는 빈값이나 null을 받아들이지 X
-                // 그래서 텍스트 입력 변경시 공백인 경우 다시 onQueryTextSubmit 를 호출하면서 인자로 빈공백을 넣어쥼
-                if(newText.equals("")){
-                    this.onQueryTextSubmit("");
-                }
-                return false;
+            public void onClick(View v)
+            {
+                EditText findStore=(EditText)view.findViewById(R.id.search_view);
+                String name=findStore.getText().toString();
+                Log.d("name","검색어 전달");
             }
         });
-
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-         */
-
-        EditText findStore=(EditText)view.findViewById(R.id.search_view);
-        String name=findStore.getText().toString();
-
+*/
         findChildrenResultFragment = new FindChildrenResultFragment();
         findSunhanResultFragment = new FindSunhanResultFragment();
 
@@ -107,20 +92,4 @@ public class FindStoreFragment extends Fragment {
         return view;
 
     }
-
-
-    /*private String getResult(){
-        StringBuilder sb = new StringBuilder();
-        for (int i=0; i<items.size(); i++){
-            String item = items.get(i);
-            if(i==items.size() -1) {
-                sb.append(item + '\n');
-            } else{
-                sb.append(item);
-                sb.append("\n");
-            }
-        }
-        retrun sb.toString();
-    }*/
-
 }

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -42,11 +44,12 @@ import retrofit2.Response;
 
 public class FindSunhanResultFragment extends Fragment {
     ArrayList<StoreItem> storeList=new ArrayList<StoreItem>();
-    RecyclerView categoryRecycler;
+    RecyclerView sunhansSunhanRecyclerView;
     SunhanStoreAdapter storeAdapter;
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
+    public static String name;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -57,30 +60,41 @@ public class FindSunhanResultFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_sunhanst_category,null);
+        View view = inflater.inflate(R.layout.fragment_find_sunhan_result,null);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
-        progressBar = view.findViewById(R.id.progress_bar_category);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
         page = 1;
 
-        categoryRecycler = view.findViewById(R.id.recyclerview_sunhanstore_category);
-        categoryRecycler.setHasFixedSize(true);
+        sunhansSunhanRecyclerView = view.findViewById(R.id.find_sunhan_recyclerView);
+        sunhansSunhanRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-        categoryRecycler.setLayoutManager(recyclerViewManager);
-        categoryRecycler.setItemAnimator(new DefaultItemAnimator());
+        sunhansSunhanRecyclerView.setLayoutManager(recyclerViewManager);
+        sunhansSunhanRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-        initData(0);
+        ImageButton button=(ImageButton) view.findViewById(R.id.btn_search);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText findStore=(EditText)view.findViewById(R.id.search_view);
+                name=findStore.getText().toString();
+                Log.d("name","검색어는 "+name);
+                initData(0);
 
+            }
+        });
 
-        categoryRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        sunhansSunhanRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItemPosition = ((LinearLayoutManager) categoryRecycler.getLayoutManager()).
+                int lastVisibleItemPosition = ((LinearLayoutManager) sunhansSunhanRecyclerView.getLayoutManager()).
                         findLastCompletelyVisibleItemPosition();
-                int itemTotalCount = categoryRecycler.getAdapter().getItemCount() - 1;
+                int itemTotalCount = sunhansSunhanRecyclerView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
                     progressBar.setVisibility(View.VISIBLE);
                     getData(page);
@@ -98,7 +112,7 @@ public class FindSunhanResultFragment extends Fragment {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Log.d("선한프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindList("Bearer "+LoginActivity.userAccessToken,FindStoreFragment.name, page);
+                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindList("Bearer "+LoginActivity.userAccessToken,name, page);
                 call.enqueue(new Callback<StoreResponse>() {
                     @Override
                     public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
@@ -106,7 +120,7 @@ public class FindSunhanResultFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             StoreResponse result = response.body();
                             storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
-                            categoryRecycler.setAdapter(storeAdapter);
+                            sunhansSunhanRecyclerView.setAdapter(storeAdapter);
                             storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
                                 @Override
                                 public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
@@ -138,7 +152,7 @@ public class FindSunhanResultFragment extends Fragment {
         } else if(LoginActivity.userAccessToken==null){
             if(tokenRetrofitInstance!=null){
                 Log.d("선한프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindListNoUser(FindStoreFragment.name, page, lat, lng);
+                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindListNoUser(name, page, lat, lng);
                 call.enqueue(new Callback<StoreResponse>() {
                     @Override
                     public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
@@ -146,7 +160,7 @@ public class FindSunhanResultFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             StoreResponse result = response.body();
                             storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
-                            categoryRecycler.setAdapter(storeAdapter);
+                            sunhansSunhanRecyclerView.setAdapter(storeAdapter);
                             storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
                                 @Override
                                 public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
@@ -160,7 +174,7 @@ public class FindSunhanResultFragment extends Fragment {
                                     }
                                 }
                             });
-                            Log.d("선한영향력성공", new Gson().toJson(response.body()));
+                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -183,7 +197,7 @@ public class FindSunhanResultFragment extends Fragment {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Log.d("선한프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindList("Bearer "+LoginActivity.userAccessToken,FindStoreFragment.name, page);
+                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindList("Bearer "+LoginActivity.userAccessToken,name, page);
                 call.enqueue(new Callback<StoreResponse>() {
                     @Override
                     public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
@@ -222,7 +236,7 @@ public class FindSunhanResultFragment extends Fragment {
         } else if(LoginActivity.userAccessToken==null){
             if(tokenRetrofitInstance!=null){
                 Log.d("선한프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindListNoUser(FindStoreFragment.name, page, lat, lng);
+                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindListNoUser(name, page, lat, lng);
                 call.enqueue(new Callback<StoreResponse>() {
                     @Override
                     public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
@@ -243,7 +257,7 @@ public class FindSunhanResultFragment extends Fragment {
                                     }
                                 }
                             });
-                            Log.d("선한영향력성공", new Gson().toJson(response.body()));
+                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
