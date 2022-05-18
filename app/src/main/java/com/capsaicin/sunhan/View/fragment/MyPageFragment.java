@@ -68,7 +68,6 @@ public class MyPageFragment extends Fragment {
     static public MyPageFragment myPageFragment ;
 
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -147,8 +146,8 @@ public class MyPageFragment extends Fragment {
             public void onClick(View view) {
                 if(LoginActivity.userAccessToken==null){
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
-                    startActivity(intent);
                     ((BottomNavigationActivity)getActivity()).finish();
+                    startActivity(intent);
                 }
             }
         });
@@ -211,7 +210,7 @@ public class MyPageFragment extends Fragment {
                         case 4:
                             if(LoginActivity.userAccessToken!=null){
                                 Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
-                                ((BottomNavigationActivity)getActivity()).finish();
+
                                 startActivity(intent5);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
@@ -262,11 +261,9 @@ public class MyPageFragment extends Fragment {
                                 userNickName.setText("로그인을 해주세요");
                                 userEmail.setText("");
                                 userImage.setImageResource(R.drawable.profile);
-//                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
-
-//                                Intent intent = new Intent(getActivity(), BottomNavigationActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(intent);
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                ((BottomNavigationActivity)getActivity()).finish();
+                                startActivity(intent);
                             }
                             return null;
                         });

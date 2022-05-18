@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CardStoreItem;
@@ -55,6 +56,7 @@ public class SunhanstCardFragment extends Fragment {
    CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     CardStoreResponse cardStoreResponse;
+    SwipeRefreshLayout swipeRefreshLayout;
     public static int distinguish; // 가맹점인 선한영향력인지 구분
 
     public void onCreate(Bundle savedInstanceState){
@@ -71,7 +73,7 @@ public class SunhanstCardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sunhanst_card,null);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         progressBar = view.findViewById(R.id.progress_bar);
-
+        swipeRefreshLayout = view.findViewById(R.id.swip_children);
         page = 1;
 
         //리사이클러뷰 설정
@@ -84,6 +86,15 @@ public class SunhanstCardFragment extends Fragment {
 
 
        initData(0);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(0);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
 
         sunhanCardRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

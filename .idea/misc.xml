@@ -73,6 +73,8 @@
         <entry key="..\:/SunHan/app/src/main/res/drawable/custom_spinner_background.xml" value="0.23796296296296296" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_card_check.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_launcher.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_location_setting.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_main_nologin.xml" value="0.25364583333333335" />
@@ -85,6 +87,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/community_popup_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/detail_logs_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_children_store_info.xml" value="0.20555555555555555" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_community.xml" value="0.16927083333333334" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_findstore.xml" value="0.14583333333333334" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_likestore_cardst.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_likestore_sunhan.xml" value="0.25364583333333335" />
@@ -95,7 +98,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_category.xml" value="0.21458333333333332" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_store_detail.xml" value="0.25364583333333335" />
-        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_card.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_card.xml" value="0.176" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_category.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.25364583333333335" />

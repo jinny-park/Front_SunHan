@@ -47,18 +47,6 @@ public class ChildrenStoreInfoFragment extends Fragment {
         phone =view.findViewById(R.id.children_storeNum);
 
         getData();
-//
-//        String weektime =bundle.getString("weekStart")+bundle.getString("weekEnd");
-//        String weekendtime = bundle.getString("weekendStart")+bundle.getString("weekStart");
-//        String holidaytime = bundle.getString("weekStart")+bundle.getString("weekendEnd");
-//
-//        storeName.setText(bundle.getString("name"));
-//        weekdayTime.setText(weektime);
-//        weekendTime.setText(weekendtime);
-//        holidayTime.setText(holidaytime);
-//        address.setText(bundle.getString("address"));
-//        phone.setText(bundle.getString("phone"));
-
 
         return view;
     }

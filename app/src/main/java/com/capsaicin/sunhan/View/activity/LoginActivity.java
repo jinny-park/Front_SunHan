@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public Unit invoke(User user, Throwable throwable) {
                 if ( user != null) {
-                    Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

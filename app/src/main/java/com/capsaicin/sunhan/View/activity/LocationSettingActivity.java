@@ -52,7 +52,6 @@ public class LocationSettingActivity extends AppCompatActivity {
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle("가게 상세");
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
     @Override
