@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/letterProfile"
+            android:id="@+id/avatarUrl"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -28,16 +28,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/letterName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:text="홍길동"
-                android:textSize="20dp"
+                android:orientation="horizontal">
 
-                android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/writer"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="홍길동"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/edit_letter"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:text="수정" />
+
+                <TextView
+                    android:id="@+id/block_letter"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="신고" />
+
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/letterImage"
@@ -48,7 +68,7 @@
                 app:srcCompat="@drawable/food" />
 
             <TextView
-                android:id="@+id/letterContent"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -57,7 +77,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/letterDate"
+                android:id="@+id/createAt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

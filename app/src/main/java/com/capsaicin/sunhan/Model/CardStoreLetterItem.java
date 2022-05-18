@@ -2,7 +2,7 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CardStoreLetter {
+public class CardStoreLetterItem {
 
     @SerializedName("writer")
     WriterItem writerItem;

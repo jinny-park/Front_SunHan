@@ -24,8 +24,6 @@ import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
-import com.capsaicin.sunhan.Model.WritepostItem;
-import com.capsaicin.sunhan.Model.WritepostResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -58,26 +56,25 @@ public interface RetrofitServiceApi {
     @GET("api/children/{id}")
     Call<ChildrenResponse> getChildren(@Path("id") String storeId);
 
-    @GET("api/reviews/{id}")
-    Call<LetterResponse> getLetter(@Path("id") String storeId);
-    /*@GET("api/reviews")
-    Call<LetterResponse> getLetter(@Header("authorization") String token);*/
-
+    @GET("api/reviews/{id}") //감사편지 조회
+    Call<LetterResponse> getLetter(@Path("id") String id, @Query("type") String type, @Query("page") int page);
+/*    @GET("api/reviews/{id}") //감사편지 조회
+    Call<CardStoreLetterResponse> getLetter(@Path("id") String storeId, @Query("type") String type, @Query("page") int page);*/
 
 
     @GET("api/scraps") // 선한영향력 찜한가게
     Call<ScrapsSunHanResponse> getSunHanScraps(@Header("authorization") String token, @Query("type") String type);
-    @GET("api/scraps")//선한영향력 찜한가게 등록하기
-    Call<ScrapOnOffResponse> getSunHanScrapsOn(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
-    @GET("api/scraps")//선한영향력 찜한가게 등록하기
-    Call<ScrapOnOffResponse> getSunHanScrapsOff(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
+    @PATCH("api/scraps/{id}")//선한영향력 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getSunHanScrapsOn(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);
+    @DELETE("api/scraps/{id}")//선한영향력 찜한가게 삭제하기
+    Call<ScrapOnOffResponse> getSunHanScrapsOff(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);
 
     @GET("api/scraps") //아동급식가맹점 찜한가게
     Call<ScrapChildResponse> getChildrenScraps(@Header("authorization") String token, @Query("type") String type);
-    @GET("api/scraps")//아동급식가맹점 찜한가게 등록하기
-    Call<ScrapOnOffResponse> getChildrenScrapsOn(@Header("authorization") String token, @Query("id") String storeId, @Query("type") String type);
-    @GET("api/scraps")//선한영향력 찜한가게 등록하기
-    Call<ScrapOnOffResponse> getChildrenScrapsOff(@Header("authorization") String token,@Query("id") String storeId, @Query("type") String type);
+    @PATCH("api/scraps/{id}")//아동급식가맹점 찜한가게 등록하기
+    Call<ScrapOnOffResponse> getChildrenScrapsOn(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);
+    @DELETE("api/scraps/{id}")//아동급식가맹점 찜한가게 삭제하기
+    Call<ScrapOnOffResponse> getChildrenScrapsOff(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);
 
 
 
@@ -125,9 +122,6 @@ public interface RetrofitServiceApi {
     Call<StoreResponse> getSunHanFindList (@Header("authorization") String token, @Query("name")String name, @Query("page")int page);
     @GET("api/sunhans/search/guest")//선한가게 찾기 (비회원)
     Call<StoreResponse> getSunHanFindListNoUser (@Query("name")String name, @Query("page")int page, @Query("lat") double lat, @Query("lng") double lng);
-
-
-
 
 
     @POST("api/users/address") // 위도 경도 보내기

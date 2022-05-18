@@ -22,7 +22,8 @@ public class SunHanDetailItem {
     private String phoneNumber;
     @SerializedName("category")
     private String category;
-    ArrayList< LetterItem > reviews = new ArrayList();
+    @SerializedName("reviews")
+    private ArrayList< LetterItem > reviews = new ArrayList();
 
     public String get_id() {
         return _id;

@@ -72,9 +72,9 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
         public ViewHolder(@NonNull View itemView/* , final OnClickStoreItemListener listener */) {
             super(itemView);
 //            imageView = itemView.findViewById(R.id.storeImage);
-            letterName = itemView.findViewById(R.id.letterName);
-            letterContent = itemView.findViewById(R.id.letterContent);
-            letterDate = itemView.findViewById(R.id.letterDate);
+            letterName = itemView.findViewById(R.id.writer);
+            letterContent = itemView.findViewById(R.id.content);
+            letterDate = itemView.findViewById(R.id.createAt);
 
             itemView.setClickable(true);
 /*            itemView.setOnClickListener(new View.OnClickListener() {

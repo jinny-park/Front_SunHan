@@ -31,13 +31,13 @@ public class CardStoreItem {
     @SerializedName("detailCategory")
     private String detailCategory;
     @SerializedName("reviews")
-    ArrayList< CardStoreLetter > reviews = new ArrayList ();
+    ArrayList<CardStoreLetterItem> reviews = new ArrayList ();
 
-    public ArrayList<CardStoreLetter> getReviews() {
+    public ArrayList<CardStoreLetterItem> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<CardStoreLetter> reviews) {
+    public void setReviews(ArrayList<CardStoreLetterItem> reviews) {
         this.reviews = reviews;
     }
 

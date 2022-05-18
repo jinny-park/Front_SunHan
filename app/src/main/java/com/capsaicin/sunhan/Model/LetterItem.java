@@ -3,11 +3,12 @@ package com.capsaicin.sunhan.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LetterItem {
-
+public class LetterItem { //sunhan reviews
 
     @SerializedName("writer")
     WriterItem writerItem;
+    @SerializedName("_id")
+    private String _id;
     @SerializedName("sunhanId")
     private String sunhanId;
     @SerializedName("content")
@@ -18,8 +19,6 @@ public class LetterItem {
     private String createAt;
     @SerializedName("updateAt")
     private String updateAt;
-    @SerializedName("_id")
-    private String _id;
 
     public WriterItem getWriterItem() {
         return writerItem;
