@@ -10,7 +10,7 @@
         android:id="@+id/loginLogo"
         android:layout_width="173dp"
         android:layout_height="114dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -86,36 +86,32 @@
         app:layout_constraintStart_toStartOf="@+id/login_text"
         app:layout_constraintTop_toBottomOf="@+id/login_text" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_login"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/login_text3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_text3"
-        app:layout_constraintTop_toBottomOf="@+id/login_text3"
-        tools:ignore="MissingConstraints" />
+<!--    <com.google.android.gms.common.SignInButton-->
+<!--        android:id="@+id/google_login"-->
+<!--        android:layout_width="280dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        tools:ignore="MissingConstraints"-->
+<!--        tools:layout_editor_absoluteY="374dp" />-->
 
     <Button
         android:id="@+id/kakao_login"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/kakao_login_medium_wide"
-        app:layout_constraintEnd_toEndOf="@+id/google_login"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/google_login"
-        app:layout_constraintTop_toBottomOf="@+id/google_login"
+        app:layout_constraintEnd_toEndOf="@+id/login_text3"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="@+id/login_text3"
+        app:layout_constraintTop_toBottomOf="@+id/login_text3"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/no_user_login"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="비회원"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bottom_border"
+        android:text="비회원"
         app:layout_constraintEnd_toEndOf="@+id/kakao_login"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/kakao_login"

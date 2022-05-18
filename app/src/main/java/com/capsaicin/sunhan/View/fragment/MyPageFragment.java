@@ -148,6 +148,7 @@ public class MyPageFragment extends Fragment {
                 if(LoginActivity.userAccessToken==null){
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     startActivity(intent);
+                    ((BottomNavigationActivity)getActivity()).finish();
                 }
             }
         });
@@ -210,6 +211,7 @@ public class MyPageFragment extends Fragment {
                         case 4:
                             if(LoginActivity.userAccessToken!=null){
                                 Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
+                                ((BottomNavigationActivity)getActivity()).finish();
                                 startActivity(intent5);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
