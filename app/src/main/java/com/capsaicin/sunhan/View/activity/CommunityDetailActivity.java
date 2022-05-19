@@ -90,6 +90,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         setToolbar();
 
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
+        commuDetailRetrofitInstance = RetrofitInstance.getRetrofitInstance();
         userProfile = findViewById(R.id.detail_userProfile);
         userId = findViewById(R.id.detail_userId);
         uploadTime = findViewById(R.id.detail_uploadTime);
@@ -98,6 +99,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
         commentContent = findViewById(R.id.comment_content);
         communityWritingComment = new CommunityWritingComment();
+        progressBar = findViewById(R.id.progress_bar);
 
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
@@ -118,10 +120,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
         commuDetailRecycleView.setLayoutManager(recyclerViewManager);
         commuDetailRecycleView.setHasFixedSize(true);
         commuDetailRecycleView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView1.setAdapter(communityDetailAdapter);
+//        commuDetailRecycleView.setAdapter(communityDetailAdapter);
 
-        initComment(0);
         getData();
+        initComment(0); //에러
 
         pop1 = findViewById(R.id.popupMore);
         pop1.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +166,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = commuDetailRecycleView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
-                    progressBar.setVisibility(View.VISIBLE);
+//                    progressBar.setVisibility(View.VISIBLE);
                     getComment(page);
                     page++;
                 }
@@ -177,13 +179,13 @@ public class CommunityDetailActivity extends AppCompatActivity {
     {
         if(commuDetailRetrofitInstance!=null){
             Log.d("댓글", "토큰인스턴스이후 콜백 전");
-            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,page);
+            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,id,page); //error
 
             call.enqueue(new Callback<CommentResponse>() {
                 @Override
                 public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                     if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
                         CommentResponse result = response.body();
                         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
                         commuDetailRecycleView.setAdapter(communityDetailAdapter);
@@ -196,10 +198,12 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<CommentResponse> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
                     Log.d("REST ERROR!", t.getMessage());
                 }
             });
+        } else {
+            Log.d("인스턴스 널임","null");
         }
     }
 
@@ -207,19 +211,19 @@ public class CommunityDetailActivity extends AppCompatActivity {
     {
 //        if(LoginActivity.userAccessToken!=null){
         if(commuDetailRetrofitInstance!=null){
-            Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
-            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,page);
+            Log.d("커뮤니티 댓글", "토큰인스턴스이후 콜백 전");
+            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,id,page);
             call.enqueue(new Callback<CommentResponse>() {
                 @Override
                 public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                     if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
                         CommentResponse result = response.body();
                         communityDetailAdapter.addList(result.getData());
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
                         progressBar.setVisibility(View.GONE);
-                        Log.d("REST FAILED MESSAGE", response.message());
+                        Log.d("커뮤니티 댓글 실패", response.message());
                     }
                 }
 
@@ -233,7 +237,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 //        }
     }
 
-    private void getData(){
+    private void getData(){ //커뮤니티 상세페이지 데이터 가져옴
         if(tokenRetrofitInstance!=null){
             Log.d("상세정보 id", id);
             Call<CommunityDetailResponse> call = RetrofitInstance.getRetrofitService().getCommunityDetail(id);
@@ -290,7 +294,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void dialog() {
+    public void dialog() { //post 다이얼로그
         dilaog01.show();
 
         Button modify_btn = dilaog01.findViewById(R.id.modify_btn);

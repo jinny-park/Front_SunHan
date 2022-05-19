@@ -53,10 +53,10 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.c_content.setText(CommunityCommentList.get(position).getC_commuContent());
         holder.c_commentDate.setText(CommunityCommentList.get(position).getC_commuIsCreateAt());
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        holder.c_recyclerView.setLayoutManager(layoutManager);
-        holder.c_recyclerView.setLayoutManager(layoutManager);
-        holder.c_recyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//        holder.c_recyclerView.setLayoutManager(layoutManager);
+//        holder.c_recyclerView.setLayoutManager(layoutManager);
+//        holder.c_recyclerView.setHasFixedSize(true);
 
 //        ArrayList<CommentItem> arrayList = new ArrayList<>(); //대댓글
 
