@@ -12,6 +12,7 @@ import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.ModifypostResponse;
 import com.capsaicin.sunhan.Model.MyCommentLogsResponse;
+import com.capsaicin.sunhan.Model.MyLetterLogsResponse;
 import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
@@ -93,6 +94,10 @@ public interface RetrofitServiceApi {
 
     @GET("api/users/comments") //내가 쓴 댓글글
      Call<MyCommentLogsResponse> getMyComments(@Header("authorization") String token, @Query("page")int page);
+
+    @GET("api/users/reviews") //내가 쓴 감사편지
+    Call<MyLetterLogsResponse> getMyLetters(@Header("authorization") String token, @Query("page")int page);
+
 
     @GET("api/children")//가맹점 거리순 리스트(회원전용)
     Call<CardStoreResponse> getChildrenStoreList (@Header("authorization") String token, @Query("page")int page, @Query("sort") String sort);

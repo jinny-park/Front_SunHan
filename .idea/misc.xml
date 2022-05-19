@@ -70,8 +70,11 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/setting_alram_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/store_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/drawable/bottom_border.xml" value="0.26564102564102565" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/custom_spinner_background.xml" value="0.23796296296296296" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_card_check.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_delete_account.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_detail_logs.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_launcher.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_location_setting.xml" value="0.264" />
@@ -83,12 +86,15 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_set_alarm.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.1" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_toolbar.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_write_letter.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/community_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/community_popup_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/detail_logs_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_children_store_info.xml" value="0.20555555555555555" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_community.xml" value="0.16927083333333334" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_findstore.xml" value="0.14583333333333334" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_letter_write.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_likestore.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_likestore_cardst.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_likestore_sunhan.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_comment.xml" value="0.10572916666666667" />
@@ -102,7 +108,10 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_category.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_letter.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_sunhan.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/letter_item.xml" value="0.176" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/mypage_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/mypostitem.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/network_security_config.xml" value="0.1" />
         <entry key="..\:/SunHan/app/src/main/res/layout/spinner_inner_view.xml" value="0.25364583333333335" />

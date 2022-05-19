@@ -19,6 +19,9 @@ public class LetterItem { //sunhan reviews
     private String createAt;
     @SerializedName("updateAt")
     private String updateAt;
+    @SerializedName("__v")
+    private float __v;
+
 
     public WriterItem getWriterItem() {
         return writerItem;
@@ -74,5 +77,13 @@ public class LetterItem { //sunhan reviews
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public float get__v() {
+        return __v;
+    }
+
+    public void set__v(float __v) {
+        this.__v = __v;
     }
 }

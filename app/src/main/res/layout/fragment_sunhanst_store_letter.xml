@@ -7,19 +7,29 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/fragment_letter_write" />
+<!--            <include layout="@layout/fragment_letter_write" />-->
+
+            <Button
+                android:id="@+id/write_letter_btn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/yellow_button"
+                android:textSize="18dp"
+                android:text="감사편지쓰러가기" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_letter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp">
+                android:padding="5dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -28,6 +38,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
     </ScrollView>
 </FrameLayout>

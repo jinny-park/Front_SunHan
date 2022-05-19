@@ -1,15 +1,19 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.LetterItem;
+import com.capsaicin.sunhan.Model.MyPost;
 import com.capsaicin.sunhan.R;
 
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
     public MyLetterLogsAdapter(Context context, ArrayList<LetterItem> items) {
         this.context = context;
         this.letterItems = items;
+        notifyItemRangeInserted(letterItems.size(),letterItems.size());
     }
 
     @NonNull
@@ -37,10 +42,11 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
     @Override
     public void onBindViewHolder(@NonNull MyLetterLogsAdapter.ViewHolder holder, int position) {
         LetterItem item = letterItems.get(position);
-        //holder.imageView.setImageResource(storeItemArrayList.get(position).image);
+        Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).into(holder.userProfile);
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
         holder.letterContent.setText(letterItems.get(position).getContent());
         holder.letterDate.setText(letterItems.get(position).getCreateAt());
+//        Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getWriterItem().get).error(R.drawable.profile).into(holder.letterImage);
     }
 
     /*
@@ -66,12 +72,14 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
         TextView letterName;
         TextView letterContent;
         TextView letterDate;
-        //ImageView letterImage;
+        ImageView letterImage;
+        ImageView userProfile;
 
 
         public ViewHolder(@NonNull View itemView/* , final OnClickStoreItemListener listener */) {
             super(itemView);
-//            imageView = itemView.findViewById(R.id.storeImage);
+            userProfile = itemView.findViewById(R.id.letter_profile_pic);
+            letterImage = itemView.findViewById(R.id.letterImage);
             letterName = itemView.findViewById(R.id.writer);
             letterContent = itemView.findViewById(R.id.content);
             letterDate = itemView.findViewById(R.id.createAt);
@@ -90,6 +98,11 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
 
  */
         }
+    }
+
+    public void addList(ArrayList <LetterItem> list){
+        letterItems.addAll(list);
+        notifyItemRangeInserted(letterItems.size(),list.size());
     }
 
     public void addItem(LetterItem item){

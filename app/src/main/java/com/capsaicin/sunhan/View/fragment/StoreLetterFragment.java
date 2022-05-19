@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
+import com.capsaicin.sunhan.View.activity.WriteLetterActivity;
 import com.capsaicin.sunhan.View.adapter.LetterAdapter;
 import com.google.gson.Gson;
 
@@ -65,6 +67,7 @@ public class StoreLetterFragment extends Fragment {
 
     static public TextView edit_letter;
     static public TextView block_letter;
+    Button write_letter_btn; //감사편지쓰러가기 버튼
 
 
 
@@ -84,7 +87,7 @@ public class StoreLetterFragment extends Fragment {
 
         letter = view.findViewById(R.id.add_letter_img);
         letter_img = view.findViewById(R.id.letter_img);
-
+        write_letter_btn = view.findViewById(R.id.write_letter_btn); // 감사편지쓰러가기버튼
 
         writer = view.findViewById(R.id.writer);
         letterImage = view.findViewById(R.id.letterImage);
@@ -95,16 +98,24 @@ public class StoreLetterFragment extends Fragment {
         edit_letter = view.findViewById(R.id.edit_letter);
         block_letter = view.findViewById(R.id.block_letter);
 
-
-        letter.setOnClickListener(new View.OnClickListener() {
+        write_letter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,REQUEST_CODE);
+                Intent intent = new Intent(getActivity(), WriteLetterActivity.class);
+                startActivity(intent);
             }
         });
+
+
+//        letter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(intent,REQUEST_CODE);
+//            }
+//        });
 
         letterAdapter = new LetterAdapter(getContext(), letterList);
 
