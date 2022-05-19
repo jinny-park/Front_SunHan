@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="감사 편지를 써주세요!"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/write_letter_image"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/write_letter_image"
-        app:layout_constraintTop_toBottomOf="@+id/write_letter_image" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/write_letter_image"
-        android:layout_width="374dp"
-        android:layout_height="174dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/add_image" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:text="감사 편지를 써주세요!"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/write_letter_image"
+            app:layout_constraintHorizontal_bias="0.0" />
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="370dp"
-        android:layout_height="156dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
+        <ImageView
+            android:id="@+id/write_letter_image"
+            android:layout_width="374dp"
+            android:layout_height="134dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            app:layout_constraintHorizontal_bias="0.567"
+            app:srcCompat="@drawable/add_image" />
 
-        app:layout_constraintEnd_toEndOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.035"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        <EditText
+            android:id="@+id/editTextTextMultiLine"
+            android:layout_width="370dp"
+            android:layout_height="163dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:maxLines="10"
+            android:background="@drawable/edit_border"
+            android:ems="10"
+            android:hint=" 10줄 이내로 써주세요!"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintHorizontal_bias="0.035" />
 
-    <Button
-        android:id="@+id/send_letter_btn"
-        android:layout_width="376dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="60dp"
-        android:text="감사펴지보내기"
-        android:background="@drawable/yellow_button"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        <Button
+            android:id="@+id/send_letter_btn"
+            android:layout_width="376dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/yellow_button"
+            android:text="감사편지보내기" />
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

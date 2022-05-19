@@ -106,7 +106,7 @@
         <activity
             android:name="com.capsaicin.sunhan.View.activity.WriteLetterActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
         </activity>
 
         <!-- 여기 조심해주세요 -->
