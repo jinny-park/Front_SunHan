@@ -6,6 +6,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.capsaicin.sunhan.View.activity.StoreDetailActivity.whichStore;
 import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,25 +18,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.Model.LetterResponse;
+import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
+import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.activity.WriteLetterActivity;
 import com.capsaicin.sunhan.View.adapter.LetterAdapter;
+import com.capsaicin.sunhan.View.adapter.MyCommentLogsAdapter;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentLogsListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -46,29 +56,19 @@ import retrofit2.Response;
 
 public class StoreLetterFragment extends Fragment {
     public static LetterAdapter letterAdapter;
-    ArrayList<LetterItem> letterList = new ArrayList<LetterItem>();
     RecyclerView letterRecyclerView;
-    CardView letter;
-    ImageView letter_img;
-    private static final int REQUEST_CODE = 0;
-    int page;
-    int blockNumber;
-    ProgressBar progressBar;
 
-    LetterResponse letterResponse;
+    int page;
+    ProgressBar progressBar;
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private RetrofitInstance tokenRetrofitInstance ;
 
-
-    static public TextView writer;
-    static public ImageView letterImage;
-    static public TextView content;
-    static public TextView createAt;
-    //static public ImageView avatarUrl;
-
-    static public TextView edit_letter;
-    static public TextView block_letter;
+    TextView edit_letter;
+    TextView block_letter;
+    private TextView delete_letter;
     Button write_letter_btn; //감사편지쓰러가기 버튼
-
+    private String letter_id;
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -82,49 +82,49 @@ public class StoreLetterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_store_letter,null);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
-        page = 0;
+        page = 1;
         progressBar = view.findViewById(R.id.progress_bar_letter);
 
-        letter = view.findViewById(R.id.add_letter_img);
-        letter_img = view.findViewById(R.id.letter_img);
+
         write_letter_btn = view.findViewById(R.id.write_letter_btn); // 감사편지쓰러가기버튼
 
-        writer = view.findViewById(R.id.writer);
-        letterImage = view.findViewById(R.id.letterImage);
-        content = view.findViewById(R.id.content);
-        createAt = view.findViewById(R.id.createAt);
-        //avatarUrl = view.findViewById(R.id.avatarUrl);
-
-        edit_letter = view.findViewById(R.id.edit_letter);
-        block_letter = view.findViewById(R.id.block_letter);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_leteter);
 
         write_letter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), WriteLetterActivity.class);
-                startActivity(intent);
+
+                if(LoginActivity.userAccessToken!=null){
+                    Intent intent = new Intent(getActivity(), WriteLetterActivity.class);
+                    intent.putExtra("_id",StoreDetailActivity.id);
+                    intent.putExtra("whichStore", StoreDetailActivity.whichStore);
+                    startActivity(intent);
+                }else{
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                    dlg.setMessage("로그인을해주세요"); // 메시지
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    dlg.show();
+                }
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initLetterData(0);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
-//        letter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent,REQUEST_CODE);
-//            }
-//        });
-
-        letterAdapter = new LetterAdapter(getContext(), letterList);
 
         letterRecyclerView = view.findViewById(R.id.recyclerview_letter);
         letterRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         letterRecyclerView.setLayoutManager(recyclerViewManager);
         letterRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        letterRecyclerView.setAdapter(letterAdapter);
 
         initLetterData(0);
 
@@ -149,33 +149,7 @@ public class StoreLetterFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_CODE){
-            if(resultCode==RESULT_OK){
-                try {
-                    Uri uri = data.getData();
-                    Glide.with(getActivity().getApplicationContext()).load(uri).into(letter_img);
-                }catch (Exception e){
-                    getActivity().finish();
-                }
-            }else if(resultCode==RESULT_CANCELED){
-                getActivity().finish();
-            }
-        }
-    }
-
-/*    void setRecyclerview(View view){
-        letterRecyclerView = view.findViewById(R.id.recyclerview_letter);
-        letterRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-        letterRecyclerView.setLayoutManager(recyclerViewManager);
-        letterRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        letterRecyclerView.setAdapter(letterAdapter);
-
-    }*/
 
     private void initLetterData(int page)
     {
@@ -189,6 +163,86 @@ public class StoreLetterFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         letterAdapter = new LetterAdapter(getActivity(), result.getData());
                         letterRecyclerView.setAdapter(letterAdapter);
+
+                        if(LoginActivity.userAccessToken!=null){
+                            letterAdapter.setOnClickLetterListener(new OnClickLetterListener() {
+                                @Override
+                                public void onItemClick(LetterAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        String letter_id = letterAdapter.getItem(position).get_id();
+                                        holder.itemView.findViewById(R.id.delete_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                                dlg.setMessage("삭제하시겠습니까?"); // 메시지
+                                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer "+LoginActivity.userAccessToken, letter_id , "children");
+                                                        call.enqueue(new Callback<ResultResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    ResultResponse result = response.body();
+                                                                    Log.d("삭제성공", new Gson().toJson(response.body()));
+                                                                } else {
+
+                                                                    Log.d("ERROR", response.message());
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                                Log.d("REST ERROR!", t.getMessage());
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                                dlg.show();
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.block_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, letter_id );
+                                                call.enqueue(new Callback<ResultResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                        if (response.isSuccessful()) {
+                                                            ResultResponse result = response.body();
+                                                            Toast toast = Toast.makeText(getContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                            Log.d("신고성공", new Gson().toJson(response.body()));
+                                                        } else {
+
+                                                            Log.d("ERROR", response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                        Log.d("REST ERROR!", t.getMessage());
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.edit_letter).setOnClickListener(new View.OnClickListener() {
+                                            //편지 수정
+                                            @Override
+                                            public void onClick(View view) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+
+                        }
+
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
@@ -211,6 +265,86 @@ public class StoreLetterFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         letterAdapter = new LetterAdapter(getActivity(), result.getData());
                         letterRecyclerView.setAdapter(letterAdapter);
+
+                        if(LoginActivity.userAccessToken!=null){
+                            letterAdapter.setOnClickLetterListener(new OnClickLetterListener() {
+                                @Override
+                                public void onItemClick(LetterAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        String letter_id = letterAdapter.getItem(position).get_id();
+                                        holder.itemView.findViewById(R.id.delete_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                                dlg.setMessage("삭제하시겠습니까?"); // 메시지
+                                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer "+LoginActivity.userAccessToken, letter_id , "sunhan");
+                                                        call.enqueue(new Callback<ResultResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    ResultResponse result = response.body();
+                                                                    Log.d("삭제성공", new Gson().toJson(response.body()));
+                                                                } else {
+
+                                                                    Log.d("ERROR", response.message());
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                                Log.d("REST ERROR!", t.getMessage());
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                                dlg.show();
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.block_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, letter_id );
+                                                call.enqueue(new Callback<ResultResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                        if (response.isSuccessful()) {
+                                                            ResultResponse result = response.body();
+                                                            Toast toast = Toast.makeText(getContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                            Log.d("신고성공", new Gson().toJson(response.body()));
+                                                        } else {
+
+                                                            Log.d("ERROR", response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                        Log.d("REST ERROR!", t.getMessage());
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.edit_letter).setOnClickListener(new View.OnClickListener() {
+                                            //편지 수정
+                                            @Override
+                                            public void onClick(View view) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+
+                        }
+
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
@@ -238,7 +372,87 @@ public class StoreLetterFragment extends Fragment {
                     if (response.isSuccessful()) {
                         LetterResponse result = response.body();
                         progressBar.setVisibility(View.GONE);
-                        letterRecyclerView.setAdapter(letterAdapter);
+                        letterAdapter.addList(result.getData());
+
+                        if(LoginActivity.userAccessToken!=null){
+                            letterAdapter.setOnClickLetterListener(new OnClickLetterListener() {
+                                @Override
+                                public void onItemClick(LetterAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        String letter_id = letterAdapter.getItem(position).get_id();
+                                        holder.itemView.findViewById(R.id.delete_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                                dlg.setMessage("삭제하시겠습니까?"); // 메시지
+                                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer "+LoginActivity.userAccessToken, letter_id , "children");
+                                                        call.enqueue(new Callback<ResultResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    ResultResponse result = response.body();
+                                                                    Log.d("삭제성공", new Gson().toJson(response.body()));
+                                                                } else {
+
+                                                                    Log.d("ERROR", response.message());
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                                Log.d("REST ERROR!", t.getMessage());
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                                dlg.show();
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.block_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, letter_id );
+                                                call.enqueue(new Callback<ResultResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                        if (response.isSuccessful()) {
+                                                            ResultResponse result = response.body();
+                                                            Toast toast = Toast.makeText(getContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                            Log.d("신고성공", new Gson().toJson(response.body()));
+                                                        } else {
+
+                                                            Log.d("ERROR", response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                        Log.d("REST ERROR!", t.getMessage());
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.edit_letter).setOnClickListener(new View.OnClickListener() {
+                                            //편지 수정
+                                            @Override
+                                            public void onClick(View view) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+
+                        }
+
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
@@ -259,7 +473,87 @@ public class StoreLetterFragment extends Fragment {
                     if (response.isSuccessful()) {
                         LetterResponse result = response.body();
                         progressBar.setVisibility(View.GONE);
-                        letterRecyclerView.setAdapter(letterAdapter);
+                        letterAdapter.addList(result.getData());
+
+                        if(LoginActivity.userAccessToken!=null){
+                            letterAdapter.setOnClickLetterListener(new OnClickLetterListener() {
+                                @Override
+                                public void onItemClick(LetterAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        String letter_id = letterAdapter.getItem(position).get_id();
+                                        holder.itemView.findViewById(R.id.delete_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                                                dlg.setMessage("삭제하시겠습니까?"); // 메시지
+                                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer "+LoginActivity.userAccessToken, letter_id , "sunhan");
+                                                        call.enqueue(new Callback<ResultResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    ResultResponse result = response.body();
+                                                                    Log.d("삭제성공", new Gson().toJson(response.body()));
+                                                                } else {
+
+                                                                    Log.d("ERROR", response.message());
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                                Log.d("REST ERROR!", t.getMessage());
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                                dlg.show();
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.block_letter).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, letter_id );
+                                                call.enqueue(new Callback<ResultResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                        if (response.isSuccessful()) {
+                                                            ResultResponse result = response.body();
+                                                            Toast toast = Toast.makeText(getContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                            Log.d("신고성공", new Gson().toJson(response.body()));
+                                                        } else {
+
+                                                            Log.d("ERROR", response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                        Log.d("REST ERROR!", t.getMessage());
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                        holder.itemView.findViewById(R.id.edit_letter).setOnClickListener(new View.OnClickListener() {
+                                            //편지 수정
+                                            @Override
+                                            public void onClick(View view) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+
+                        }
+
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 

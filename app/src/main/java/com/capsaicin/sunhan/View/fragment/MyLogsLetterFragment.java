@@ -1,6 +1,5 @@
 package com.capsaicin.sunhan.View.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,19 +14,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.Model.MyLetterLogsResponse;
-import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.adapter.MyLetterLogsAdapter;
-import com.capsaicin.sunhan.View.adapter.MyPostLogsAdapter;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickPostLogsListener;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,18 +87,6 @@ public class MyLogsLetterFragment extends Fragment {
                             MyLetterLogsResponse result = response.body();
                             letterLogsAdapter = new MyLetterLogsAdapter(getActivity(),result.getMyLetterLogData().getWriteReviews());
                             letterRecyclerView.setAdapter(letterLogsAdapter);
-//                            letterLogsAdapter.setOnClickCommunityLogsListener(new OnClickPostLogsListener() {
-//                                @Override
-//                                public void onItemClick(MyPostLogsAdapter.ViewHolder holder, View view, int position) {
-//                                    if(position!=RecyclerView.NO_POSITION){
-//                                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-//                                        intent.putExtra("_id", letterLogsAdapter.getItem(position).get_id());
-//                                        Log.d("아이디", letterLogsAdapter.getItem(position).get_id());
-//
-//                                        startActivity(intent);
-//                                    }
-//                                }
-//                            });
                             Log.d("편지로그성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
@@ -138,17 +118,6 @@ public class MyLogsLetterFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             MyLetterLogsResponse result = response.body();
                             letterLogsAdapter.addList(result.getMyLetterLogData().getWriteReviews());
-//                            letterLogsAdapter.setOnClickCommunityLogsListener(new OnClickPostLogsListener() {
-//                                @Override
-//                                public void onItemClick(MyPostLogsAdapter.ViewHolder holder, View view, int position) {
-//                                    if(position!=RecyclerView.NO_POSITION){
-//                                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-//                                        intent.putExtra("_id", letterLogsAdapter.getItem(position).get_id());
-//                                        Log.d("아이디", letterLogsAdapter.getItem(position).get_id());
-//                                        startActivity(intent);
-//                                    }
-//                                }
-//                            });
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);

@@ -26,6 +26,7 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
     public ManageBlockAdapter(Context context, ArrayList<BlockedItem> list){
         this.context = context ;
         this.blocekdItemsList= list;
+        notifyItemRangeInserted(blocekdItemsList.size(),blocekdItemsList.size());
     }
 
     @NonNull
@@ -39,7 +40,6 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
     @Override
     public void onBindViewHolder(@NonNull ManageBlockAdapter.ViewHolder holder, int position) {
         BlockedItem item =blocekdItemsList.get(position);
-//     holder.imageView.setImageResource(mypageItemArrayList.get(position).image);
         holder.textView.setText(blocekdItemsList.get(position).getNickname());
     }
 
@@ -80,19 +80,6 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
                     }
                 }
             });
-
-            itemView.setClickable(true);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-
-                    if(listener != null){
-                        listener.onItemClick(ManageBlockAdapter.ViewHolder.this, view, position);
-                    }
-                }
-            });
-
 
         }
 

@@ -1,16 +1,11 @@
 package com.capsaicin.sunhan.Model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LetterItem { //sunhan reviews
+public class ChildrenSendLetterData {
 
     @SerializedName("writer")
-    WriterItem writerItem;
-    @SerializedName("_id")
-    private String _id;
-    @SerializedName("sunhanId")
-    private String sunhanId;
+    private WriterItem writerItem;
     @SerializedName("childrenId")
     private String childrenId;
     @SerializedName("content")
@@ -21,26 +16,10 @@ public class LetterItem { //sunhan reviews
     private String createAt;
     @SerializedName("updateAt")
     private String updateAt;
+    @SerializedName("_id")
+    private String _id;
     @SerializedName("__v")
     private float __v;
-    @SerializedName("imageUrl")
-    private String imageUrl;
-
-    public String getChildrenId() {
-        return childrenId;
-    }
-
-    public void setChildrenId(String childrenId) {
-        this.childrenId = childrenId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public WriterItem getWriterItem() {
         return writerItem;
@@ -50,12 +29,12 @@ public class LetterItem { //sunhan reviews
         this.writerItem = writerItem;
     }
 
-    public String getSunhanId() {
-        return sunhanId;
+    public String getChildrenId() {
+        return childrenId;
     }
 
-    public void setSunhanId(String sunhanId) {
-        this.sunhanId = sunhanId;
+    public void setChildrenId(String childrenId) {
+        this.childrenId = childrenId;
     }
 
     public String getContent() {

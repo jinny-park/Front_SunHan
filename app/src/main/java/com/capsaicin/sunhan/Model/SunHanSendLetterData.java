@@ -1,18 +1,13 @@
 package com.capsaicin.sunhan.Model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LetterItem { //sunhan reviews
+public class SunHanSendLetterData {
 
     @SerializedName("writer")
-    WriterItem writerItem;
-    @SerializedName("_id")
-    private String _id;
+    private WriterItem writerItem;
     @SerializedName("sunhanId")
     private String sunhanId;
-    @SerializedName("childrenId")
-    private String childrenId;
     @SerializedName("content")
     private String content;
     @SerializedName("blockNumber")
@@ -21,26 +16,11 @@ public class LetterItem { //sunhan reviews
     private String createAt;
     @SerializedName("updateAt")
     private String updateAt;
+    @SerializedName("_id")
+    private String _id;
     @SerializedName("__v")
     private float __v;
-    @SerializedName("imageUrl")
-    private String imageUrl;
 
-    public String getChildrenId() {
-        return childrenId;
-    }
-
-    public void setChildrenId(String childrenId) {
-        this.childrenId = childrenId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public WriterItem getWriterItem() {
         return writerItem;

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.BlockedItem;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
+import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
@@ -48,6 +50,12 @@ public class ManageBlockActivity extends AppCompatActivity {
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         setToolbar();
 
+        manageBlockRecyclerView = findViewById(R.id.recyclerview_block);
+        manageBlockRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getApplicationContext());
+        manageBlockRecyclerView.setLayoutManager(recyclerViewManager);
+        manageBlockRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
         if(LoginActivity.userAccessToken!=null) {
             progressDialog = new ProgressDialog(ManageBlockActivity.this);
             progressDialog.setMessage("Loading....");
@@ -60,7 +68,44 @@ public class ManageBlockActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             BlockListResponse result = response.body();
                             progressDialog.dismiss();
-                            setRecyclerview(result.getBlockUsers().getBlockUsers());
+                            adapter = new ManageBlockAdapter(getApplicationContext(),result.getBlockUsers().getBlockUsers());
+                            manageBlockRecyclerView.setAdapter(adapter);
+
+                            adapter.setOnClickBlockedItemListener(new OnClickBlockedItemListener() {
+                                @Override
+                                public void onItemClick(ManageBlockAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION) {
+                                        String id = adapter.getItem(position).get_id();
+                                        holder.itemView.findViewById(R.id.isBlocked_btn).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().unBlockUser("Bearer "+LoginActivity.userAccessToken, id);
+                                                call.enqueue(new Callback<ResultResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                                        if (response.isSuccessful()) {
+                                                            ResultResponse result = response.body();
+                                                            Toast toast = Toast.makeText(getApplicationContext(), "차단해제",Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                            Log.d("차단풀기 성공", new Gson().toJson(response.body()));
+                                                        } else {
+
+                                                            Log.d("ERROR", response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                                        Log.d("REST ERROR!", t.getMessage());
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                }
+                            });
+
                             Log.d("차단 리스트", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -74,39 +119,6 @@ public class ManageBlockActivity extends AppCompatActivity {
                 });
             }
         }
-
-//        adapter.setOnClickBlockedItemListener(new OnClickBlockedItemListener() {
-//            @Override public void onItemClick(ManageBlockAdapter.ViewHolder holder, View view, int position) {
-//                if (position != RecyclerView.NO_POSITION) {
-//                    showDialog();
-//                }
-//            }
-//        });
-    }
-    void showDialog() {
-        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(ManageBlockActivity.this).
-                setMessage("차단을 해제하시겠어요?") .
-                setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                }) .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        AlertDialog msgDlg = msgBuilder.create();
-        msgDlg.show();
-    }
-
-    void setRecyclerview(ArrayList<BlockedItem> list){
-        manageBlockRecyclerView = findViewById(R.id.recyclerview_block);
-        manageBlockRecyclerView.setHasFixedSize(true);
-        adapter = new ManageBlockAdapter(this, list);
-        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getApplicationContext());
-        manageBlockRecyclerView.setLayoutManager(recyclerViewManager);
-        manageBlockRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        manageBlockRecyclerView.setAdapter(adapter);
     }
 
     void setToolbar(){

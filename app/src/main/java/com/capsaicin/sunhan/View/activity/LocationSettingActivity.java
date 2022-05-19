@@ -126,17 +126,18 @@ public class LocationSettingActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
+            }else{
+
+                   Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
+                   startActivity(intent);
+                   finish();
+               }
 
                 String address = getCurrentAddress(latitude, longitude);
                 textview_address.setText(address);
 
                 Toast.makeText(LocationSettingActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(LocationSettingActivity.this, BottomNavigationActivity.class);
-                startActivity(intent);
                 finish();
-
             }
         });
     }

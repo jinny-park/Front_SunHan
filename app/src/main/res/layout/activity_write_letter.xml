@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/add_image" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/write_letter_editText"
             android:layout_width="370dp"
             android:layout_height="163dp"
             android:layout_gravity="center"

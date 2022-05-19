@@ -142,7 +142,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
                                 imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
                             }
-                            imageRequestBody = RequestBody.create(MediaType.parse("image/jpg"), imageFile);
+                            imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
                             filePart = MultipartBody.Part.createFormData("image", imageFile.getName() ,imageRequestBody);
 
                             Call<ProfileChangeResponse> call2 = RetrofitInstance.getRetrofitService().changePicture("Bearer "+LoginActivity.userAccessToken, filePart);
