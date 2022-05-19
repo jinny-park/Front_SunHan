@@ -46,8 +46,6 @@ public class WriteActivity extends AppCompatActivity {
     WritepostItem writepostItem;
     CommunityWritingPost communityWritingPost;
 
-    public static String id ;
-
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
 
@@ -66,7 +64,6 @@ public class WriteActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        id = "1234";
 
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
@@ -87,7 +84,6 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     private void savePost(CommunityWritingPost content){
-        Log.d("확인1", id);
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<CommunityWritingResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, content);
@@ -95,7 +91,6 @@ public class WriteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<CommunityWritingResponse> call, Response<CommunityWritingResponse> response) {
                         if (response.isSuccessful()) {
-                            Log.d("확인3", id);
                             CommunityWritingResponse result = response.body();
                             Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
