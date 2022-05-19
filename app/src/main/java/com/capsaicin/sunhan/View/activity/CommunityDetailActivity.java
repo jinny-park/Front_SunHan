@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,9 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommentItem;
+import com.capsaicin.sunhan.Model.CommentResponse;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
+import com.capsaicin.sunhan.Model.CommunityWritingComment;
+import com.capsaicin.sunhan.Model.CommunityWritingPost;
+import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
@@ -59,6 +64,11 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     ImageView addImage;
 
+    //댓글 글쓰기
+    EditText commentContent;
+    ImageView send;
+    CommunityWritingComment communityWritingComment;
+
     Dialog dilaog01;
 
     CommunityFragment communityFragment;
@@ -86,6 +96,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
         content = findViewById(R.id.detail_content);
         commentNum = findViewById(R.id.detail_commentNum);
 
+        commentContent = findViewById(R.id.comment_content);
+        communityWritingComment = new CommunityWritingComment();
+
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
 
@@ -100,18 +113,17 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
 //        setList();
 
-        commuDetailRecycleView = findViewById(R.id.recyleView_community_detail);
+        commuDetailRecycleView = findViewById(R.id.recyleView_community_comment_parent);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(this);
         commuDetailRecycleView.setLayoutManager(recyclerViewManager);
         commuDetailRecycleView.setHasFixedSize(true);
         commuDetailRecycleView.setItemAnimator(new DefaultItemAnimator());
 //        recyclerView1.setAdapter(communityDetailAdapter);
 
-//        initData(0);
+        initComment(0);
         getData();
 
         pop1 = findViewById(R.id.popupMore);
-
         pop1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,39 +141,97 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
         });
 
+        send = findViewById(R.id.send_comment);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                communityWritingComment.setContent(commentContent.getText().toString());
+                communityWritingComment.setPostId(id);
+                if(communityWritingComment.getContent().isEmpty()){
+                    commentContent.setError("내용을 입력해주세요");
+                } else {
+                    saveComment(communityWritingComment);
+                }
+            }
+        });
+
+        commuDetailRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItemPosition = ((LinearLayoutManager) commuDetailRecycleView.getLayoutManager()).
+                        findLastCompletelyVisibleItemPosition();
+                int itemTotalCount = commuDetailRecycleView.getAdapter().getItemCount() - 1;
+                if(lastVisibleItemPosition == itemTotalCount) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    getComment(page);
+                    page++;
+                }
+            }
+        });
+
     }
 
-//    private void initData(int page)
-//    {
-////        if(LoginActivity.userAccessToken!=null){
-//        if(commuDetailRetrofitInstance!=null){
-//            Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
-//            Call<CommunityDetailResponse> call = RetrofitInstance.getRetrofitService().getCommunityDetailList("Bearer "+LoginActivity.userAccessToken,page);
-//
-//            call.enqueue(new Callback<CommunityDetailResponse>() {
-//                @Override
-//                public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
-//                    if (response.isSuccessful()) {
-//                        progressBar.setVisibility(View.GONE);
-//                        CommunityDetailResponse result = response.body();
-////                        communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
-//                        commuDetailRecycleView.setAdapter(communityDetailAdapter);
-//                        Log.d("성공", new Gson().toJson(response.body()));
-//                    } else {
-//                        progressBar.setVisibility(View.GONE);
-//                        Log.d("REST FAILED MESSAGE", response.message());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
-//                    progressBar.setVisibility(View.GONE);
-//                    Log.d("REST ERROR!", t.getMessage());
-//                }
-//            });
+    private void initComment(int page)
+    {
+        if(commuDetailRetrofitInstance!=null){
+            Log.d("댓글", "토큰인스턴스이후 콜백 전");
+            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,page);
+
+            call.enqueue(new Callback<CommentResponse>() {
+                @Override
+                public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                    if (response.isSuccessful()) {
+                        progressBar.setVisibility(View.GONE);
+                        CommentResponse result = response.body();
+                        communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
+                        commuDetailRecycleView.setAdapter(communityDetailAdapter);
+                        Log.d("성공", new Gson().toJson(response.body()));
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommentResponse> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+        }
+    }
+
+    private void getComment(int page)
+    {
+//        if(LoginActivity.userAccessToken!=null){
+        if(commuDetailRetrofitInstance!=null){
+            Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
+            Call<CommentResponse> call = RetrofitInstance.getRetrofitService().getCommunityCommentList("Bearer "+LoginActivity.userAccessToken,page);
+            call.enqueue(new Callback<CommentResponse>() {
+                @Override
+                public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                    if (response.isSuccessful()) {
+                        progressBar.setVisibility(View.GONE);
+                        CommentResponse result = response.body();
+                        communityDetailAdapter.addList(result.getData());
+                        Log.d("성공", new Gson().toJson(response.body()));
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST FAILED MESSAGE", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommentResponse> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST ERROR!", t.getMessage());
+                }
+            });
+        }
 //        }
-////        }
-//    }
+    }
 
     private void getData(){
         if(tokenRetrofitInstance!=null){
@@ -193,6 +263,30 @@ public class CommunityDetailActivity extends AppCompatActivity {
             });
 
 
+        }
+    }
+
+    private void saveComment(CommunityWritingComment content){
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<CommunityWritingResponse> call = RetrofitInstance.getRetrofitService().writeComment("Bearer "+LoginActivity.userAccessToken, content);
+                call.enqueue(new Callback<CommunityWritingResponse>() {
+                    @Override
+                    public void onResponse(Call<CommunityWritingResponse> call, Response<CommunityWritingResponse> response) {
+                        if (response.isSuccessful()) {
+                            CommunityWritingResponse result = response.body();
+                            Log.d("글 올리기 성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommunityWritingResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+            }
         }
     }
 

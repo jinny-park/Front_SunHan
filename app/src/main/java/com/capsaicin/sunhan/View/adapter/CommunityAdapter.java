@@ -27,7 +27,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public OnClickCommunityListener listener;
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> items) {
-        Log.d("어댑터생성자 ","들어옴" );
+        Log.d("어댑터생성자-커뮤니티post ","들어옴" );
         this.context = context;
         this.communityList = items;
         notifyItemRangeInserted(communityList.size(),items.size());
@@ -36,7 +36,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     @NonNull
     @Override
     public CommunityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("온크리에이트뷰홀더 ","들어옴" );
+        Log.d("온크리에이트뷰홀더-커뮤니티post ","들어옴" );
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_item, parent, false);
 
@@ -46,7 +46,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     @Override
     public void onBindViewHolder(@NonNull CommunityAdapter.ViewHolder holder, int position) {
         CommunityItem item = communityList.get(position);
-        Log.d("온바인드홀더 ", communityList.get(position).getCommuId());
+        Log.d("온바인드홀더-커뮤니티post ", communityList.get(position).getCommuId());
         //holder.userProfile.setImageResource(items.get(position).getUserProfile());
         Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+communityList.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).circleCrop().into(holder.userProfile);
         holder.userId.setText(communityList.get(position).getWriterItem().getNickname());

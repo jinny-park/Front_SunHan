@@ -74,7 +74,7 @@ public class WriteActivity extends AppCompatActivity {
                 communityWritingPost.setContent(writeContent.getText().toString());
 //                String content = writeContent.getText().toString().trim();
                 if(communityWritingPost.getContent().isEmpty()){
-                    writeContent.setError("내용을 작성해주세요.");
+                    writeContent.setError("내용을 입력해주세요.");
                 } else {
                     savePost(communityWritingPost);
                     finish();
@@ -106,31 +106,6 @@ public class WriteActivity extends AppCompatActivity {
             }
         }
     }
-
-//    void uploadPost(){
-//        if(LoginActivity.userAccessToken!=null){
-//            if(tokenRetrofitInstance!=null){
-//                Call<WritepostResponse> call = RetrofitInstance.getRetrofitService().writePost("Bearer "+LoginActivity.userAccessToken, writepostItem);
-//                call.enqueue(new Callback<WritepostResponse>() {
-//                    @Override
-//                    public void onResponse(Call<WritepostResponse> call, Response<WritepostResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            WritepostResponse result = response.body();
-//                            Log.d("글 올리기 성공", new Gson().toJson(response.body()));
-//                        } else {
-//                            Log.d("REST FAILED MESSAGE", response.message());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<WritepostResponse> call, Throwable t) {
-//                        Log.d("REST ERROR!", t.getMessage());
-//                    }
-//                });
-//            }
-//        }
-//
-//    }
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정

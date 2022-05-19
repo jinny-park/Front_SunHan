@@ -16,7 +16,7 @@
         android:background="@drawable/commnity_round_popup">
 
         <EditText
-            android:id="@+id/textView5"
+            android:id="@+id/comment_content"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
@@ -27,7 +27,7 @@
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/send_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.1"

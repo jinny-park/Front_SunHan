@@ -134,22 +134,6 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-//        communityAdapter.setOnClickCommunityListener(new OnClickCommunityListener() {
-//            @Override
-//            public void onItemClick(CommunityAdapter.ViewHolder holder, View view, int position) {
-//                ToolbarActivity toolbarActivity = new ToolbarActivity();
-//                String str_position = String.valueOf(position + 1); //
-//                if (position != RecyclerView.NO_POSITION) {
-//                    for (int i = 0; i <= position; i++) {
-//                        Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
-//                        intent.putExtra("position", str_position); //
-//                        startActivity(intent);
-//                        break;
-//                    }
-//                }
-//            }
-//        });
-
         return view;
     }
 
@@ -172,7 +156,6 @@ public class CommunityFragment extends Fragment {
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
-//                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
                 call.enqueue(new Callback<CommunityResponse>() {
                     @Override
                     public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {

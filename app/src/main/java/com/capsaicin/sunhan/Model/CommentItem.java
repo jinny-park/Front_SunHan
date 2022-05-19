@@ -3,90 +3,67 @@ package com.capsaicin.sunhan.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class CommentItem {
-    @SerializedName("writer") Object commuWriter;
-    @SerializedName("_id") private String commuId;
-    @SerializedName("content") private String commuContent;
-    @SerializedName("isDeleted") private Boolean commuIsDeleted;
-    @SerializedName("commentCount") private String commuIsCommentCount;
-    @SerializedName("createAt") private String commuIsCreateAt;
-    @SerializedName("updateAt") private String commuIsUpdateAt;
+    @SerializedName("writer") WriterItem c_writerItem;
+    @SerializedName("_id") private String c_commuId;
+    @SerializedName("content") private String c_commuContent;
+    @SerializedName("isDeleted") private Boolean c_commuIsDeleted;
+    @SerializedName("commentCount") private String c_commuIsCommentCount;
+    @SerializedName("createAt") private String c_commuIsCreateAt;
+    @SerializedName("updateAt") private String c_commuIsUpdateAt;
 
-    public CommentItem(Object commuWriter, String commuId, String commuContent, Boolean commuIsDeleted, String commuIsCommentCount, String commuIsCreateAt, String commuIsUpdateAt) {
-        this.commuWriter = commuWriter;
-        this.commuId = commuId;
-        this.commuContent = commuContent;
-        this.commuIsDeleted = commuIsDeleted;
-        this.commuIsCommentCount = commuIsCommentCount;
-        this.commuIsCreateAt = commuIsCreateAt;
-        this.commuIsUpdateAt = commuIsUpdateAt;
+    public WriterItem getC_writerItem() {
+        return c_writerItem;
     }
 
-    public Object getCommuWriter() {
-        return commuWriter;
+    public void setC_writerItem(WriterItem c_writerItem) {
+        this.c_writerItem = c_writerItem;
     }
 
-    public void setCommuWriter(Object commuWriter) {
-        this.commuWriter = commuWriter;
+    public String getC_commuId() {
+        return c_commuId;
     }
 
-    public String getCommuId() {
-        return commuId;
+    public void setC_commuId(String c_commuId) {
+        this.c_commuId = c_commuId;
     }
 
-    public void setCommuId(String commuId) {
-        this.commuId = commuId;
+    public String getC_commuContent() {
+        return c_commuContent;
     }
 
-    public String getCommuContent() {
-        return commuContent;
+    public void setC_commuContent(String c_commuContent) {
+        this.c_commuContent = c_commuContent;
     }
 
-    public void setCommuContent(String commuContent) {
-        this.commuContent = commuContent;
+    public Boolean getC_commuIsDeleted() {
+        return c_commuIsDeleted;
     }
 
-    public Boolean getCommuIsDeleted() {
-        return commuIsDeleted;
+    public void setC_commuIsDeleted(Boolean c_commuIsDeleted) {
+        this.c_commuIsDeleted = c_commuIsDeleted;
     }
 
-    public void setCommuIsDeleted(Boolean commuIsDeleted) {
-        this.commuIsDeleted = commuIsDeleted;
+    public String getC_commuIsCommentCount() {
+        return c_commuIsCommentCount;
     }
 
-    public String getCommuIsCommentCount() {
-        return commuIsCommentCount;
+    public void setC_commuIsCommentCount(String c_commuIsCommentCount) {
+        this.c_commuIsCommentCount = c_commuIsCommentCount;
     }
 
-    public void setCommuIsCommentCount(String commuIsCommentCount) {
-        this.commuIsCommentCount = commuIsCommentCount;
+    public String getC_commuIsCreateAt() {
+        return c_commuIsCreateAt;
     }
 
-    public String getCommuIsCreateAt() {
-        return commuIsCreateAt;
+    public void setC_commuIsCreateAt(String c_commuIsCreateAt) {
+        this.c_commuIsCreateAt = c_commuIsCreateAt;
     }
 
-    public void setCommuIsCreateAt(String commuIsCreateAt) {
-        this.commuIsCreateAt = commuIsCreateAt;
+    public String getC_commuIsUpdateAt() {
+        return c_commuIsUpdateAt;
     }
 
-    public String getCommuIsUpdateAt() {
-        return commuIsUpdateAt;
-    }
-
-    public void setCommuIsUpdateAt(String commuIsUpdateAt) {
-        this.commuIsUpdateAt = commuIsUpdateAt;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentItem{" +
-                "commuWriter=" + commuWriter +
-                ", commuId='" + commuId + '\'' +
-                ", commuContent='" + commuContent + '\'' +
-                ", commuIsDeleted=" + commuIsDeleted +
-                ", commuIsCommentCount=" + commuIsCommentCount +
-                ", commuIsCreateAt='" + commuIsCreateAt + '\'' +
-                ", commuIsUpdateAt='" + commuIsUpdateAt + '\'' +
-                '}';
+    public void setC_commuIsUpdateAt(String c_commuIsUpdateAt) {
+        this.c_commuIsUpdateAt = c_commuIsUpdateAt;
     }
 }

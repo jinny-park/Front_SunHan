@@ -37,9 +37,9 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
         CommentItem item =CommunityCommentItemList.get(position);
 
 //        holder.cuserProfile.setImageResource(CommunityCommentItemList.get(position).getUserProfile());
-        holder.cuserId.setText(CommunityCommentItemList.get(position).getCommuId());
-        holder.ccontent.setText(CommunityCommentItemList.get(position).getCommuContent());
-        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommuIsCreateAt());
+//        holder.cuserId.setText(CommunityCommentItemList.get(position).getCommuId());
+//        holder.ccontent.setText(CommunityCommentItemList.get(position).getCommuContent());
+//        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommuIsCreateAt());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

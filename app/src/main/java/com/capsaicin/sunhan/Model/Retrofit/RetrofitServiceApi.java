@@ -7,8 +7,10 @@ import com.capsaicin.sunhan.Model.ChildrenResponse;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.ChildrenSendLetterItem;
 import com.capsaicin.sunhan.Model.ChildrenSendLetterResponse;
+import com.capsaicin.sunhan.Model.CommentResponse;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
+import com.capsaicin.sunhan.Model.CommunityWritingComment;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
@@ -156,9 +158,6 @@ public interface RetrofitServiceApi {
     @GET("api/posts") //커뮤니티 글
     Call<CommunityResponse> getCommunityList(@Header("authorization") String token, @Query("page")int page);
 
-    @GET("api/comments") //커뮤니티 댓글
-    Call<CommunityDetailResponse> getCommunityDetailList(@Header("authorization") String token, @Query("page")int page);
-
     @GET("api/posts/{id}") //커뮤니티 상세화면
     Call<CommunityDetailResponse> getCommunityDetail(@Path("id") String id);
 
@@ -166,5 +165,14 @@ public interface RetrofitServiceApi {
     Call<CommunityWritingResponse> writePost(@Header("authorization") String token, @Body CommunityWritingPost post);
 
     @PATCH("api/posts/{id}") //커뮤니티 글 수정
-    Call<ModifypostResponse> modifyPost(@Path("id") String id);
+//    Call<Post> modifyPost(@Path("id") String id);
+
+    @DELETE("api/posts/{id}") //커뮤니티 글 삭제
+//    Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
+
+    @GET("api/comments/{id}/post") //커뮤니티 댓글
+    Call<CommentResponse> getCommunityCommentList(@Path("id") String id, @Query("page")int page);
+
+    @POST("api/comments/post/parent") //커뮤니티 댓글 작성
+    Call<CommunityWritingResponse> writeComment(@Header("authorization") String token, @Body CommunityWritingComment post);
 }
