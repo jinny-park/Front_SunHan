@@ -108,6 +108,10 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+            android:name="com.capsaicin.sunhan.View.activity.EditPostActivity"
+            android:exported="true">
+        </activity>
 
         <!-- 여기 조심해주세요 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"

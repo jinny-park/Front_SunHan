@@ -35,6 +35,7 @@ import com.capsaicin.sunhan.Model.CommunityWritingComment;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.PostDeleteResponse;
+import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.UserResponse;
@@ -128,7 +129,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 //        commuDetailRecycleView.setAdapter(communityDetailAdapter);
 
         getData();
-        initComment(0); //에러
+        initComment(0);
 
         pop1 = findViewById(R.id.popupMore);
         pop1.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +167,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     commentContent.setError("내용을 입력해주세요");
                 } else {
                     saveComment(communityWritingComment);
-//                    communityDetailAdapter.updateData();
                 }
             }
         });
@@ -270,7 +270,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
                         user_id = result.getCommunityItem().getWriterItem().get_id(); // 글쓴이 id정보 저장
                         Log.d("글쓴사람 id",user_id);
-//                        Log.d("유저 id",MyPageFragment.user_id);
+                        Log.d("유저 id",MyPageFragment.user_id);
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
@@ -319,6 +319,13 @@ public class CommunityDetailActivity extends AppCompatActivity {
         modify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(LoginActivity.userAccessToken!=null && user_id.equals(MyPageFragment.user_id)){
+                    Intent intent = new Intent(getApplicationContext(), EditPostActivity.class);
+                    intent.putExtra("_id",id);
+                    startActivity(intent);
+                }else{
+                    showDialog();
+                }
 
                 dilaog01.dismiss();
             }
@@ -363,7 +370,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int which) {
                             //토스트 메시지
-                            finish();
                         }
                     });
                     dlg.show();
@@ -376,7 +382,26 @@ public class CommunityDetailActivity extends AppCompatActivity {
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, id);
+                call.enqueue(new Callback<ResultResponse>() {
+                    @Override
+                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                        if (response.isSuccessful()) {
+                            ResultResponse result = response.body();
+                            Toast toast = Toast.makeText(getApplicationContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.d("신고성공", new Gson().toJson(response.body()));
+                        } else {
 
+                            Log.d("ERROR", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
                 dilaog01.dismiss();
             }
         });
@@ -426,6 +451,18 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 dilaog01.dismiss();
             }
         });
+    }
+
+    void showDialog() {
+        AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+        dlg.setMessage("본인 글이 아닙니다."); // 메시지
+        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                //토스트 메시지
+                finish();
+            }
+        });
+        dlg.show();
     }
 
     void setToolbar(){

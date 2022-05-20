@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         implements OnClickCommunityListener {
     ArrayList<CommunityItem> communityList = new ArrayList<CommunityItem>();
     private Context context;
+    String save_content;
     public OnClickCommunityListener listener;
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> items) {
@@ -53,6 +55,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         holder.uploadTime.setText(communityList.get(position).getCommuIsCreateAt());
         holder.content.setText(communityList.get(position).getCommuContent());
         holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount());
+
+        save_content = communityList.get(position).getCommuContent();
     }
 
     public void setOnClickCommunityListener(OnClickCommunityListener listener) {

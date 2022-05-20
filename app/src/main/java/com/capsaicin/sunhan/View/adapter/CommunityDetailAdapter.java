@@ -1,10 +1,12 @@
 package com.capsaicin.sunhan.View.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 
 import org.w3c.dom.Comment;
 
@@ -26,6 +29,11 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     ArrayList<CommunityDetailItem> CommunityDetailItemList;
     ArrayList<CommentItem> CommunityCommentList;
     public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
+
+    ImageView pop2;
+    Dialog dilaog01;
+
+
 
     public CommunityDetailAdapter(Context context, ArrayList<CommentItem> items){
         Log.d("어댑터생성자-커뮤니티comment ","들어옴" );
@@ -40,6 +48,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         Log.d("온크리에이트뷰홀더-커뮤니티comment ","들어옴" );
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_comment_item, parent, false);
+
         return new CommunityDetailAdapter.ViewHolder(itemView);
     }
 
@@ -52,6 +61,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.c_userId.setText(CommunityCommentList.get(position).getC_writerItem().getNickname());
         holder.c_content.setText(CommunityCommentList.get(position).getC_commuContent());
         holder.c_commentDate.setText(CommunityCommentList.get(position).getC_commuIsCreateAt());
+
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 //        holder.c_recyclerView.setLayoutManager(layoutManager);
@@ -98,6 +108,10 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         CommunityCommentList.addAll(list);
         notifyItemRangeInserted(CommunityCommentList.size(),list.size());
         Log.d("addList ",list.toString());
+    }
+
+    public void updateData() {
+        notifyDataSetChanged();
     }
 
     @Override

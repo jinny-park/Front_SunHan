@@ -237,6 +237,10 @@ public class CommunityFragment extends Fragment {
 //        }
     }
 
+    public void refreshPosts() {
+        initData(0);
+    }
+
 
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그인 후 이용해주세요.") .
