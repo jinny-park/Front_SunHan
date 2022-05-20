@@ -106,7 +106,7 @@ public class LocationSettingActivity extends AppCompatActivity {
                 lng = longitude; // 사용자의 위도경도
                 addressItem = new AddressItem (latitude,longitude);
 
-               if(LoginActivity.userAccessToken!=null){
+               if(LoginActivity.userAccessToken!=null){ //딱히 필요 없을 듯
                 if(tokenRetrofitInstance!=null){
                     Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress("Bearer "+LoginActivity.userAccessToken,addressItem);
                     call.enqueue(new Callback<ResultResponse>() {
@@ -127,17 +127,13 @@ public class LocationSettingActivity extends AppCompatActivity {
                     });
                 }
             }else{
-
+                   String address = getCurrentAddress(latitude, longitude);
+                   textview_address.setText(address);
+                   Toast.makeText(LocationSettingActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
                    Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
                    startActivity(intent);
                    finish();
                }
-
-                String address = getCurrentAddress(latitude, longitude);
-                textview_address.setText(address);
-
-                Toast.makeText(LocationSettingActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-                finish();
             }
         });
     }

@@ -136,6 +136,13 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(LoginActivity.userAccessToken==null){
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                    dlg.setMessage("로그인을 해주세요"); // 메시지
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    dlg.show();
 
                 }else{
                     Intent intent = new Intent(getActivity(), EditProfileActivity.class);
@@ -175,7 +182,7 @@ public class MyPageFragment extends Fragment {
                                 startActivity(intent3);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setMessage("로그인을 해주세요"); // 메시지
                                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -189,7 +196,7 @@ public class MyPageFragment extends Fragment {
                                 startActivity(intent4);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setMessage("로그인을 해주세요"); // 메시지
                                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -202,7 +209,7 @@ public class MyPageFragment extends Fragment {
                                 showDialog();
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setMessage("로그인을 해주세요"); // 메시지
                                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -219,7 +226,7 @@ public class MyPageFragment extends Fragment {
                                 startActivity(intent5);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을해주세요"); // 메시지
+                                dlg.setMessage("로그인을 해주세요"); // 메시지
                                 dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                                     public void onClick(DialogInterface dialog, int which) {
                                     }

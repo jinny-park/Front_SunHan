@@ -243,9 +243,8 @@ public class FindChildrenResultFragment extends Fragment {
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            cardStoreResponse = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),cardStoreResponse.getData());
-                            sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
+                            CardStoreResponse result = response.body();
+                            cardStoreAdapter.addList(result.getData());
                             cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
                                 @Override
                                 public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {

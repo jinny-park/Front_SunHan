@@ -111,7 +111,6 @@ public class FindSunhanResultFragment extends Fragment {
     {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Log.d("선한프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanFindList("Bearer "+LoginActivity.userAccessToken,name, page);
                 call.enqueue(new Callback<StoreResponse>() {
                     @Override
