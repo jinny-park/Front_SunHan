@@ -324,10 +324,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                     dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
                                         public void onClick(DialogInterface dialog, int which) {
                                             //토스트 메시지
-                                            LoginActivity.userAccessToken = null;
-                                            LoginActivity.userRefreshToken = null;
-                                            Intent intent = new Intent(getApplication(), BottomNavigationActivity.class);
-                                            startActivity(intent);
                                             finish();
                                         }
                                     });
