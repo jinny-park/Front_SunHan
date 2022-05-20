@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommentItem;
@@ -42,8 +43,10 @@ import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityDetailAdapter;
+import com.capsaicin.sunhan.View.adapter.LetterAdapter;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 import com.google.gson.Gson;
 
@@ -57,6 +60,7 @@ import retrofit2.Response;
 public class CommunityDetailActivity extends AppCompatActivity {
     public static CommunityDetailAdapter communityDetailAdapter ;
     RecyclerView commuDetailRecycleView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     Toolbar toolbar;
     ImageView pop1;
@@ -107,6 +111,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
         communityWritingComment = new CommunityWritingComment();
         progressBar = findViewById(R.id.progress_bar);
 
+//        swipeRefreshLayout = findViewById(R.id.swip_comment);
+
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
 
@@ -130,6 +136,14 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
         getData();
         initComment(0);
+
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                initComment(0);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
 
         pop1 = findViewById(R.id.popupMore);
         pop1.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +217,21 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         CommentResponse result = response.body();
                         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
                         commuDetailRecycleView.setAdapter(communityDetailAdapter);
+
+                        communityDetailAdapter.setOnClickCommentListner(new OnClickCommentListener() {
+                            @Override
+                            public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
+                                if (position != RecyclerView.NO_POSITION) {
+                                    holder.itemView.findViewById(R.id.comment_More).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            commentDialog();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -234,6 +263,21 @@ public class CommunityDetailActivity extends AppCompatActivity {
 //                        progressBar.setVisibility(View.GONE);
                         CommentResponse result = response.body();
                         communityDetailAdapter.addList(result.getData());
+
+                        communityDetailAdapter.setOnClickCommentListner(new OnClickCommentListener() {
+                            @Override
+                            public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
+                                int num = position;
+                                if (position != RecyclerView.NO_POSITION) {
+                                    holder.itemView.findViewById(R.id.comment_More).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            commentDialog();
+                                        }
+                                    });
+                                }
+                            }
+                        });
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -336,6 +380,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                int num = position;
                 if(LoginActivity.userAccessToken!=null && user_id.equals(MyPageFragment.user_id)){
                     if(tokenRetrofitInstance!=null){
                         Call<PostDeleteResponse> call = RetrofitInstance.getRetrofitService().deletePost("Bearer "+LoginActivity.userAccessToken, id);
@@ -344,6 +389,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                             public void onResponse(Call<PostDeleteResponse> call, Response<PostDeleteResponse> response) {
                                 if (response.isSuccessful()) {
                                     PostDeleteResponse result = response.body();
+//                                    communityDetailAdapter.removeItem(position);
                                     AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
                                     dlg.setMessage("글이 삭제되었습니다. "); // 메시지
                                     dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
@@ -383,13 +429,41 @@ public class CommunityDetailActivity extends AppCompatActivity {
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockLetter("Bearer "+LoginActivity.userAccessToken, id);
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockPost("Bearer "+LoginActivity.userAccessToken, id);
                 call.enqueue(new Callback<ResultResponse>() {
                     @Override
                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
                         if (response.isSuccessful()) {
                             ResultResponse result = response.body();
-                            Toast toast = Toast.makeText(getApplicationContext(), "신고되었습니다",Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "글 신고되었습니다",Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.d("신고성공", new Gson().toJson(response.body()));
+                        } else {
+
+                            Log.d("ERROR", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+                dilaog01.dismiss();
+            }
+        });
+
+        Button block_btn = dilaog01.findViewById(R.id.block_btn);
+        block_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockCommuUser(id);
+                call.enqueue(new Callback<ResultResponse>() {
+                    @Override
+                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                        if (response.isSuccessful()) {
+                            ResultResponse result = response.body();
+                            Toast toast = Toast.makeText(getApplicationContext(), "차단되었습니다",Toast.LENGTH_SHORT);
                             toast.show();
                             Log.d("신고성공", new Gson().toJson(response.body()));
                         } else {
@@ -416,7 +490,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void commentDialog() { //post 다이얼로그
+    public void commentDialog() { //commment 다이얼로그
         dilaog01.show();
 
         Button modify_btn = dilaog01.findViewById(R.id.modify_btn);
@@ -429,15 +503,44 @@ public class CommunityDetailActivity extends AppCompatActivity {
         });
 
         Button delete_btn = dilaog01.findViewById(R.id.delete_btn);
-        delete_btn.setOnClickListener(new View.OnClickListener() {
+        delete_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 dilaog01.dismiss();
             }
         });
 
         Button report_btn = dilaog01.findViewById(R.id.report_btn);
         report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockComment("Bearer "+LoginActivity.userAccessToken, id);
+                call.enqueue(new Callback<ResultResponse>() {
+                    @Override
+                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                        if (response.isSuccessful()) {
+                            ResultResponse result = response.body();
+                            Toast toast = Toast.makeText(getApplicationContext(), "댓글 신고되었습니다",Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.d("신고성공", new Gson().toJson(response.body()));
+                        } else {
+
+                            Log.d("ERROR", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                    }
+                });
+                dilaog01.dismiss();
+            }
+        });
+
+        Button block_btn = dilaog01.findViewById(R.id.block_btn);
+        block_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

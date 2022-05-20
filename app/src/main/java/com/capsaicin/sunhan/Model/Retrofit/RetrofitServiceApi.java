@@ -174,11 +174,20 @@ public interface RetrofitServiceApi {
     Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
 
     @PATCH("api/posts/{id}/block") //커뮤니티 글 신고
-    Call<ResultResponse> blockUserPost(@Header("authorization") String token, @Path("id") String id);
+    Call<ResultResponse> blockPost(@Header("authorization") String token, @Path("id") String id);
 
     @GET("api/comments/{id}/post") //커뮤니티 댓글
     Call<CommentResponse> getCommunityCommentList(@Header("authorization") String token, @Path("id") String id, @Query("page")int page);
 
     @POST("api/comments/post/parent") //커뮤니티 댓글 작성
     Call<CommunityWritingResponse> writeComment(@Header("authorization") String token, @Body CommunityWritingComment post);
+
+    @PATCH("api/comments/{id}/block") //커뮤니티 댓글 신고
+    Call<ResultResponse> blockComment(@Header("authorization") String token, @Path("id") String id);
+
+    @PATCH("api/comments/{id}") //커뮤니티 댓글 수정
+    Call<PostChangeResponse> modifyComment(@Header("authorization") String token, @Path("id") String id, @Body CommunityWritingPost post);
+
+    @PATCH("api/users/{id}/block") //유저 차단
+    Call<ResultResponse> blockCommuUser(@Path("id") String id);
 }

@@ -108,6 +108,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
     }
 
+    public void removeItem(int position){
+        communityList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public void addList(ArrayList <CommunityItem> list){
         communityList.addAll(list);
         notifyItemRangeInserted(communityList.size(),list.size());

@@ -19,16 +19,20 @@ import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 
-public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder> {
+public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder>
+        implements OnClickCommentListener{
     private Context context;
     ArrayList<CommunityDetailItem> CommunityDetailItemList;
     ArrayList<CommentItem> CommunityCommentList;
     public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
+    public OnClickCommentListener listener;
 
     ImageView pop2;
     Dialog dilaog01;
@@ -49,7 +53,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_comment_item, parent, false);
 
-        return new CommunityDetailAdapter.ViewHolder(itemView);
+        return new CommunityDetailAdapter.ViewHolder(itemView, this);
     }
 
     @Override
@@ -84,21 +88,42 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
 
     }
 
+    public void setOnClickCommentListner(OnClickCommentListener listner){
+        this.listener = listner;
+    }
+
+    @Override
+    public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
+        if (listener != null) {
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView c_userProfile;
         public TextView c_userId;
         public TextView c_content;
         public TextView c_commentDate;
+        public ImageView pop_comment;
         public RecyclerView c_recyclerView; //대댓글
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnClickCommentListener listener) {
             super(itemView);
             c_userProfile = itemView.findViewById(R.id.comment_userProfile);
             c_userId = itemView.findViewById(R.id.comment_userId);
             c_content = itemView.findViewById(R.id.comment_content);
             c_commentDate = itemView.findViewById(R.id.comment_date);
+            pop_comment = itemView.findViewById(R.id.comment_More);
             c_recyclerView = itemView.findViewById(R.id.recylerView_community_comment_child); //대댓글
-
+            pop_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(CommunityDetailAdapter.ViewHolder.this, view,position);
+                    }
+                }
+            });
         }
 
     }
@@ -110,8 +135,13 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         Log.d("addList ",list.toString());
     }
 
-    public void updateData() {
+    public void updateData(int position) {
         notifyDataSetChanged();
+    }
+
+    public void removeItem(int position){
+        CommunityCommentList.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override

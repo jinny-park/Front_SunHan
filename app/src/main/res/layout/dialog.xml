@@ -40,6 +40,15 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/block_btn"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_border"
+            android:text="차단하기"
+            android:textSize="18sp" />
+
+        <Button
             android:id="@+id/cancle_btn"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
