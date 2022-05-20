@@ -322,6 +322,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 if(LoginActivity.userAccessToken!=null && user_id.equals(MyPageFragment.user_id)){
                     Intent intent = new Intent(getApplicationContext(), EditPostActivity.class);
                     intent.putExtra("_id",id);
+                    intent.putExtra("content",content.getText());
                     startActivity(intent);
                 }else{
                     showDialog();

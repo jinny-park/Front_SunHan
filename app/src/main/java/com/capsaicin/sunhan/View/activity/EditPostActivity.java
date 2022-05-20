@@ -53,6 +53,7 @@ public class EditPostActivity extends AppCompatActivity {
     Intent intent;
 
     public static  String id;
+    public static  String content;
 
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
@@ -73,6 +74,7 @@ public class EditPostActivity extends AppCompatActivity {
 
         intent = getIntent();
         id = intent.getStringExtra("_id");
+        content = intent.getStringExtra("content");
         writeContent.setText(intent.getStringExtra("content")); // 기존 글 내용 불러오기?
 
         setToolbar();
@@ -80,7 +82,7 @@ public class EditPostActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communityWritingPost.setContent(writeContent.getText().toString());
+                communityWritingPost.setContent(content);
 
                 if(communityWritingPost.getContent().isEmpty()){
                     writeContent.setError("내용을 입력해주세요.");
