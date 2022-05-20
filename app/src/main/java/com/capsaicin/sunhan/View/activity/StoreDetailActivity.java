@@ -71,7 +71,6 @@ public class StoreDetailActivity extends AppCompatActivity {
     //상세페이지의 두 하위 프래그먼트에서 쓰일 에정
     public static String id ;
     public static int whichStore;
-
     TextView storeName ;
     TextView storeAddress;
 
@@ -80,7 +79,6 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     private int likeCount=0;
     private String likeAction="";*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +185,8 @@ public class StoreDetailActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {   }
         });
+
+
 
     }
 

@@ -35,6 +35,7 @@ import com.capsaicin.sunhan.Model.SunHanSendLetterResponse;
 import com.capsaicin.sunhan.Model.WritepostItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
+import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -61,6 +62,7 @@ public class WriteLetterActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 0;
     SunHanSendLetterItem sunHanSendLetterItem;
     ChildrenSendLetterItem childrenSendLetterItem;
+    StoreDetailActivity storeDetailActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,18 +79,6 @@ public class WriteLetterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
-
-//        if(whichStore==0){
-//            //가맹점
-//
-//
-//        }else{
-//            //선한
-//
-//        }
-
-
-
 
 
         letter_image.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +115,7 @@ public class WriteLetterActivity extends AppCompatActivity {
                     }else{
                         sendLetter();
                         finish();
+
                     }
 
                 }else if(whichStore==1){

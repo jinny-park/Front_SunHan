@@ -166,7 +166,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     commentContent.setError("내용을 입력해주세요");
                 } else {
                     saveComment(communityWritingComment);
-                    communityDetailAdapter.updateData();
+//                    communityDetailAdapter.updateData();
                 }
             }
         });

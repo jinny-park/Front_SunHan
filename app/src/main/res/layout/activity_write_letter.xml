@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             app:layout_constraintHorizontal_bias="0.567"
-            app:srcCompat="@drawable/add_image" />
+            android:src="@drawable/add_image" />
 
         <EditText
             android:id="@+id/write_letter_editText"

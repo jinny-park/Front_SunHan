@@ -60,7 +60,7 @@ public class MyPageFragment extends Fragment {
     RecyclerView mypageRecyclerView;
     Button profileEditBtn;
     public static TextView userNickName;
-    public static TextView userId;
+    public static String userId;
     public static TextView userEmail;
     public static ImageView userImage;
     public static String imageUrl;
@@ -92,6 +92,7 @@ public class MyPageFragment extends Fragment {
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.isSuccessful()) {
                             UserResponse result = response.body();
+                            userId = result.getUserItem().get_id();
                             userNickName.setText(result.getUserItem().getNickname());
                             userEmail.setText(result.getUserItem().getEmail());
                             imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();

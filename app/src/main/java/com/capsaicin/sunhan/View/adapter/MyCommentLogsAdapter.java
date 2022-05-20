@@ -42,7 +42,7 @@ public class MyCommentLogsAdapter extends RecyclerView.Adapter<MyCommentLogsAdap
     @Override
     public void onBindViewHolder(@NonNull MyCommentLogsAdapter.ViewHolder holder, int position) {
         MyCommentLogsItem item = myLogsList.get(position);
-//        Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+myLogsList.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).into(holder.userProfile);
+        Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+myLogsList.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).into(holder.userProfile);
         holder.userId.setText(myLogsList.get(position).getWriterItem().getNickname());
         holder.uploadTime.setText(myLogsList.get(position).getCreateAt());
         holder.content.setText(myLogsList.get(position).getContent());

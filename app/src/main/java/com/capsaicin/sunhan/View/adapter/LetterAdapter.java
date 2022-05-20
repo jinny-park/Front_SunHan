@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,20 +68,15 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return letterItems.size();
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView letterName;
         TextView letterContent;
         TextView letterDate;
         ImageView letterImage;
         ImageView userProfile;
-        TextView delete;
+        Button delete;
         TextView edit;
-        TextView block;
+        Button block;
 
 
         public ViewHolder(@NonNull View itemView, final OnClickLetterListener listener) {
@@ -92,9 +88,8 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             letterContent = itemView.findViewById(R.id.content);
             letterDate = itemView.findViewById(R.id.createAt);
             delete = itemView.findViewById(R.id.delete_letter);
-            edit = itemView.findViewById(R.id.edit_letter);
+//            edit = itemView.findViewById(R.id.edit_letter);
             block = itemView.findViewById(R.id.block_letter);
-
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -104,16 +99,16 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
                     }
                 }
             });
-
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (listener != null) {
-                        listener.onItemClick(LetterAdapter.ViewHolder.this, view, position);
-                    }
-                }
-            });
+//
+//            edit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = getAdapterPosition();
+//                    if (listener != null) {
+//                        listener.onItemClick(LetterAdapter.ViewHolder.this, view, position);
+//                    }
+//                }
+//            });
 
             block.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -125,28 +120,28 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
                 }
             });
 
-//            itemView.setClickable(true);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View view) {
-//                    int position = getAdapterPosition();
-//                    if (listener != null) {
-//                        listener.onItemClick(LetterAdapter.ViewHolder.this, view, position);
-//                    }
-//                }
-//            });
-
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return letterItems.size();
+    }
+
+
+    public void removeItem(int position){
+        letterItems.remove(position);
+        notifyItemRemoved(position);
+  }
 
     public void addList(ArrayList <LetterItem> list){
         letterItems.addAll(list);
         notifyItemRangeInserted(letterItems.size(),list.size());
     }
 
-    public void addItem(LetterItem item){
+    public void addItem(LetterItem item,int position){
         letterItems.add(item);
+        notifyItemInserted(position);
     }
     public void setArrayList(ArrayList<LetterItem> arrayList) {
         this.letterItems = arrayList;

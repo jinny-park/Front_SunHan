@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth; // firebase 인증 객체
     private int RC_SIGN_IN=123;
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -364,8 +363,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void init(){
         mypageAdapter = new MypageAdapter(getApplicationContext(), mypageList);
-        likedStoreAdapter1 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList1);
-        likedStoreAdapter2 = new SunhanStoreAdapter(getApplicationContext(), storeItemArrayList2);
+
         communityAdapter = new CommunityAdapter(getApplicationContext(),communityItemArrayList);
         cardCheckAdapter = new CardCheckAdapter(getApplicationContext(), cardCheckItemArrayList);
 

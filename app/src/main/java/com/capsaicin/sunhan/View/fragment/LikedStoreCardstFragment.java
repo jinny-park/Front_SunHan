@@ -25,6 +25,7 @@ import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.LikedChildAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedChildListener;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -73,6 +74,19 @@ public class LikedStoreCardstFragment extends Fragment {
                             result = response.body();
                             likedChildAdapter = new LikedChildAdapter(getActivity(),result.getScrapChildItem().getLikedChildItems());
                             recyclerView.setAdapter(likedChildAdapter);
+                            likedChildAdapter.setOnClickLikedChildListener(new OnClickLikedChildListener() {
+                                @Override
+                                public void onItemClick(LikedChildAdapter.ViewHolder holder, View view, int position) {
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("_id", likedChildAdapter.getItem(position).get_id());
+                                        intent.putExtra("whichStore", 0);
+                                        Log.d("아이디", likedChildAdapter.getItem(position).get_id());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                             Log.d("가맹점찜한가게리스트성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);

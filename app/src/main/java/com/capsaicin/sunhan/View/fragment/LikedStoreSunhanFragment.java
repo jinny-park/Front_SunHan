@@ -23,8 +23,11 @@ import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
+import com.capsaicin.sunhan.View.adapter.LikedChildAdapter;
 import com.capsaicin.sunhan.View.adapter.LikedSunHanAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedChildListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedSunHanListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
 
@@ -71,6 +74,18 @@ public class LikedStoreSunhanFragment extends Fragment {
                             ScrapsSunHanResponse result = response.body();
                             likedSunHanAdapter = new LikedSunHanAdapter(getActivity(),result.getScrapsItem().getScrapSunhan());
                             recyclerView.setAdapter(likedSunHanAdapter);
+                            likedSunHanAdapter.setOnClickLikedSunHanListener(new OnClickLikedSunHanListener() {
+                                @Override
+                                public void onItemClick(LikedSunHanAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("_id", likedSunHanAdapter.getItem(position).get_id());
+                                        intent.putExtra("whichStore", 1);
+                                        Log.d("아이디", likedSunHanAdapter.getItem(position).get_id());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                             Log.d("선한영향력스크랩리스트성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);

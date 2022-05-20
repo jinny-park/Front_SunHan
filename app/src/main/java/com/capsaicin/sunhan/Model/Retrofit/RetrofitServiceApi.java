@@ -50,16 +50,16 @@ import retrofit2.http.Query;
 
 public interface RetrofitServiceApi {
 
-    @GET("api/auth/kakao")
+    @GET("api/auth/kakao") // 카카오 토큰 인증
     Call<TokenResponse> getkakaoToken(@Header("authorization") String token);
     @GET("api/auth/google")
     Call<TokenResponse> getgoogleToken(@Header("authorization") String token);
     @GET("api/users") // 유저정보 받아오기
     Call<UserResponse> getUser(@Header("authorization") String token);
 
-    @DELETE("api/users")
+    @DELETE("api/users")//회원탈퇴
     Call<UserDeleteResponse> deleteUser(@Header("authorization") String token);
-    @PATCH("api/users/{id}/unblock")
+    @PATCH("api/users/{id}/unblock") //회원차단해제
     Call<ResultResponse> unBlockUser(@Header("authorization") String token, @Path("id") String id);
 
 //    @GET("api/sunhans/{id}")

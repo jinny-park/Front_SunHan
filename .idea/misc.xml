@@ -74,6 +74,7 @@
         <entry key="..\:/SunHan/app/src/main/res/drawable/custom_spinner_background.xml" value="0.23796296296296296" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/letter_edit_border.xml" value="0.26564102564102565" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_card_check.xml" value="0.25364583333333335" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_community.xml" value="0.1527777777777778" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_delete_account.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_detail_logs.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_edit_profile.xml" value="0.25364583333333335" />
@@ -85,7 +86,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_mypage_add_card_detail.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_navi.xml" value="0.16574074074074074" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_set_alarm.xml" value="0.25364583333333335" />
-        <entry key="..\:/SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.1" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_toolbar.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_write_letter.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/community_detail_item.xml" value="0.25364583333333335" />
@@ -102,7 +103,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_comment.xml" value="0.10572916666666667" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_letter.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mylogs_post.xml" value="0.25364583333333335" />
-        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.18125" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/fragment_mypage.xml" value="0.2" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_category.xml" value="0.21458333333333332" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhan_store_detail.xml" value="0.25364583333333335" />
@@ -112,7 +113,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_info.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_store_letter.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/fragment_sunhanst_sunhan.xml" value="0.25364583333333335" />
-        <entry key="..\:/SunHan/app/src/main/res/layout/letter_item.xml" value="0.176" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/letter_item.xml" value="0.264" />
         <entry key="..\:/SunHan/app/src/main/res/layout/my_letter_log_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/mypage_item.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/mypostitem.xml" value="0.25364583333333335" />
