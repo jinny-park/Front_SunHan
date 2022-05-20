@@ -19,6 +19,9 @@ import com.capsaicin.sunhan.Model.MyCommentLogsResponse;
 import com.capsaicin.sunhan.Model.MyLetterLogsResponse;
 import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
+import com.capsaicin.sunhan.Model.PostBlockListResponse;
+import com.capsaicin.sunhan.Model.PostChangeResponse;
+import com.capsaicin.sunhan.Model.PostDeleteResponse;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.ScrapChildResponse;
@@ -164,11 +167,14 @@ public interface RetrofitServiceApi {
     @POST("api/posts") //커뮤니티 글쓰기
     Call<CommunityWritingResponse> writePost(@Header("authorization") String token, @Body CommunityWritingPost post);
 
-//    @PATCH("api/posts/{id}") //커뮤니티 글 수정
-//    Call<Post> modifyPost(@Path("id") String id);
+    @PATCH("api/posts/{id}") //커뮤니티 글 수정
+    Call<PostChangeResponse> modifyPost(@Path("id") String id, @Body CommunityWritingPost post);
 
-//    @DELETE("api/posts/{id}") //커뮤니티 글 삭제
-//    Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
+    @DELETE("api/posts/{id}") //커뮤니티 글 삭제
+    Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
+
+    @PATCH("api/posts/{id}/block") //커뮤니티 글 신고
+    Call<PostBlockListResponse> blockUserPost(@Header("authorization") String token, @Path("id") String id);
 
     @GET("api/comments/{id}/post") //커뮤니티 댓글
     Call<CommentResponse> getCommunityCommentList(@Header("authorization") String token, @Path("id") String id, @Query("page")int page);
