@@ -37,10 +37,12 @@ import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.PostDeleteResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
+import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityDetailAdapter;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 import com.google.gson.Gson;
 
@@ -57,6 +59,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ImageView pop1;
+    ImageView pop2;
     ImageView userProfile;
     TextView userId;
     TextView uploadTime;
@@ -75,6 +78,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     CommunityFragment communityFragment;
 
     public static String id ;
+    public static String user_id ;
 
     private RetrofitInstance tokenRetrofitInstance ;
 
@@ -134,6 +138,14 @@ public class CommunityDetailActivity extends AppCompatActivity {
             }
         });
 
+//        pop2 = commuDetailRecycleView.findViewById(R.id.comment_More);
+//        pop2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                commentDialog();
+//            }
+//        });
+
         addImage = findViewById(R.id.sunhan_add);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +166,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     commentContent.setError("내용을 입력해주세요");
                 } else {
                     saveComment(communityWritingComment);
+                    communityDetailAdapter.updateData();
                 }
             }
         });
@@ -254,6 +267,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         uploadTime.setText(result.getCommunityItem().getCommuIsCreateAt());
                         content.setText(result.getCommunityItem().getCommuContent());
                         commentNum.setText(result.getCommunityItem().getCommuIsCommentCount());
+
+                        user_id = result.getCommunityItem().getWriterItem().get_id(); // 글쓴이 id정보 저장
+                        Log.d("글쓴사람 id",user_id);
+                        Log.d("유저 id",MyPageFragment.user_id);
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
@@ -311,7 +328,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(LoginActivity.userAccessToken!=null){
+                if(LoginActivity.userAccessToken!=null && user_id.equals(MyPageFragment.user_id)){
                     if(tokenRetrofitInstance!=null){
                         Call<PostDeleteResponse> call = RetrofitInstance.getRetrofitService().deletePost("Bearer "+LoginActivity.userAccessToken, id);
                         call.enqueue(new Callback<PostDeleteResponse>() {
@@ -340,7 +357,55 @@ public class CommunityDetailActivity extends AppCompatActivity {
                             }
                         });
                     }
+                } else {
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                    dlg.setMessage("본인이 작성한 글이 아닙니다. "); // 메시지
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            //토스트 메시지
+                            finish();
+                        }
+                    });
+                    dlg.show();
                 }
+                dilaog01.dismiss();
+            }
+        });
+
+        Button report_btn = dilaog01.findViewById(R.id.report_btn);
+        report_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dilaog01.dismiss();
+            }
+        });
+
+        Button cancle_btn = dilaog01.findViewById(R.id.cancle_btn);
+        cancle_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dilaog01.dismiss();
+            }
+        });
+    }
+
+    public void commentDialog() { //post 다이얼로그
+        dilaog01.show();
+
+        Button modify_btn = dilaog01.findViewById(R.id.modify_btn);
+        modify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dilaog01.dismiss();
+            }
+        });
+
+        Button delete_btn = dilaog01.findViewById(R.id.delete_btn);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dilaog01.dismiss();
             }
         });

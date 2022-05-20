@@ -65,6 +65,8 @@ public class MyPageFragment extends Fragment {
     public static ImageView userImage;
     public static String imageUrl;
 
+    public static String user_id;
+
     static public MyPageFragment myPageFragment ;
 
     private RetrofitInstance tokenRetrofitInstance ;
@@ -93,6 +95,8 @@ public class MyPageFragment extends Fragment {
                             userNickName.setText(result.getUserItem().getNickname());
                             userEmail.setText(result.getUserItem().getEmail());
                             imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
+
+                            user_id = result.getUserItem().get_id(); //로그인 유저 id 정보 저장
                             Log.d("imageUrl", imageUrl);
                             Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
                             Log.d("성공", new Gson().toJson(response.body()));

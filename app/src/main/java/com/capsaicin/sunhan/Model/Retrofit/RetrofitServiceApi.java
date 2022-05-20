@@ -168,7 +168,7 @@ public interface RetrofitServiceApi {
     Call<CommunityWritingResponse> writePost(@Header("authorization") String token, @Body CommunityWritingPost post);
 
     @PATCH("api/posts/{id}") //커뮤니티 글 수정
-    Call<PostChangeResponse> modifyPost(@Path("id") String id, @Body CommunityWritingPost post);
+    Call<PostChangeResponse> modifyPost(@Header("authorization") String token, @Path("id") String id, @Body CommunityWritingPost post);
 
     @DELETE("api/posts/{id}") //커뮤니티 글 삭제
     Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
