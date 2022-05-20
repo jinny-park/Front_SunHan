@@ -34,6 +34,7 @@ import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.CommunityWritingComment;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.CommunityWritingResponse;
+import com.capsaicin.sunhan.Model.PostDeleteResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
@@ -310,6 +311,40 @@ public class CommunityDetailActivity extends AppCompatActivity {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(LoginActivity.userAccessToken!=null){
+                    if(tokenRetrofitInstance!=null){
+                        Call<PostDeleteResponse> call = RetrofitInstance.getRetrofitService().deletePost("Bearer "+LoginActivity.userAccessToken, id);
+                        call.enqueue(new Callback<PostDeleteResponse>() {
+                            @Override
+                            public void onResponse(Call<PostDeleteResponse> call, Response<PostDeleteResponse> response) {
+                                if (response.isSuccessful()) {
+                                    PostDeleteResponse result = response.body();
+                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                                    dlg.setMessage("글이 삭제되었습니다. "); // 메시지
+                                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //토스트 메시지
+                                            LoginActivity.userAccessToken = null;
+                                            LoginActivity.userRefreshToken = null;
+                                            Intent intent = new Intent(getApplication(), BottomNavigationActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                    dlg.show();
+                                    Log.d("삭제성공", result.getMessage());
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PostDeleteResponse> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+                    }
+                }
                 dilaog01.dismiss();
             }
         });
@@ -318,6 +353,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         report_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dilaog01.dismiss();
             }
         });
@@ -326,7 +362,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         cancle_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dilaog01.dismiss();;
+                dilaog01.dismiss();
             }
         });
     }
