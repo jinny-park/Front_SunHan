@@ -168,7 +168,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 }
                 finish();
-//                getSupportFragmentManager().beginTransaction().add(R.id.main_frame,myPageFragment).addToBackStack(null).commit();
             }
         });
 

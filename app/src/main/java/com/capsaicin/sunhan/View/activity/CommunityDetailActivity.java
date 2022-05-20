@@ -270,7 +270,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
                         user_id = result.getCommunityItem().getWriterItem().get_id(); // 글쓴이 id정보 저장
                         Log.d("글쓴사람 id",user_id);
-                        Log.d("유저 id",MyPageFragment.user_id);
+//                        Log.d("유저 id",MyPageFragment.user_id);
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 
