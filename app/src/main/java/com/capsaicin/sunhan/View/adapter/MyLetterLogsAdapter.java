@@ -50,7 +50,6 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
     }
 
 
-
     @Override
     public int getItemCount() {
         return letterItems.size();

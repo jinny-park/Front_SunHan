@@ -112,6 +112,7 @@ public interface RetrofitServiceApi {
 
     @GET("api/users/reviews") //내가 쓴 감사편지
     Call<MyLetterLogsResponse> getMyLetters(@Header("authorization") String token, @Query("page")int page);
+
     @Multipart
     @POST("api/reviews") //아동급식 감사편지 쓰기
     Call<ChildrenSendLetterResponse> sendChildLetterContent(@Header("authorization") String toke, @Part("childrenId") RequestBody id,@Part("content") RequestBody content , @Part MultipartBody.Part image);
