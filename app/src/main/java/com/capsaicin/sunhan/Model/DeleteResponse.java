@@ -2,7 +2,7 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostDeleteResponse {
+public class DeleteResponse {
 
     @SerializedName("message")
     private String message;

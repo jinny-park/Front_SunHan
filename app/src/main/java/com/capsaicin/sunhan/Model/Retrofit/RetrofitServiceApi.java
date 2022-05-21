@@ -13,6 +13,7 @@ import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.CommunityWritingComment;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.CommunityWritingResponse;
+import com.capsaicin.sunhan.Model.DeleteResponse;
 import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.ModifypostResponse;
 import com.capsaicin.sunhan.Model.MyCommentLogsResponse;
@@ -21,7 +22,6 @@ import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.NickNameItem;
 import com.capsaicin.sunhan.Model.PostBlockListResponse;
 import com.capsaicin.sunhan.Model.PostChangeResponse;
-import com.capsaicin.sunhan.Model.PostDeleteResponse;
 import com.capsaicin.sunhan.Model.ProfileChangeResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.ScrapChildResponse;
@@ -47,6 +47,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -167,7 +168,7 @@ public interface RetrofitServiceApi {
     Call<PostChangeResponse> modifyPost(@Header("authorization") String token, @Path("id") String id, @Body CommunityWritingPost post);
 
     @DELETE("api/posts/{id}") //커뮤니티 글 삭제
-    Call<PostDeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
+    Call<DeleteResponse> deletePost(@Header("authorization") String token, @Path("id") String id);
 
     @PATCH("api/posts/{id}/block") //커뮤니티 글 신고
     Call<ResultResponse> blockPost(@Header("authorization") String token, @Path("id") String id);
@@ -184,6 +185,9 @@ public interface RetrofitServiceApi {
     @PATCH("api/comments/{id}") //커뮤니티 댓글 수정
     Call<PostChangeResponse> modifyComment(@Header("authorization") String token, @Path("id") String id, @Body CommunityWritingPost post);
 
+    @PUT("api/comments/{id}/post/parent") //커뮤니티 댓글 삭제
+    Call<DeleteResponse> deleteComment(@Header("authorization") String token, @Path("id") String id);
+
     @PATCH("api/users/{id}/block") //유저 차단
-    Call<ResultResponse> blockCommuUser(@Path("id") String id);
+    Call<ResultResponse> blockCommuUser(@Header("authorization") String token, @Path("id") String id);
 }

@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentListener;
 
 import java.util.ArrayList;
 
-public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<CommunityDetailCommentAdapter.ViewHolder> {
+public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<CommunityDetailCommentAdapter.ViewHolder>
+        implements OnClickCommentListener{
     private Context context;
     ArrayList<CommentItem> CommunityCommentItemList;
+    public OnClickCommentListener listener;
 
     public CommunityDetailCommentAdapter(Context context, ArrayList<CommentItem> arrayList){
         this.context = context ;
@@ -42,11 +45,23 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
 //        holder.ccommentTime.setText(CommunityCommentItemList.get(position).getCommuIsCreateAt());
     }
 
+    public void setOnClickCommentListner(OnClickCommentListener listner){
+        this.listener = listner;
+    }
+
+    @Override
+    public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
+        if (listener != null) {
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView cuserProfile;
         public TextView cuserId;
         public TextView ccontent;
         public TextView ccommentTime;
+        public ImageView cpop_comment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +69,8 @@ public class CommunityDetailCommentAdapter extends RecyclerView.Adapter<Communit
             cuserId = itemView.findViewById(R.id.cuserId);
             ccontent = itemView.findViewById(R.id.ccontent);
             ccommentTime = itemView.findViewById(R.id.cuploadTime);
+            cpop_comment = itemView.findViewById(R.id.cMore);
+
 
         }
 

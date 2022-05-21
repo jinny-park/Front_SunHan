@@ -59,10 +59,6 @@
             android:exported="true">
         </activity>
         <activity
-            android:name="com.capsaicin.sunhan.View.activity.PopupActivity"
-            android:exported="true">
-        </activity>
-        <activity
             android:name="com.capsaicin.sunhan.View.activity.CardCheckActivity"
             android:exported="true">
         </activity>
