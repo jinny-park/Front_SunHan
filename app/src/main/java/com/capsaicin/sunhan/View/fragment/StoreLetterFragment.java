@@ -210,7 +210,6 @@ public class StoreLetterFragment extends Fragment {
                                                     dlg.show();
                                                 }
 
-
                                             } else {
                                                 //로그인 안 함
                                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());

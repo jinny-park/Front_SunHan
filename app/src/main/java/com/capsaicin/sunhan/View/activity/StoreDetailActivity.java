@@ -345,12 +345,13 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         String strStore = textStorename.getText().toString();
         strStore = getIntent().getStringExtra("strStore");
 */
+        String name = storeName.getText().toString();
         FeedTemplate params = FeedTemplate
                 .newBuilder(ContentObject.newBuilder("SUNHAN",
                         "https://ifh.cc/g/GG1KNy.png",
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption("\n가게를 확인해보세요!")
+                        .setDescrption("\n"+name+" 가게를 확인해보세요!")
                         .build())
                 .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
