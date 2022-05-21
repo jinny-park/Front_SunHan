@@ -55,7 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StoreLetterFragment extends Fragment {
-    public static LetterAdapter letterAdapter;
+    LetterAdapter letterAdapter;
     RecyclerView letterRecyclerView;
 
     int page;
@@ -65,9 +65,6 @@ public class StoreLetterFragment extends Fragment {
     private RetrofitInstance tokenRetrofitInstance ;
     Button write_letter_btn; //감사편지쓰러가기 버튼
     private String letter_id;
-
-
-
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -163,7 +160,6 @@ public class StoreLetterFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         letterAdapter = new LetterAdapter(getActivity(), result.getData());
                         letterRecyclerView.setAdapter(letterAdapter);
-
                         letterAdapter.setOnClickLetterListener(new OnClickLetterListener() {
                             @Override
                             public void onItemClick(LetterAdapter.ViewHolder holder, View view, int position) {

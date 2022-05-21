@@ -35,7 +35,10 @@ import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
 
+import java.util.HashMap;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -45,6 +48,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -108,16 +112,16 @@ public interface RetrofitServiceApi {
 
     @GET("api/users/reviews") //내가 쓴 감사편지
     Call<MyLetterLogsResponse> getMyLetters(@Header("authorization") String token, @Query("page")int page);
-
-    @POST("api/reviews") //아동급식 감사편지 쓰기
-    Call<ChildrenSendLetterResponse> sendChildLetterContent(@Header("authorization") String toke, @Body ChildrenSendLetterItem letter);
-
-    @POST("api/reviews") //선한영향력가게 감사편지 쓰기
-    Call<SunHanSendLetterResponse> sendSunHanLetterContent(@Header("authorization") String toke, @Body SunHanSendLetterItem letter);
-
     @Multipart
-    @POST("api/reviews") //감사편지 쓰기(사진 보내기)
-    Call<SunHanSendLetterResponse> sendLetterImage(@Header("authorization") String token, @Part MultipartBody.Part image);
+    @POST("api/reviews") //아동급식 감사편지 쓰기
+    Call<ChildrenSendLetterResponse> sendChildLetterContent(@Header("authorization") String toke, @Part("childrenId") RequestBody id,@Part("content") RequestBody content , @Part MultipartBody.Part image);
+    @Multipart
+    @POST("api/reviews") //선한영향력가게 감사편지 쓰기
+    Call<SunHanSendLetterResponse> sendSunHanLetterContent(@Header("authorization") String toke, @Part("sunhanId") RequestBody id,@Part("content") RequestBody content,@Part MultipartBody.Part image);
+
+//    @Multipart
+//    @POST("api/reviews") //감사편지 쓰기(사진 보내기)
+//    Call<SunHanSendLetterResponse> sendLetterImage(@Header("authorization") String token, @Part MultipartBody.Part image);
 
     @DELETE("api/reviews/{id}") //감사편지 삭제
     Call<ResultResponse> deleteLetter(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);

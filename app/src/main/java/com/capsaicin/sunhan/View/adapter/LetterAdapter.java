@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentLogsListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
-//import com.example.front_sunhan.View.interfaceListener.OnClickStoreItemListener;
 
 import java.util.ArrayList;
 
@@ -48,13 +47,10 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
         holder.letterContent.setText(letterItems.get(position).getContent());
         holder.letterDate.setText(letterItems.get(position).getCreateAt());
-        if(letterItems.get(position).getImageUrl()!=null)
+        if(letterItems.get(position).getImageUrl()!=null){
             Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).into(holder.letterImage);
+        }
 
-//        //holder.imageView.setImageResource(storeItemArrayList.get(position).image);
-//        holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
-//        holder.letterContent.setText(letterItems.get(position).getContent());
-//        holder.letterDate.setText(letterItems.get(position).getCreateAt());
     }
     public void setOnClickLetterListener(OnClickLetterListener listener) {
 

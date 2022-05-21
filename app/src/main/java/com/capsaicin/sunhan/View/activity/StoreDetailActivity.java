@@ -57,7 +57,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StoreDetailActivity extends AppCompatActivity {
+public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
     public static MenuAdapter menuAdapter;
     ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
     RecyclerView StoreDetailRecyclerView;
@@ -73,6 +73,7 @@ public class StoreDetailActivity extends AppCompatActivity {
     public static int whichStore;
     TextView storeName ;
     TextView storeAddress;
+    BackgroundTask task;
 
 /*    ImageView heart_img;
     ImageView heart_full_img;
@@ -93,6 +94,7 @@ public class StoreDetailActivity extends AppCompatActivity {
         heart_img=findViewById(R.id.heart_img);
         heart_full_img=findViewById(R.id.heart_full_img);
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();//싱글톤
+
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
@@ -121,7 +123,12 @@ public class StoreDetailActivity extends AppCompatActivity {
                 }
             }
         });*/
-
+        shareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnClick(view);
+            }
+        });
 
 
         findRoadLayout.setOnClickListener(new View.OnClickListener() {
