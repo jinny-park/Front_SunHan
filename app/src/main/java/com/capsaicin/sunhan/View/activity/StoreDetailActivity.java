@@ -3,6 +3,7 @@ package com.capsaicin.sunhan.View.activity;
 //activity_sunhanst_store.xml
 
 import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
+import static com.kakao.kakaolink.internal.KakaoTalkLinkProtocol.APP_KEY;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -288,47 +289,116 @@ public class StoreDetailActivity extends AppCompatActivity {
     }
 
     public void ShareBtnClick(View view){
+        if(whichStore==0){
 
-        /*ImageButton textStorename = findViewById(R.id.img_store_share);
-        String strStore = textStorename.getText().toString();
-        strStore = getIntent().getStringExtra("strStore");
-*/
+            //share_kakao_template("0");
+
+            String name = storeName.getText().toString();
+            String address = storeAddress.getText().toString();
+            FeedTemplate params = FeedTemplate
+                    .newBuilder(ContentObject.newBuilder(name+"을 확인해보세요!",
+                            "https://ifh.cc/g/fT1GYp.png",
+                            LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                    .setMobileWebUrl("https://developers.kakao.com").build())
+                            .setDescrption(address)
+                            .build())
+                    /*.addButton(new ButtonObject("가맹점 보러 가기", LinkObject.newBuilder()
+                            .setWebUrl("https://xn--o39akkz01az4ip7f4xzwoa.com/store#search")
+                            .setMobileWebUrl("https://xn--o39akkz01az4ip7f4xzwoa.com/store#search")
+                            .setAndroidExecutionParams("key1=value1")
+                            .setIosExecutionParams("key1=value1")
+                            .build()))*/
+                    .build();
+
+            Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+            serverCallbackArgs.put("user_id", "${current_user_id}");
+            serverCallbackArgs.put("product_id", "${shared_product_id}");
+
+
+            KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    Log.d("kakao share", "카카오톡 공유하기 실패\n"+errorResult);
+                }
+
+                @Override
+                public void onSuccess(KakaoLinkResponse result) {
+                    Log.d("kakao share", "카카오톡 공유 성공!");
+                }
+            });
+
+
+
+        } else if (whichStore==1) {
+            //share_kakao_template("1");
+
+            String name = storeName.getText().toString();
+            String address = storeAddress.getText().toString();
+
+            FeedTemplate params = FeedTemplate
+                    .newBuilder(ContentObject.newBuilder(name+"을 확인해보세요!",
+                            "https://ifh.cc/g/fT1GYp.png",
+                            LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                    .setMobileWebUrl("https://developers.kakao.com").build())
+                            .setDescrption(address)
+                            .build())
+                    /*.addButton(new ButtonObject("가맹점 보러 가기", LinkObject.newBuilder()
+                            .setWebUrl("https://www.xn--o39akkz01az4ip7f4xzwoa.com")
+                            .setMobileWebUrl("https://www.xn--o39akkz01az4ip7f4xzwoa.com")
+                            .setAndroidExecutionParams("key1=value1")
+                            .setIosExecutionParams("key1=value1")
+                            .build()))*/
+                    .build();
+
+            Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+            serverCallbackArgs.put("user_id", "${current_user_id}");
+            serverCallbackArgs.put("product_id", "${shared_product_id}");
+
+
+            KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    Log.d("kakao share", "카카오톡 공유하기 실패\n"+errorResult);
+                }
+
+                @Override
+                public void onSuccess(KakaoLinkResponse result) {
+                    Log.d("kakao share", "카카오톡 공유 성공!");
+                }
+            });
+
+        }
+
+
+    }
+
+    public void share_kakao_template(String BUT){
+        // 템플릿 종류 :  피트, 리스크, 커머스
+        String templateId = "77055"; // 템플릿 피드아이디
+
         String name = storeName.getText().toString();
-        FeedTemplate params = FeedTemplate
-                .newBuilder(ContentObject.newBuilder("SUNHAN",
-                        "https://ifh.cc/g/GG1KNy.png",
-                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
-                                .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption("\n"+name+" 가게를 확인해보세요!")
-                        .build())
-                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
-                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                        .setWebUrl("https://developers.kakao.com")
-                        .setMobileWebUrl("https://developers.kakao.com")
-                        .setAndroidExecutionParams("key1=value1")
-                        .setIosExecutionParams("key1=value1")
-                        .build()))
-                .build();
+        String address = storeAddress.getText().toString();
 
-        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
-        serverCallbackArgs.put("user_id", "${current_user_id}");
-        serverCallbackArgs.put("product_id", "${shared_product_id}");
+        // 템플릿에서  사용할 데이터 맵
+        Map<String, String> templateArgs = new HashMap<String, String>();
+        //templateArgs.put("APP_KEY", APP_KEY);
+        templateArgs.put("title",name+ "을 확인해보세요");
+        templateArgs.put("content",address);
+        templateArgs.put("BUT",BUT);
 
-
-        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+        KakaoLinkService.getInstance().sendCustom(this, templateId, templateArgs, new ResponseCallback<KakaoLinkResponse>() {
             @Override
             public void onFailure(ErrorResult errorResult) {
-                Log.d("kakao share", "카카오톡 공유하기 실패\n"+errorResult);
+                Log.e("EOTEST",errorResult.toString());
             }
 
             @Override
             public void onSuccess(KakaoLinkResponse result) {
+                // 템플릿 밸리데이션과 쿼터 체크가 성공적으로 끝남
                 Log.d("kakao share", "카카오톡 공유 성공!");
             }
         });
-
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         switch (item.getItemId()){
