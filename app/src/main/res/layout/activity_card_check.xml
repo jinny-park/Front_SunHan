@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:text="아동급식카드잔액조회"
                 android:textColor="@color/black"
-                android:textSize="20dp"></TextView>
+                android:textSize="20dp"/>
 
         </androidx.appcompat.widget.Toolbar>
 
