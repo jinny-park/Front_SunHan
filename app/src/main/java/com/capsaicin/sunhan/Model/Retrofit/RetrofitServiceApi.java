@@ -66,17 +66,12 @@ public interface RetrofitServiceApi {
     @PATCH("api/users/{id}/unblock") //회원차단해제
     Call<ResultResponse> unBlockUser(@Header("authorization") String token, @Path("id") String id);
 
-//    @GET("api/sunhans/{id}")
-//    Call<StoreResponse> getStore(@Path("id") String storeId);
 
     @GET("api/children/{id}")
     Call<ChildrenResponse> getChildren(@Path("id") String storeId);
 
     @GET("api/reviews/{id}") //감사편지 조회
     Call<LetterResponse> getLetter(@Path("id") String id, @Query("type") String type, @Query("page") int page);
-/*    @GET("api/reviews/{id}") //감사편지 조회
-    Call<CardStoreLetterResponse> getLetter(@Path("id") String storeId, @Query("type") String type, @Query("page") int page);*/
-
 
     @GET("api/scraps") // 선한영향력 찜한가게
     Call<ScrapsSunHanResponse> getSunHanScraps(@Header("authorization") String token, @Query("type") String type);
@@ -119,10 +114,6 @@ public interface RetrofitServiceApi {
     @Multipart
     @POST("api/reviews") //선한영향력가게 감사편지 쓰기
     Call<SunHanSendLetterResponse> sendSunHanLetterContent(@Header("authorization") String toke, @Part("sunhanId") RequestBody id,@Part("content") RequestBody content,@Part MultipartBody.Part image);
-
-//    @Multipart
-//    @POST("api/reviews") //감사편지 쓰기(사진 보내기)
-//    Call<SunHanSendLetterResponse> sendLetterImage(@Header("authorization") String token, @Part MultipartBody.Part image);
 
     @DELETE("api/reviews/{id}") //감사편지 삭제
     Call<ResultResponse> deleteLetter(@Header("authorization") String token, @Path("id") String id, @Query("type") String type);

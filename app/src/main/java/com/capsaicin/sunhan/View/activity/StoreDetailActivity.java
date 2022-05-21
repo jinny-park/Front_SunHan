@@ -4,6 +4,8 @@ package com.capsaicin.sunhan.View.activity;
 
 import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -58,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
+public class StoreDetailActivity extends AppCompatActivity {
     public static MenuAdapter menuAdapter;
     ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
     RecyclerView StoreDetailRecyclerView;
@@ -74,7 +77,6 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
     public static int whichStore;
     TextView storeName ;
     TextView storeAddress;
-    BackgroundTask task;
 
 /*    ImageView heart_img;
     ImageView heart_full_img;
@@ -103,7 +105,7 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         TextView textStorename = findViewById(R.id.text_storename);
         TextView textStoreaddrs = findViewById(R.id.text_storeaddrs);
 
-        ViewGroup findRoadLayout = (ViewGroup) findViewById(R.id.store_findroad);
+        ViewGroup letterLayout = (ViewGroup) findViewById(R.id.store_letter);
         ViewGroup heartLayout = (ViewGroup) findViewById(R.id.store_heart);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
 
@@ -124,7 +126,7 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
                 }
             }
         });*/
-        shareLayout.setOnClickListener(new View.OnClickListener() {
+        shareLayout.setOnClickListener(new View.OnClickListener() { // 카카오톡 공유하기
             @Override
             public void onClick(View view) {
                 ShareBtnClick(view);
@@ -132,11 +134,22 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         });
 
 
-        findRoadLayout.setOnClickListener(new View.OnClickListener() {
+        letterLayout.setOnClickListener(new View.OnClickListener() { // 편지쓰기로 이동하기
             @Override public void onClick(View v) {
-                // 네이버 지도 API 사용하기
-                //Intent intent = new Intent(this, SubActivity.class);
-                //startActivity(intent);
+                if(LoginActivity.userAccessToken!=null){
+                    Intent intent = new Intent(StoreDetailActivity.this, WriteLetterActivity.class);
+                    intent.putExtra("_id",id);
+                    intent.putExtra("whichStore", whichStore);
+                    startActivity(intent);
+                }else{ // 로그인 안 하면 다이얼로그 뜸
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(StoreDetailActivity.this);
+                    dlg.setMessage("로그인 후 이용해주세요!"); // 메시지
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    dlg.show();
+                }
             }
         });
 
@@ -267,75 +280,10 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         }
     }
 
-   /* private void getLetterData()
-    {
-        if(tokenRetrofitInstance!=null && whichStore==0){
-            Log.d("상세정보 id", id);
-            Call<CardStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreDetail(id);
-            call.enqueue(new Callback<CardStoreDetailResponse>() {
-                @Override
-                public void onResponse(Call<CardStoreDetailResponse> call, Response<CardStoreDetailResponse> response) {
-                    if (response.isSuccessful()) {
-                        CardStoreDetailResponse result = response.body();
-                        *//*Glide.with(getApplicationContext()).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+
-                                result.getCardStoreItem().getReviews().getAvatarUrl()).error(R.drawable.avartalUrl).circleCrop().into(avartalUrl);*//*
-
-                        StoreLetterFragment.writer.setText(result.getCardStoreItem().getReviews().getWriterItem());
-                        StoreLetterFragment.content.setText(result.getCardStoreItem().getReviews().getContent());
-                        StoreLetterFragment.createAt.setText(result.getCardStoreItem().getReviews().getCreateAt());
-
-                        Log.d("성공", new Gson().toJson(response.body()));
-                    } else {
-
-                        Log.d("가맹점상세정보실패", response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<CardStoreDetailResponse> call, Throwable t) {
-                    Log.d("REST ERROR!", t.getMessage());
-                }
-            });
-        } else if(tokenRetrofitInstance!=null && whichStore==1){
-            Call<SunHanStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getSunHansStoreDetail(id);
-            call.enqueue(new Callback<SunHanStoreDetailResponse>() {
-                @Override
-                public void onResponse(Call<SunHanStoreDetailResponse> call, Response<SunHanStoreDetailResponse> response) {
-                    if (response.isSuccessful()) {
-                        SunHanStoreDetailResponse result = response.body();
-
-                        StoreLetterFragment.writer.setText(result.getSunHanDetailItem().getReviews().getWriterItem());
-                        StoreLetterFragment.content.setText(result.getSunHanDetailItem().getReviews().getContent());
-                        StoreLetterFragment.createAt.setText(result.getSunHanDetailItem().getReviews().getCreateAt());
-                        //blockNumber
-                        *//*StoreLetterFragment.letterImage.setImage(result.);*//*
-
-                        Log.d("성공", new Gson().toJson(response.body()));
-                    } else {
-
-                        Log.d("가맹점상세정보실패", response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<SunHanStoreDetailResponse> call, Throwable t) {
-                    Log.d("REST ERROR!", t.getMessage());
-                }
-            });
-
-
-        }
-    }
-*/
-
-
-
-
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle("가게 상세");
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
 

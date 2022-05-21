@@ -91,27 +91,27 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/store_findroad"
+                    android:id="@+id/store_letter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/img_store_findroad"
+                        android:id="@+id/img_letter"
                         android:layout_width="22dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/location" />
+                        app:srcCompat="@drawable/letter" />
 
 
                     <TextView
-                        android:id="@+id/text_store_findroad"
+                        android:id="@+id/text_store_letter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="길찾기"
+                        android:text="편지"
                         android:textColor="@color/black" />
 
                 </LinearLayout>

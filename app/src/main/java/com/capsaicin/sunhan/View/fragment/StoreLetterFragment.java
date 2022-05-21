@@ -63,8 +63,6 @@ public class StoreLetterFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     private RetrofitInstance tokenRetrofitInstance ;
-    Button write_letter_btn; //감사편지쓰러가기 버튼
-    private String letter_id;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -80,31 +78,7 @@ public class StoreLetterFragment extends Fragment {
         page = 1;
         progressBar = view.findViewById(R.id.progress_bar_letter);
 
-
-        write_letter_btn = view.findViewById(R.id.write_letter_btn); // 감사편지쓰러가기버튼
-
         swipeRefreshLayout = view.findViewById(R.id.swipe_leteter);
-
-        write_letter_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(LoginActivity.userAccessToken!=null){
-                    Intent intent = new Intent(getActivity(), WriteLetterActivity.class);
-                    intent.putExtra("_id",StoreDetailActivity.id);
-                    intent.putExtra("whichStore", StoreDetailActivity.whichStore);
-                    startActivity(intent);
-                }else{
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                    dlg.setMessage("로그인을해주세요"); // 메시지
-                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    dlg.show();
-                }
-            }
-        });
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
