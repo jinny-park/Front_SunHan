@@ -166,7 +166,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
-                        android:onClick="btnClick"
+                        android:onClick="ShareBtnClick"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/link" />
 

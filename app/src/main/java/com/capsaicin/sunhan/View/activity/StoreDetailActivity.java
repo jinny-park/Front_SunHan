@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -126,7 +127,7 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         shareLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnClick(view);
+                ShareBtnClick(view);
             }
         });
 
@@ -338,20 +339,18 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
 
-    public void btnClick(View view){
+    public void ShareBtnClick(View view){
 
-        TextView textStorename = findViewById(R.id.text_storename);
+        /*ImageButton textStorename = findViewById(R.id.img_store_share);
         String strStore = textStorename.getText().toString();
         strStore = getIntent().getStringExtra("strStore");
-
-        //가게 이름 저장한거
-
+*/
         FeedTemplate params = FeedTemplate
                 .newBuilder(ContentObject.newBuilder("SUNHAN",
                         "https://ifh.cc/g/GG1KNy.png",
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption(strStore+"\n가게를 확인해보세요!")
+                        .setDescrption("\n가게를 확인해보세요!")
                         .build())
                 .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("https://developers.kakao.com").setMobileWebUrl("https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
@@ -369,10 +368,13 @@ public class StoreDetailActivity<BackgroundTask> extends AppCompatActivity {
 
         KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
             @Override
-            public void onFailure(ErrorResult errorResult) {}
+            public void onFailure(ErrorResult errorResult) {
+                Log.d("kakao share", "카카오톡 공유하기 실패\n"+errorResult);
+            }
 
             @Override
             public void onSuccess(KakaoLinkResponse result) {
+                Log.d("kakao share", "카카오톡 공유 성공!");
             }
         });
 

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Front_SunHan</string>
-    <string name="kakao_app_key">kakao11b33a8e699d97bd408aa024de68650b</string>
+    <!--<string name="kakao_app_key">kakao11b33a8e699d97bd408aa024de68650b</string>-->
+    <string name="kakao_app_key">11b33a8e699d97bd408aa024de68650b</string>
 </resources>
