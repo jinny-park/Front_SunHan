@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.capsaicin.sunhan.Model.CommunityDetailItem;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
@@ -28,6 +30,7 @@ import com.capsaicin.sunhan.Model.WritepostItem;
 import com.capsaicin.sunhan.Model.WritepostResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
+import com.capsaicin.sunhan.View.adapter.CommunityDetailAdapter;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.google.gson.Gson;
@@ -44,7 +47,7 @@ import retrofit2.Response;
 public class EditPostActivity extends AppCompatActivity {
     Button finishBtn;
     Toolbar toolbar;
-//    EditText writeContent;
+    //    EditText writeContent;
     TextView writeContent;
     CommunityFragment communityFragment;
     CommunityAdapter communityAdapter;
@@ -73,21 +76,23 @@ public class EditPostActivity extends AppCompatActivity {
 
 
         intent = getIntent();
+        writeContent.setText(intent.getStringExtra("content")); //원래 내용 불러오기
         id = intent.getStringExtra("_id");
         content = intent.getStringExtra("content");
-        writeContent.setText(intent.getStringExtra("content")); // 기존 글 내용 불러오기?
 
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communityWritingPost.setContent(content);
+                communityWritingPost.setContent(writeContent.getText().toString()); // 수정 입력한 내용 받기
 
                 if(communityWritingPost.getContent().isEmpty()){
                     writeContent.setError("내용을 입력해주세요.");
                 } else {
                     modify_Post(communityWritingPost);
+                    Toast toast = Toast.makeText(getApplicationContext(), "수정되었습니다", Toast.LENGTH_SHORT);
+                    toast.show();
                     finish();
                 }
             }
