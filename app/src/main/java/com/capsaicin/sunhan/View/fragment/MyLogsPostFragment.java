@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.MyPostLogsResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -33,6 +34,7 @@ public class MyLogsPostFragment extends Fragment {
     RecyclerView postLogsRecyclerView;
     ProgressBar progressBar;
     MyPostLogsAdapter mypageMylogsAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
@@ -48,8 +50,17 @@ public class MyLogsPostFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar_myPost);
         page = 1;
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
+        swipeRefreshLayout = view.findViewById(R.id.swipe_myLog_post);
 
         initData(0);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(0);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         postLogsRecyclerView = view.findViewById(R.id.recyclerview_logs_post);
         postLogsRecyclerView.setHasFixedSize(false);
@@ -66,7 +77,6 @@ public class MyLogsPostFragment extends Fragment {
                         findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = postLogsRecyclerView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
-                    progressBar.setVisibility(View.VISIBLE);
                     getData(page);
                     page++;
                 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.MyLetterLogsResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -31,6 +32,9 @@ public class MyLogsLetterFragment extends Fragment {
     RecyclerView letterRecyclerView;
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+
     int page;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,12 +52,20 @@ public class MyLogsLetterFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         letterRecyclerView.setLayoutManager(recyclerViewManager);
         letterRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe_myLog_letter);
         progressBar = view.findViewById(R.id.progress_bar_myLetter);
         page = 1;
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
         initData(0);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(0);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         letterRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -64,7 +76,6 @@ public class MyLogsLetterFragment extends Fragment {
                         findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = letterRecyclerView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
-                    progressBar.setVisibility(View.VISIBLE);
                     getData(page);
                     page++;
                 }
