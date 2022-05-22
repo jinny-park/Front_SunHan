@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommentResponse;
 import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityWritingComment;
@@ -57,7 +58,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     ImageView userProfile;
     TextView userId;
     TextView uploadTime;
-    TextView content;
+    public static TextView content;
     TextView commentNum;
 
     ImageView addImage;
@@ -201,124 +202,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
                         commuDetailRecycleView.setAdapter(communityDetailAdapter);
 
-                        communityDetailAdapter.setOnClickCommentListner(new OnClickCommentListener() {
-                            @Override
-                            public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
-                                if (position != RecyclerView.NO_POSITION) {
-                                    String comment_id = communityDetailAdapter.getItem(position).getC_commuId();
-                                    String comment_userid = communityDetailAdapter.getItem(position).getC_writerItem().get_id();
-                                    Log.d("댓글 고유 아이디1",comment_id);
-                                    Log.d("댓글 쓴 유저 고유아이디",comment_userid);
-                                    holder.itemView.findViewById(R.id.delete_comment).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (LoginActivity.userAccessToken != null) {
-                                                if (MyPageFragment.user_id.equals(comment_userid)) {
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("삭제하시겠습니까?"); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            Call<DeleteResponse> call = RetrofitInstance.getRetrofitService().deleteComment("Bearer "+LoginActivity.userAccessToken, comment_id);
-                                                            call.enqueue(new Callback<DeleteResponse>() {
-                                                                @Override
-                                                                public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
-                                                                    if (response.isSuccessful()) {
-                                                                        DeleteResponse result = response.body();
-                                                                        communityDetailAdapter.removeItem(position);
-                                                                        Log.d("삭제성공", result.getMessage());
-                                                                    } else {
-                                                                        Log.d("REST FAILED MESSAGE", response.message());
-                                                                    }
-                                                                }
-
-                                                                @Override
-                                                                public void onFailure(Call<DeleteResponse> call, Throwable t) {
-                                                                    Log.d("REST ERROR!", t.getMessage());
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                } else { //본인 아님
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("본인 댓글만 삭제가능합니다."); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                }
-                                            } else { //로그인 안함
-                                                AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-                                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                });
-                                                dlg.show();
-                                            }
-                                        }
-                                    }); //삭제하기
-
-                                    holder.itemView.findViewById(R.id.report_comment).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (LoginActivity.userAccessToken != null) {
-                                                if (!MyPageFragment.user_id.equals(comment_userid)) {
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("신고하시겠습니까?"); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockComment("Bearer "+LoginActivity.userAccessToken, comment_id);
-                                                            call.enqueue(new Callback<ResultResponse>() {
-                                                                @Override
-                                                                public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                                                                    if (response.isSuccessful()) {
-                                                                        ResultResponse result = response.body();
-                                                                        Log.d("신고성공", result.getMessage());
-                                                                    } else {
-                                                                        Log.d("REST FAILED MESSAGE", response.message());
-                                                                    }
-                                                                }
-
-                                                                @Override
-                                                                public void onFailure(Call<ResultResponse> call, Throwable t) {
-                                                                    Log.d("REST ERROR!", t.getMessage());
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                } else { //본인일경우
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("본인은 신고 불가능합니다."); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                }
-                                            } else { //로그인 안함
-                                                AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-                                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                });
-                                                dlg.show();
-                                            }
-                                        }
-                                    }); //신고하기
-
-                                }
-                            }
-                        });
 
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
@@ -352,124 +235,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         CommentResponse result = response.body();
                         communityDetailAdapter.addList(result.getData());
 
-                        communityDetailAdapter.setOnClickCommentListner(new OnClickCommentListener() {
-                            @Override
-                            public void onItemClick(CommunityDetailAdapter.ViewHolder holder, View view, int position) {
-                                if (position != RecyclerView.NO_POSITION) {
-                                    String comment_id = communityDetailAdapter.getItem(position).getC_commuId();
-                                    String comment_userid = communityDetailAdapter.getItem(position).getC_writerItem().get_id();
-                                    Log.d("댓글 고유 아이디1",comment_id);
-                                    Log.d("댓글 쓴 유저 고유아이디",comment_userid);
-                                    holder.itemView.findViewById(R.id.delete_comment).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (LoginActivity.userAccessToken != null) {
-                                                if (MyPageFragment.userId.equals(comment_userid)) {
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("삭제하시겠습니까?"); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            Call<DeleteResponse> call = RetrofitInstance.getRetrofitService().deleteComment("Bearer "+LoginActivity.userAccessToken, comment_id);
-                                                            call.enqueue(new Callback<DeleteResponse>() {
-                                                                @Override
-                                                                public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
-                                                                    if (response.isSuccessful()) {
-                                                                        DeleteResponse result = response.body();
-                                                                        communityDetailAdapter.removeItem(position);
-                                                                        Log.d("삭제성공", result.getMessage());
-                                                                    } else {
-                                                                        Log.d("REST FAILED MESSAGE", response.message());
-                                                                    }
-                                                                }
-
-                                                                @Override
-                                                                public void onFailure(Call<DeleteResponse> call, Throwable t) {
-                                                                    Log.d("REST ERROR!", t.getMessage());
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                } else { //본인 아님
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("본인 댓글만 삭제가능합니다."); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                }
-                                            } else { //로그인 안함
-                                                AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-                                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                });
-                                                dlg.show();
-                                            }
-                                        }
-                                    }); //삭제하기
-
-                                    holder.itemView.findViewById(R.id.report_comment).setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            if (LoginActivity.userAccessToken != null) {
-                                                if (!MyPageFragment.user_id.equals(comment_userid)) {
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("신고하시겠습니까?"); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            Call<ResultResponse> call = RetrofitInstance.getRetrofitService().blockComment("Bearer "+LoginActivity.userAccessToken, comment_id);
-                                                            call.enqueue(new Callback<ResultResponse>() {
-                                                                @Override
-                                                                public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                                                                    if (response.isSuccessful()) {
-                                                                        ResultResponse result = response.body();
-                                                                        Log.d("신고성공", result.getMessage());
-                                                                    } else {
-                                                                        Log.d("REST FAILED MESSAGE", response.message());
-                                                                    }
-                                                                }
-
-                                                                @Override
-                                                                public void onFailure(Call<ResultResponse> call, Throwable t) {
-                                                                    Log.d("REST ERROR!", t.getMessage());
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                } else { //본인일경우
-                                                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                    dlg.setMessage("본인은 신고 불가능합니다."); // 메시지
-                                                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    });
-                                                    dlg.show();
-                                                }
-                                            } else { //로그인 안함
-                                                AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
-                                                dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-                                                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                });
-                                                dlg.show();
-                                            }
-                                        }
-                                    }); //신고하기
-
-                                }
-                            }
-                        });
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
                         progressBar.setVisibility(View.GONE);
@@ -533,6 +298,15 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     public void onResponse(Call<CommunityWritingResponse> call, Response<CommunityWritingResponse> response) {
                         if (response.isSuccessful()) {
                             CommunityWritingResponse result = response.body();
+                            CommentItem commentItem = new CommentItem();
+                            commentItem.setC_writerItem(result.getCommunityWritingResponseData().getWriterItem());
+                            commentItem.setC_commuId(result.getCommunityWritingResponseData().get_id());
+                            commentItem.setC_commuContent(result.getCommunityWritingResponseData().getContent());
+                            commentItem.setC_commuIsDeleted(result.getCommunityWritingResponseData().getIsDeleted());
+                            commentItem.setC_commuIsCommentCount(result.getCommunityWritingResponseData().getCommentCount());
+                            commentItem.setC_commuIsCreateAt(result.getCommunityWritingResponseData().getCreateAt());
+                            commentItem.setC_commuIsUpdateAt(result.getCommunityWritingResponseData().getUpdateAt());
+                            communityDetailAdapter.addItem(commentItem);
                             Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());

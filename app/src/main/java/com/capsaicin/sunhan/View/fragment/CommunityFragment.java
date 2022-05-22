@@ -63,10 +63,8 @@ public class CommunityFragment extends Fragment {
 //    public static ArrayList < Object > commuWriter;
     public static String commuId;
     public static String commuContent;
-    public static Boolean commuIsDeleted;
     public static int commuIsCommentCount;
     public static String commuIsCreateAt;
-    public static String commuIsUpdateAt;
 
     private RetrofitInstance commuRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;//

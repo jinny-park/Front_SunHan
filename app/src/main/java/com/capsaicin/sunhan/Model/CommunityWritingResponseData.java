@@ -8,12 +8,16 @@ public class CommunityWritingResponseData {
     WriterItem writerItem;
     @SerializedName("_id")
     private String _id;
+    @SerializedName("isDeleted")
+    private Boolean isDeleted;
     @SerializedName("content")
     private String content;
     @SerializedName("createAt")
     private String createAt;
     @SerializedName("updateAt")
     private String updateAt;
+    @SerializedName("commentCount")
+    private int commentCount;
 
     public WriterItem getWriterItem() {
         return writerItem;
@@ -39,6 +43,14 @@ public class CommunityWritingResponseData {
         this.content = content;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getCreateAt() {
         return createAt;
     }
@@ -53,5 +65,13 @@ public class CommunityWritingResponseData {
 
     public void setUpdateAt(String updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.updateAt = commentCount;
     }
 }

@@ -56,6 +56,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         holder.content.setText(communityList.get(position).getCommuContent());
         holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount());
 
+        if(communityList.get(position).getCommuIsCommentCount() == null) {
+            holder.commentNum.setText("0");
+        } else {
+            holder.commentNum.setText(communityList.get(position).getCommuIsCommentCount());
+        }
+
         save_content = communityList.get(position).getCommuContent();
     }
 
@@ -111,6 +117,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public void removeItem(int position){
         communityList.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     public void addList(ArrayList <CommunityItem> list){
