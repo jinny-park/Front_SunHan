@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class MypageAdapter extends RecyclerView.Adapter<MypageAdapter.ViewHolder
     public void onBindViewHolder(@NonNull MypageAdapter.ViewHolder holder, int position) {
         MypageItem item =mypageItemArrayList.get(position);
         holder.myPageName.setText(mypageItemArrayList.get(position).getItemName());
+        holder.myPageImage.setImageResource(mypageItemArrayList.get(position).getMyPageIcon());
     }
 
     public void setOnClickMyPageItemListener(OnClickMyPageItemListener listener){
@@ -60,11 +62,13 @@ public class MypageAdapter extends RecyclerView.Adapter<MypageAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView myPageName;
+        ImageView myPageImage;
 
         public ViewHolder(@NonNull View itemView , final OnClickMyPageItemListener listener) {
             super(itemView);
 
             myPageName = itemView.findViewById(R.id.mypage_item_name);
+            myPageImage = itemView.findViewById(R.id.mypage_icon);
 
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
