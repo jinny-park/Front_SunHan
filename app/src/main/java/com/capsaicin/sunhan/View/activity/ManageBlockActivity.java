@@ -55,6 +55,11 @@ public class ManageBlockActivity extends AppCompatActivity {
         manageBlockRecyclerView.setLayoutManager(recyclerViewManager);
         manageBlockRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        getData();
+
+    }
+
+    private void getData(){
         if(LoginActivity.userAccessToken!=null) {
             if (tokenRetrofitInstance != null) {
                 Call<BlockListResponse> call = RetrofitInstance.getRetrofitService().getBlockedList("Bearer " + LoginActivity.userAccessToken);
@@ -65,43 +70,6 @@ public class ManageBlockActivity extends AppCompatActivity {
                             BlockListResponse result = response.body();
                             adapter = new ManageBlockAdapter(getApplicationContext(),result.getBlockUsers().getBlockUsers());
                             manageBlockRecyclerView.setAdapter(adapter);
-
-                            adapter.setOnClickBlockedItemListener(new OnClickBlockedItemListener() {
-                                @Override
-                                public void onItemClick(ManageBlockAdapter.ViewHolder holder, View view, int position) {
-                                    if(position!=RecyclerView.NO_POSITION) {
-                                        String id = adapter.getItem(position).get_id();
-                                        holder.itemView.findViewById(R.id.isBlocked_btn).setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().unBlockUser("Bearer "+LoginActivity.userAccessToken, id);
-                                                call.enqueue(new Callback<ResultResponse>() {
-                                                    @Override
-                                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                                                        if (response.isSuccessful()) {
-                                                            ResultResponse result = response.body();
-                                                            adapter.removeItem(position);
-                                                            Toast toast = Toast.makeText(getApplicationContext(), "차단해제",Toast.LENGTH_SHORT);
-                                                            toast.show();
-                                                            Log.d("차단풀기 성공", new Gson().toJson(response.body()));
-                                                        } else {
-
-                                                            Log.d("차단실패", response.message());
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
-                                                        Log.d("REST ERROR!", t.getMessage());
-                                                    }
-                                                });
-                                            }
-                                        });
-
-                                    }
-                                }
-                            });
-
                             Log.d("차단 리스트", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -121,7 +89,6 @@ public class ManageBlockActivity extends AppCompatActivity {
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle("메인툴바");
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
     @Override
