@@ -38,12 +38,36 @@
             android:textSize="13dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/comment_More"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/more" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/delete_comment"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/yellow_button"
+                android:text="삭제"
+                android:textSize="15dp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/report_comment"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button_border"
+                android:backgroundTint="@color/sunhanStatus"
+                android:text="신고"
+                android:textSize="15dp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <TextView

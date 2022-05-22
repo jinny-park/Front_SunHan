@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     ArrayList<CommentItem> CommunityCommentList;
     public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     public OnClickCommentListener listener;
+
+    public static String comment_user_id ;
 
     ImageView pop2;
     Dialog dilaog01;
@@ -65,6 +68,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.c_userId.setText(CommunityCommentList.get(position).getC_writerItem().getNickname());
         holder.c_content.setText(CommunityCommentList.get(position).getC_commuContent());
         holder.c_commentDate.setText(CommunityCommentList.get(position).getC_commuIsCreateAt());
+
 
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -100,12 +104,13 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView c_userProfile;
-        public TextView c_userId;
-        public TextView c_content;
-        public TextView c_commentDate;
-        public ImageView pop_comment;
-        public RecyclerView c_recyclerView; //대댓글
+        ImageView c_userProfile;
+        TextView c_userId;
+        TextView c_content;
+        TextView c_commentDate;
+        Button delete_comment;
+        Button report_comment;
+        RecyclerView c_recyclerView; //대댓글
 
         public ViewHolder(@NonNull View itemView, final OnClickCommentListener listener) {
             super(itemView);
@@ -113,9 +118,20 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
             c_userId = itemView.findViewById(R.id.comment_userId);
             c_content = itemView.findViewById(R.id.comment_content);
             c_commentDate = itemView.findViewById(R.id.comment_date);
-            pop_comment = itemView.findViewById(R.id.comment_More);
+            delete_comment = itemView.findViewById(R.id.delete_comment);
+            report_comment = itemView.findViewById(R.id.report_comment);
             c_recyclerView = itemView.findViewById(R.id.recylerView_community_comment_child); //대댓글
-            pop_comment.setOnClickListener(new View.OnClickListener() {
+            delete_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(CommunityDetailAdapter.ViewHolder.this, view,position);
+                    }
+                }
+            });
+
+            report_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
@@ -133,10 +149,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         CommunityCommentList.addAll(list);
         notifyItemRangeInserted(CommunityCommentList.size(),list.size());
         Log.d("addList ",list.toString());
-    }
-
-    public void updateData(int position) {
-        notifyDataSetChanged();
     }
 
     public void removeItem(int position){
