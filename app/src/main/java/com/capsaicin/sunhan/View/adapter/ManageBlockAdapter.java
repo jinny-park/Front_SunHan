@@ -84,6 +84,10 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
         }
 
     }
+    public void removeItem(int position){
+        blocekdItemsList.remove(position);
+        notifyItemRemoved(position);
+    }
 
     public void addItem(BlockedItem item){
         blocekdItemsList.add(item);

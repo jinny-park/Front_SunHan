@@ -286,7 +286,7 @@ public class StoreLetterFragment extends Fragment {
                                                                         Log.d("삭제성공", new Gson().toJson(response.body()));
                                                                     } else {
 
-                                                                        Log.d("ERROR", response.message());
+                                                                        Log.d("선한영향력편지삭제실패", response.message());
                                                                     }
                                                                 }
 
@@ -413,10 +413,10 @@ public class StoreLetterFragment extends Fragment {
                                                                     if (response.isSuccessful()) {
                                                                         ResultResponse result = response.body();
                                                                         letterAdapter.removeItem(position);
-                                                                        Log.d("삭제성공", new Gson().toJson(response.body()));
+                                                                        Log.d("가맹점 편지삭제성공", new Gson().toJson(response.body()));
                                                                     } else {
 
-                                                                        Log.d("ERROR", response.message());
+                                                                        Log.d("가맹점 편지삭제실패", response.message());
                                                                     }
                                                                 }
 
@@ -540,8 +540,7 @@ public class StoreLetterFragment extends Fragment {
                                                                             letterAdapter.removeItem(position);
                                                                             Log.d("삭제성공", new Gson().toJson(response.body()));
                                                                         } else {
-
-                                                                            Log.d("ERROR", response.message());
+                                                                            Log.d("선한영향력편지삭제실패", response.message());
                                                                         }
                                                                     }
 

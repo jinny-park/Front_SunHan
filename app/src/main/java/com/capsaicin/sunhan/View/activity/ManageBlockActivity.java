@@ -40,7 +40,6 @@ public class ManageBlockActivity extends AppCompatActivity {
     private RetrofitInstance tokenRetrofitInstance ;
     private RetrofitServiceApi retrofitServiceApi;
     RecyclerView manageBlockRecyclerView;
-    ProgressDialog progressDialog;
     ManageBlockAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +56,6 @@ public class ManageBlockActivity extends AppCompatActivity {
         manageBlockRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         if(LoginActivity.userAccessToken!=null) {
-            progressDialog = new ProgressDialog(ManageBlockActivity.this);
-            progressDialog.setMessage("Loading....");
-            progressDialog.show();
             if (tokenRetrofitInstance != null) {
                 Call<BlockListResponse> call = RetrofitInstance.getRetrofitService().getBlockedList("Bearer " + LoginActivity.userAccessToken);
                 call.enqueue(new Callback<BlockListResponse>() {
@@ -67,7 +63,6 @@ public class ManageBlockActivity extends AppCompatActivity {
                     public void onResponse(Call<BlockListResponse> call, Response<BlockListResponse> response) {
                         if (response.isSuccessful()) {
                             BlockListResponse result = response.body();
-                            progressDialog.dismiss();
                             adapter = new ManageBlockAdapter(getApplicationContext(),result.getBlockUsers().getBlockUsers());
                             manageBlockRecyclerView.setAdapter(adapter);
 
@@ -85,12 +80,13 @@ public class ManageBlockActivity extends AppCompatActivity {
                                                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
                                                         if (response.isSuccessful()) {
                                                             ResultResponse result = response.body();
+                                                            adapter.removeItem(position);
                                                             Toast toast = Toast.makeText(getApplicationContext(), "차단해제",Toast.LENGTH_SHORT);
                                                             toast.show();
                                                             Log.d("차단풀기 성공", new Gson().toJson(response.body()));
                                                         } else {
 
-                                                            Log.d("ERROR", response.message());
+                                                            Log.d("차단실패", response.message());
                                                         }
                                                     }
 
