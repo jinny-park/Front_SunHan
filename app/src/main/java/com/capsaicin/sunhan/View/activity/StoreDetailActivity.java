@@ -288,13 +288,13 @@ public class StoreDetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
 
-    public void ShareBtnClick(View view){
+    public void ShareBtnClick(View view) {
+        if (whichStore == 0) {
 
             String name = storeName.getText().toString();
             String address = storeAddress.getText().toString();
-
             FeedTemplate params = FeedTemplate
-                    .newBuilder(ContentObject.newBuilder(name+"을 확인해보세요!",
+                    .newBuilder(ContentObject.newBuilder(name + "을 확인해보세요!",
                             "https://ifh.cc/g/fT1GYp.png",
                             LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                     .setMobileWebUrl("https://developers.kakao.com").build())
@@ -307,10 +307,10 @@ public class StoreDetailActivity extends AppCompatActivity {
             serverCallbackArgs.put("product_id", "${shared_product_id}");
 
 
-            KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback <KakaoLinkResponse>() {
+            KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
                 @Override
                 public void onFailure(ErrorResult errorResult) {
-                    Log.d("kakao share", "카카오톡 공유하기 실패\n"+errorResult);
+                    Log.d("kakao share", "카카오톡 공유하기 실패\n" + errorResult);
                 }
 
                 @Override
@@ -320,7 +320,47 @@ public class StoreDetailActivity extends AppCompatActivity {
             });
 
 
+        } else if (whichStore==1) {
+
+            String name = storeName.getText().toString();
+            String address = storeAddress.getText().toString();
+
+            FeedTemplate params = FeedTemplate
+                    .newBuilder(ContentObject.newBuilder(name + "을 확인해보세요!",
+                            "https://ifh.cc/g/fT1GYp.png",
+                            LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                    .setMobileWebUrl("https://developers.kakao.com").build())
+                            .setDescrption(address)
+                            .build())
+                    /*.addButton(new ButtonObject("가맹점 보러 가기", LinkObject.newBuilder()
+                            .setWebUrl("https://www.xn--o39akkz01az4ip7f4xzwoa.com")
+                            .setMobileWebUrl("https://www.xn--o39akkz01az4ip7f4xzwoa.com")
+                            .setAndroidExecutionParams("key1=value1")
+                            .setIosExecutionParams("key1=value1")
+                            .build()))*/
+                    .build();
+
+            Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+            serverCallbackArgs.put("user_id", "${current_user_id}");
+            serverCallbackArgs.put("product_id", "${shared_product_id}");
+
+
+            KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    Log.d("kakao share", "카카오톡 공유하기 실패\n" + errorResult);
+                }
+
+                @Override
+                public void onSuccess(KakaoLinkResponse result) {
+                    Log.d("kakao share", "카카오톡 공유 성공!");
+                }
+            });
+        }
     }
+
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         switch (item.getItemId()){
