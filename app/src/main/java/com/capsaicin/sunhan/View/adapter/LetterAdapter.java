@@ -64,21 +64,23 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).into(holder.letterImage);
         }
 
-        if(letterItems.get(position).getChildrenId()!=null){ //아동급식가맹점
-            holder.delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"children");
-                }
-            });
-        } else{ //선한영향력
-            holder.delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"sunhan");
-                }
-            });
-        }
+//        if(letterItems.get(position).getChildrenId()!=null){ //아동급식가맹점
+//            holder.delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Log.d("가맹점","편지삭제");
+//                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"children");
+//                }
+//            });
+//        } else if(letterItems.get(position).getSunhanId()!=null){ //선한영향력
+//            holder.delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Log.d("선한영향력","편지삭제");
+//                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"sunhan");
+//                }
+//            });
+//        }
 
         holder.block.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +123,7 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             letterName = itemView.findViewById(R.id.writer);
             letterContent = itemView.findViewById(R.id.content);
             letterDate = itemView.findViewById(R.id.createAt);
-            delete = itemView.findViewById(R.id.delete_letter);
+//            delete = itemView.findViewById(R.id.delete_letter);
 //            edit = itemView.findViewById(R.id.edit_letter);
             block = itemView.findViewById(R.id.block_letter);
         }
@@ -141,9 +143,11 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
                                 if (response.isSuccessful()) {
                                     ResultResponse result = response.body();
                                     removeItem(position);
+                                    Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
+                                    toast.show();
                                     Log.d("삭제성공", new Gson().toJson(response.body()));
                                 } else {
-                                    Log.d("선한영향력편지삭제실패", response.message());
+                                    Log.d("편지삭제실패", response.message());
                                 }
                             }
 

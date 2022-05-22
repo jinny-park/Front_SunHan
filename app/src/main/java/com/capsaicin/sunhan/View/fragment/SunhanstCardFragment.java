@@ -55,7 +55,6 @@ public class SunhanstCardFragment extends Fragment {
     private RetrofitInstance tokenRetrofitInstance ;
    CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
-    CardStoreResponse cardStoreResponse;
     SwipeRefreshLayout swipeRefreshLayout;
     public static int distinguish; // 가맹점인 선한영향력인지 구분
 
@@ -129,13 +128,12 @@ public class SunhanstCardFragment extends Fragment {
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            cardStoreResponse = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),cardStoreResponse.getData());
+                            CardStoreResponse result = response.body();
+                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
                             sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
                             cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
                                 @Override
                                 public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
                                     if(position!=RecyclerView.NO_POSITION){
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                         intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
@@ -169,13 +167,12 @@ public class SunhanstCardFragment extends Fragment {
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            cardStoreResponse = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),cardStoreResponse.getData());
+                            CardStoreResponse result = response.body();
+                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
                             sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
                             cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
                                 @Override
                                 public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
                                     if(position!=RecyclerView.NO_POSITION){
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                         intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
@@ -253,8 +250,8 @@ public class SunhanstCardFragment extends Fragment {
                     public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
-                            cardStoreResponse = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),cardStoreResponse.getData());
+                            CardStoreResponse result = response.body();
+                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
                             sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
                             cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
                                 @Override
