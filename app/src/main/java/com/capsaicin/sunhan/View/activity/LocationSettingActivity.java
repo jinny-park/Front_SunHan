@@ -109,7 +109,7 @@ public class LocationSettingActivity extends AppCompatActivity {
                 String address = getCurrentAddress(latitude, longitude);
                 if(!address.equals("지오코더 서비스 사용불가")){ //네트워크 활성화 됨
                     textview_address.setText(address);
-                    Toast.makeText(LocationSettingActivity.this, "현재위치 잡기 성공!" + longitude, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LocationSettingActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
                     startActivity(intent);
                     finish();

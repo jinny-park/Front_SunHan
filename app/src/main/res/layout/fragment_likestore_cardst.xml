@@ -14,7 +14,6 @@
             android:id="@+id/liked_cardStore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
             app:layout_constrainedHeight="true">
 
         </androidx.recyclerview.widget.RecyclerView>
