@@ -50,11 +50,9 @@ import retrofit2.Response;
 public class CommunityDetailActivity extends AppCompatActivity {
     CommunityDetailAdapter communityDetailAdapter ;
     RecyclerView commuDetailRecycleView;
-    SwipeRefreshLayout swipeRefreshLayout;
 
     Toolbar toolbar;
     ImageView pop1;
-    ImageView pop2;
     ImageView userProfile;
     TextView userId;
     TextView uploadTime;
@@ -70,8 +68,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
     Dialog dialog_post;
     Dialog dialog_comment;
-
-    CommunityFragment communityFragment;
 
     public static String id ;
     public static String user_id ;
@@ -102,8 +98,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
         communityWritingComment = new CommunityWritingComment();
         progressBar = findViewById(R.id.progress_bar);
 
-//        swipeRefreshLayout = findViewById(R.id.swip_comment);
-
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
 
@@ -122,24 +116,26 @@ public class CommunityDetailActivity extends AppCompatActivity {
         commuDetailRecycleView.setLayoutManager(recyclerViewManager);
         commuDetailRecycleView.setHasFixedSize(true);
         commuDetailRecycleView.setItemAnimator(new DefaultItemAnimator());
-//        commuDetailRecycleView.setAdapter(communityDetailAdapter);
 
         getData();
         initComment(0);
-
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                initComment(0);
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
 
         pop1 = findViewById(R.id.popupMore);
         pop1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog();
+                if(LoginActivity.userAccessToken!=null) { //로그인 했을때
+                    dialog();
+                } else {
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                    dlg.setMessage("로그인 후 이용해주세요."); // 메시지
+                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dlg.show();
+                }
             }
         });
 
@@ -159,13 +155,25 @@ public class CommunityDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 communityWritingComment.setContent(commentContent.getText().toString());
                 communityWritingComment.setPostId(id);
-                if(communityWritingComment.getContent().isEmpty()){
-                    commentContent.setError("내용을 입력해주세요");
-                } else {
-                    saveComment(communityWritingComment);
-                    commentContent.setText("");
-                    Toast toast = Toast.makeText(getApplicationContext(), "댓글이 입력되었습니다", Toast.LENGTH_SHORT);
-                    toast.show();
+
+                if(LoginActivity.userAccessToken!=null){ //로그인 했을때
+                    if(communityWritingComment.getContent().isEmpty()){
+                        commentContent.setError("내용을 입력해주세요");
+                    } else {
+                        saveComment(communityWritingComment);
+                        commentContent.setText("");
+                        Toast toast = Toast.makeText(getApplicationContext(), "댓글이 입력되었습니다", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } else { //로그인 안했을 때
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                    dlg.setMessage("로그인 후 이용해주세요."); // 메시지
+                    dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dlg.show();
                 }
             }
         });
@@ -179,7 +187,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = commuDetailRecycleView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
-//                    progressBar.setVisibility(View.VISIBLE);
                     getComment(page);
                     page++;
                 }
@@ -198,7 +205,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                     if (response.isSuccessful()) {
-//                        progressBar.setVisibility(View.GONE);
                         CommentResponse result = response.body();
                         communityDetailAdapter = new CommunityDetailAdapter(getApplicationContext(),result.getData());
                         commuDetailRecycleView.setAdapter(communityDetailAdapter);
@@ -424,7 +430,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void saveComment(CommunityWritingComment content){
+    private void saveComment(CommunityWritingComment content){ //댓글 쓰면 저장
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<CommunityWritingResponse> call = RetrofitInstance.getRetrofitService().writeComment("Bearer "+LoginActivity.userAccessToken, content);
@@ -442,6 +448,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                             commentItem.setC_commuIsCreateAt(result.getCommunityWritingResponseData().getCreateAt());
                             commentItem.setC_commuIsUpdateAt(result.getCommunityWritingResponseData().getUpdateAt());
                             communityDetailAdapter.addItem(commentItem);
+                            getData();
                             Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
