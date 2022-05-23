@@ -101,6 +101,9 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
                                              Log.d("삭제성공", new Gson().toJson(response.body()));
                                          } else {
                                              Log.d("편지삭제실패", response.message());
+//                                             removeItem(position); //임시로
+//                                             Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
+//                                             toast.show();
                                          }
                                      }
 

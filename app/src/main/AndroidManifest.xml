@@ -102,7 +102,7 @@
         <activity
             android:name="com.capsaicin.sunhan.View.activity.WriteLetterActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.EditPostActivity"

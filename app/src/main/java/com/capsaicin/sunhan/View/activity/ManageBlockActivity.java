@@ -41,6 +41,7 @@ public class ManageBlockActivity extends AppCompatActivity {
     private RetrofitServiceApi retrofitServiceApi;
     RecyclerView manageBlockRecyclerView;
     ManageBlockAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

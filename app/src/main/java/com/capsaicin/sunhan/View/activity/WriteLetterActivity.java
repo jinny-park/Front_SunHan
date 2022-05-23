@@ -17,13 +17,16 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -76,7 +79,7 @@ public class WriteLetterActivity extends AppCompatActivity {
     StoreDetailActivity storeDetailActivity;
     String content;
     String letter_id;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,13 +89,14 @@ public class WriteLetterActivity extends AppCompatActivity {
         letter_image = findViewById(R.id.write_letter_image);
         letterContent = findViewById(R.id.write_letter_editText);
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
-
+        toolbar = findViewById(R.id.write_letter_toolbar);
 
 
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
 
+        setToolbar();
 
         letter_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +151,23 @@ public class WriteLetterActivity extends AppCompatActivity {
         });
     }
 
+    void setToolbar(){
+        setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
+        ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                //select back button
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void sendLetter(){
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){

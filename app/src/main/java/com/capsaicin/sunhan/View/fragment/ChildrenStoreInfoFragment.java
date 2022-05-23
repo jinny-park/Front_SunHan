@@ -1,5 +1,6 @@
 package com.capsaicin.sunhan.View.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChildrenStoreInfoFragment extends Fragment {
+public class ChildrenStoreInfoFragment extends Fragment { //가맹점 인포
     View view;
 
    static public TextView storeName;
@@ -29,6 +30,14 @@ public class ChildrenStoreInfoFragment extends Fragment {
     static public TextView holidayTime;
     static public TextView phone;
     static public Bundle bundle;
+    static public TextView text_name;
+    static public TextView text_address;
+    static public TextView text_phone;
+    static public TextView text_weekday;
+    static public TextView text_weekend;
+    static public TextView text_holiday;
+    ProgressDialog progressDialog;
+
     private RetrofitInstance tokenRetrofitInstance ;
 
     @Override
@@ -38,6 +47,11 @@ public class ChildrenStoreInfoFragment extends Fragment {
         bundle = getArguments();
 
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();//싱글톤
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("잠시만 기다려주세요");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+        progressDialog.show();
 
         storeName = view.findViewById(R.id.children_storeName);
         weekdayTime =view.findViewById(R.id.children_store_weekday);
@@ -45,6 +59,13 @@ public class ChildrenStoreInfoFragment extends Fragment {
         holidayTime =view.findViewById(R.id.children_store_holiday);
         address =view.findViewById(R.id.children_storeAddress);
         phone =view.findViewById(R.id.children_storeNum);
+        text_name = view.findViewById(R.id.text_name);
+        text_address = view.findViewById(R.id.text_address);
+        text_phone = view.findViewById(R.id.text_phone);
+        text_weekday = view.findViewById(R.id.text_weekday);
+        text_weekend = view.findViewById(R.id.text_weekend);
+        text_holiday = view.findViewById(R.id.text_holiday);
+
 
         getData();
 
@@ -61,6 +82,12 @@ public class ChildrenStoreInfoFragment extends Fragment {
                 public void onResponse(Call<CardStoreDetailResponse> call, Response<CardStoreDetailResponse> response) {
                     if (response.isSuccessful()) {
                         CardStoreDetailResponse result = response.body();
+                        text_name.setText("가게이름: ");
+                        text_address.setText("가게주소: ");
+                        text_phone.setText("가게번호: ");
+                        text_weekday.setText("평일운영: ");
+                        text_weekend.setText("주말운영: ");
+                        text_holiday.setText("공휴일운영: ");
                         String weektime =result.getCardStoreItem().getWeekdayStartTime()+"-"+result.getCardStoreItem().getWeekdayEndTime();
                         String weekendtime = result.getCardStoreItem().getWeekendStartTime()+"-"+result.getCardStoreItem().getWeekendEndTime();
                         String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
@@ -70,6 +97,8 @@ public class ChildrenStoreInfoFragment extends Fragment {
                         holidayTime.setText(holidaytime);
                         address.setText(result.getCardStoreItem().getAddress());
                         phone.setText(result.getCardStoreItem().getPhoneNumber());
+
+                        progressDialog.dismiss();
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
 

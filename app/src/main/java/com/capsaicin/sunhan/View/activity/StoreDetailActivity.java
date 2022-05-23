@@ -226,7 +226,12 @@ public class StoreDetailActivity extends AppCompatActivity {
                             String weektime =result.getCardStoreItem().getWeekdayStartTime()+"-"+result.getCardStoreItem().getWeekdayEndTime();
                             String weekendtime = result.getCardStoreItem().getWeekendStartTime()+"-"+result.getCardStoreItem().getWeekendEndTime();
                             String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
-
+                            ChildrenStoreInfoFragment.text_name.setText("가게이름: ");
+                            ChildrenStoreInfoFragment.text_address.setText("가게주소: ");
+                            ChildrenStoreInfoFragment.text_phone.setText("가게번호: ");
+                            ChildrenStoreInfoFragment.text_weekday.setText("평일운영: ");
+                            ChildrenStoreInfoFragment.text_weekend.setText("주말운영: ");
+                            ChildrenStoreInfoFragment.text_holiday.setText("공휴일운영: ");
                             ChildrenStoreInfoFragment.storeName.setText(result.getCardStoreItem().getName());
                             storeName.setText(result.getCardStoreItem().getName());
                             ChildrenStoreInfoFragment.weekdayTime.setText(weektime);
@@ -247,7 +252,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
-            } else if(tokenRetrofitInstance!=null && whichStore==1){
+            } else if(tokenRetrofitInstance!=null && whichStore==1){ // 선한영향력
             Call<SunHanStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getSunHansStoreDetail(id);
             call.enqueue(new Callback<SunHanStoreDetailResponse>() {
                 @Override
@@ -255,6 +260,12 @@ public class StoreDetailActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         SunHanStoreDetailResponse result = response.body();
 
+                        StoreInfoFragment.text_sunhan_offer.setText("제공음식: ");
+                        StoreInfoFragment.text_sunhan_Name.setText("가게이름: ");
+                        StoreInfoFragment.text_sunhan_addr.setText("가게주소: ");
+                        StoreInfoFragment.text_sunhan_target.setText("제공대상: ");
+                        StoreInfoFragment.text_sunhan_time.setText("운영시간: ");
+                        StoreInfoFragment.text_sunhan_phone.setText("가게번호: ");
                         storeName.setText(result.getSunHanDetailItem().getName());
                         storeAddress.setText(result.getSunHanDetailItem().getAddress());
                         StoreInfoFragment.sunhan_Name.setText(result.getSunHanDetailItem().getName());

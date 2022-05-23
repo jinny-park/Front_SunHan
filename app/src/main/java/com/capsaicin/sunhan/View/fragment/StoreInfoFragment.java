@@ -1,5 +1,6 @@
 package com.capsaicin.sunhan.View.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,14 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
     public static TextView sunhan_time;
     public static TextView sunhan_target;
     public static TextView sunhan_offer;
+    public static TextView text_sunhan_offer;
+    public static TextView text_sunhan_Name;
+    public static TextView text_sunhan_addr;
+    public static TextView text_sunhan_time;
+    public static TextView text_sunhan_target;
+    public static TextView text_sunhan_phone;
 
+    ProgressDialog progressDialog;
     private RetrofitInstance tokenRetrofitInstance ;
 
 
@@ -42,12 +50,26 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
         view = inflater.inflate(R.layout.fragment_sunhanst_store_info, container, false);
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();//싱글톤
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("잠시만 기다려주세요");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+        progressDialog.show();
+
         sunhan_Name = view.findViewById(R.id.sunhan_storeName);
         sunhan_addr = view.findViewById(R.id.sunhan_storeAddress);
         sunhan_phone = view.findViewById(R.id.sunhan_storeNum);
         sunhan_time = view.findViewById(R.id.sunhan_store_weekday);
         sunhan_target = view.findViewById(R.id.sunhan_target);
         sunhan_offer = view.findViewById(R.id.sunhan_offer);
+
+        text_sunhan_offer = view.findViewById(R.id.text_sunhan_offer);
+        text_sunhan_Name = view.findViewById(R.id.text_sunhan_name);
+        text_sunhan_addr = view.findViewById(R.id.text_sunhan_address);
+        text_sunhan_target = view.findViewById(R.id.text_sunhan_target);
+        text_sunhan_time = view.findViewById(R.id.text_sunhan_weekday);
+        text_sunhan_phone = view.findViewById(R.id.text_sunhan_phone);
+
         getData();
 
         return view;
@@ -60,15 +82,23 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
                 public void onResponse(Call<SunHanStoreDetailResponse> call, Response<SunHanStoreDetailResponse> response) {
                     if (response.isSuccessful()) {
                         SunHanStoreDetailResponse result = response.body();
+
+                        text_sunhan_offer.setText("제공음식: ");
+                        text_sunhan_Name.setText("가게이름: ");
+                        text_sunhan_addr.setText("가게주소: ");
+                        text_sunhan_target.setText("제공대상: ");
+                        text_sunhan_time.setText("운영시간: ");
+                        text_sunhan_phone.setText("가게번호: ");
+
                         sunhan_Name.setText(result.getSunHanDetailItem().getName());
                         sunhan_addr.setText(result.getSunHanDetailItem().getAddress());
                         sunhan_phone.setText(result.getSunHanDetailItem().getPhoneNumber());
                         sunhan_time.setText(result.getSunHanDetailItem().getOpeningHours());
                         sunhan_target.setText(result.getSunHanDetailItem().getTatget());
                         sunhan_offer.setText(result.getSunHanDetailItem().getOffer());
+                        progressDialog.dismiss();
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
                         Log.d("가맹점상세정보실패", response.message());
                     }
                 }

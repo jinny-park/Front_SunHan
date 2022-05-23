@@ -34,11 +34,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/text_name"
+                        android:id="@+id/text_sunhan_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="가게이름: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -58,11 +58,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/text_phone"
+                        android:id="@+id/text_sunhan_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="가게번호: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -82,11 +82,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/text_address"
+                        android:id="@+id/text_sunhan_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="가게주소: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -106,11 +106,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/weekday"
+                        android:id="@+id/text_sunhan_weekday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="운영시간: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -130,10 +130,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/weekend"
+                        android:id="@+id/text_sunhan_target"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="제공대상: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -153,10 +153,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/holiday"
+                        android:id="@+id/text_sunhan_offer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="제공음식: "
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 

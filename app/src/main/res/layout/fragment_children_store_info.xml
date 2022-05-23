@@ -41,7 +41,7 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:text="가게이름: " />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_storeName"
@@ -65,7 +65,7 @@
                     android:gravity="center"
                     android:textSize="20dp"
                     android:textColor="@color/black"
-                    android:text="가게번호: " />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_storeNum"
@@ -89,7 +89,7 @@
                     android:gravity="center"
                     android:textSize="20dp"
                     android:textColor="@color/black"
-                    android:text="가게주소: " />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_storeAddress"
@@ -107,13 +107,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/weekday"
+                    android:id="@+id/text_weekday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:text="평일운영: " />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_store_weekday"
@@ -131,12 +131,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/weekend"
+                    android:id="@+id/text_weekend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:textColor="@color/black"
-                    android:text="주말운영: " />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_store_weekend"
@@ -154,12 +154,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/holiday"
+                    android:id="@+id/text_holiday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="20dp"
-                    android:text="공휴일운영 :" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/children_store_holiday"
