@@ -18,9 +18,7 @@ import com.capsaicin.sunhan.Model.CommunityDetailResponse;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.PostChangeResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.google.gson.Gson;
 
@@ -31,10 +29,8 @@ import retrofit2.Response;
 public class EditPostActivity extends AppCompatActivity {
     Button finishBtn;
     Toolbar toolbar;
-    //    EditText writeContent;
     TextView writeContent;
     CommunityFragment communityFragment;
-    CommunityAdapter communityAdapter;
     CommunityWritingPost communityWritingPost;
     Intent intent;
 
@@ -42,7 +38,6 @@ public class EditPostActivity extends AppCompatActivity {
     public static  String content;
 
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +142,6 @@ public class EditPostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                //select back button
                 finish();
                 return true;
         }

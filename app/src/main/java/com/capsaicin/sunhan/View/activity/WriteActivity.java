@@ -1,6 +1,5 @@
 package com.capsaicin.sunhan.View.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.capsaicin.sunhan.Model.CommunityWritingPost;
 import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.google.gson.Gson;
@@ -34,7 +32,6 @@ public class WriteActivity extends AppCompatActivity {
     CommunityWritingPost communityWritingPost;
 
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +45,6 @@ public class WriteActivity extends AppCompatActivity {
         communityWritingPost = new CommunityWritingPost();
         tokenRetrofitInstance = RetrofitInstance.getRetrofitInstance();
 
-
-        Intent intent = getIntent();
-
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
         finishBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +52,6 @@ public class WriteActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 communityWritingPost.setContent(writeContent.getText().toString());
-//                String content = writeContent.getText().toString().trim();
                 if(communityWritingPost.getContent().isEmpty()){
                     writeContent.setError("내용을 입력해주세요.");
                 } else {
@@ -105,7 +98,6 @@ public class WriteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                //select back button
                 finish();
                 return true;
         }

@@ -79,7 +79,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
     @Override
     public int getItemCount() {
-//        Log.d("size", String.valueOf(items.size()));
         return communityList.size();
     }
 

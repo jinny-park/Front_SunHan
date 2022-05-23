@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -22,28 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.capsaicin.sunhan.Model.CardStoreResponse;
-import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
-import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
-import com.capsaicin.sunhan.View.activity.EditProfileActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
-import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
-import com.capsaicin.sunhan.View.activity.ToolbarActivity;
 import com.capsaicin.sunhan.View.activity.WriteActivity;
-import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.kakao.sdk.user.UserApiClient;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,17 +45,9 @@ public class CommunityFragment extends Fragment {
     int page;
     ProgressBar progressBar;
 
-    //    Button writeBtn;
-    FloatingActionButton writeBtn;
-
-//    public static ArrayList < Object > commuWriter;
-    public static String commuId;
-    public static String commuContent;
-    public static int commuIsCommentCount;
-    public static String commuIsCreateAt;
+    FloatingActionButton writeBtn; //플로팅 버튼
 
     private RetrofitInstance commuRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;//
 
     @Nullable
     @Override
@@ -88,12 +67,9 @@ public class CommunityFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         communityRecyclerView.setLayoutManager(recyclerViewManager);
         communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        communityRecyclerView.setAdapter(communityAdapter);
 
         swipeRefreshLayout = view.findViewById(R.id.swip_community);
 
-//        setRecyclerview(view);
-//        setData();
         initData(0);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -151,7 +127,6 @@ public class CommunityFragment extends Fragment {
 
     private void initData(int page)
     {
-//        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
@@ -170,7 +145,6 @@ public class CommunityFragment extends Fragment {
                                     if(position!=RecyclerView.NO_POSITION){
                                         Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
                                         intent.putExtra("_id", communityAdapter.getItem(position).getCommuId());
-                                        Log.d("아이디", communityAdapter.getItem(position).getCommuId());
                                         startActivity(intent);
                                     }
                                 }
@@ -190,13 +164,11 @@ public class CommunityFragment extends Fragment {
                     }
                 });
             }
-//        }
     }
 
 
     private void getData(int page)
     {
-//        if(LoginActivity.userAccessToken!=null){
             if(commuRetrofitInstance!=null){
                 Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
@@ -235,13 +207,7 @@ public class CommunityFragment extends Fragment {
                     }
                 });
             }
-//        }
     }
-
-    public void refreshPosts() {
-        initData(0);
-    }
-
 
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getContext()).setMessage("로그인 후 이용해주세요.") .
