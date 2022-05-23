@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -204,7 +205,12 @@ public class MyPageFragment extends Fragment {
                                 dlg.show();
                             }
                             break;
-                        case 3: /*로그아웃 팝업*/
+                        case 3:
+                            Intent intent6 = new Intent(getActivity(), PolicyActivity.class);
+                            startActivity(intent6);
+                            break;
+
+                        case 4: /*로그아웃 팝업*/
                             if(LoginActivity.userAccessToken!=null){
                                 showDialog();
                             }else{
@@ -216,13 +222,10 @@ public class MyPageFragment extends Fragment {
                                 });
                                 dlg.show();
                             }
-
                             break;
-
-                        case 4:
+                        case 5:
                             if(LoginActivity.userAccessToken!=null){
                                 Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
-
                                 startActivity(intent5);
                             }else{
                                 AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
@@ -233,10 +236,6 @@ public class MyPageFragment extends Fragment {
                                 });
                                 dlg.show();
                             }
-                            break;
-                        case 5:
-                            Intent intent6 = new Intent(getActivity(), PolicyActivity.class);
-                            startActivity(intent6);
                             break;
                     }
 
@@ -251,7 +250,7 @@ public class MyPageFragment extends Fragment {
     void setRecyclerview(View view){
         mypageRecyclerView = view.findViewById(R.id.recyclerview_mypage);
         mypageRecyclerView.setHasFixedSize(false);
-        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager recyclerViewManager = new GridLayoutManager(getActivity(),2);
         mypageRecyclerView.setLayoutManager(recyclerViewManager);
         mypageRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mypageRecyclerView.setAdapter(LoginActivity.mypageAdapter);

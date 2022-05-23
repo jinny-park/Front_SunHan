@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.MyCommentLogsResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -35,6 +36,7 @@ public class MyLogsCommentFragment extends Fragment {
     RecyclerView commentsLogsRecyclerView;
     ProgressBar progressBar;
     MyCommentLogsAdapter myCommentLogsAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
@@ -51,6 +53,7 @@ public class MyLogsCommentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mylogs_comment, null);
 
         progressBar = view.findViewById(R.id.progress_bar_myComments);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_myLog_comment);
 
         page = 1;
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
@@ -63,6 +66,15 @@ public class MyLogsCommentFragment extends Fragment {
 
         initData(0);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(0);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         commentsLogsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -72,7 +84,6 @@ public class MyLogsCommentFragment extends Fragment {
                         findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = commentsLogsRecyclerView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
-                    progressBar.setVisibility(View.VISIBLE);
                     getData(page);
                     page++;
                 }
@@ -86,6 +97,7 @@ public class MyLogsCommentFragment extends Fragment {
     {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
+                progressBar.setVisibility(View.VISIBLE);
                 Call<MyCommentLogsResponse> call = RetrofitInstance.getRetrofitService().getMyComments("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<MyCommentLogsResponse>() {
                     @Override
@@ -129,7 +141,6 @@ public class MyLogsCommentFragment extends Fragment {
     {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<MyCommentLogsResponse> call = RetrofitInstance.getRetrofitService().getMyComments("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<MyCommentLogsResponse>() {
                     @Override

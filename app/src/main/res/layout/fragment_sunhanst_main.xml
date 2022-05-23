@@ -21,15 +21,6 @@
                 app:tabGravity="fill"
                 app:tabIndicatorHeight="3dp"
                 app:tabMode="fixed" />
-<!--
-
-            <FrameLayout
-                android:id="@+id/tabs_store_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
-
--->
 
             <ImageView
                 android:id="@+id/img_sunhan_donate"
@@ -37,19 +28,6 @@
                 android:layout_height="135dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/sunhan_ad1" />
-
-<!--            <com.google.android.material.tabs.TabLayout-->
-<!--                android:id="@+id/food_tapLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:background="#fff"-->
-<!--                android:elevation="1dp"-->
-<!--                app:layout_anchorGravity="center"-->
-<!--                app:tabGravity="fill"-->
-<!--                app:tabIndicatorHeight="3dp"-->
-<!--                app:tabMode="fixed" />-->
-
             <FrameLayout
                 android:id="@+id/tabs_store_container"
                 android:layout_width="match_parent"

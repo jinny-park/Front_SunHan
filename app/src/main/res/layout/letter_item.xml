@@ -56,33 +56,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/delete_letter"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:textSize="15dp"
-                        android:background="@drawable/yellow_button"
-                        android:text="삭제" />
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/edit_letter"-->
-<!--                        android:layout_width="30dp"-->
-<!--                        android:layout_height="20dp"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:text="수정" />-->
-
-                    <Button
                         android:id="@+id/block_letter"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60sp"
+                        android:layout_height="40sp"
                         android:layout_gravity="center"
+                        android:gravity="center"
                         android:background="@drawable/button_border"
                         android:backgroundTint="@color/sunhanStatus"
                         android:layout_marginLeft="10dp"

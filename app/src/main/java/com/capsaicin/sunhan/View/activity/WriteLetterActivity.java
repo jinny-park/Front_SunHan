@@ -40,7 +40,6 @@ import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.SunHanSendLetterItem;
 import com.capsaicin.sunhan.Model.SunHanSendLetterResponse;
-import com.capsaicin.sunhan.Model.WritepostItem;
 import com.capsaicin.sunhan.Model.WriterItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.LetterAdapter;
@@ -151,105 +150,105 @@ public class WriteLetterActivity extends AppCompatActivity {
     private void sendLetter(){
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                    if( whichStore == 1 ){//선한
-                        RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
-                        RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
-                        if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
-                            imageFile = new File(imagePath);
-                            if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
-                                imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
-                            }
-                            imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
-                            filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
-                            Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
-                            call2.enqueue(new Callback<SunHanSendLetterResponse>() {
-                                @Override
-                                public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        SunHanSendLetterResponse result = response.body();
-                                        Log.d("선한편지성공", new Gson().toJson(response.body()));
-                                    } else {
-                                        Log.d("REST FAILED MESSAGE", response.message());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
-                                    Log.d("REST ERROR!", t.getMessage());
-                                }
-                            });
-
-                        }else {//사진 안 넣은 편지 보낼 때
-                            Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
-                            call2.enqueue(new Callback<SunHanSendLetterResponse>() {
-                                @Override
-                                public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        SunHanSendLetterResponse result = response.body();
-                                        Log.d("선한편지성공", new Gson().toJson(response.body()));
-                                    } else {
-                                        Log.d("REST FAILED MESSAGE", response.message());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
-                                    Log.d("REST ERROR!", t.getMessage());
-                                }
-                            });
-
+                if( whichStore == 1 ){//선한
+                    RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
+                    RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
+                    if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
+                        imageFile = new File(imagePath);
+                        if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
+                            imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
                         }
+                        imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                        filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
+                        Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
+                        call2.enqueue(new Callback<SunHanSendLetterResponse>() {
+                            @Override
+                            public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
+                                if (response.isSuccessful()) {
+                                    SunHanSendLetterResponse result = response.body();
+                                    Log.d("선한편지성공", new Gson().toJson(response.body()));
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+
+                    }else {//사진 안 넣은 편지 보낼 때
+                        Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
+                        call2.enqueue(new Callback<SunHanSendLetterResponse>() {
+                            @Override
+                            public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
+                                if (response.isSuccessful()) {
+                                    SunHanSendLetterResponse result = response.body();
+                                    Log.d("선한편지성공", new Gson().toJson(response.body()));
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+
+                    }
                 }else if(whichStore==0){ //아동급식 카드 편지쓰기
-                        RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
-                        RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
-                        if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
-                            imageFile = new File(imagePath);
-                            if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
-                                imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
-                            }
-                            imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
-                            filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
-                            Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
-                            call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
-                                @Override
-                                public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        ChildrenSendLetterResponse result = response.body();
-                                        Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
-                                    } else {
-                                        Log.d("REST FAILED MESSAGE", response.message());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
-                                    Log.d("REST ERROR!", t.getMessage());
-                                }
-                            });
-
-                        }else {//사진 안 넣은 편지 보낼 때
-                            Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
-                                call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
-                                    @Override
-                                    public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
-                                        if (response.isSuccessful()) {
-                                            ChildrenSendLetterResponse result = response.body();
-                                            Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
-                                        } else {
-                                            Log.d("REST FAILED MESSAGE", response.message());
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
-                                        Log.d("REST ERROR!", t.getMessage());
-                                    }
-                                });
-
-                            }
-
+                    RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
+                    RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
+                    if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
+                        imageFile = new File(imagePath);
+                        if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
+                            imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
                         }
+                        imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                        filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
+                        Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
+                        call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
+                            @Override
+                            public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
+                                if (response.isSuccessful()) {
+                                    ChildrenSendLetterResponse result = response.body();
+                                    Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+
+                    }else {//사진 안 넣은 편지 보낼 때
+                        Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
+                        call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
+                            @Override
+                            public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
+                                if (response.isSuccessful()) {
+                                    ChildrenSendLetterResponse result = response.body();
+                                    Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
+                                } else {
+                                    Log.d("REST FAILED MESSAGE", response.message());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
+                                Log.d("REST ERROR!", t.getMessage());
+                            }
+                        });
+
+                    }
+
                 }
+            }
         }
     }
 

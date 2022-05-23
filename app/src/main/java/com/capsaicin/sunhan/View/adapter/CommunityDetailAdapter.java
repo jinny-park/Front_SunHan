@@ -1,12 +1,16 @@
 package com.capsaicin.sunhan.View.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommentItem;
 import com.capsaicin.sunhan.Model.CommunityDetailItem;
+import com.capsaicin.sunhan.Model.DeleteResponse;
+import com.capsaicin.sunhan.Model.ResultResponse;
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
+import com.capsaicin.sunhan.View.activity.LoginActivity;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 
@@ -26,16 +35,24 @@ import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetailAdapter.ViewHolder>
         implements OnClickCommentListener{
-    private Context context;
+    Context context;
     ArrayList<CommunityDetailItem> CommunityDetailItemList;
-    ArrayList<CommentItem> CommunityCommentList;
+    public static ArrayList<CommentItem> CommunityCommentList;
     public static CommunityDetailCommentAdapter communityDetailCommentAdapter ;
     public OnClickCommentListener listener;
+    CommunityDetailActivity communityDetailActivity;
+
+    public static String comment_user_id ;
 
     ImageView pop2;
-    Dialog dilaog01;
+    Dialog dialog;
+
 
 
 
@@ -57,7 +74,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommunityDetailAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CommunityDetailAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommentItem item =CommunityCommentList.get(position);
         Log.d("온바인드홀더-커뮤니티comment ", CommunityCommentList.get(position).getC_commuId());
 //        holder.userProfile.setImageResource(CommunityDetailItemList.get(position).getUserProfile());
@@ -65,6 +82,15 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         holder.c_userId.setText(CommunityCommentList.get(position).getC_writerItem().getNickname());
         holder.c_content.setText(CommunityCommentList.get(position).getC_commuContent());
         holder.c_commentDate.setText(CommunityCommentList.get(position).getC_commuIsCreateAt());
+
+//        holder.comment_More.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                dialog_comment(position,CommunityCommentList.get(position).getC_writerItem().get_id(),CommunityCommentList.get(position).getC_commuId());
+//            }
+//        });
+
 
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -100,12 +126,12 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView c_userProfile;
-        public TextView c_userId;
-        public TextView c_content;
-        public TextView c_commentDate;
-        public ImageView pop_comment;
-        public RecyclerView c_recyclerView; //대댓글
+        ImageView c_userProfile;
+        TextView c_userId;
+        TextView c_content;
+        TextView c_commentDate;
+        ImageView comment_More;
+        RecyclerView c_recyclerView; //대댓글
 
         public ViewHolder(@NonNull View itemView, final OnClickCommentListener listener) {
             super(itemView);
@@ -113,21 +139,22 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
             c_userId = itemView.findViewById(R.id.comment_userId);
             c_content = itemView.findViewById(R.id.comment_content);
             c_commentDate = itemView.findViewById(R.id.comment_date);
-            pop_comment = itemView.findViewById(R.id.comment_More);
+            comment_More = itemView.findViewById(R.id.comment_More);
             c_recyclerView = itemView.findViewById(R.id.recylerView_community_comment_child); //대댓글
-            pop_comment.setOnClickListener(new View.OnClickListener() {
+
+            comment_More.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(listener != null){
-                        listener.onItemClick(CommunityDetailAdapter.ViewHolder.this, view,position);
+                        listener.onItemClick(CommunityDetailAdapter.ViewHolder.this, view, position);
                     }
                 }
             });
+
         }
 
     }
-
 
     public void addList(ArrayList <CommentItem> list){
         CommunityCommentList.addAll(list);
@@ -135,20 +162,20 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         Log.d("addList ",list.toString());
     }
 
-    public void updateData(int position) {
-        notifyDataSetChanged();
-    }
-
     public void removeItem(int position){
         CommunityCommentList.remove(position);
         notifyItemRemoved(position);
+//        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
         return CommunityCommentList.size();
     }
-    public void addItem(CommentItem item){ CommunityCommentList.add(item); }
+    public void addItem(CommentItem item){
+        CommunityCommentList.add(item);
+        notifyDataSetChanged();
+    }
     public void setarrayList(ArrayList<CommentItem> arrayList) { this.CommunityCommentList = arrayList; }
     public CommentItem getItem(int position) { return CommunityCommentList.get(position); }
     public void setItem(int position, CommentItem item) { CommunityCommentList.set(position, item); }

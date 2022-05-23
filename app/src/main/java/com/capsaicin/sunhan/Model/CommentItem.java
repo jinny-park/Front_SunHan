@@ -7,7 +7,7 @@ public class CommentItem {
     @SerializedName("_id") private String c_commuId;
     @SerializedName("content") private String c_commuContent;
     @SerializedName("isDeleted") private Boolean c_commuIsDeleted;
-    @SerializedName("commentCount") private String c_commuIsCommentCount;
+    @SerializedName("commentCount") private int c_commuIsCommentCount;
     @SerializedName("createAt") private String c_commuIsCreateAt;
     @SerializedName("updateAt") private String c_commuIsUpdateAt;
 
@@ -43,11 +43,11 @@ public class CommentItem {
         this.c_commuIsDeleted = c_commuIsDeleted;
     }
 
-    public String getC_commuIsCommentCount() {
+    public int getC_commuIsCommentCount() {
         return c_commuIsCommentCount;
     }
 
-    public void setC_commuIsCommentCount(String c_commuIsCommentCount) {
+    public void setC_commuIsCommentCount(int c_commuIsCommentCount) {
         this.c_commuIsCommentCount = c_commuIsCommentCount;
     }
 

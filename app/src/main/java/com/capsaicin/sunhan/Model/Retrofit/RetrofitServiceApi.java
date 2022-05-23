@@ -104,7 +104,7 @@ public interface RetrofitServiceApi {
     Call<MyPostLogsResponse> getMyPosts(@Header("authorization") String token, @Query("page")int page);
 
     @GET("api/users/comments") //내가 쓴 댓글글
-     Call<MyCommentLogsResponse> getMyComments(@Header("authorization") String token, @Query("page")int page);
+    Call<MyCommentLogsResponse> getMyComments(@Header("authorization") String token, @Query("page")int page);
 
     @GET("api/users/reviews") //내가 쓴 감사편지
     Call<MyLetterLogsResponse> getMyLetters(@Header("authorization") String token, @Query("page")int page);
@@ -181,10 +181,7 @@ public interface RetrofitServiceApi {
 
     @PATCH("api/comments/{id}/block") //커뮤니티 댓글 신고
     Call<ResultResponse> blockComment(@Header("authorization") String token, @Path("id") String id);
-
-    @PATCH("api/comments/{id}") //커뮤니티 댓글 수정
-    Call<PostChangeResponse> modifyComment(@Header("authorization") String token, @Path("id") String id, @Body CommunityWritingPost post);
-
+    
     @PUT("api/comments/{id}/post/parent") //커뮤니티 댓글 삭제
     Call<DeleteResponse> deleteComment(@Header("authorization") String token, @Path("id") String id);
 
