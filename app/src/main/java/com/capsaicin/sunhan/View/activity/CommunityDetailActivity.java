@@ -618,7 +618,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which) {
                 //토스트 메시지
-                finish();
+
             }
         });
         dlg.show();
