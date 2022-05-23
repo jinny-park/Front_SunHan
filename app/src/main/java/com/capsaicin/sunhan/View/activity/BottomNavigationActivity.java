@@ -60,7 +60,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private GpsTracker gpsTracker;
+
     private AddressItem addressItem;
     public static double lat;
     public static double lng;
@@ -196,7 +196,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     }
 
     void setLocation(){ // 로케이션 버튼 누르면 화면 이동 없이 바로 잡음 (회원/비회원 둘다 가능)
-        gpsTracker = new GpsTracker(BottomNavigationActivity.this);
+        GpsTracker gpsTracker = new GpsTracker(BottomNavigationActivity.this);
 
         double latitude = gpsTracker.getLatitude(); //위도
         double longitude = gpsTracker.getLongitude(); //경도
@@ -205,9 +205,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
         lng = longitude; // 사용자의 위도경도
         addressItem = new AddressItem (latitude,longitude);
 
-        if(LoginActivity.userAccessToken!=null){ //회원일경우 서버에 전송해야함
-            if(tokenRetrofitInstance!=null){
-                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress("Bearer "+LoginActivity.userAccessToken,addressItem);
+        String address = getCurrentAddress(latitude, longitude);
+
+        if(!address.equals("지오코더 서비스 사용불가")) {
+            if (LoginActivity.userAccessToken != null && tokenRetrofitInstance != null) { //회원일경우 서버에 전송해야함
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress("Bearer " + LoginActivity.userAccessToken, addressItem);
                 call.enqueue(new Callback<ResultResponse>() {
                     @Override
                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
@@ -222,13 +224,15 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResultResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
+
                     }
                 });
             }
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
+            Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
-        String address = getCurrentAddress(latitude, longitude);
-        Toast.makeText(BottomNavigationActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
     }
 
 

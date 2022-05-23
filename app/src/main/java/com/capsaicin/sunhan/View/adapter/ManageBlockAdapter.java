@@ -84,6 +84,8 @@ public class ManageBlockAdapter extends RecyclerView.Adapter<ManageBlockAdapter.
             @Override
             public void onFailure(Call<ResultResponse> call, Throwable t) {
                 Log.d("REST ERROR!", t.getMessage());
+                Toast.makeText(context, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
             }
         });
     }

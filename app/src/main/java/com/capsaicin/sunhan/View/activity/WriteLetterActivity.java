@@ -196,6 +196,8 @@ public class WriteLetterActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
                                 Log.d("REST ERROR!", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                             }
                         });
 
@@ -215,6 +217,8 @@ public class WriteLetterActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
                                 Log.d("REST ERROR!", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                             }
                         });
 
@@ -244,6 +248,8 @@ public class WriteLetterActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
                                 Log.d("REST ERROR!", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                             }
                         });
 
@@ -263,6 +269,8 @@ public class WriteLetterActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
                                 Log.d("REST ERROR!", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                             }
                         });
 

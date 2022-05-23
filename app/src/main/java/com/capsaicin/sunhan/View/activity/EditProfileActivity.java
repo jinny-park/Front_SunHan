@@ -134,6 +134,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
                                 Log.d("REST ERROR!", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                             }
                         });
 
@@ -161,6 +163,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
                                     Log.d("프로필 실패", t.getMessage());
+                                    Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                                 }
                             });
                         }
@@ -216,6 +220,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
@@ -245,6 +251,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
@@ -372,41 +380,6 @@ public class EditProfileActivity extends AppCompatActivity {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-//    public static String getFullPathFromUri(Context ctx, Uri fileUri) {
-//        String fullPath = null;
-//        final String column = "_data";
-//        Cursor cursor = ctx.getContentResolver().query(fileUri, null, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//            String document_id = cursor.getString(0);
-//            if (document_id == null) {
-//                for (int i=0; i < cursor.getColumnCount(); i++) {
-//                    if (column.equalsIgnoreCase(cursor.getColumnName(i))) {
-//                        fullPath = cursor.getString(i);
-//                        break;
-//                    }
-//                }
-//            } else {
-//                document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-//                cursor.close();
-//
-//                final String[] projection = {column};
-//                try {
-//                    cursor = ctx.getContentResolver().query(
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                            projection, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-//                    if (cursor != null) {
-//                        cursor.moveToFirst();
-//                        fullPath = cursor.getString(cursor.getColumnIndexOrThrow(column));
-//                    }
-//                } finally {
-//                    if (cursor != null) cursor.close();
-//                }
-//            }
-//        }
-//        return fullPath;
-//    }
-
     @SuppressLint("Range")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -418,7 +391,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     uri = data.getData();
                     Log.d("글라이드URI",uri.toString());
                     Glide.with(getApplicationContext()).load(uri).into(profile_img);
-                    imagePath = getPath(getApplicationContext(),uri);
+                    imagePath = getPath(getApplicationContext(),uri); //이미지의 절대 경로
                     Log.d("글라이드경로",imagePath);
                 }catch (Exception e){
                     finish();

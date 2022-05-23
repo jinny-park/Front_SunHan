@@ -9,21 +9,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.CardCheckItem;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.adapter.CardCheckAdapter;
 import com.capsaicin.sunhan.View.adapter.CardCheckSpinnerAdpater;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickCardCheckListener;
 
 import java.util.ArrayList;
 import java.util.List;

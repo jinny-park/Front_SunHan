@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -75,7 +76,7 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
         return view;
     }
     private void getData(){
-        if(tokenRetrofitInstance!=null && StoreDetailActivity.whichStore==1){
+        if(tokenRetrofitInstance!=null && StoreDetailActivity.whichStore==1){ // 선한영향력 가게 정보
             Call<SunHanStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getSunHansStoreDetail(StoreDetailActivity.id);
             call.enqueue(new Callback<SunHanStoreDetailResponse>() {
                 @Override
@@ -106,6 +107,7 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
                 @Override
                 public void onFailure(Call<SunHanStoreDetailResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
             });
 

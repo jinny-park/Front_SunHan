@@ -92,7 +92,7 @@ public class LocationSettingActivity extends AppCompatActivity {
 
         Button ShowLocationButton = (Button) findViewById(R.id.location_btn);
         ShowLocationButton.setOnClickListener(new View.OnClickListener()
-        {
+        { // 비회원 유저 위치 정보 받아오기
             @Override
             public void onClick(View arg0)
             {
@@ -106,62 +106,20 @@ public class LocationSettingActivity extends AppCompatActivity {
                 lng = longitude; // 사용자의 위도경도
                 addressItem = new AddressItem (latitude,longitude);
 
-               if(LoginActivity.userAccessToken!=null){ //딱히 필요 없을 듯
-                if(tokenRetrofitInstance!=null){
-                    Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress("Bearer "+LoginActivity.userAccessToken,addressItem);
-                    call.enqueue(new Callback<ResultResponse>() {
-                        @Override
-                        public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                            if (response.isSuccessful()) {
-                                ResultResponse result = response.body();
-                                Log.d("성공", new Gson().toJson(response.body()));
-                            } else {
-                                Log.d("REST FAILED MESSAGE", response.message());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResultResponse> call, Throwable t) {
-                            Log.d("REST ERROR!", t.getMessage());
-                        }
-                    });
+                String address = getCurrentAddress(latitude, longitude);
+                if(!address.equals("지오코더 서비스 사용불가")){ //네트워크 활성화 됨
+                    textview_address.setText(address);
+                    Toast.makeText(LocationSettingActivity.this, "현재위치 잡기 성공!" + longitude, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{ //네트워크 활성화 안됨
+                    Toast.makeText(LocationSettingActivity.this, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
-            }else{
-                   String address = getCurrentAddress(latitude, longitude);
-                   textview_address.setText(address);
-                   Toast.makeText(LocationSettingActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-                   Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
-                   startActivity(intent);
-                   finish();
-               }
+
             }
         });
     }
-
-//    private void sendAddress(AddressItem addressItem){
-//
-//        if(LoginActivity.userAccessToken!=null){
-//            if(tokenRetrofitInstance!=null){
-//                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().postAddress(LoginActivity.userAccessToken,addressItem);
-//                call.enqueue(new Callback<ResultResponse>() {
-//                    @Override
-//                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            ResultResponse result = response.body();
-//                            Log.d("성공", new Gson().toJson(response.body()));
-//                        } else {
-//                            Log.d("REST FAILED MESSAGE", response.message());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResultResponse> call, Throwable t) {
-//                        Log.d("REST ERROR!", t.getMessage());
-//                    }
-//                });
-//            }
-//        }
-//    }
 
     /*
      * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.
@@ -351,82 +309,3 @@ public class LocationSettingActivity extends AppCompatActivity {
     }
 }
 
-
-
-
-
-/*
-public class LocationSettingActivity extends Activity {
-    TextView textView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_setting);
-
-        textView = findViewById(R.id.location_text);
-        Button location_btn=findViewById(R.id.location_btn);
-
-        location_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startLocationService();
-            }
-        });
-
-        AndPermission.with(this)
-                .runtime()
-                .permission(
-                        Permission.ACCESS_FINE_LOCATION,
-                        Permission.ACCESS_COARSE_LOCATION)
-                .onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        showToast("허용된 권한 갯수 : " + permissions.size());
-                    }
-                })
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        showToast("거부된 권한 갯수 : " + permissions.size());
-                    }
-                })
-                .start();
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    public void startLocationService(){
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        try{
-            Location location=manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if(location!=null){
-                GPSListener gpsListener=new GPSListener();
-                long minTime=10000;
-                float minDistance=0;
-
-                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, gpsListener);
-                Toast.makeText(getApplicationContext(), "내 위치 확인 요청함", Toast.LENGTH_SHORT).show();
-            }
-        } catch(SecurityException e){
-            e.printStackTrace();
-            //Toast.makeText(getApplicationContext(), "내 위치 없음", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    class GPSListener implements LocationListener{
-        public void onLocationChanged(Location location){
-            double latitude= location.getLatitude();    //위도
-            double longitude= location.getLongitude();  //경도
-            String message="현재 위치 -> Laitude: "+latitude+"\nLongitude: "+longitude;
-            textView.setText(message);
-        }
-        public void onProviderDisabled(String provider){}
-
-        public void onProviderEnabled(String provider){}
-
-        public void onStatusChanged(String provider, int status, Bundle extras){}
-    }
-}
-*/

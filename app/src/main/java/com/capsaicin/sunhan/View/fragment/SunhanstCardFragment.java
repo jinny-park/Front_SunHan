@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -154,6 +155,7 @@ public class SunhanstCardFragment extends Fragment {
                     @Override
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
@@ -193,6 +195,7 @@ public class SunhanstCardFragment extends Fragment {
                     @Override
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
@@ -237,6 +240,7 @@ public class SunhanstCardFragment extends Fragment {
                     @Override
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
@@ -277,6 +281,7 @@ public class SunhanstCardFragment extends Fragment {
                     @Override
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });

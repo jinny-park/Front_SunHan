@@ -86,13 +86,6 @@
         app:layout_constraintStart_toStartOf="@+id/login_text"
         app:layout_constraintTop_toBottomOf="@+id/login_text" />
 
-<!--    <com.google.android.gms.common.SignInButton-->
-<!--        android:id="@+id/google_login"-->
-<!--        android:layout_width="280dp"-->
-<!--        android:layout_height="48dp"-->
-<!--        tools:ignore="MissingConstraints"-->
-<!--        tools:layout_editor_absoluteY="374dp" />-->
-
     <Button
         android:id="@+id/kakao_login"
         android:layout_width="280sp"

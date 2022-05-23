@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -110,6 +111,7 @@ public class MyPageFragment extends Fragment {
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }

@@ -2,17 +2,12 @@ package com.capsaicin.sunhan.View.activity;
 
 //activity_sunhanst_store.xml
 
-import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
-import static com.kakao.kakaolink.internal.KakaoTalkLinkProtocol.APP_KEY;
-
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,19 +19,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.capsaicin.sunhan.Model.BlockListResponse;
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
-import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.MenuItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.ScrapChildResponse;
 import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
-import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.adapter.LikedChildAdapter;
-import com.capsaicin.sunhan.View.adapter.MenuAdapter;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
@@ -63,8 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StoreDetailActivity extends AppCompatActivity {
-    public static MenuAdapter menuAdapter;
-    ArrayList<MenuItem> menuList=new ArrayList<MenuItem>();
+
     RecyclerView StoreDetailRecyclerView;
     Toolbar toolbar;
 

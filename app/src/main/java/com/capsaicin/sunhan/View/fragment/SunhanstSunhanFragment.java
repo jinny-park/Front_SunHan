@@ -18,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SunhanstSunhanFragment extends Fragment {
 
-    RecyclerView sunhanSunhanRecyclerView;
     SunhanstCategoryFragment sunhanCategoryFragment1;
     SunhanstCategoryFragment sunhanCategoryFragment2;
     SunhanstCategoryFragment sunhanCategoryFragment3;
@@ -42,7 +41,7 @@ public class SunhanstSunhanFragment extends Fragment {
         sunhanCategoryFragment4 = new SunhanstCategoryFragment();
         sunhanCategoryFragment5 = new SunhanstCategoryFragment();
         sunhanCategoryFragment6 = new SunhanstCategoryFragment();
-//        setRecyclerview(view);
+
 
         TabLayout tabs2 = view.findViewById(R.id.food_tapLayout);
         tabs2.addTab(tabs2.newTab().setText("한식"));
@@ -100,34 +99,8 @@ public class SunhanstSunhanFragment extends Fragment {
             }
         });
 
-
-//        LoginActivity.storeSunhanAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-//            @Override
-//            public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-//                String str_position = String.valueOf(position+1);
-//                if(position!=RecyclerView.NO_POSITION){
-//                    for(int i=0; i<=position; i++){
-//                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-//                        intent.putExtra("position", str_position);
-//                        startActivity(intent);
-//                        break;
-//                    }
-//                }
-//            }
-//        });
-
         return view;
 
     }
 
-
-//    void setRecyclerview(View view){
-//        sunhanSunhanRecyclerView = view.findViewById(R.id.recyclerview_sunhanstore);
-//        sunhanSunhanRecyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-//        sunhanSunhanRecyclerView.setLayoutManager(recyclerViewManager);
-//        sunhanSunhanRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        sunhanSunhanRecyclerView.setAdapter(LoginActivity.storeSunhanAdapter);
-//
-//    }
 }

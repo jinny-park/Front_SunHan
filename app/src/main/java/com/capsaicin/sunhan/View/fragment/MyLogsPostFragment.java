@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -124,6 +125,7 @@ public class MyLogsPostFragment extends Fragment {
                     public void onFailure(Call<MyPostLogsResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -166,6 +168,7 @@ public class MyLogsPostFragment extends Fragment {
                     public void onFailure(Call<MyPostLogsResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }

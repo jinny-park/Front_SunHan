@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -147,6 +148,7 @@ public class FindChildrenResultFragment extends Fragment {
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -187,6 +189,7 @@ public class FindChildrenResultFragment extends Fragment {
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -231,6 +234,7 @@ public class FindChildrenResultFragment extends Fragment {
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -270,6 +274,7 @@ public class FindChildrenResultFragment extends Fragment {
                     public void onFailure(Call<CardStoreResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                     }
                 });
             }

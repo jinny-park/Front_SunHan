@@ -37,9 +37,6 @@ import retrofit2.Response;
 
 
 public class SunhanstMainFragment extends Fragment {
-    public static SunhanStoreAdapter storeAdapter;
-    ArrayList<StoreItem> storeList=new ArrayList<StoreItem>();
-    RecyclerView sunhanStoreRecyclerView;
 
     private SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
@@ -47,17 +44,6 @@ public class SunhanstMainFragment extends Fragment {
 
     public static String storeId;
     public static String storeName;
-    public static String storeAddrs;
-    public static String storeNum;
-    public static String storeTime;
-    public static String storeCategory;
-    public static String storeOffer;
-    public static String storeTarget;
-    public static ArrayList <Object> storeReviews;
-
-
-    private RetrofitInstance storeRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

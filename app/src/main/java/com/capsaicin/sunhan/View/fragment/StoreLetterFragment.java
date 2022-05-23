@@ -124,7 +124,7 @@ public class StoreLetterFragment extends Fragment {
 
     public void initLetterData(int page)
     {
-        if(tokenRetrofitInstance!=null && whichStore==0){
+        if(tokenRetrofitInstance!=null && whichStore==0){ // 가맹점 편지 리스트
             Call<LetterResponse> call = RetrofitInstance.getRetrofitService().getLetter(StoreDetailActivity.id, "children", page);
             call.enqueue(new Callback<LetterResponse>() {
                 @Override
@@ -144,9 +144,10 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
             });
-        } else if(tokenRetrofitInstance!=null && whichStore==1){
+        } else if(tokenRetrofitInstance!=null && whichStore==1){ // 선한영향력 가게 편지 리스트
             Call<LetterResponse> call = RetrofitInstance.getRetrofitService().getLetter(StoreDetailActivity.id, "sunhan", page);
             call.enqueue(new Callback<LetterResponse>() {
                 @Override
@@ -166,6 +167,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -175,7 +177,7 @@ public class StoreLetterFragment extends Fragment {
 
 
     private void getLetterData(int page) {
-        if (tokenRetrofitInstance != null && whichStore == 0) {
+        if (tokenRetrofitInstance != null && whichStore == 0) { // 가맹점 편지 리스트
             Call<LetterResponse> call = RetrofitInstance.getRetrofitService().getLetter(StoreDetailActivity.id, "children", page);
             call.enqueue(new Callback<LetterResponse>() {
                 @Override
@@ -194,6 +196,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
             });
         } else if (tokenRetrofitInstance != null && whichStore == 1) {
@@ -215,6 +218,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                 }
             });
         }

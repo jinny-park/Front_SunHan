@@ -129,59 +129,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         }
     }
 
-    private void letterDelete(int position, String userId,String letter_id,String type){
-        if (LoginActivity.userAccessToken != null) {
-            if (MyPageFragment.userId.equals(userId)) {
-                AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-                dlg.setMessage("삭제하시겠습니까?"); // 메시지
-                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer " + LoginActivity.userAccessToken, letter_id, type);
-                        call.enqueue(new Callback<ResultResponse>() {
-                            @Override
-                            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                                if (response.isSuccessful()) {
-                                    ResultResponse result = response.body();
-                                    removeItem(position);
-                                    Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    Log.d("삭제성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("편지삭제실패", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResultResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                            }
-                        });
-
-                    }
-                });
-                dlg.show();
-            } else { //본인 불일치
-                AlertDialog.Builder dlg = new AlertDialog.Builder(context.getApplicationContext());
-                dlg.setMessage("본인 편지만 삭제가능합니다!"); // 메시지
-                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                dlg.show();
-            }
-        } else {
-            //로그인 안 함
-            AlertDialog.Builder dlg = new AlertDialog.Builder(context.getApplicationContext());
-            dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-            dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            dlg.show();
-        }
-    }
 
     private void letterBlock(String letter_id){
         if (LoginActivity.userAccessToken != null) {
@@ -200,6 +147,8 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
                      @Override
                      public void onFailure(Call<ResultResponse> call, Throwable t) {
                          Log.d("REST ERROR!", t.getMessage());
+                         Toast.makeText(context, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+
                      }
                  });
         } else {
