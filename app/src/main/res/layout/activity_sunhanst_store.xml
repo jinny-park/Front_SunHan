@@ -193,19 +193,6 @@
             android:background="#fff"
             android:elevation="1dp" />
     </RelativeLayout>
-<!--
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
         <FrameLayout
             android:id="@+id/tabs_storedetail_container"

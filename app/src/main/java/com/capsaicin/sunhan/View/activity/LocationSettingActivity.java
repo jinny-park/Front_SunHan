@@ -46,8 +46,8 @@ public class LocationSettingActivity extends AppCompatActivity {
     private RetrofitInstance tokenRetrofitInstance ;
     private AddressItem addressItem;
     Toolbar toolbar;
-    public static double lat;
-    public static double lng;
+    public static double lat; // 비회원 위도, 경도
+    public static double lng; //
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스

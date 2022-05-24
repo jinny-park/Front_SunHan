@@ -74,11 +74,7 @@ public class WriteLetterActivity extends AppCompatActivity {
     MultipartBody.Part filePart;
     private RetrofitInstance tokenRetrofitInstance ;
     private static final int REQUEST_CODE = 0;
-    SunHanSendLetterItem sunHanSendLetterItem;
-    ChildrenSendLetterItem childrenSendLetterItem;
-    StoreDetailActivity storeDetailActivity;
     String content;
-    String letter_id;
     Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,12 +88,14 @@ public class WriteLetterActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.write_letter_toolbar);
 
 
+        //가게 디테일 정보 받아오기
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
 
         setToolbar();
 
+        //갤러리 접근
         letter_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,39 +117,28 @@ public class WriteLetterActivity extends AppCompatActivity {
             }
         });
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        sendBtn.setOnClickListener(new View.OnClickListener() { // 편지 보내기 버튼
             @Override
             public void onClick(View view) {
-
-                if(whichStore==0){ //가맹점
-                    content = letterContent.getText().toString();
-                    if(content.isEmpty()) {
+                content = letterContent.getText().toString();
+                if(tokenRetrofitInstance!=null){
+                    if(content.isEmpty()){ //편지 공백일 경우
                         letterContent.setError("내용을 입력해주세요");
                     }else{
-                        sendLetter();
+                        if(whichStore==0){
+                            sendChildrenStoreLetter(); //가맹점 편지 보내기
+                        }else{
+                            sendSunHanStoreLetter(); // 선한영향력 편지 보내기
+                        }
                         Toast.makeText(getApplicationContext(), "편지 보내기 성공!", Toast.LENGTH_SHORT).show();
                         finish();
-
-                    }
-
-                }else if(whichStore==1){
-                    content = letterContent.getText().toString();
-                    if(content.isEmpty()) {
-                        letterContent.setError("내용을 입력해주세요");
-                    }else{
-                        sendLetter();
-                        Toast.makeText(getApplicationContext(), "편지 보내기 성공!", Toast.LENGTH_SHORT).show();
-                        finish();
-
                     }
                 }
-
-
             }
         });
     }
 
-    void setToolbar(){
+    void setToolbar(){ //툴바 설정
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
         actionBar.setDisplayShowTitleEnabled(false);
@@ -168,133 +155,100 @@ public class WriteLetterActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void sendLetter(){
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                if( whichStore == 1 ){//선한
-                    RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
-                    RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
-                    if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
-                        imageFile = new File(imagePath);
-                        if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
-                            imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
-                        }
-                        imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
-                        filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
-                        Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
-                        call2.enqueue(new Callback<SunHanSendLetterResponse>() {
-                            @Override
-                            public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
-                                if (response.isSuccessful()) {
-                                    SunHanSendLetterResponse result = response.body();
-                                    Log.d("선한편지성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
 
-                            @Override
-                            public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+    private void sendChildrenStoreLetter(){
+        RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
+        RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
 
-                            }
-                        });
-
-                    }else {//사진 안 넣은 편지 보낼 때
-                        Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
-                        call2.enqueue(new Callback<SunHanSendLetterResponse>() {
-                            @Override
-                            public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
-                                if (response.isSuccessful()) {
-                                    SunHanSendLetterResponse result = response.body();
-                                    Log.d("선한편지성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                    }
-                }else if(whichStore==0){ //아동급식 카드 편지쓰기
-                    RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
-                    RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
-                    if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
-                        imageFile = new File(imagePath);
-                        if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
-                            imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
-                        }
-                        imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
-                        filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
-                        Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
-                        call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
-                            @Override
-                            public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
-                                if (response.isSuccessful()) {
-                                    ChildrenSendLetterResponse result = response.body();
-                                    Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                    }else {//사진 안 넣은 편지 보낼 때
-                        Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, null);
-                        call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
-                            @Override
-                            public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
-                                if (response.isSuccessful()) {
-                                    ChildrenSendLetterResponse result = response.body();
-                                    Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                    }
-
-                }
+        if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
+            imageFile = new File(imagePath);
+            if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
+                imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
             }
+            imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+            filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
+
+            childrenRetrofitMethod(Lid,letter,filePart);
+
+        }else {//사진 안 넣은 편지 보낼 때
+            childrenRetrofitMethod(Lid,letter,null);
         }
     }
 
+    //가맹점 가게 편지 보내는 레트로핏 메소드
+    private void childrenRetrofitMethod(RequestBody Lid, RequestBody letter,MultipartBody.Part filePart){
+        Call<ChildrenSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendChildLetterContent("Bearer " + LoginActivity.userAccessToken, Lid, letter, filePart);
+        call2.enqueue(new Callback<ChildrenSendLetterResponse>() {
+            @Override
+            public void onResponse(Call<ChildrenSendLetterResponse> call, Response<ChildrenSendLetterResponse> response) {
+                if (response.isSuccessful()) {
+                    ChildrenSendLetterResponse result = response.body();
+                    Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ChildrenSendLetterResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void sendSunHanStoreLetter(){
+        RequestBody Lid = RequestBody.create(MediaType.parse("text/plain"), id);
+        RequestBody letter = RequestBody.create(MediaType.parse("text/plain"),content);
+        if(imagePath!=null){ // 사진 넣어서 편지 쓸 때
+
+            imageFile = new File(imagePath); //이미지 파일 생성
+            if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
+                imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
+            }
+
+            //이미지를 멀티파트바디 형식으로 변경하기
+            imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+            filePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
+
+            sunHanRetrofitMethod(Lid,letter,filePart);
+
+
+        }else {//사진 안 넣은 편지 보낼 때
+            sunHanRetrofitMethod(Lid,letter,null);
+        }
+    }
+
+    //선한영향력 가게 편지 보내는 레트로핏 메소드
+    private void sunHanRetrofitMethod(RequestBody Lid, RequestBody letter,MultipartBody.Part filePart){
+        Call<SunHanSendLetterResponse> call2 = RetrofitInstance.getRetrofitService().sendSunHanLetterContent("Bearer "+LoginActivity.userAccessToken,Lid,letter,filePart);
+        call2.enqueue(new Callback<SunHanSendLetterResponse>() {
+            @Override
+            public void onResponse(Call<SunHanSendLetterResponse> call, Response<SunHanSendLetterResponse> response) {
+                if (response.isSuccessful()) {
+                    SunHanSendLetterResponse result = response.body();
+                    Log.d("선한편지성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<SunHanSendLetterResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @SuppressLint("Range")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == REQUEST_CODE){
             if(resultCode==RESULT_OK&&data!=null){
                 try {
                     uri = data.getData();
-                    Log.d("글라이드URI",uri.toString());
                     Glide.with(getApplicationContext()).load(uri).into(letter_image);
                     imagePath = getPath(getApplicationContext(),uri);
-                    Log.d("글라이드경로",imagePath);
                 }catch (Exception e){
                     finish();
                 }
@@ -304,6 +258,7 @@ public class WriteLetterActivity extends AppCompatActivity {
         }
     }
 
+    //사진의 절대경로 불러오기
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

@@ -81,6 +81,7 @@ public class StoreLetterFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipe_leteter);
 
 
+        //스와이프시 새로 데이터 요청
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,12 +91,14 @@ public class StoreLetterFragment extends Fragment {
         });
 
 
+        //리사이클러뷰 설정
         letterRecyclerView = view.findViewById(R.id.recyclerview_letter);
         letterRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         letterRecyclerView.setLayoutManager(recyclerViewManager);
         letterRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //초기데이터 세팅
         initLetterData(0);
 
 
@@ -103,6 +106,7 @@ public class StoreLetterFragment extends Fragment {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // 리사이클러뷰 페이징 네이션
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItemPosition = ((LinearLayoutManager) letterRecyclerView.getLayoutManager()).
                         findLastCompletelyVisibleItemPosition();
@@ -122,7 +126,7 @@ public class StoreLetterFragment extends Fragment {
 
 
 
-    public void initLetterData(int page)
+    public void initLetterData(int page) //초기데이터 요청 메소드
     {
         if(tokenRetrofitInstance!=null && whichStore==0){ // 가맹점 편지 리스트
             Call<LetterResponse> call = RetrofitInstance.getRetrofitService().getLetter(StoreDetailActivity.id, "children", page);
@@ -144,7 +148,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 }
             });
         } else if(tokenRetrofitInstance!=null && whichStore==1){ // 선한영향력 가게 편지 리스트
@@ -167,7 +171,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -176,7 +180,7 @@ public class StoreLetterFragment extends Fragment {
     }
 
 
-    private void getLetterData(int page) {
+    private void getLetterData(int page) { // 페이징네이션 다음 리스트 요청 메소드
         if (tokenRetrofitInstance != null && whichStore == 0) { // 가맹점 편지 리스트
             Call<LetterResponse> call = RetrofitInstance.getRetrofitService().getLetter(StoreDetailActivity.id, "children", page);
             call.enqueue(new Callback<LetterResponse>() {
@@ -196,7 +200,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 }
             });
         } else if (tokenRetrofitInstance != null && whichStore == 1) {
@@ -218,7 +222,7 @@ public class StoreLetterFragment extends Fragment {
                 @Override
                 public void onFailure(Call<LetterResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 }
             });
         }

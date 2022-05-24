@@ -66,7 +66,6 @@ public class MyPageFragment extends Fragment {
     public static TextView userEmail;
     public static ImageView userImage;
     public static String imageUrl;
-
     public static String user_id;
 
     static public MyPageFragment myPageFragment ;
@@ -75,49 +74,7 @@ public class MyPageFragment extends Fragment {
 
 
     public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("온스타트","레트로핏 전");
-        if(LoginActivity.userAccessToken!=null){
-            Log.d("온스타트","토큰");
-            if(tokenRetrofitInstance!=null){
-                Log.d("온스타트","레트로핏 시작");
-                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
-                call.enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                        if (response.isSuccessful()) {
-                            UserResponse result = response.body();
-                            userId = result.getUserItem().get_id();
-                            userNickName.setText(result.getUserItem().getNickname());
-                            userEmail.setText(result.getUserItem().getEmail());
-                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
-
-                            user_id = result.getUserItem().get_id(); //로그인 유저 id 정보 저장
-                            Log.d("imageUrl", imageUrl);
-                            Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }
-
-    }
+        super.onCreate(savedInstanceState); }
 
     @SuppressLint("ResourceType")
     @Nullable
@@ -133,19 +90,15 @@ public class MyPageFragment extends Fragment {
         userImage = view.findViewById(R.id.info_user_profile);
         myPageFragment = new MyPageFragment();
 
+        requestUserData(); //마이페이지 프로필 세팅
         setRecyclerview(view);
+
         profileEditBtn = view.findViewById(R.id.modify_profile);
         profileEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(LoginActivity.userAccessToken==null){
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                    dlg.setMessage("로그인을 해주세요"); // 메시지
-                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    dlg.show();
+                    loginPopUP();
 
                 }else{
                     Intent intent = new Intent(getActivity(), EditProfileActivity.class);
@@ -168,8 +121,6 @@ public class MyPageFragment extends Fragment {
         });
 
 
-
-
         LoginActivity.mypageAdapter.setOnClickMyPageItemListener(new OnClickMyPageItemListener() {
             @Override public void onItemClick(MypageAdapter.ViewHolder holder, View view, int position) {
                 if (position != RecyclerView.NO_POSITION) {
@@ -184,13 +135,7 @@ public class MyPageFragment extends Fragment {
                                 Intent intent3 = new Intent(getActivity(), MyLogsActivity.class);
                                 startActivity(intent3);
                             }else{
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을 해주세요"); // 메시지
-                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                                dlg.show();
+                                loginPopUP();
                             }
                             break;
                         case 2:
@@ -198,13 +143,7 @@ public class MyPageFragment extends Fragment {
                                 Intent intent4 = new Intent(getActivity(), ManageBlockActivity.class);
                                 startActivity(intent4);
                             }else{
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을 해주세요"); // 메시지
-                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                                dlg.show();
+                                loginPopUP();
                             }
                             break;
                         case 3:
@@ -216,13 +155,7 @@ public class MyPageFragment extends Fragment {
                             if(LoginActivity.userAccessToken!=null){
                                 showDialog();
                             }else{
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을 해주세요"); // 메시지
-                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                                dlg.show();
+                                loginPopUP();
                             }
                             break;
                         case 5:
@@ -230,13 +163,7 @@ public class MyPageFragment extends Fragment {
                                 Intent intent5 = new Intent(getActivity(), DeleteAccountActivity.class);
                                 startActivity(intent5);
                             }else{
-                                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
-                                dlg.setMessage("로그인을 해주세요"); // 메시지
-                                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                });
-                                dlg.show();
+                                loginPopUP();
                             }
                             break;
                     }
@@ -247,6 +174,16 @@ public class MyPageFragment extends Fragment {
 
         return view;
 
+    }
+
+    private void loginPopUP(){
+        AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+        dlg.setMessage("로그인을 해주세요"); // 메시지
+        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        dlg.show();
     }
 
     void setRecyclerview(View view){
@@ -289,4 +226,35 @@ public class MyPageFragment extends Fragment {
         AlertDialog msgDlg = msgBuilder.create();
         msgDlg.show();
     }
+
+    private void requestUserData(){
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            UserResponse result = response.body();
+                            userId = result.getUserItem().get_id();
+                            userNickName.setText(result.getUserItem().getNickname());
+                            userEmail.setText(result.getUserItem().getEmail());
+                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
+                            user_id = result.getUserItem().get_id(); //로그인 유저 id 정보 저장
+                            Glide.with(getActivity()).load(imageUrl).error(R.drawable.profile).into(userImage);
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
 }

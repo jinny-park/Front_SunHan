@@ -75,7 +75,7 @@ public class ChildrenStoreInfoFragment extends Fragment { //가맹점 인포
 
 
     private void getData()
-    {
+    { //데이터 요청 메소드
         if(tokenRetrofitInstance!=null && StoreDetailActivity.whichStore==0){
             Call<CardStoreDetailResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreDetail(StoreDetailActivity.id);
             call.enqueue(new Callback<CardStoreDetailResponse>() {

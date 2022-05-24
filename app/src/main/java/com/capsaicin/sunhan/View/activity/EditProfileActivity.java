@@ -63,9 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
     MyPageFragment myPageFragment;
     private static final int REQUEST_CODE = 0;
     NickNameItem nickNameItem;
-
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
     RequestBody imageRequestBody;
     MultipartBody.Part filePart;
 
@@ -83,11 +81,16 @@ public class EditProfileActivity extends AppCompatActivity {
         myPageFragment  = new MyPageFragment();
         nickNameItem = new NickNameItem();
 
+        //마이페이지로부터 원래의 닉네임과 이미지 정보 얻어오고 화면에 붙임
         intent = getIntent();
         edit_profile_name.setText(intent.getStringExtra("nickName"));
         imageUrl = intent.getStringExtra("profilePic");
         Glide.with(getApplicationContext()).load(imageUrl).error(R.drawable.profile).into(profile_img);
 
+        // 툴바 세팅
+        setToolbar();
+
+        // 갤러리 접근
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,99 +112,81 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        //프로필 변경 버튼
         edit_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nickNameItem.setNickname(edit_profile_name.getText().toString());
 
-//                File path = Environment.getExternalStoragePublicDirectory(
-//                        Environment.DIRECTORY_PICTURES);
-                if(LoginActivity.userAccessToken!=null){
-                    if(tokenRetrofitInstance!=null){
-                        Call<ProfileChangeResponse> call = RetrofitInstance.getRetrofitService().changeNickname("Bearer "+LoginActivity.userAccessToken, nickNameItem);
-                        call.enqueue(new Callback<ProfileChangeResponse>() {
-                            @Override
-                            public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
-                                if (response.isSuccessful()) {
-                                    ProfileChangeResponse result = response.body();
-                                    changeNickname();
-                                    Log.d("닉네임변경성공", new Gson().toJson(response.body()));
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                        if(imagePath!=null){
+                if(edit_profile_name.getText().toString().isEmpty()){
+                    edit_profile_name.setError("닉네임을 입력해 주세요!");
+                }else{
+                    // 닉네임만 변경할 경우
+                    nickNameItem.setNickname(edit_profile_name.getText().toString());
+                    if(tokenRetrofitInstance!=null) {
+                        if (!intent.getStringExtra("nickName").equals(edit_profile_name.getText().toString())) {
+                            sendNickNameToServer(nickNameItem);
+                        }
+                        if(imagePath!=null){ //이미지를 변경했을 경우
                             imageFile = new File(imagePath);
                             if (!imageFile.exists()) {       // 원하는 경로에 폴더가 있는지 확인
                                 imageFile.mkdirs();    // 하위폴더를 포함한 폴더를 전부 생성
                             }
+
+                            //이미지 파일을 멀티파트바디 형식으로 전환해 주어야 함
                             imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
                             filePart = MultipartBody.Part.createFormData("image", imageFile.getName() ,imageRequestBody);
-
-                            Call<ProfileChangeResponse> call2 = RetrofitInstance.getRetrofitService().changePicture("Bearer "+LoginActivity.userAccessToken, filePart);
-                            call2.enqueue(new Callback<ProfileChangeResponse>() {
-                                @Override
-                                public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        ProfileChangeResponse result = response.body();
-                                        changePicture();
-                                        Log.d("프로필사진변경성공", new Gson().toJson(response.body()));
-                                    } else {
-                                        Log.d("프로필 온리스폰스 실패", response.message());
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
-                                    Log.d("프로필 실패", t.getMessage());
-                                    Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                                }
-                            });
+                            sendImageToServer(filePart);
                         }
-
                     }
+                    finish();
                 }
-                finish();
             }
         });
 
-        setToolbar();
+
     }
 
-    private File getRealFile(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        if(uri == null) {
-            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        }
+    private void sendNickNameToServer(NickNameItem nickNameItem){//변경 닉네임 정보  서버에 보내기
+        Call<ProfileChangeResponse> call = RetrofitInstance.getRetrofitService().changeNickname("Bearer " + LoginActivity.userAccessToken, nickNameItem);
+        call.enqueue(new Callback<ProfileChangeResponse>() {
+            @Override
+            public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
+                if (response.isSuccessful()) {
+                    ProfileChangeResponse result = response.body();
+                    changeNickname();
+                } else {
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
 
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, MediaStore.Images.Media.DATE_MODIFIED + " desc");
-        if(cursor == null || cursor.getColumnCount() <1 ) {
-            return null;
-        }
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
+            @Override
+            public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
 
-        String path = cursor.getString(column_index);
-
-        if(cursor != null) {
-            cursor.close();
-            cursor = null;
-        }
-
-        return new File(path);
+            }
+        });
     }
 
-    void changeNickname(){
+    private void sendImageToServer(MultipartBody.Part filePart){ //프로필 이미지 파일 서버에 보내기
+        Call<ProfileChangeResponse> call2 = RetrofitInstance.getRetrofitService().changePicture("Bearer "+LoginActivity.userAccessToken, filePart);
+        call2.enqueue(new Callback<ProfileChangeResponse>() {
+            @Override
+            public void onResponse(Call<ProfileChangeResponse> call, Response<ProfileChangeResponse> response) {
+                if (response.isSuccessful()) {
+                    ProfileChangeResponse result = response.body();
+                    changePicture();
+                } else {
+                    Log.d("프로필 온리스폰스 실패", response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ProfileChangeResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void changeNickname(){ // 마이페이지에 변경
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
@@ -220,7 +205,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -229,7 +214,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-    void changePicture(){
+    void changePicture(){ // 마이페이지에 변경
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
@@ -238,9 +223,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.isSuccessful()) {
                             UserResponse result = response.body();
-                            imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
-//                            MyPageFragment.userImage.setImageURI(uri);
-                            Glide.with(getApplicationContext()).load(imageUrl).error(R.drawable.profile).into(MyPageFragment.userImage);
+                            MyPageFragment.imageUrl="https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+result.getUserItem().getAvatarUrl();
+                            Glide.with(getApplicationContext()).load(MyPageFragment.imageUrl).error(R.drawable.profile).into(MyPageFragment.userImage);
 
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
@@ -251,7 +235,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<UserResponse> call, Throwable t) {
                         Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -260,6 +244,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    //이미지 절대 경로 가져오는 코드 ! 매우 중요함
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -389,10 +374,8 @@ public class EditProfileActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK&&data!=null){
                 try {
                     uri = data.getData();
-                    Log.d("글라이드URI",uri.toString());
-                    Glide.with(getApplicationContext()).load(uri).into(profile_img);
+                    Glide.with(getApplicationContext()).load(uri).into(profile_img); // 바꾼 이미지 붙이기
                     imagePath = getPath(getApplicationContext(),uri); //이미지의 절대 경로
-                    Log.d("글라이드경로",imagePath);
                 }catch (Exception e){
                     finish();
                 }

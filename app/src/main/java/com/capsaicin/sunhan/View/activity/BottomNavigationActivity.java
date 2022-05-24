@@ -54,7 +54,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
     NavigationBarView navigationBarView;
     Toolbar toolbar;
     private RetrofitInstance tokenRetrofitInstance ;
-    private RetrofitServiceApi retrofitServiceApi;
 
     Intent intent;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -79,8 +78,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
         findStoreFragment = new FindStoreFragment();
         communityFragment = new CommunityFragment();
         sunhanstMainFragment = new SunhanstMainFragment();
-
-
 
         navigationBarView = findViewById(R.id.bottomNavi);
 
@@ -139,7 +136,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 //select back button
                 finish();
                 return true;
-            case R.id.location_search:
+            case R.id.location_search:  //사용자 위치 잡기
 //                Intent intent=new Intent(getApplicationContext(), LocationSettingActivity.class);
 //                startActivity(intent);
                 setLocation();
@@ -181,13 +178,13 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
 
-                    Toast.makeText(BottomNavigationActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BottomNavigationActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_SHORT).show();
                     finish();
 
 
                 } else {
 
-                    Toast.makeText(BottomNavigationActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BottomNavigationActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -229,9 +226,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 });
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
-            Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_LONG).show();
+            Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -296,18 +293,16 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     7);
         } catch (IOException ioException) {
             //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             return "지오코더 서비스 사용불가";
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_SHORT).show();
             return "잘못된 GPS 좌표";
 
         }
 
-
-
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_SHORT).show();
             return "주소 미발견";
 
         }

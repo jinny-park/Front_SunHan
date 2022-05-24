@@ -50,14 +50,12 @@ import retrofit2.Response;
 
 public class SunhanstCardFragment extends Fragment {
 
-    ArrayList<CardStoreItem> cardStoreList=new ArrayList();
     RecyclerView sunhanCardRecyclerView;
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
-   CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
+    CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     SwipeRefreshLayout swipeRefreshLayout;
-    public static int distinguish; // 가맹점인 선한영향력인지 구분
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -74,6 +72,8 @@ public class SunhanstCardFragment extends Fragment {
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swip_children);
+
+        //리사이클러뷰 페이징네이션
         page = 1;
 
         //리사이클러뷰 설정
@@ -83,12 +83,15 @@ public class SunhanstCardFragment extends Fragment {
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        //초기데이터 세팅
+
+        initData(0);
 
 
-       initData(0);
+
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
+            @Override // 스와이프 실행 시 새 데이터
             public void onRefresh() {
                 initData(0);
                 swipeRefreshLayout.setRefreshing(false);
@@ -98,9 +101,11 @@ public class SunhanstCardFragment extends Fragment {
 
 
         sunhanCardRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
+            //리사이클러뷰 페이징네이션
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // 리사이클러뷰 스크롤 인지
+                // 스크롤 인지 시 추가데이터 서버에 요청 해서 10개씩 데이터 받아옴
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItemPosition = ((LinearLayoutManager) sunhanCardRecyclerView.getLayoutManager()).
                         findLastCompletelyVisibleItemPosition();
@@ -117,176 +122,183 @@ public class SunhanstCardFragment extends Fragment {
 
     }
 
-
-    private void initData(int page)
-    {
+    private void initData(int page) { // 초기 데이터 세팅
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
-                call.enqueue(new Callback<CardStoreResponse>() {
-                    @Override
-                    public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            CardStoreResponse result = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
-                            sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
-                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                                @Override
-                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 0);
-                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CardStoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
+                serverInitUserRequest(page);
             }
-        } else if (LoginActivity.userAccessToken==null){
+        } else{
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreListNoUser(page, null, lat, lng);
-                call.enqueue(new Callback<CardStoreResponse>() {
-                    @Override
-                    public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            CardStoreResponse result = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
-                            sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
-                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                                @Override
-                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 0);
-                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CardStoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
+                serverInitNoUserRequest(page,lat,lng);
             }
         }
     }
 
 
-    private void getData(int page)
-    {
+    private void getData(int page) { // 추가데이터 받아옴
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
-                call.enqueue(new Callback<CardStoreResponse>() {
-                    @Override
-                    public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            CardStoreResponse result = response.body();
-                            cardStoreAdapter.addList(result.getData());
-                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                                @Override
-                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 0);
-                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CardStoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
+                serverUserNextRequest(page);
             }
-        } else if (LoginActivity.userAccessToken==null){
+        } else{
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreListNoUser(page, null, lat, lng);
-                call.enqueue(new Callback<CardStoreResponse>() {
-                    @Override
-                    public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            CardStoreResponse result = response.body();
-                            cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
-                            sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
-                            cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                                @Override
-                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 0);
-                                        Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CardStoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
+                serverNoUserNextRequest(page,lat,lng);
             }
         }
+    }
+
+    private void serverUserNextRequest(int page){ //유저의 추가데이터 요청 함수
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
+        call.enqueue(new Callback<CardStoreResponse>() {
+            @Override
+            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    CardStoreResponse result = response.body();
+                    cardStoreAdapter.addList(result.getData());
+                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                        @Override
+                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
+                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
+    private void serverNoUserNextRequest(int page, double lat, double lng){ // 비회원의 추가데이터 요청 메소드
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreListNoUser(page, null, lat, lng);
+        call.enqueue(new Callback<CardStoreResponse>() {
+            @Override
+            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    CardStoreResponse result = response.body();
+                    cardStoreAdapter.addList(result.getData());
+                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                        @Override
+                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
+                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
+    private void serverInitNoUserRequest(int page,double lat, double lng){ // 비회원 초기 서버 요청 레트로핏 함수
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreListNoUser(page, null, lat, lng);
+        call.enqueue(new Callback<CardStoreResponse>() {
+            @Override
+            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    CardStoreResponse result = response.body();
+                    cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
+                    sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
+                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                        @Override
+                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
+                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
+    private void serverInitUserRequest(int page){ // 회원 서버 요청 레트로핏 함수
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
+        call.enqueue(new Callback<CardStoreResponse>() {
+            @Override
+            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    CardStoreResponse result = response.body();
+                    cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
+                    sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
+                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                        @Override
+                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
+                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 }
 

@@ -41,45 +41,49 @@ public class DeleteAccountActivity extends AppCompatActivity {
         setToolbar();
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
         delete_btn = findViewById(R.id.delete_account_btn);
+
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(LoginActivity.userAccessToken!=null){
                     if(tokenRetrofitInstance!=null){
-                        Call<UserDeleteResponse> call = RetrofitInstance.getRetrofitService().deleteUser("Bearer "+LoginActivity.userAccessToken);
-                        call.enqueue(new Callback<UserDeleteResponse>() {
-                            @Override
-                            public void onResponse(Call<UserDeleteResponse> call, Response<UserDeleteResponse> response) {
-                                if (response.isSuccessful()) {
-                                    UserDeleteResponse result = response.body();
-                                    AlertDialog.Builder dlg = new AlertDialog.Builder(DeleteAccountActivity.this);
-                                    dlg.setMessage("탈퇴가 완료되었습니다. "); // 메시지
-                                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //토스트 메시지
-                                            LoginActivity.userAccessToken = null;
-                                            LoginActivity.userRefreshToken = null;
-                                            Intent intent = new Intent(getApplication(), BottomNavigationActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
-                                    dlg.show();
-                                    Log.d("탈퇴성공", result.getMessage());
-                                } else {
-                                    Log.d("REST FAILED MESSAGE", response.message());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<UserDeleteResponse> call, Throwable t) {
-                                Log.d("REST ERROR!", t.getMessage());
-                                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
+                        requestDeleteAccount();
                     }
                 }
+            }
+        });
+
+    }
+
+    private void requestDeleteAccount(){ //탈퇴요청 메소드
+        Call<UserDeleteResponse> call = RetrofitInstance.getRetrofitService().deleteUser("Bearer "+LoginActivity.userAccessToken);
+        call.enqueue(new Callback<UserDeleteResponse>() {
+            @Override
+            public void onResponse(Call<UserDeleteResponse> call, Response<UserDeleteResponse> response) {
+                if (response.isSuccessful()) {
+                    UserDeleteResponse result = response.body();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(DeleteAccountActivity.this);
+                    dlg.setMessage("탈퇴가 완료되었습니다. "); // 메시지
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            LoginActivity.userAccessToken = null;
+                            LoginActivity.userRefreshToken = null;
+                            Intent intent = new Intent(getApplication(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    dlg.show();
+                } else {
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDeleteResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+                Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+
             }
         });
 

@@ -33,8 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapter.ViewHolder>
-         {
+public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapter.ViewHolder> {
 
     ArrayList<LetterItem> letterItems;
     private Context context;
@@ -60,6 +59,7 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
         holder.letterContent.setText(letterItems.get(position).getContent());
         holder.letterDate.setText(letterItems.get(position).getCreateAt());
+
         if(letterItems.get(position).getImageUrl()!=null)
              Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).error(R.drawable.profile).into(holder.letterImage);
 
@@ -68,7 +68,7 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
                 @Override
                 public void onClick(View view) {
                     Log.d("가맹점","편지삭제");
-                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"children");
+                    letterDelete(position,letterItems.get(position).get_id(),"children");
                 }
             });
         } else if(letterItems.get(position).getSunhanId()!=null){ //선한영향력
@@ -76,48 +76,41 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
                 @Override
                 public void onClick(View view) {
                     Log.d("선한영향력","편지삭제");
-                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"sunhan");
+                    letterDelete(position,letterItems.get(position).get_id(),"sunhan");
                 }
             });
         }
 
     }
-             private void letterDelete(int position, String userId,String letter_id,String type){
-                         AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-                         dlg.setMessage("삭제하시겠습니까?"); // 메시지
-                         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int which) {
-                                 Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer " + LoginActivity.userAccessToken, letter_id, type);
-                                 call.enqueue(new Callback<ResultResponse>() {
-                                     @Override
-                                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                                         if (response.isSuccessful()) {
-                                             ResultResponse result = response.body();
-                                             removeItem(position);
-                                             Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
-                                             toast.show();
-                                             Log.d("삭제성공", new Gson().toJson(response.body()));
-                                         } else {
-                                             Log.d("편지삭제실패", response.message());
-//                                             removeItem(position); //임시로
-//                                             Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
-//                                             toast.show();
-                                         }
-                                     }
-
-                                     @Override
-                                     public void onFailure(Call<ResultResponse> call, Throwable t) {
-                                         Log.d("REST ERROR!", t.getMessage());
-                                         Toast.makeText(context, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-
-                                     }
-                                 });
-
-                             }
-                         });
-                  dlg.show();
-
-             }
+    private void letterDelete(int position,String letter_id,String type){ //편지 삭제요청 메소드
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+        dlg.setMessage("삭제하시겠습니까?"); // 메시지
+        dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Call<ResultResponse> call = RetrofitInstance.getRetrofitService().deleteLetter("Bearer " + LoginActivity.userAccessToken, letter_id, type);
+                call.enqueue(new Callback<ResultResponse>() {
+                    @Override
+                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                        if (response.isSuccessful()) {
+                            ResultResponse result = response.body();
+                            removeItem(position);
+                            Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.d("삭제성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("편지삭제실패", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(context, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        dlg.show();
+    }
 
     @Override
     public int getItemCount() {
@@ -132,7 +125,6 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
         ImageView userProfile;
         Button delete;
 
-
         public ViewHolder(@NonNull View itemView ) {
             super(itemView);
             userProfile = itemView.findViewById(R.id.letter_log_user_profile);
@@ -144,10 +136,10 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
 
         }
     }
-    public void removeItem(int position){
+    public void removeItem(int position){ // 삭제 완료시 리사이클러뷰에 데이터 변경 notify
         letterItems.remove(position);
         notifyItemRemoved(position);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(position,letterItems.size());
     }
 
     public void addList(ArrayList <LetterItem> list){

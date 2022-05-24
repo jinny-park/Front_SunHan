@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class SunhanstMainFragment extends Fragment {
 
-    private SunhanstCardFragment sunhanstCardFragment;
+    SunhanstCardFragment sunhanstCardFragment;
     SunhanstSunhanFragment sunhanstSunhanFragment;
     ImageView addImage;
 
@@ -60,9 +60,7 @@ public class SunhanstMainFragment extends Fragment {
         sunhanstCardFragment = new SunhanstCardFragment();
         sunhanstSunhanFragment = new SunhanstSunhanFragment();
 
-        getChildFragmentManager().beginTransaction().add(R.id.tabs_store_container,sunhanstCardFragment).commit();
         getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container,sunhanstCardFragment).commit();
-
         addImage = view.findViewById(R.id.img_sunhan_donate);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override

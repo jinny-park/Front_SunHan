@@ -107,7 +107,7 @@ public class StoreInfoFragment extends Fragment { //선한 영향력가게 인�
                 @Override
                 public void onFailure(Call<SunHanStoreDetailResponse> call, Throwable t) {
                     Log.d("REST ERROR!", t.getMessage());
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                 }
             });
 

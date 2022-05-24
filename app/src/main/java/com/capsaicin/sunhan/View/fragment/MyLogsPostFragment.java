@@ -125,7 +125,7 @@ public class MyLogsPostFragment extends Fragment {
                     public void onFailure(Call<MyPostLogsResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -137,7 +137,6 @@ public class MyLogsPostFragment extends Fragment {
     {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<MyPostLogsResponse> call = RetrofitInstance.getRetrofitService().getMyPosts("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<MyPostLogsResponse>() {
                     @Override
@@ -168,7 +167,7 @@ public class MyLogsPostFragment extends Fragment {
                     public void onFailure(Call<MyPostLogsResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

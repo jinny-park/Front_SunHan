@@ -65,6 +65,7 @@ public class SunhanstCategoryFragment extends Fragment {
         page = 1;
         swipeRefreshLayout = view.findViewById(R.id.swip_category);
 
+        //리사이클러뷰 설정
         categoryRecycler = view.findViewById(R.id.recyclerview_sunhanstore_category);
         categoryRecycler.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
@@ -72,9 +73,11 @@ public class SunhanstCategoryFragment extends Fragment {
         categoryRecycler.setItemAnimator(new DefaultItemAnimator());
 
 
+        //초기 데이터 불러옴
         initData(0);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            //스와이프 시 새로 데이터 요청
             @Override
             public void onRefresh() {
                 initData(0);
@@ -86,6 +89,8 @@ public class SunhanstCategoryFragment extends Fragment {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // 리사이클러뷰 페이징네이션
+                // 스크롤 인식 시 다음 데이터 서버에 요청
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItemPosition = ((LinearLayoutManager) categoryRecycler.getLayoutManager()).
                         findLastCompletelyVisibleItemPosition();
@@ -102,174 +107,178 @@ public class SunhanstCategoryFragment extends Fragment {
 
     }
 
-    private void initData(int page)
-    {
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreList("Bearer "+LoginActivity.userAccessToken,page,SunhanstSunhanFragment.category,null);
-                call.enqueue(new Callback<StoreResponse>() {
-                    @Override
-                    public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            StoreResponse result = response.body();
-                            storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
-                            categoryRecycler.setAdapter(storeAdapter);
-                            storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-                                @Override
-                                public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", storeAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 1);
-                                        Log.d("아이디", storeAdapter.getItem(position).get_id());
-
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<StoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
-            }
-        } else if(LoginActivity.userAccessToken==null){
+    private void initData(int page) { //초기데이터 요청
         if(tokenRetrofitInstance!=null){
-            Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-            Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreListNoUser(page,SunhanstSunhanFragment.category,null, lat, lng);
-            call.enqueue(new Callback<StoreResponse>() {
-                @Override
-                public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                    if (response.isSuccessful()) {
-                        progressBar.setVisibility(View.GONE);
-                        StoreResponse result = response.body();
-                        storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
-                        categoryRecycler.setAdapter(storeAdapter);
-                        storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-                            @Override
-                            public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                                String str_position = String.valueOf(position+1);
-                                if(position!=RecyclerView.NO_POSITION){
-                                    Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                    intent.putExtra("_id", storeAdapter.getItem(position).get_id());
-                                    intent.putExtra("whichStore", 1);
-                                    Log.d("아이디", storeAdapter.getItem(position).get_id());
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-                        Log.d("선한영향력성공", new Gson().toJson(response.body()));
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Log.d("REST FAILED MESSAGE", response.message());
-                    }
-                }
+           if(LoginActivity.userAccessToken!=null){
+               serverInitUserRequest(page); //회원
+           }else{
+               serverInitNoUserRequest(page,lat,lng); //비회원
+           }
+        }
+    }
 
-                @Override
-                public void onFailure(Call<StoreResponse> call, Throwable t) {
+
+    private void getData(int page) { //추가 데이터 요청
+        if(tokenRetrofitInstance!=null){
+            if(LoginActivity.userAccessToken!=null){
+                serverUserNextRequest(page); //회원
+            }else{
+                serverNoUserNextRequest(page,lat,lng); //비회원
+            }
+        }
+    }
+
+    private void serverInitUserRequest(int page){
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreList("Bearer "+LoginActivity.userAccessToken,page,SunhanstSunhanFragment.category,null);
+        call.enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if (response.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                    Log.d("REST ERROR!", t.getMessage());
+                    StoreResponse result = response.body();
+                    storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
+                    categoryRecycler.setAdapter(storeAdapter);
+                    storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+                        @Override
+                        public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                            String str_position = String.valueOf(position+1);
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 1);
+                                Log.d("아이디", storeAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
                 }
-            });
-        }
-    }
-    }
-
-
-    private void getData(int page)
-    {
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreList("Bearer "+LoginActivity.userAccessToken,page,SunhanstSunhanFragment.category,null);
-                call.enqueue(new Callback<StoreResponse>() {
-                    @Override
-                    public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            StoreResponse result = response.body();
-                            storeAdapter.addList(result.getData());
-                            storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-                                @Override
-                                public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", storeAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 1);
-                                        Log.d("아이디", storeAdapter.getItem(position).get_id());
-
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<StoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
             }
-        } else if(LoginActivity.userAccessToken==null){
-            if(tokenRetrofitInstance!=null){
-                Log.d("카드프래그먼트", "토큰인스턴스이후 콜백 전");
-                Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreListNoUser(page,SunhanstSunhanFragment.category,null, lat, lng);
-                call.enqueue(new Callback<StoreResponse>() {
-                    @Override
-                    public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            StoreResponse result = response.body();
-                            storeAdapter.addList(result.getData());
-                            storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-                                @Override
-                                public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("_id", storeAdapter.getItem(position).get_id());
-                                        intent.putExtra("whichStore", 1);
-                                        Log.d("아이디", storeAdapter.getItem(position).get_id());
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                            Log.d("선한영향력성공", new Gson().toJson(response.body()));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<StoreResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
-                        Log.d("REST ERROR!", t.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
             }
-        }
+        });
+    }
+    private void serverUserNextRequest(int page){
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreList("Bearer "+LoginActivity.userAccessToken,page,SunhanstSunhanFragment.category,null);
+        call.enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    StoreResponse result = response.body();
+                    storeAdapter.addList(result.getData());
+                    storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+                        @Override
+                        public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                            String str_position = String.valueOf(position+1);
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 1);
+                                Log.d("아이디", storeAdapter.getItem(position).get_id());
+
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+    private void serverInitNoUserRequest(int page, double lat, double lng){
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreListNoUser(page,SunhanstSunhanFragment.category,null, lat, lng);
+        call.enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    StoreResponse result = response.body();
+                    storeAdapter = new SunhanStoreAdapter(getActivity(),result.getData());
+                    categoryRecycler.setAdapter(storeAdapter);
+                    storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+                        @Override
+                        public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                            String str_position = String.valueOf(position+1);
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 1);
+                                Log.d("아이디", storeAdapter.getItem(position).get_id());
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("선한영향력성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
+    private void serverNoUserNextRequest(int page, double lat, double lng){
+        Call<StoreResponse> call = RetrofitInstance.getRetrofitService().getSunHanStoreListNoUser(page,SunhanstSunhanFragment.category,null, lat, lng);
+        call.enqueue(new Callback<StoreResponse>() {
+            @Override
+            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    StoreResponse result = response.body();
+                    storeAdapter.addList(result.getData());
+                    storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+                        @Override
+                        public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                            String str_position = String.valueOf(position+1);
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", storeAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 1);
+                                Log.d("아이디", storeAdapter.getItem(position).get_id());
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("선한영향력성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 }

@@ -87,7 +87,6 @@ public class CardCheckActivity extends AppCompatActivity {
                  // 어댑터에서 정의하는 게 귀찮다면 아래처럼 구할 수도 있다
                 // getItemAtPosition()의 리턴형은 Object이므로 String 캐스팅이 필요하다
                 String otherItem = (String) spinner.getItemAtPosition(position);
-                Log.e(TAG, "getItemAtPosition() - 선택한 아이템 : " + otherItem);
             }
 
             @Override
