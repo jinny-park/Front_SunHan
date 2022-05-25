@@ -2,7 +2,9 @@ package com.capsaicin.sunhan.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LikedSunHanItem {
+import java.io.Serializable;
+
+public class LikedSunHanItem implements Serializable {
 
     @SerializedName("_id")
     private String _id;

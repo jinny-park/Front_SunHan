@@ -2,10 +2,17 @@ package com.capsaicin.sunhan.View.activity;
 
 //activity_sunhanst_store.xml
 
+//import static com.capsaicin.sunhan.Model.ScrapChildResponse.getScrapChildItem;
+//import static com.capsaicin.sunhan.Model.ScrapsSunHanResponse.getScrapsItem;
+
+import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
+
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,9 +27,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
-import com.capsaicin.sunhan.Model.MenuItem;
+import com.capsaicin.sunhan.Model.LikedChildItem;
+import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.ScrapChildItem;
 import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
+import com.capsaicin.sunhan.Model.ScrapsSunHanItem;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
@@ -66,6 +76,10 @@ public class StoreDetailActivity extends AppCompatActivity {
     TextView storeName ;
     TextView storeAddress;
 
+    ImageView heart_img;
+    ImageView heart_full_img;
+    int imageIndex=0;
+
 /*    ImageView heart_img;
     ImageView heart_full_img;
 
@@ -97,23 +111,113 @@ public class StoreDetailActivity extends AppCompatActivity {
         ViewGroup heartLayout = (ViewGroup) findViewById(R.id.store_heart);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
 
-        /*heart_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(likeAction == ""){
-                    likeCount += 1;
-                    likeAction = "liked";
-                    heart_img.setVisibility(View.VISIBLE);
-                    heart_full_img.setVisibility(View.INVISIBLE);
+        Log.d("imageIndex", String.valueOf(imageIndex));
 
-                } else if (likeAction == "liked"){
-                    likeCount -= 1;
-                    likeAction = "";
+
+        ArrayList<LikedChildItem> childArray = (ArrayList<LikedChildItem>) getIntent().getSerializableExtra("childArray");
+        ArrayList<LikedSunHanItem> sunhanArray = (ArrayList<LikedSunHanItem>) getIntent().getSerializableExtra("sunhanArray");
+
+        Log.d("child array", String.valueOf(childArray));
+        Log.d("sunhan array", String.valueOf(sunhanArray));
+
+
+        if (whichStore == 0 && childArray!=null) {
+            //찜한가게 리사이클러뷰에 id가 포함된 경우 풀하트로 변경 (imageIndex=1)
+            //ArrayList<ScrapChildItem> childArray = (ArrayList<ScrapChildItem>) getIntent().getSerializableExtra("scrapChild");
+            //String childId = intent.getStringExtra("scrapChild");
+
+            try{
+                if (childArray.contains(id)) {
+                    imageIndex = 1;
                     heart_img.setVisibility(View.INVISIBLE);
                     heart_full_img.setVisibility(View.VISIBLE);
+                } else { //찜한가게 리사이클러뷰에 id가 포함 안 된 경우 빈하트로 변경 (imageIndex=0)
+                    Log.d("imageIndex 아이디 체크", "childArray!=id\n"+"childArray="+String.valueOf(childArray)+"\nid="+id);
+                    imageIndex = 0;
+                    heart_img.setVisibility(View.VISIBLE);
+                    heart_full_img.setVisibility(View.INVISIBLE);
                 }
+
+            } catch (NullPointerException e){
+                imageIndex = 0;
+                heart_img.setVisibility(View.VISIBLE);
+                heart_full_img.setVisibility(View.INVISIBLE);
             }
-        });*/
+        }
+
+        else if (whichStore == 1 && sunhanArray!=null) {
+            //ArrayList<ScrapsSunHanItem> sunhanArray = (ArrayList<ScrapsSunHanItem>) getIntent().getSerializableExtra("scrapSunhan");
+            //String sunhanId = intent.getStringExtra("scrapSunhan");
+
+            try {
+                if (sunhanArray.contains(id)) {
+                    imageIndex = 1;
+                    heart_img.setVisibility(View.INVISIBLE);
+                    heart_full_img.setVisibility(View.VISIBLE);
+                } else {
+                    Log.d("imageIndex 아이디 체크", "sunhanArray!=id\n"+"sunhanArray="+String.valueOf(sunhanArray)+"\nid="+id);
+                    imageIndex = 0;
+                    heart_img.setVisibility(View.VISIBLE);
+                    heart_full_img.setVisibility(View.INVISIBLE);
+                }
+            } catch (NullPointerException e) {
+                imageIndex = 0;
+                heart_img.setVisibility(View.VISIBLE);
+                heart_full_img.setVisibility(View.INVISIBLE);
+            }
+        }
+
+
+        if(imageIndex==1){
+            heart_img.setVisibility(View.INVISIBLE);
+            heart_full_img.setVisibility(View.VISIBLE);
+        } else if(imageIndex==0) {
+            heart_img.setVisibility(View.VISIBLE);
+            heart_full_img.setVisibility(View.INVISIBLE);
+        }
+
+
+        heart_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                heart_img.setVisibility(View.INVISIBLE);
+                heart_full_img.setVisibility(View.VISIBLE);
+                imageIndex = 1;
+                Log.d("imageIndex", String.valueOf(imageIndex));
+                // imageIndex ==0 -> imageIndex==1
+                // 빈 하트를 눌렀을 때 스크랩 등록
+                getHeartOnData();
+                /*if(savedInstanceState != null){
+                    imageIndex = savedInstanceState.getString("imageIndex", "1");
+                }
+                SharedPreferences sf=getSharedPreferences("imageIndex", MODE_PRIVATE);
+                if(imageIndex!=null){
+                    imageIndex=sf.getString("1", "0");
+                }*/
+            }
+        });
+
+        heart_full_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                heart_img.setVisibility(View.VISIBLE);
+                heart_full_img.setVisibility(View.INVISIBLE);
+                imageIndex = 0;
+                Log.d("imageIndex", String.valueOf(imageIndex));
+                // imageIndex ==1 -> imageIndex==0
+                // 찬 하트를 눌렀을때 스크랩 취소
+                getHeartOffData();
+                /*if(savedInstanceState != null){
+                    imageIndex = savedInstanceState.getString("imageIndex", "0");
+                }
+                SharedPreferences sf=getSharedPreferences("imageIndex", MODE_PRIVATE);
+                if(imageIndex!=null){
+                    imageIndex=sf.getString("1", "0");
+                }*/
+            }
+        });
+
+
         shareLayout.setOnClickListener(new View.OnClickListener() { // 카카오톡 공유하기
             @Override
             public void onClick(View view) {
@@ -196,8 +300,47 @@ public class StoreDetailActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    /*@Override
+    protected void onStop() {
+        super.onStop();
+
+        // Activity가 종료되기 전에 저장한다.
+        //SharedPreferences를 sFile이름, 기본모드로 설정
+        SharedPreferences sharedPreferences = getSharedPreferences("imageIndex",MODE_PRIVATE);
+
+        //저장을 하기위해 editor를 이용하여 값을 저장시켜준다.
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //String imageIndex = imageIndex.getText().toString(); // 사용자가 입력한 저장할 데이터
+        editor.putString("imageIndex",imageIndex); // key, value를 이용하여 저장하는 형태
+
+        editor.commit();
 
     }
+
+    // indexImage 값 저장
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("TAG", "!!!onSavedInstanceState Called!!!");
+        outState.putString("imageIndex",imageIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("TAG", "!!!onRestoreInstanceState Called!!!");
+        //outState.getString("imageIndex",imageIndex);
+        imageIndex = savedInstanceState.getString("imageIndex", imageIndex);
+    }*/
+
+    /*protected void onPause(){
+        super.onPause();
+        SharedPreferences imageIndex = getSharedPreferences("imageIndex", imageIndex);
+
+    }*/
 
 
     private void getDetailData()
@@ -227,6 +370,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                             ChildrenStoreInfoFragment.address.setText(result.getCardStoreItem().getAddress());
                             storeAddress.setText(result.getCardStoreItem().getAddress());
                             ChildrenStoreInfoFragment.phone.setText(result.getCardStoreItem().getPhoneNumber());
+
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
 
@@ -360,8 +504,9 @@ public class StoreDetailActivity extends AppCompatActivity {
 
 
 
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 //select back button
@@ -371,15 +516,13 @@ public class StoreDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    ImageView heart_img;
-    ImageView heart_full_img;
-
-    int imageIndex=0; //TODO: 얘를 0으로 하면 안되고 찜한 상태의 가게인지 아닌지 받아와야함
-
+/*
 
     public void onEmptyHeartClicked(View v){
-        changeImage();
+        heart_img.setVisibility(View.INVISIBLE);
+        heart_full_img.setVisibility(View.VISIBLE);
+        imageIndex = 1;
+        Log.d("imageIndex", String.valueOf(imageIndex));
         // imageIndex ==0 -> imageIndex==1
         // 빈 하트를 눌렀을 때 스크랩 등록
         getHeartOnData();
@@ -387,24 +530,15 @@ public class StoreDetailActivity extends AppCompatActivity {
     }
 
     public void onFullHeartClicked(View v){
-        changeImage();
+        heart_img.setVisibility(View.VISIBLE);
+        heart_full_img.setVisibility(View.INVISIBLE);
+        imageIndex = 0;
+        Log.d("imageIndex", String.valueOf(imageIndex));
         // imageIndex ==1 -> imageIndex==0
         // 찬 하트를 눌렀을때 스크랩 취소
         getHeartOffData();
     }
-
-    public void changeImage(){
-        if (imageIndex == 0) {
-            heart_img.setVisibility(View.INVISIBLE);
-            heart_full_img.setVisibility(View.VISIBLE);
-            imageIndex = 1;
-        } else if (imageIndex== 1) {
-            heart_img.setVisibility(View.VISIBLE);
-            heart_full_img.setVisibility(View.INVISIBLE);
-            imageIndex = 0;
-        }
-
-    }
+*/
 
     private void getHeartOnData()
     {
@@ -415,9 +549,6 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
                     if (response.isSuccessful()) {
                         ScrapOnOffResponse result = response.body();
-                        //TODO: 찜한 가게 목록 리사이클러뷰에 item 추가해야함
-                        /*likedChildAdapter = new LikedChildAdapter(getActivity(),result.getScrapChildItem().getLikedChildItems());
-                        recyclerView.setAdapter(likedChildAdapter);*/
                         Log.d("찜한 아동 급식 가게 등록", new Gson().toJson(response.body()));
                     } else {
                         Log.d("REST FAILED MESSAGE", response.message());
@@ -495,6 +626,7 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         }
     }
+
 
 
 }

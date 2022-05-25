@@ -129,9 +129,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@color/white"
-                        android:onClick="onEmptyHeartClicked"
                         android:scaleType="fitCenter"
-                        android:visibility="visible"
                         app:srcCompat="@drawable/heart" />
 
                     <ImageView
@@ -140,8 +138,6 @@
                         android:layout_height="24dp"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        android:visibility="invisible"
-                        android:onClick="onFullHeartClicked"
                         app:srcCompat="@drawable/heart_full" />
 
                     <TextView

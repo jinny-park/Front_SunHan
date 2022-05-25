@@ -22,25 +22,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.CardStoreResponse;
+import com.capsaicin.sunhan.Model.LikedChildItem;
+import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.ScrapChildResponse;
+import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.StoreResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
+import com.capsaicin.sunhan.View.adapter.LikedSunHanAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedSunHanListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SunhanstCategoryFragment extends Fragment {
+public class SunhanstCategoryFragment extends Fragment{
     ArrayList<StoreItem> storeList=new ArrayList<StoreItem>();
     RecyclerView categoryRecycler;
     SunhanStoreAdapter storeAdapter;
@@ -48,6 +56,10 @@ public class SunhanstCategoryFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
+
+    LikedSunHanAdapter likedSunHanAdapter;
+    RecyclerView recyclerView;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -72,9 +84,17 @@ public class SunhanstCategoryFragment extends Fragment {
         categoryRecycler.setLayoutManager(recyclerViewManager);
         categoryRecycler.setItemAnimator(new DefaultItemAnimator());
 
+        //recyclerView = view.findViewById(R.id.liked_sunhan);
+        //recyclerView.setHasFixedSize(true);
+        //RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+        //recyclerView.setLayoutManager(recyclerViewManager);
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+
 
         //초기 데이터 불러옴
         initData(0);
+
+        initLikedSunhanData();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             //스와이프 시 새로 데이터 요청
@@ -184,6 +204,7 @@ public class SunhanstCategoryFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
+
                                 Log.d("아이디", storeAdapter.getItem(position).get_id());
 
                                 startActivity(intent);
@@ -280,5 +301,48 @@ public class SunhanstCategoryFragment extends Fragment {
                 Log.d("REST ERROR!", t.getMessage());
             }
         });
+    }
+
+
+    private void initLikedSunhanData()
+    {
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<ScrapsSunHanResponse> call = RetrofitInstance.getRetrofitService().getSunHanScraps("Bearer "+LoginActivity.userAccessToken,"sunhan");
+                call.enqueue(new Callback<ScrapsSunHanResponse>() {
+                    @Override
+                    public void onResponse(Call<ScrapsSunHanResponse> call, Response<ScrapsSunHanResponse> response) {
+                        if (response.isSuccessful()) {
+                            ScrapsSunHanResponse result = response.body();
+                            likedSunHanAdapter = new LikedSunHanAdapter(getActivity(),result.getScrapsItem().getScrapSunhan());
+
+                            //Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                            //intent.putExtra("sunhanArray", result.getScrapsItem().getScrapSunhan());
+                           /* storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
+                                @Override
+                                public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
+                                    String str_position = String.valueOf(position+1);
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("sunhanArray", result.getScrapsItem().getScrapSunhan());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });*/
+                            Log.d("선한영향력스크랩리스트성공", new Gson().toJson(response.body()));
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ScrapsSunHanResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
     }
 }

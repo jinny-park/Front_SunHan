@@ -28,8 +28,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CardStoreResponse;
+import com.capsaicin.sunhan.Model.LikedChildItem;
+import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
+import com.capsaicin.sunhan.Model.ScrapChildResponse;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
@@ -37,25 +40,30 @@ import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
+import com.capsaicin.sunhan.View.adapter.LikedChildAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
+import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedChildListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SunhanstCardFragment extends Fragment {
+public class SunhanstCardFragment extends Fragment{
 
     RecyclerView sunhanCardRecyclerView;
+    RecyclerView recyclerView;
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
     CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     SwipeRefreshLayout swipeRefreshLayout;
+    LikedChildAdapter likedChildAdapter;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -87,7 +95,13 @@ public class SunhanstCardFragment extends Fragment {
 
         initData(0);
 
+        /*recyclerView = view.findViewById(R.id.liked_cardStore);
+        //recyclerView.setHasFixedSize(true);
+        //RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(recyclerViewManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());*/
 
+        initLikedChildData();
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -162,7 +176,10 @@ public class SunhanstCardFragment extends Fragment {
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);
+                                intent.putExtra("whichStore", 0);/*
+                                if(intent.hasExtra("scrapChild")) {
+                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
+                                }*/
                                 Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
 
                                 startActivity(intent);
@@ -200,7 +217,10 @@ public class SunhanstCardFragment extends Fragment {
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);
+                                intent.putExtra("whichStore", 0);/*
+                                if(intent.hasExtra("scrapChild")) {
+                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
+                                }*/
                                 Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
 
                                 startActivity(intent);
@@ -239,7 +259,10 @@ public class SunhanstCardFragment extends Fragment {
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);
+                                intent.putExtra("whichStore", 0);/*
+                                if(intent.hasExtra("scrapChild")) {
+                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
+                                }*/
                                 Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
 
                                 startActivity(intent);
@@ -299,6 +322,49 @@ public class SunhanstCardFragment extends Fragment {
                 Log.d("REST ERROR!", t.getMessage());
             }
         });
+    }
+
+    //TODO: 찜하기
+
+    private void initLikedChildData()
+    {
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<ScrapChildResponse> call = RetrofitInstance.getRetrofitService().getChildrenScraps("Bearer "+LoginActivity.userAccessToken,"children");
+                call.enqueue(new Callback<ScrapChildResponse>() {
+                    @Override
+                    public void onResponse(Call<ScrapChildResponse> call, Response<ScrapChildResponse> response) {
+                        if (response.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            ScrapChildResponse result;
+                            result = response.body();
+                            likedChildAdapter = new LikedChildAdapter(getActivity(),result.getScrapChildItem().getLikedChildItems());
+                            /*cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                                @Override
+                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                                    if(position!=RecyclerView.NO_POSITION){
+                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                        intent.putExtra("childArray",result.getScrapChildItem().getLikedChildItems());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });*/
+                            Log.d("가맹점찜한가게리스트성공", new Gson().toJson(response.body()));
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ScrapChildResponse> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
     }
 }
 
