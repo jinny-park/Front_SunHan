@@ -47,7 +47,7 @@ public class LocationSettingActivity extends AppCompatActivity {
     private AddressItem addressItem;
     Toolbar toolbar;
     public static double lat; // 비회원 위도, 경도
-    public static double lng; //
+    public static double lng; // 비회원 위도, 경도
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
@@ -80,10 +80,8 @@ public class LocationSettingActivity extends AppCompatActivity {
         setToolbar();
 
         if (!checkLocationServicesStatus()) {
-
             showDialogForLocationServiceSetting();
         }else {
-
             checkRunTimePermission();
         }
 
@@ -91,8 +89,8 @@ public class LocationSettingActivity extends AppCompatActivity {
 
 
         Button ShowLocationButton = (Button) findViewById(R.id.location_btn);
-        ShowLocationButton.setOnClickListener(new View.OnClickListener()
-        { // 비회원 유저 위치 정보 받아오기
+        ShowLocationButton.setOnClickListener(new View.OnClickListener() {
+            // 비회원 유저 위치 정보 받아오기
             @Override
             public void onClick(View arg0)
             {

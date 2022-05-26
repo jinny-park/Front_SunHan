@@ -121,12 +121,25 @@ public class StoreDetailActivity extends AppCompatActivity {
         heart_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                heart_img.setVisibility(View.INVISIBLE);
-                heart_full_img.setVisibility(View.VISIBLE);
-                imageIndex = 1;
-                // imageIndex ==0 -> imageIndex==1
-                // 빈 하트를 눌렀을 때 스크랩 등록
-                getHeartOnData();
+                if(LoginActivity.userAccessToken!=null) {
+                    heart_img.setVisibility(View.INVISIBLE);
+                    heart_full_img.setVisibility(View.VISIBLE);
+                    imageIndex = 1;
+                    // imageIndex ==0 -> imageIndex==1
+                    // 빈 하트를 눌렀을 때 스크랩 등록
+                    getHeartOnData();
+                } else{
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(StoreDetailActivity.this);
+                    dlg.setMessage("로그인 후 이용해주세요!");
+                    dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    dlg.show();
+                    heart_img.setVisibility(View.VISIBLE);
+                    heart_full_img.setVisibility(View.INVISIBLE);
+                    imageIndex=0;
+                }
 
             }
         });

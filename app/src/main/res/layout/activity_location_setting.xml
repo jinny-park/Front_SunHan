@@ -6,54 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     // 주소설정
-<!--
-    <SearchView
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/round_corner_medium"
-        android:backgroundTint="#DFDFDF"
-        android:queryHint="지번, 도로명, 건물명으로 검색"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
--->
-<!--
-    <LinearLayout
-        android:id="@+id/location_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_mylocation"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="103dp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:text="현재 위치로 설정"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="108dp" />
-    </LinearLayout>-->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/location_toolbar"
@@ -100,16 +52,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_text" />
-    <!--
-        <View
-            android:id="@+id/view02"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#BCBCBC"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="149dp" />
-    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
