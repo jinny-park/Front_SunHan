@@ -63,7 +63,7 @@ public class SunhanstCardFragment extends Fragment{
     CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     SwipeRefreshLayout swipeRefreshLayout;
-    ArrayList<LikedChildItem> likedChildItems;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -81,7 +81,6 @@ public class SunhanstCardFragment extends Fragment{
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swip_children);
 
-        likedChildItems = new ArrayList<>();
 
         //리사이클러뷰 페이징네이션
         page = 1;
@@ -92,9 +91,6 @@ public class SunhanstCardFragment extends Fragment{
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //스크랩가게 불러오기
-        initLikedChildData();
 
         //초기데이터 세팅
         initData(0);
@@ -175,12 +171,6 @@ public class SunhanstCardFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 0);
-
-                                for (LikedChildItem scrap: likedChildItems) {
-                                    if (scrap.get_id().indexOf(cardStoreAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                        intent.putExtra("scrap",1);
-                                    }
-                                }
                                 startActivity(intent);
                             }
                         }
@@ -218,11 +208,6 @@ public class SunhanstCardFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 0);
-                                for (LikedChildItem scrap: likedChildItems) {
-                                    if (scrap.get_id().indexOf(cardStoreAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                        intent.putExtra("scrap",1);
-                                    }
-                                }
                                 startActivity(intent);
                             }
                         }
@@ -317,37 +302,5 @@ public class SunhanstCardFragment extends Fragment{
         });
     }
 
-
-    //TODO: 찜하기
-
-    private void initLikedChildData()
-    {
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                Call<ScrapChildResponse> call = RetrofitInstance.getRetrofitService().getChildrenScraps("Bearer "+LoginActivity.userAccessToken,"children");
-                call.enqueue(new Callback<ScrapChildResponse>() {
-                    @Override
-                    public void onResponse(Call<ScrapChildResponse> call, Response<ScrapChildResponse> response) {
-                        if (response.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            ScrapChildResponse result;
-                            result = response.body();
-                            likedChildItems = result.getScrapChildItem().getLikedChildItems();
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ScrapChildResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-    }
 }
 

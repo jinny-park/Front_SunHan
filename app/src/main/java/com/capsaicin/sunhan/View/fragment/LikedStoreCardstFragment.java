@@ -44,7 +44,6 @@ public class LikedStoreCardstFragment extends Fragment {
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
     LikedChildAdapter likedChildAdapter;
-    ArrayList<LikedChildItem> likedChildItems;
 
 
     @Nullable
@@ -61,8 +60,6 @@ public class LikedStoreCardstFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(recyclerViewManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        likedChildItems = new ArrayList<>();
 
         initData();
 
@@ -81,7 +78,6 @@ public class LikedStoreCardstFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                             ScrapChildResponse result;
                             result = response.body();
-                            likedChildItems = result.getScrapChildItem().getLikedChildItems();
                             likedChildAdapter = new LikedChildAdapter(getActivity(),result.getScrapChildItem().getLikedChildItems());
                             recyclerView.setAdapter(likedChildAdapter);
                             likedChildAdapter.setOnClickLikedChildListener(new OnClickLikedChildListener() {
@@ -92,11 +88,6 @@ public class LikedStoreCardstFragment extends Fragment {
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                         intent.putExtra("_id", likedChildAdapter.getItem(position).get_id());
                                         intent.putExtra("whichStore", 0);
-                                        for (LikedChildItem scrap: likedChildItems) {
-                                            if (scrap.get_id().indexOf(likedChildAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                                intent.putExtra("scrap",1);
-                                            }
-                                        }
                                         startActivity(intent);
                                     }
                                 }

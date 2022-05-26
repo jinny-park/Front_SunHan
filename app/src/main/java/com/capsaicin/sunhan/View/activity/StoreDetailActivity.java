@@ -83,7 +83,9 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     ImageView heart_img;
     ImageView heart_full_img;
-    int imageIndex;
+
+    ArrayList<LikedChildItem> likedChildItems;
+    ArrayList<LikedSunHanItem> scrapSunhan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,21 +104,20 @@ public class StoreDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
-        imageIndex = intent.getIntExtra("scrap",0);
 
         ViewGroup letterLayout = (ViewGroup) findViewById(R.id.store_letter);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
 
+        likedChildItems = new ArrayList<>();
+        scrapSunhan = new ArrayList ();
 
-        if(imageIndex==1){
-            heart_img.setVisibility(View.INVISIBLE);
-            heart_full_img.setVisibility(View.VISIBLE);
-        } else if(imageIndex==0) {
-            heart_img.setVisibility(View.VISIBLE);
-            heart_full_img.setVisibility(View.INVISIBLE);
-        }
+        heart_img.setVisibility(View.VISIBLE);
+        heart_full_img.setVisibility(View.INVISIBLE);
 
-
+        if(whichStore==0)
+            initLikedChildData();
+        else
+            initLikedSunhanData();
 
         heart_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +125,6 @@ public class StoreDetailActivity extends AppCompatActivity {
                 if(LoginActivity.userAccessToken!=null) {
                     heart_img.setVisibility(View.INVISIBLE);
                     heart_full_img.setVisibility(View.VISIBLE);
-                    imageIndex = 1;
                     // imageIndex ==0 -> imageIndex==1
                     // 빈 하트를 눌렀을 때 스크랩 등록
                     getHeartOnData();
@@ -138,7 +138,6 @@ public class StoreDetailActivity extends AppCompatActivity {
                     dlg.show();
                     heart_img.setVisibility(View.VISIBLE);
                     heart_full_img.setVisibility(View.INVISIBLE);
-                    imageIndex=0;
                 }
 
             }
@@ -149,7 +148,6 @@ public class StoreDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 heart_img.setVisibility(View.VISIBLE);
                 heart_full_img.setVisibility(View.INVISIBLE);
-                imageIndex = 0;
                 // imageIndex ==1 -> imageIndex==0
                 // 찬 하트를 눌렀을때 스크랩 취소
                 getHeartOffData();
@@ -239,6 +237,75 @@ public class StoreDetailActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private void initLikedSunhanData() { //찜한 선한영향력 가게인지 판단
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<ScrapsSunHanResponse> call = RetrofitInstance.getRetrofitService().getSunHanScraps("Bearer "+LoginActivity.userAccessToken,"sunhan");
+                call.enqueue(new Callback<ScrapsSunHanResponse>() {
+                    @Override
+                    public void onResponse(Call<ScrapsSunHanResponse> call, Response<ScrapsSunHanResponse> response) {
+                        if (response.isSuccessful()) {
+                            ScrapsSunHanResponse result = response.body();
+                            scrapSunhan = result.getScrapsItem().getScrapSunhan();
+                            for (LikedSunHanItem scrap: scrapSunhan) {
+                                if (scrap.get_id().indexOf(id) != -1) { // 검색어가 존재함
+                                    heart_img.setVisibility(View.INVISIBLE);
+                                    heart_full_img.setVisibility(View.VISIBLE);
+                                    return;
+                                }
+                                heart_img.setVisibility(View.VISIBLE);
+                                heart_full_img.setVisibility(View.INVISIBLE);
+                            }
+
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ScrapsSunHanResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
+    private void initLikedChildData() { //찜한 가맹점인지 판단
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<ScrapChildResponse> call = RetrofitInstance.getRetrofitService().getChildrenScraps("Bearer "+LoginActivity.userAccessToken,"children");
+                call.enqueue(new Callback<ScrapChildResponse>() {
+                    @Override
+                    public void onResponse(Call<ScrapChildResponse> call, Response<ScrapChildResponse> response) {
+                        if (response.isSuccessful()) {
+                            ScrapChildResponse result;
+                            result = response.body();
+                            likedChildItems = result.getScrapChildItem().getLikedChildItems();
+                            for (LikedChildItem scrap: likedChildItems) {
+                                if (scrap.get_id().indexOf(id) != -1) { // 검색어가 존재함
+                                    heart_img.setVisibility(View.INVISIBLE);
+                                    heart_full_img.setVisibility(View.VISIBLE);
+                                    return;
+                                }
+                                heart_img.setVisibility(View.VISIBLE);
+                                heart_full_img.setVisibility(View.INVISIBLE);
+                            }
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ScrapChildResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
     }
 
     private void getDetailData()

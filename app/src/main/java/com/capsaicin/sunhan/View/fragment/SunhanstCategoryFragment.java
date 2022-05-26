@@ -57,10 +57,6 @@ public class SunhanstCategoryFragment extends Fragment{
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
 
-    ArrayList<LikedSunHanItem> scrapSunhan;
-
-
-
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
@@ -84,9 +80,6 @@ public class SunhanstCategoryFragment extends Fragment{
         categoryRecycler.setLayoutManager(recyclerViewManager);
         categoryRecycler.setItemAnimator(new DefaultItemAnimator());
 
-        scrapSunhan = new ArrayList ();
-
-        initLikedSunhanData();
 
         //초기 데이터 불러옴
         initData(0);
@@ -161,12 +154,6 @@ public class SunhanstCategoryFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-                                for (LikedSunHanItem scrap: scrapSunhan) {
-                                    if (scrap.get_id().indexOf(storeAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                        intent.putExtra("scrap",1);
-                                    }
-                                }
-
                                 startActivity(intent);
                             }
                         }
@@ -202,11 +189,6 @@ public class SunhanstCategoryFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-                                for (LikedSunHanItem scrap: scrapSunhan) {
-                                    if (scrap.get_id().indexOf(storeAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                        intent.putExtra("scrap",1);
-                                    }
-                                }
                                 startActivity(intent);
                             }
                         }
@@ -302,29 +284,4 @@ public class SunhanstCategoryFragment extends Fragment{
     }
 
 
-    private void initLikedSunhanData()
-    {
-        if(LoginActivity.userAccessToken!=null){
-            if(tokenRetrofitInstance!=null){
-                Call<ScrapsSunHanResponse> call = RetrofitInstance.getRetrofitService().getSunHanScraps("Bearer "+LoginActivity.userAccessToken,"sunhan");
-                call.enqueue(new Callback<ScrapsSunHanResponse>() {
-                    @Override
-                    public void onResponse(Call<ScrapsSunHanResponse> call, Response<ScrapsSunHanResponse> response) {
-                        if (response.isSuccessful()) {
-                            ScrapsSunHanResponse result = response.body();
-                            scrapSunhan = result.getScrapsItem().getScrapSunhan();
-
-                        } else {
-                            Log.d("REST FAILED MESSAGE", response.message());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ScrapsSunHanResponse> call, Throwable t) {
-                        Log.d("REST ERROR!", t.getMessage());
-                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-    }
 }

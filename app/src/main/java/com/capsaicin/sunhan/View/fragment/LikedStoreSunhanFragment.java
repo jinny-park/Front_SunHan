@@ -47,9 +47,7 @@ public class LikedStoreSunhanFragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
-
     LikedSunHanAdapter likedSunHanAdapter;
-    ArrayList<LikedSunHanItem> likedSunHanItems;
 
     @Nullable
     @Override
@@ -64,15 +62,13 @@ public class LikedStoreSunhanFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(recyclerViewManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        likedSunHanItems = new ArrayList<>();
 
         initData();
 
         return view;
     }
 
-    private void initData()
-    {
+    private void initData() {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
                 Call<ScrapsSunHanResponse> call = RetrofitInstance.getRetrofitService().getSunHanScraps("Bearer "+LoginActivity.userAccessToken,"sunhan");
@@ -82,7 +78,6 @@ public class LikedStoreSunhanFragment extends Fragment {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
                             ScrapsSunHanResponse result = response.body();
-                            likedSunHanItems = result.getScrapsItem().getScrapSunhan();
                             likedSunHanAdapter = new LikedSunHanAdapter(getActivity(),result.getScrapsItem().getScrapSunhan());
                             recyclerView.setAdapter(likedSunHanAdapter);
                             likedSunHanAdapter.setOnClickLikedSunHanListener(new OnClickLikedSunHanListener() {
@@ -92,11 +87,6 @@ public class LikedStoreSunhanFragment extends Fragment {
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                         intent.putExtra("_id", likedSunHanAdapter.getItem(position).get_id());
                                         intent.putExtra("whichStore", 1);
-                                        for (LikedSunHanItem scrap: likedSunHanItems) {
-                                            if (scrap.get_id().indexOf(likedSunHanAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
-                                                intent.putExtra("scrap",1);
-                                            }
-                                        }
                                         startActivity(intent);
                                     }
                                 }
