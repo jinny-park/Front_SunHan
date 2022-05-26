@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -31,14 +32,18 @@ import com.capsaicin.sunhan.Model.LikedChildItem;
 import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.ScrapChildItem;
+import com.capsaicin.sunhan.Model.ScrapChildResponse;
 import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
 import com.capsaicin.sunhan.Model.ScrapsSunHanItem;
+import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 //import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstCategoryFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import com.google.gson.Gson;
@@ -78,13 +83,7 @@ public class StoreDetailActivity extends AppCompatActivity {
 
     ImageView heart_img;
     ImageView heart_full_img;
-    int imageIndex=0;
-
-/*    ImageView heart_img;
-    ImageView heart_full_img;
-
-    private int likeCount=0;
-    private String likeAction="";*/
+    int imageIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,69 +102,10 @@ public class StoreDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("_id");
         whichStore = intent.getIntExtra("whichStore",0);
-
-        TextView textStorename = findViewById(R.id.text_storename);
-        TextView textStoreaddrs = findViewById(R.id.text_storeaddrs);
+        imageIndex = intent.getIntExtra("scrap",0);
 
         ViewGroup letterLayout = (ViewGroup) findViewById(R.id.store_letter);
-        ViewGroup heartLayout = (ViewGroup) findViewById(R.id.store_heart);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
-
-        Log.d("imageIndex", String.valueOf(imageIndex));
-
-
-        ArrayList<LikedChildItem> childArray = (ArrayList<LikedChildItem>) getIntent().getSerializableExtra("childArray");
-        ArrayList<LikedSunHanItem> sunhanArray = (ArrayList<LikedSunHanItem>) getIntent().getSerializableExtra("sunhanArray");
-
-        Log.d("child array", String.valueOf(childArray));
-        Log.d("sunhan array", String.valueOf(sunhanArray));
-
-
-        if (whichStore == 0 && childArray!=null) {
-            //찜한가게 리사이클러뷰에 id가 포함된 경우 풀하트로 변경 (imageIndex=1)
-            //ArrayList<ScrapChildItem> childArray = (ArrayList<ScrapChildItem>) getIntent().getSerializableExtra("scrapChild");
-            //String childId = intent.getStringExtra("scrapChild");
-
-            try{
-                if (childArray.contains(id)) {
-                    imageIndex = 1;
-                    heart_img.setVisibility(View.INVISIBLE);
-                    heart_full_img.setVisibility(View.VISIBLE);
-                } else { //찜한가게 리사이클러뷰에 id가 포함 안 된 경우 빈하트로 변경 (imageIndex=0)
-                    Log.d("imageIndex 아이디 체크", "childArray!=id\n"+"childArray="+String.valueOf(childArray)+"\nid="+id);
-                    imageIndex = 0;
-                    heart_img.setVisibility(View.VISIBLE);
-                    heart_full_img.setVisibility(View.INVISIBLE);
-                }
-
-            } catch (NullPointerException e){
-                imageIndex = 0;
-                heart_img.setVisibility(View.VISIBLE);
-                heart_full_img.setVisibility(View.INVISIBLE);
-            }
-        }
-
-        else if (whichStore == 1 && sunhanArray!=null) {
-            //ArrayList<ScrapsSunHanItem> sunhanArray = (ArrayList<ScrapsSunHanItem>) getIntent().getSerializableExtra("scrapSunhan");
-            //String sunhanId = intent.getStringExtra("scrapSunhan");
-
-            try {
-                if (sunhanArray.contains(id)) {
-                    imageIndex = 1;
-                    heart_img.setVisibility(View.INVISIBLE);
-                    heart_full_img.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("imageIndex 아이디 체크", "sunhanArray!=id\n"+"sunhanArray="+String.valueOf(sunhanArray)+"\nid="+id);
-                    imageIndex = 0;
-                    heart_img.setVisibility(View.VISIBLE);
-                    heart_full_img.setVisibility(View.INVISIBLE);
-                }
-            } catch (NullPointerException e) {
-                imageIndex = 0;
-                heart_img.setVisibility(View.VISIBLE);
-                heart_full_img.setVisibility(View.INVISIBLE);
-            }
-        }
 
 
         if(imageIndex==1){
@@ -177,23 +117,17 @@ public class StoreDetailActivity extends AppCompatActivity {
         }
 
 
+
         heart_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 heart_img.setVisibility(View.INVISIBLE);
                 heart_full_img.setVisibility(View.VISIBLE);
                 imageIndex = 1;
-                Log.d("imageIndex", String.valueOf(imageIndex));
                 // imageIndex ==0 -> imageIndex==1
                 // 빈 하트를 눌렀을 때 스크랩 등록
                 getHeartOnData();
-                /*if(savedInstanceState != null){
-                    imageIndex = savedInstanceState.getString("imageIndex", "1");
-                }
-                SharedPreferences sf=getSharedPreferences("imageIndex", MODE_PRIVATE);
-                if(imageIndex!=null){
-                    imageIndex=sf.getString("1", "0");
-                }*/
+
             }
         });
 
@@ -203,17 +137,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                 heart_img.setVisibility(View.VISIBLE);
                 heart_full_img.setVisibility(View.INVISIBLE);
                 imageIndex = 0;
-                Log.d("imageIndex", String.valueOf(imageIndex));
                 // imageIndex ==1 -> imageIndex==0
                 // 찬 하트를 눌렀을때 스크랩 취소
                 getHeartOffData();
-                /*if(savedInstanceState != null){
-                    imageIndex = savedInstanceState.getString("imageIndex", "0");
-                }
-                SharedPreferences sf=getSharedPreferences("imageIndex", MODE_PRIVATE);
-                if(imageIndex!=null){
-                    imageIndex=sf.getString("1", "0");
-                }*/
+
             }
         });
 
@@ -259,7 +186,6 @@ public class StoreDetailActivity extends AppCompatActivity {
         else
             getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeInfoFragment).commit();
 
-        //getLetterData();
 
         TabLayout tabs = findViewById(R.id.store_detail_tapLayout);
 
@@ -301,47 +227,6 @@ public class StoreDetailActivity extends AppCompatActivity {
 
 
     }
-
-    /*@Override
-    protected void onStop() {
-        super.onStop();
-
-        // Activity가 종료되기 전에 저장한다.
-        //SharedPreferences를 sFile이름, 기본모드로 설정
-        SharedPreferences sharedPreferences = getSharedPreferences("imageIndex",MODE_PRIVATE);
-
-        //저장을 하기위해 editor를 이용하여 값을 저장시켜준다.
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        //String imageIndex = imageIndex.getText().toString(); // 사용자가 입력한 저장할 데이터
-        editor.putString("imageIndex",imageIndex); // key, value를 이용하여 저장하는 형태
-
-        editor.commit();
-
-    }
-
-    // indexImage 값 저장
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("TAG", "!!!onSavedInstanceState Called!!!");
-        outState.putString("imageIndex",imageIndex);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.d("TAG", "!!!onRestoreInstanceState Called!!!");
-        //outState.getString("imageIndex",imageIndex);
-        imageIndex = savedInstanceState.getString("imageIndex", imageIndex);
-    }*/
-
-    /*protected void onPause(){
-        super.onPause();
-        SharedPreferences imageIndex = getSharedPreferences("imageIndex", imageIndex);
-
-    }*/
-
 
     private void getDetailData()
     {
@@ -516,29 +401,6 @@ public class StoreDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-/*
-
-    public void onEmptyHeartClicked(View v){
-        heart_img.setVisibility(View.INVISIBLE);
-        heart_full_img.setVisibility(View.VISIBLE);
-        imageIndex = 1;
-        Log.d("imageIndex", String.valueOf(imageIndex));
-        // imageIndex ==0 -> imageIndex==1
-        // 빈 하트를 눌렀을 때 스크랩 등록
-        getHeartOnData();
-
-    }
-
-    public void onFullHeartClicked(View v){
-        heart_img.setVisibility(View.VISIBLE);
-        heart_full_img.setVisibility(View.INVISIBLE);
-        imageIndex = 0;
-        Log.d("imageIndex", String.valueOf(imageIndex));
-        // imageIndex ==1 -> imageIndex==0
-        // 찬 하트를 눌렀을때 스크랩 취소
-        getHeartOffData();
-    }
-*/
 
     private void getHeartOnData()
     {
@@ -549,6 +411,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
                     if (response.isSuccessful()) {
                         ScrapOnOffResponse result = response.body();
+                        Toast.makeText(getApplicationContext(), "찜하기 완료", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 아동 급식 가게 등록", new Gson().toJson(response.body()));
                     } else {
                         Log.d("REST FAILED MESSAGE", response.message());
@@ -568,6 +431,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
                     if (response.isSuccessful()) {
                         ScrapOnOffResponse result = response.body();
+                        Toast.makeText(getApplicationContext(), "찜하기 완료", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 선한 가게 등록", new Gson().toJson(response.body()));
                     } else {
                         Log.d("REST FAILED MESSAGE", response.message());
@@ -593,6 +457,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
                     if (response.isSuccessful()) {
                         ScrapOnOffResponse result = response.body();
+                        Toast.makeText(getApplicationContext(), "찜하기 해제", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 아동가맹점 가게 취소", new Gson().toJson(response.body()));
                     } else {
                         Log.d("REST FAILED MESSAGE", response.message());
@@ -611,6 +476,7 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<ScrapOnOffResponse> call, Response<ScrapOnOffResponse> response) {
                     if (response.isSuccessful()) {
                         ScrapOnOffResponse result = response.body();
+                        Toast.makeText(getApplicationContext(), "찜하기 해제", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 선한 가게 취소", new Gson().toJson(response.body()));
                     } else {
                         Log.d("REST FAILED MESSAGE", response.message());

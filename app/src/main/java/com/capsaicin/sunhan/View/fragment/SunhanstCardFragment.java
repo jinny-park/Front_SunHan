@@ -63,7 +63,7 @@ public class SunhanstCardFragment extends Fragment{
     CardStoreAdapter cardStoreAdapter;  /*new CardStoreAdapter(getActivity(),cardStoreList) ;*/
     int page;
     SwipeRefreshLayout swipeRefreshLayout;
-    LikedChildAdapter likedChildAdapter;
+    ArrayList<LikedChildItem> likedChildItems;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -81,6 +81,8 @@ public class SunhanstCardFragment extends Fragment{
         progressBar = view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = view.findViewById(R.id.swip_children);
 
+        likedChildItems = new ArrayList<>();
+
         //리사이클러뷰 페이징네이션
         page = 1;
 
@@ -91,17 +93,11 @@ public class SunhanstCardFragment extends Fragment{
         sunhanCardRecyclerView.setLayoutManager(recyclerViewManager);
         sunhanCardRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //초기데이터 세팅
-
-        initData(0);
-
-        /*recyclerView = view.findViewById(R.id.liked_cardStore);
-        //recyclerView.setHasFixedSize(true);
-        //RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(recyclerViewManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());*/
-
+        //스크랩가게 불러오기
         initLikedChildData();
+
+        //초기데이터 세팅
+        initData(0);
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -161,6 +157,50 @@ public class SunhanstCardFragment extends Fragment{
         }
     }
 
+
+    private void serverInitUserRequest(int page){ // 회원 서버 요청 레트로핏 함수
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
+        call.enqueue(new Callback<CardStoreResponse>() {
+            @Override
+            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
+                if (response.isSuccessful()) {
+                    progressBar.setVisibility(View.GONE);
+                    CardStoreResponse result = response.body();
+                    cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
+                    sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
+                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
+                        @Override
+                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
+                            if(position!=RecyclerView.NO_POSITION){
+                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
+                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
+
+                                for (LikedChildItem scrap: likedChildItems) {
+                                    if (scrap.get_id().indexOf(cardStoreAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
+                                        intent.putExtra("scrap",1);
+                                    }
+                                }
+                                startActivity(intent);
+                            }
+                        }
+                    });
+                    Log.d("성공", new Gson().toJson(response.body()));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("REST FAILED MESSAGE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
     private void serverUserNextRequest(int page){ //유저의 추가데이터 요청 함수
         Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
         call.enqueue(new Callback<CardStoreResponse>() {
@@ -174,14 +214,15 @@ public class SunhanstCardFragment extends Fragment{
                         @Override
                         public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
                             if(position!=RecyclerView.NO_POSITION){
+                                int imageIndex=0;
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);/*
-                                if(intent.hasExtra("scrapChild")) {
-                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
-                                }*/
-                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
+                                intent.putExtra("whichStore", 0);
+                                for (LikedChildItem scrap: likedChildItems) {
+                                    if (scrap.get_id().indexOf(cardStoreAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
+                                        intent.putExtra("scrap",1);
+                                    }
+                                }
                                 startActivity(intent);
                             }
                         }
@@ -217,11 +258,7 @@ public class SunhanstCardFragment extends Fragment{
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);/*
-                                if(intent.hasExtra("scrapChild")) {
-                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
-                                }*/
-                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
+                                intent.putExtra("whichStore", 0);
 
                                 startActivity(intent);
                             }
@@ -259,51 +296,7 @@ public class SunhanstCardFragment extends Fragment{
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
-                                intent.putExtra("whichStore", 0);/*
-                                if(intent.hasExtra("scrapChild")) {
-                                    intent.putExtra("scrapChild", new ScrapChildResponse().getScrapChildItem().getLikedChildItems());
-                                }*/
-                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
-                                startActivity(intent);
-                            }
-                        }
-                    });
-                    Log.d("성공", new Gson().toJson(response.body()));
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    Log.d("REST FAILED MESSAGE", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CardStoreResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
-                Log.d("REST ERROR!", t.getMessage());
-            }
-        });
-    }
-
-    private void serverInitUserRequest(int page){ // 회원 서버 요청 레트로핏 함수
-        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
-        call.enqueue(new Callback<CardStoreResponse>() {
-            @Override
-            public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {
-                if (response.isSuccessful()) {
-                    progressBar.setVisibility(View.GONE);
-                    CardStoreResponse result = response.body();
-                    cardStoreAdapter = new CardStoreAdapter(getActivity(),result.getData());
-                    sunhanCardRecyclerView.setAdapter(cardStoreAdapter);
-                    cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                        @Override
-                        public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                            if(position!=RecyclerView.NO_POSITION){
-                                Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                intent.putExtra("_id", cardStoreAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 0);
-                                Log.d("아이디", cardStoreAdapter.getItem(position).get_id());
-
                                 startActivity(intent);
                             }
                         }
@@ -323,6 +316,7 @@ public class SunhanstCardFragment extends Fragment{
             }
         });
     }
+
 
     //TODO: 찜하기
 
@@ -338,18 +332,7 @@ public class SunhanstCardFragment extends Fragment{
                             progressBar.setVisibility(View.GONE);
                             ScrapChildResponse result;
                             result = response.body();
-                            likedChildAdapter = new LikedChildAdapter(getActivity(),result.getScrapChildItem().getLikedChildItems());
-                            /*cardStoreAdapter.setOnClickCardStoreItemListener(new OnClickCardStoreItemListener() {
-                                @Override
-                                public void onItemClick(CardStoreAdapter.ViewHolder holder, View view, int position) {
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("childArray",result.getScrapChildItem().getLikedChildItems());
-                                        startActivity(intent);
-                                    }
-                                }
-                            });*/
-                            Log.d("가맹점찜한가게리스트성공", new Gson().toJson(response.body()));
+                            likedChildItems = result.getScrapChildItem().getLikedChildItems();
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());

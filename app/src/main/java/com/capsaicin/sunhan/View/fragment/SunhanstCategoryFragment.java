@@ -57,8 +57,8 @@ public class SunhanstCategoryFragment extends Fragment{
     private RetrofitInstance tokenRetrofitInstance ;
     int page;
 
-    LikedSunHanAdapter likedSunHanAdapter;
-    RecyclerView recyclerView;
+    ArrayList<LikedSunHanItem> scrapSunhan;
+
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -84,17 +84,12 @@ public class SunhanstCategoryFragment extends Fragment{
         categoryRecycler.setLayoutManager(recyclerViewManager);
         categoryRecycler.setItemAnimator(new DefaultItemAnimator());
 
-        //recyclerView = view.findViewById(R.id.liked_sunhan);
-        //recyclerView.setHasFixedSize(true);
-        //RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
-        //recyclerView.setLayoutManager(recyclerViewManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        scrapSunhan = new ArrayList ();
 
+        initLikedSunhanData();
 
         //초기 데이터 불러옴
         initData(0);
-
-        initLikedSunhanData();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             //스와이프 시 새로 데이터 요청
@@ -166,7 +161,11 @@ public class SunhanstCategoryFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-                                Log.d("아이디", storeAdapter.getItem(position).get_id());
+                                for (LikedSunHanItem scrap: scrapSunhan) {
+                                    if (scrap.get_id().indexOf(storeAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
+                                        intent.putExtra("scrap",1);
+                                    }
+                                }
 
                                 startActivity(intent);
                             }
@@ -199,14 +198,15 @@ public class SunhanstCategoryFragment extends Fragment{
                     storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
                         @Override
                         public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                            String str_position = String.valueOf(position+1);
                             if(position!=RecyclerView.NO_POSITION){
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-
-                                Log.d("아이디", storeAdapter.getItem(position).get_id());
-
+                                for (LikedSunHanItem scrap: scrapSunhan) {
+                                    if (scrap.get_id().indexOf(storeAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
+                                        intent.putExtra("scrap",1);
+                                    }
+                                }
                                 startActivity(intent);
                             }
                         }
@@ -244,7 +244,6 @@ public class SunhanstCategoryFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-                                Log.d("아이디", storeAdapter.getItem(position).get_id());
                                 startActivity(intent);
                             }
                         }
@@ -282,7 +281,6 @@ public class SunhanstCategoryFragment extends Fragment{
                                 Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                 intent.putExtra("_id", storeAdapter.getItem(position).get_id());
                                 intent.putExtra("whichStore", 1);
-                                Log.d("아이디", storeAdapter.getItem(position).get_id());
                                 startActivity(intent);
                             }
                         }
@@ -314,30 +312,14 @@ public class SunhanstCategoryFragment extends Fragment{
                     public void onResponse(Call<ScrapsSunHanResponse> call, Response<ScrapsSunHanResponse> response) {
                         if (response.isSuccessful()) {
                             ScrapsSunHanResponse result = response.body();
-                            likedSunHanAdapter = new LikedSunHanAdapter(getActivity(),result.getScrapsItem().getScrapSunhan());
+                            scrapSunhan = result.getScrapsItem().getScrapSunhan();
 
-                            //Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                            //intent.putExtra("sunhanArray", result.getScrapsItem().getScrapSunhan());
-                           /* storeAdapter.setOnClickStoreItemListener(new OnClickStoreItemListener() {
-                                @Override
-                                public void onItemClick(SunhanStoreAdapter.ViewHolder holder, View view, int position) {
-                                    String str_position = String.valueOf(position+1);
-                                    if(position!=RecyclerView.NO_POSITION){
-                                        Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
-                                        intent.putExtra("sunhanArray", result.getScrapsItem().getScrapSunhan());
-                                        startActivity(intent);
-                                    }
-                                }
-                            });*/
-                            Log.d("선한영향력스크랩리스트성공", new Gson().toJson(response.body()));
                         } else {
-                            progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }
                     @Override
                     public void onFailure(Call<ScrapsSunHanResponse> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
                         Log.d("REST ERROR!", t.getMessage());
                         Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
                     }

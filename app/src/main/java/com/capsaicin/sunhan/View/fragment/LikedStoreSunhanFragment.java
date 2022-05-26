@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.CardStoreResponse;
+import com.capsaicin.sunhan.Model.LikedChildItem;
+import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.StoreResponse;
@@ -32,6 +34,8 @@ import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedSunHanListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +47,8 @@ public class LikedStoreSunhanFragment extends Fragment {
     private RetrofitInstance tokenRetrofitInstance ;
 
     LikedSunHanAdapter likedSunHanAdapter;
+    ArrayList<LikedSunHanItem> likedSunHanItems;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class LikedStoreSunhanFragment extends Fragment {
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(recyclerViewManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        likedSunHanItems = new ArrayList<>();
 
         initData();
 
@@ -73,6 +80,7 @@ public class LikedStoreSunhanFragment extends Fragment {
                         if (response.isSuccessful()) {
                             progressBar.setVisibility(View.GONE);
                             ScrapsSunHanResponse result = response.body();
+                            likedSunHanItems = result.getScrapsItem().getScrapSunhan();
                             likedSunHanAdapter = new LikedSunHanAdapter(getActivity(),result.getScrapsItem().getScrapSunhan());
                             recyclerView.setAdapter(likedSunHanAdapter);
                             likedSunHanAdapter.setOnClickLikedSunHanListener(new OnClickLikedSunHanListener() {
@@ -82,7 +90,11 @@ public class LikedStoreSunhanFragment extends Fragment {
                                         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
                                         intent.putExtra("_id", likedSunHanAdapter.getItem(position).get_id());
                                         intent.putExtra("whichStore", 1);
-                                        Log.d("아이디", likedSunHanAdapter.getItem(position).get_id());
+                                        for (LikedSunHanItem scrap: likedSunHanItems) {
+                                            if (scrap.get_id().indexOf(likedSunHanAdapter.getItem(position).get_id()) != -1) { // 검색어가 존재함
+                                                intent.putExtra("scrap",1);
+                                            }
+                                        }
                                         startActivity(intent);
                                     }
                                 }
