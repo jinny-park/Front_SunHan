@@ -70,17 +70,4 @@ public class CommunityItem {
     public void setCommuIsUpdateAt(String commuIsUpdateAt) {
         this.commuIsUpdateAt = commuIsUpdateAt;
     }
-
-//    @Override
-//    public String toString() {
-//        return "CommentItem{" +
-//                "commuWriter=" + WriterItem +
-//                ", commuId='" + commuId + '\'' +
-//                ", commuContent='" + commuContent + '\'' +
-//                ", commuIsDeleted=" + commuIsDeleted +
-//                ", commuIsCommentCount=" + commuIsCommentCount +
-//                ", commuIsCreateAt='" + commuIsCreateAt + '\'' +
-//                ", commuIsUpdateAt='" + commuIsUpdateAt + '\'' +
-//                '}';
-//    }
 }

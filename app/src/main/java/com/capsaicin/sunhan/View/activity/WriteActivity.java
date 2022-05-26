@@ -1,11 +1,14 @@
 package com.capsaicin.sunhan.View.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -57,6 +60,8 @@ public class WriteActivity extends AppCompatActivity {
                 } else {
                     savePost(communityWritingPost);
                     finish();
+                    Toast toast = Toast.makeText(getApplicationContext(), "글이 등록되었습니다.", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
@@ -71,7 +76,6 @@ public class WriteActivity extends AppCompatActivity {
                     public void onResponse(Call<CommunityWritingResponse> call, Response<CommunityWritingResponse> response) {
                         if (response.isSuccessful()) {
                             CommunityWritingResponse result = response.body();
-                            Log.d("글 올리기 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
                         }

@@ -59,14 +59,14 @@ public class EditPostActivity extends AppCompatActivity {
 
         setToolbar();
         finishBtn = findViewById(R.id.write_btn);
-        finishBtn.setOnClickListener(new View.OnClickListener() {
+        finishBtn.setOnClickListener(new View.OnClickListener() { //글쓰기 완료 시 버튼
             @Override
             public void onClick(View view) {
                 communityWritingPost.setContent(writeContent.getText().toString()); // 수정 입력한 내용 받기
 
-                if(communityWritingPost.getContent().isEmpty()){
+                if(communityWritingPost.getContent().isEmpty()){ //입력한 내용이 없을때
                     writeContent.setError("내용을 입력해주세요.");
-                } else {
+                } else { //입력 내용 존재시
                     modify_Post(communityWritingPost);
                     Toast toast = Toast.makeText(getApplicationContext(), "수정되었습니다", Toast.LENGTH_SHORT);
                     toast.show();
@@ -76,7 +76,7 @@ public class EditPostActivity extends AppCompatActivity {
         });
     }
 
-    private void modify_Post(CommunityWritingPost content){
+    private void modify_Post(CommunityWritingPost content){ //글 수정
         Log.d("확인",LoginActivity.userAccessToken);
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
@@ -86,9 +86,7 @@ public class EditPostActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<PostChangeResponse> call, Response<PostChangeResponse> response) {
                         if (response.isSuccessful()) {
-                            PostChangeResponse result = response.body();
                             changePost();
-                            Log.d("글 수정 성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
@@ -114,7 +112,6 @@ public class EditPostActivity extends AppCompatActivity {
                             CommunityDetailResponse result = response.body();
                             content = result.getCommunityItem().getCommuContent();
                             CommunityDetailActivity.content.setText(content);
-                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
                         }

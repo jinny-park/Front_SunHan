@@ -27,7 +27,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     public OnClickCommentListener listener;
 
     public CommunityDetailAdapter(Context context, ArrayList<CommentItem> items){
-        Log.d("어댑터생성자-커뮤니티comment ","들어옴" );
         this.context = context ;
         this.CommunityCommentList= items;
         notifyItemRangeInserted(CommunityCommentList.size(), items.size());
@@ -36,7 +35,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     @NonNull
     @Override
     public CommunityDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("온크리에이트뷰홀더-커뮤니티comment ","들어옴" );
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.community_comment_item, parent, false);
 
@@ -46,7 +44,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     @Override
     public void onBindViewHolder(@NonNull CommunityDetailAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommentItem item =CommunityCommentList.get(position);
-        Log.d("온바인드홀더-커뮤니티comment ", CommunityCommentList.get(position).getC_commuId());
         Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+CommunityCommentList.get(position).getC_writerItem().getAvatarUrl()).error(R.drawable.profile).circleCrop().into(holder.c_userProfile);
         holder.c_userId.setText(CommunityCommentList.get(position).getC_writerItem().getNickname());
         holder.c_content.setText(CommunityCommentList.get(position).getC_commuContent());
@@ -70,7 +67,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
         TextView c_content;
         TextView c_commentDate;
         ImageView comment_More;
-        RecyclerView c_recyclerView; //대댓글
 
         public ViewHolder(@NonNull View itemView, final OnClickCommentListener listener) {
             super(itemView);
@@ -79,9 +75,8 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
             c_content = itemView.findViewById(R.id.comment_content);
             c_commentDate = itemView.findViewById(R.id.comment_date);
             comment_More = itemView.findViewById(R.id.comment_More);
-            c_recyclerView = itemView.findViewById(R.id.recylerView_community_comment_child); //대댓글
 
-            comment_More.setOnClickListener(new View.OnClickListener() {
+            comment_More.setOnClickListener(new View.OnClickListener() { //댓글 ...클릭시 이벤트
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
@@ -98,7 +93,6 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     public void addList(ArrayList <CommentItem> list){
         CommunityCommentList.addAll(list);
         notifyItemRangeInserted(CommunityCommentList.size(),list.size());
-        Log.d("addList ",list.toString());
     }
 
     public void removeItem(int position){
@@ -112,7 +106,7 @@ public class CommunityDetailAdapter extends RecyclerView.Adapter<CommunityDetail
     }
     public void addItem(CommentItem item){
         CommunityCommentList.add(item);
-        notifyDataSetChanged();
+        notifyDataSetChanged(); //댓글 업데이트 바로 해줌
     }
     public void setarrayList(ArrayList<CommentItem> arrayList) { this.CommunityCommentList = arrayList; }
     public CommentItem getItem(int position) { return CommunityCommentList.get(position); }

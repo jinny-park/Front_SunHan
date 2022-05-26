@@ -62,15 +62,15 @@ public class CommunityFragment extends Fragment {
         page = 1;
 
 
-        communityRecyclerView = view.findViewById(R.id.recyleView_community);
+        communityRecyclerView = view.findViewById(R.id.recyleView_community); //커뮤니티 글 리사이클러뷰
         communityRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         communityRecyclerView.setLayoutManager(recyclerViewManager);
         communityRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        swipeRefreshLayout = view.findViewById(R.id.swip_community);
+        swipeRefreshLayout = view.findViewById(R.id.swip_community); //스와이프 레이아웃 불러오기
 
-        initData(0);
+        initData(0); //데이터 불러오기
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -80,7 +80,7 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        writeBtn = view.findViewById(R.id.write_btn);
+        writeBtn = view.findViewById(R.id.write_btn); //글쓰기 플로팅 버튼
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +128,6 @@ public class CommunityFragment extends Fragment {
     private void initData(int page)
     {
             if(commuRetrofitInstance!=null){
-                Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<CommunityResponse>() {
                     @Override
@@ -149,7 +148,6 @@ public class CommunityFragment extends Fragment {
                                     }
                                 }
                             });
-                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
@@ -170,7 +168,6 @@ public class CommunityFragment extends Fragment {
     private void getData(int page)
     {
             if(commuRetrofitInstance!=null){
-                Log.d("커뮤니티프래그먼트", "토큰인스턴스이후 콜백 전");
                 Call<CommunityResponse> call = RetrofitInstance.getRetrofitService().getCommunityList("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<CommunityResponse>() {
                     @Override
@@ -186,13 +183,11 @@ public class CommunityFragment extends Fragment {
                                     if(position!=RecyclerView.NO_POSITION){
                                         Intent intent = new Intent(getActivity(), CommunityDetailActivity.class);
                                         intent.putExtra("_id", communityAdapter.getItem(position).getCommuId());
-                                        Log.d("아이디", communityAdapter.getItem(position).getCommuId());
 
                                         startActivity(intent);
                                     }
                                 }
                             });
-                            Log.d("성공", new Gson().toJson(response.body()));
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
