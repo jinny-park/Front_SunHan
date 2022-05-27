@@ -31,6 +31,7 @@ import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
 import com.capsaicin.sunhan.View.fragment.HeartFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -212,7 +213,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
                         if (response.isSuccessful()) {
                             ResultResponse result = response.body();
-                            Log.d("성공", new Gson().toJson(response.body()));
+                            Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
@@ -225,8 +226,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     }
                 });
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
-            Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
         }

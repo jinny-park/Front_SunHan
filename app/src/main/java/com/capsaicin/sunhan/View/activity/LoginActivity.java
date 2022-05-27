@@ -156,10 +156,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void setData(){
-        mypageAdapter.addItem(new MypageItem("잔액조회",R.drawable.card_icon));
-        mypageAdapter.addItem(new MypageItem("내활동",R.drawable.mylog));
+        mypageAdapter.addItem(new MypageItem("잔액조회",R.drawable.card_check));
+        mypageAdapter.addItem(new MypageItem("내활동",R.drawable.my_logs));
         mypageAdapter.addItem(new MypageItem("차단관리",R.drawable.block_user));
-        mypageAdapter.addItem(new MypageItem("약관및정책",R.drawable.ploicy));
+        mypageAdapter.addItem(new MypageItem("약관및정책",R.drawable.policy));
         mypageAdapter.addItem(new MypageItem("로그아웃",R.drawable.logout));
         mypageAdapter.addItem(new MypageItem("탈퇴하기",R.drawable.delete_user));
     }
