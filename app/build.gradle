@@ -103,4 +103,8 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-ui-auth:4.2.1'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
+    //카카오 Maps
+    implementation files('libs/libDaumMapAndroid.jar')
+
 }

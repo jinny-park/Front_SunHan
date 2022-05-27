@@ -107,6 +107,7 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         ViewGroup letterLayout = (ViewGroup) findViewById(R.id.store_letter);
         ViewGroup shareLayout = (ViewGroup) findViewById(R.id.store_share);
+        ViewGroup findroadLayout = (ViewGroup) findViewById(R.id.store_findroad);
 
         likedChildItems = new ArrayList<>();
         scrapSunhan = new ArrayList ();
@@ -152,6 +153,13 @@ public class StoreDetailActivity extends AppCompatActivity {
                 // 찬 하트를 눌렀을때 스크랩 취소
                 getHeartOffData();
 
+            }
+        });
+
+        findroadLayout.setOnClickListener(new View.OnClickListener() { // 카카오 지도 길찾기로 이동하기
+            @Override public void onClick(View v) {
+                Intent intent = new Intent(StoreDetailActivity.this, FindRoadActivity.class);
+                startActivity(intent);
             }
         });
 
