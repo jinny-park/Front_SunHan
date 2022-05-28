@@ -1,6 +1,7 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,8 @@ import com.capsaicin.sunhan.View.fragment.HeartFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 
@@ -82,8 +85,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
         toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
-        heartFragment = new HeartFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, heartFragment).commit();
+        if(sunhanstMainFragment==null){
+            sunhanstMainFragment = new SunhanstMainFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, sunhanstMainFragment).commit();
+        }
 
         navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -92,6 +97,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_heart:
                         //찜한가게는 매번 불러와야 함
+                        if(heartFragment==null){
+                            heartFragment = new HeartFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, heartFragment).commit();
+                        }
                         allHideScreens();
                         getSupportFragmentManager().beginTransaction().remove(heartFragment).commit();
                         heartFragment = new HeartFragment();
@@ -112,10 +121,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         screenChange(myPageFragment);
                         return true;
                     case R.id.action_bottomnavi:
-                        if(sunhanstMainFragment==null){
-                            sunhanstMainFragment = new SunhanstMainFragment();
-                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, sunhanstMainFragment).commit();
-                        }
                         screenChange(sunhanstMainFragment);
                         return true;
                     case R.id.action_findstore:
@@ -130,7 +135,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
             }
         });
     }
-
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
@@ -249,9 +253,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             ResultResponse result = response.body();
                             allHideScreens();
-                            getSupportFragmentManager().beginTransaction().remove(sunhanstMainFragment).commit();
-                            sunhanstMainFragment = new SunhanstMainFragment();
-                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame,sunhanstMainFragment).commit();
+                            if(sunhanstMainFragment!=null){
+                                getSupportFragmentManager().beginTransaction().remove(sunhanstMainFragment).commit();
+                                sunhanstMainFragment = new SunhanstMainFragment();
+                                getSupportFragmentManager().beginTransaction().add(R.id.main_frame,sunhanstMainFragment).commit();
+                            }
                             Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());

@@ -23,14 +23,6 @@
             app:srcCompat="@drawable/sunhan_logo"
             android:layout_gravity="center"
             android:scaleType="fitCenter"/>
-<!--           <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:text="선한"-->
-<!--                android:textSize="20dp"-->
-<!--                android:textColor="@color/black">-->
-<!--            </TextView>-->
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -55,7 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         app:itemBackground="@color/white"
-        app:itemTextColor="#000000"
+        app:itemTextColor="@drawable/bottom_navi_effect"
+        app:itemIconTint="@drawable/bottom_navi_effect"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

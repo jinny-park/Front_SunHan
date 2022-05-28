@@ -71,6 +71,7 @@
         <entry key="..\:/Front_SunHan/app/src/main/res/layout/store_item.xml" value="0.25364583333333335" />
         <entry key="..\:/Front_SunHan/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/bottom_border.xml" value="0.26564102564102565" />
+        <entry key="..\:/SunHan/app/src/main/res/drawable/bottom_navi_effect.xml" value="0.2074074074074074" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/custom_spinner_background.xml" value="0.23796296296296296" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/letter_edit_border.xml" value="0.26564102564102565" />
         <entry key="..\:/SunHan/app/src/main/res/drawable/mypage_layout.xml" value="0.17962962962962964" />
@@ -87,7 +88,7 @@
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_main_nologin.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_mypage_add_card_detail.xml" value="0.25364583333333335" />
-        <entry key="..\:/SunHan/app/src/main/res/layout/activity_navi.xml" value="0.16574074074074074" />
+        <entry key="..\:/SunHan/app/src/main/res/layout/activity_navi.xml" value="0.2" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_set_alarm.xml" value="0.25364583333333335" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_sunhanst_store.xml" value="0.24567474048442905" />
         <entry key="..\:/SunHan/app/src/main/res/layout/activity_toolbar.xml" value="0.25364583333333335" />
