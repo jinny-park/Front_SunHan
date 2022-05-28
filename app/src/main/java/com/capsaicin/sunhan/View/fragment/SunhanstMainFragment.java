@@ -57,10 +57,6 @@ public class SunhanstMainFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_main, null);
 
-        sunhanstCardFragment = new SunhanstCardFragment();
-        sunhanstSunhanFragment = new SunhanstSunhanFragment();
-
-        getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container,sunhanstCardFragment).commit();
         addImage = view.findViewById(R.id.img_sunhan_donate);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,19 +71,23 @@ public class SunhanstMainFragment extends Fragment {
         tabs1.addTab(tabs1.newTab().setText("아동급식가맹점"));
         tabs1.addTab(tabs1.newTab().setText("선한영향력가게"));
 
+        sunhanstCardFragment = new SunhanstCardFragment();
+        getChildFragmentManager().beginTransaction().add(R.id.tabs_store_container,sunhanstCardFragment).commit();
+
         tabs1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab1) {
                 int position = tab1.getPosition();
-
-                Fragment selected = null;
                 if(position == 0){
-                    selected = sunhanstCardFragment;
+                    screenChange(sunhanstCardFragment);
                 }
                 else {
-                    selected = sunhanstSunhanFragment;
+                    if(sunhanstSunhanFragment==null){
+                        sunhanstSunhanFragment = new SunhanstSunhanFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_store_container,sunhanstSunhanFragment).commit();
+                    }
+                     screenChange(sunhanstSunhanFragment);
                 }
-                getChildFragmentManager().beginTransaction().replace(R.id.tabs_store_container, selected).commit();
             }
 
             @Override
@@ -103,6 +103,20 @@ public class SunhanstMainFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void screenChange(Fragment fragment){
+        allHideScreens();
+        if(fragment!=null)
+            getChildFragmentManager().beginTransaction().show(fragment).commit();
+    }
+
+
+    private void allHideScreens(){
+        if(sunhanstCardFragment!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanstCardFragment).commit();
+        if(sunhanstSunhanFragment!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanstSunhanFragment).commit();
     }
 
 }

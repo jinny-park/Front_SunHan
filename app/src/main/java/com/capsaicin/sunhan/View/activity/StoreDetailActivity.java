@@ -44,6 +44,7 @@ import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 //import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstCategoryFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import com.google.gson.Gson;
@@ -193,48 +194,41 @@ public class StoreDetailActivity extends AppCompatActivity {
 
 
         // 탭레이아웃
-
-        storeInfoFragment = new StoreInfoFragment();
-        storeLetterFragment = new StoreLetterFragment();
-        childrenStoreInfoFragment = new ChildrenStoreInfoFragment();
-
-        getDetailData();
-
-        if(whichStore==0)
-            getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, childrenStoreInfoFragment).commit();
-        else
-            getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, storeInfoFragment).commit();
-
-
         TabLayout tabs = findViewById(R.id.store_detail_tapLayout);
 
         tabs.addTab(tabs.newTab().setText("정보"));
         tabs.addTab(tabs.newTab().setText("감사편지"));
 
+        storeInfoFragment = new StoreInfoFragment();
+        childrenStoreInfoFragment = new ChildrenStoreInfoFragment();
+
+        getDetailData();
+
+        if(whichStore==0)
+            getSupportFragmentManager().beginTransaction().add(R.id.tabs_storedetail_container, childrenStoreInfoFragment).commit();
+        else
+            getSupportFragmentManager().beginTransaction().add(R.id.tabs_storedetail_container, storeInfoFragment).commit();
+
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-
-                Fragment selected = null;
-
                 if(position == 0){
                     if(whichStore ==0) { //0일 경우 가맹점 정보 프래그먼트
-
-                        selected = childrenStoreInfoFragment;
+                        screenChange(childrenStoreInfoFragment);
                     }
                     else{
                         // 1일경우 선한영향력정보 프래그먼트 -> 두개 정보다 달라서 따로 만듦
-                        selected = storeInfoFragment;
+                        screenChange(storeInfoFragment);
                     }
-
-
                 }
                 else if(position==1) {
-                    selected = storeLetterFragment;
-
+                    if(storeLetterFragment==null){
+                        storeLetterFragment = new StoreLetterFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.tabs_storedetail_container, storeLetterFragment).commit();
+                    }
+                    screenChange(storeLetterFragment);
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.tabs_storedetail_container, selected).commit();
             }
 
             @Override
@@ -243,8 +237,24 @@ public class StoreDetailActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {   }
         });
+    }
 
+    private void screenChange(Fragment fragment){
+        allHideScreens();
+        if(fragment!=null)
+            getSupportFragmentManager().beginTransaction().show(fragment).commit();
+    }
 
+    private void allHideScreens(){
+        if(whichStore==0){
+            if(childrenStoreInfoFragment!=null)
+                getSupportFragmentManager().beginTransaction().hide(childrenStoreInfoFragment).commit();
+        }else{
+            if(storeInfoFragment!=null)
+                getSupportFragmentManager().beginTransaction().hide(storeInfoFragment).commit();
+        }
+        if(storeLetterFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(storeLetterFragment).commit();
     }
 
 

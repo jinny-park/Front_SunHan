@@ -42,22 +42,8 @@ public class FindStoreFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_findstore, null);
 
-        /*ImageButton button=(ImageButton) view.findViewById(R.id.btn_search);
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                EditText findStore=(EditText)view.findViewById(R.id.search_view);
-                String name=findStore.getText().toString();
-                Log.d("name","검색어 전달");
-            }
-        });
-*/
         findChildrenResultFragment = new FindChildrenResultFragment();
-        findSunhanResultFragment = new FindSunhanResultFragment();
-
-      getChildFragmentManager().beginTransaction().replace(R.id.tabs_find_container,findChildrenResultFragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.tabs_find_container,findChildrenResultFragment).commit();
 
         TabLayout tabs1 = view.findViewById(R.id.findstore_tapLayout);
         tabs1.addTab(tabs1.newTab().setText("아동급식가맹점"));
@@ -67,15 +53,17 @@ public class FindStoreFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab1) {
                 int position = tab1.getPosition();
-
-                Fragment selected = null;
                 if(position == 0 ){
-                    selected = findChildrenResultFragment;
+                    screenChange(findChildrenResultFragment);
                 }
                 else {
-                    selected = findSunhanResultFragment;
+                    if(findSunhanResultFragment==null){
+                        findSunhanResultFragment = new FindSunhanResultFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_find_container, findSunhanResultFragment).commit();
+                    }
+                    screenChange(findSunhanResultFragment);
                 }
-                getChildFragmentManager().beginTransaction().replace(R.id.tabs_find_container, selected).commit();
+
             }
 
             @Override
@@ -90,6 +78,18 @@ public class FindStoreFragment extends Fragment {
         });
 
         return view;
+    }
 
+    private void screenChange(Fragment fragment){
+        allHideScreens();
+        if(fragment!=null)
+            getChildFragmentManager().beginTransaction().show(fragment).commit();
+    }
+
+    private void allHideScreens(){
+        if(findChildrenResultFragment!=null)
+            getChildFragmentManager().beginTransaction().hide(findChildrenResultFragment).commit();
+        if(findSunhanResultFragment!=null)
+            getChildFragmentManager().beginTransaction().hide(findSunhanResultFragment).commit();
     }
 }

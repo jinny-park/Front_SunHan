@@ -35,13 +35,6 @@ public class SunhanstSunhanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sunhanst_sunhan,null);
-        sunhanCategoryFragment1 = new SunhanstCategoryFragment();
-        sunhanCategoryFragment2 = new SunhanstCategoryFragment();
-        sunhanCategoryFragment3 = new SunhanstCategoryFragment();
-        sunhanCategoryFragment4 = new SunhanstCategoryFragment();
-        sunhanCategoryFragment5 = new SunhanstCategoryFragment();
-        sunhanCategoryFragment6 = new SunhanstCategoryFragment();
-
 
         TabLayout tabs2 = view.findViewById(R.id.food_tapLayout);
         tabs2.addTab(tabs2.newTab().setText("한식"));
@@ -51,41 +44,63 @@ public class SunhanstSunhanFragment extends Fragment {
         tabs2.addTab(tabs2.newTab().setText("카페/디저트"));
         tabs2.addTab(tabs2.newTab().setText("기타"));
 
-        getChildFragmentManager().beginTransaction().replace(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment1 ).commit();
+        sunhanCategoryFragment1 = new SunhanstCategoryFragment();
+        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment1 ).commit();
 
         tabs2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab2) {
                 int position = tab2.getPosition();
-
-                Fragment selected = null;
                 if(position == 0){
                     category = "한식";
-                    selected = sunhanCategoryFragment1;
+                    screenChange(sunhanCategoryFragment1);
                 }
                 else if(position==1){
                     category = "중식";
-                    selected = sunhanCategoryFragment2;
+                    if(sunhanCategoryFragment2==null){
+                        sunhanCategoryFragment2 = new SunhanstCategoryFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment2 ).commit();
+                    }
+                   screenChange(sunhanCategoryFragment2);
                 }
                 else if(position==2){
                     category = "일식";
-                    selected = sunhanCategoryFragment3;
+                    if(sunhanCategoryFragment3==null){
+                        sunhanCategoryFragment3 = new SunhanstCategoryFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment3 ).commit();
+                    }
+
+                    screenChange(sunhanCategoryFragment3);
 
                 }
                 else if(position==3){
                     category = "양식";
-                    selected = sunhanCategoryFragment4;
+                    if(sunhanCategoryFragment4==null){
+                        sunhanCategoryFragment4 = new SunhanstCategoryFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment4 ).commit();
+                    }
+
+                    screenChange(sunhanCategoryFragment4);
                 }
                 else if(position==4){
                     category = "카페/디저트";
-                    selected = sunhanCategoryFragment5;
+                    if(sunhanCategoryFragment5==null){
+                        sunhanCategoryFragment5 = new SunhanstCategoryFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment5 ).commit();
+                    }
+
+                    screenChange(sunhanCategoryFragment5);
 
                 }
                 else {
                     category = "기타";
-                    selected = sunhanCategoryFragment6;
+                    if(sunhanCategoryFragment6==null){
+                        sunhanCategoryFragment6 = new SunhanstCategoryFragment();
+                        getChildFragmentManager().beginTransaction().add(R.id.tabs_sunhan_store_container,  sunhanCategoryFragment6 ).commit();
+                    }
+
+                    screenChange(sunhanCategoryFragment6);
                 }
-                getChildFragmentManager().beginTransaction().replace(R.id.tabs_sunhan_store_container, selected).commit();
             }
 
             @Override
@@ -101,6 +116,28 @@ public class SunhanstSunhanFragment extends Fragment {
 
         return view;
 
+    }
+
+    private void screenChange(Fragment fragment){
+        allHideScreens();
+        if(fragment!=null)
+            getChildFragmentManager().beginTransaction().show(fragment).commit();
+    }
+
+
+    private void allHideScreens(){
+        if(sunhanCategoryFragment1!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment1).commit();
+        if(sunhanCategoryFragment2!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment2).commit();
+        if(sunhanCategoryFragment3!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment3).commit();
+        if(sunhanCategoryFragment4!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment4).commit();
+        if(sunhanCategoryFragment5!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment5).commit();
+        if(sunhanCategoryFragment6!=null)
+            getChildFragmentManager().beginTransaction().hide(sunhanCategoryFragment6).commit();
     }
 
 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.LikedChildItem;
@@ -44,7 +45,7 @@ public class LikedStoreCardstFragment extends Fragment {
     ProgressBar progressBar;
     private RetrofitInstance tokenRetrofitInstance ;
     LikedChildAdapter likedChildAdapter;
-
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -55,12 +56,25 @@ public class LikedStoreCardstFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar_liked_card);
         progressBar.setVisibility(View.VISIBLE);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe_likeCard);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 새로운 데이터 스와이프로 얻어오기
+                initData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        //리사이클러뷰 설정
         recyclerView = view.findViewById(R.id.liked_cardStore);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager recyclerViewManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(recyclerViewManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        // 처음 생성 됐을 때 초기 데이터 요청
         initData();
 
         return view;

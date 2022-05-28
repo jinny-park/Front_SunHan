@@ -21,11 +21,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.capsaicin.sunhan.Model.AddressItem;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
+import com.capsaicin.sunhan.Model.SunHanDetailItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
@@ -74,39 +76,54 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        myPageFragment = new MyPageFragment();
-        heartFragment = new HeartFragment();
-        findStoreFragment = new FindStoreFragment();
-        communityFragment = new CommunityFragment();
-        sunhanstMainFragment = new SunhanstMainFragment();
 
         navigationBarView = findViewById(R.id.bottomNavi);
 
         toolbar = findViewById (R.id.toolbar);
         setToolbar();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
+        heartFragment = new HeartFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, heartFragment).commit();
 
         navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
                     case R.id.action_heart:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, heartFragment).commit();
+                        //찜한가게는 매번 불러와야 함
+                        allHideScreens();
+                        getSupportFragmentManager().beginTransaction().remove(heartFragment).commit();
+                        heartFragment = new HeartFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.main_frame,heartFragment).commit();
                         return true;
                     case R.id.action_community:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, communityFragment).commit();
+                        if(communityFragment==null){
+                            communityFragment = new CommunityFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, communityFragment).commit();
+                        }
+                        screenChange(communityFragment);
                         return true;
                     case R.id.action_mypage:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myPageFragment).commit();
+                        if(myPageFragment==null){
+                            myPageFragment = new MyPageFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, myPageFragment).commit();
+                        }
+                        screenChange(myPageFragment);
                         return true;
                     case R.id.action_bottomnavi:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, sunhanstMainFragment).commit();
+                        if(sunhanstMainFragment==null){
+                            sunhanstMainFragment = new SunhanstMainFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, sunhanstMainFragment).commit();
+                        }
+                        screenChange(sunhanstMainFragment);
                         return true;
                     case R.id.action_findstore:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, findStoreFragment).commit();
+                        if(findStoreFragment==null){
+                            findStoreFragment = new FindStoreFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame, findStoreFragment).commit();
+                        }
+                        screenChange(findStoreFragment);
                         return true;
                 }
                     return false;
@@ -121,6 +138,24 @@ public class BottomNavigationActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled (true); // 앱바에 뒤로가기 버튼 만들기
     }
 
+    private void screenChange(Fragment fragment){
+        allHideScreens();
+        if(fragment!=null)
+            getSupportFragmentManager().beginTransaction().show(fragment).commit();
+    }
+
+    private void allHideScreens(){
+        if(myPageFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(myPageFragment).commit();
+        if(communityFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+        if(sunhanstMainFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(sunhanstMainFragment).commit();
+        if(findStoreFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(findStoreFragment).commit();
+        if(heartFragment!=null)
+            getSupportFragmentManager().beginTransaction().hide(heartFragment).commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -213,6 +248,10 @@ public class BottomNavigationActivity extends AppCompatActivity {
                     public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
                         if (response.isSuccessful()) {
                             ResultResponse result = response.body();
+                            allHideScreens();
+                            getSupportFragmentManager().beginTransaction().remove(sunhanstMainFragment).commit();
+                            sunhanstMainFragment = new SunhanstMainFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_frame,sunhanstMainFragment).commit();
                             Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("REST FAILED MESSAGE", response.message());
