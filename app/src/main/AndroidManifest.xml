@@ -28,7 +28,8 @@
             android:value="@string/kakao_app_key" />
         <activity
             android:name="com.capsaicin.sunhan.View.activity.LauncherActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,64 +45,79 @@
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.StoreDetailActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.ToolbarActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.BottomNavigationActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.CardCheckActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.ManageBlockActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.EditProfileActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.DeleteAccountActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.MyLogsActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.PolicyActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name="com.capsaicin.sunhan.View.activity.WriteActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.CommunityDetailActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.LocationSettingActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.WriteLetterActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name="com.capsaicin.sunhan.View.activity.EditPostActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
         </activity>
 
@@ -115,7 +131,7 @@
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
                 <data android:host="oauth"
-                    android:scheme="kakao11b33a8e699d97bd408aa024de68650b" />
+                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
 
