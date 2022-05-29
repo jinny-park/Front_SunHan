@@ -5,27 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_border"
+    android:clickable="true"
     android:gravity="center_vertical"
-    android:padding="10sp"
     android:orientation="vertical"
     >
-
     <LinearLayout
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?selectableItemBackground"
+        android:layout_gravity="center"
+        android:padding="8sp"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="340sp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/myPost_userProfile_card"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
+            android:layout_width="25sp"
+            android:layout_height="30sp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_margin="10dp"
+            android:layout_margin="10sp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="75dp"
+            app:cardCornerRadius="75sp"
             tools:ignore="MissingConstraints">
 
             <ImageView
@@ -44,9 +50,9 @@
             android:layout_weight="15"
             android:gravity="center|start"
             android:text="TextView"
-            android:layout_margin="5dp"
+            android:layout_margin="5sp"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -63,14 +69,14 @@
 
     <TextView
         android:id="@+id/myPost_content"
-        android:layout_width="340dp"
+        android:layout_width="340sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="10sp"
         android:text="TextView"
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="#000000"
-        android:textSize="17sp" />
-
+        android:textSize="13sp" />
+    </LinearLayout>
 </LinearLayout>

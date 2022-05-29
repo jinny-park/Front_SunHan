@@ -1,5 +1,6 @@
 package com.capsaicin.sunhan.View.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +22,8 @@ import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
 import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstSunhanFragment;
 import com.google.gson.Gson;
 import com.kakao.sdk.user.UserApiClient;
 
@@ -68,8 +71,13 @@ public class DeleteAccountActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             LoginActivity.userAccessToken = null;
                             LoginActivity.userRefreshToken = null;
-                            Intent intent = new Intent(getApplication(), LoginActivity.class);
-                            startActivity(intent);
+                            MyPageFragment.userNickName.setText("로그인을 해주세요");
+                            MyPageFragment.userEmail.setText("");
+                            MyPageFragment.userImage.setImageResource(R.drawable.profile);
+                            SunhanstSunhanFragment.category="한식";
+                            //탈퇴 후 서울 시청 위도
+                            LocationSettingActivity.lat=37.5666805;
+                            LocationSettingActivity.lng=126.9784147;
                             finish();
                         }
                     });

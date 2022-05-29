@@ -211,6 +211,7 @@ public class MyPageFragment extends Fragment {
                                 userNickName.setText("로그인을 해주세요");
                                 userEmail.setText("");
                                 userImage.setImageResource(R.drawable.profile);
+                                SunhanstSunhanFragment.category="한식";
                                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 ((BottomNavigationActivity)getActivity()).finish();
                                 startActivity(intent);

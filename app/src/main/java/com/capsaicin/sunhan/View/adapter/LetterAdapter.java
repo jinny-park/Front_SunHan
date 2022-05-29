@@ -64,28 +64,15 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).into(holder.letterImage);
         }
 
-//        if(letterItems.get(position).getChildrenId()!=null){ //아동급식가맹점
-//            holder.delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.d("가맹점","편지삭제");
-//                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"children");
-//                }
-//            });
-//        } else if(letterItems.get(position).getSunhanId()!=null){ //선한영향력
-//            holder.delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.d("선한영향력","편지삭제");
-//                    letterDelete(position,letterItems.get(position).getWriterItem().get_id(),letterItems.get(position).get_id(),"sunhan");
-//                }
-//            });
-//        }
-
         holder.block.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                letterBlock(letterItems.get(position).get_id());
+
+                if(letterItems.get(position).getWriterItem().get_id()!=MyPageFragment.userId){
+                    popUP();
+                }else{
+                    letterBlock(letterItems.get(position).get_id());
+                }
             }
         });
 
@@ -111,8 +98,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         TextView letterDate;
         ImageView letterImage;
         ImageView userProfile;
-        Button delete;
-        TextView edit;
         Button block;
 
         public ViewHolder(@NonNull View itemView, final OnClickLetterListener listener) {
@@ -123,8 +108,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
             letterName = itemView.findViewById(R.id.writer);
             letterContent = itemView.findViewById(R.id.content);
             letterDate = itemView.findViewById(R.id.createAt);
-//            delete = itemView.findViewById(R.id.delete_letter);
-//            edit = itemView.findViewById(R.id.edit_letter);
             block = itemView.findViewById(R.id.block_letter);
         }
     }
@@ -152,15 +135,28 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
                      }
                  });
         } else {
-            //로그인 안함
-            AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-            dlg.setMessage("로그인 후 이용해주세요."); // 메시지
-            dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            dlg.show();
+            loginPopUP();
         }
+    }
+
+    private void popUP(){
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+        dlg.setMessage("본인 편지는 신고할 수 없습니다."); // 메시지
+        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        dlg.show();
+    }
+
+    private void loginPopUP(){
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+        dlg.setMessage("로그인을 해주세요"); // 메시지
+        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        dlg.show();
     }
 
     @Override
@@ -168,12 +164,6 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         return letterItems.size();
     }
 
-
-    public void removeItem(int position){
-        letterItems.remove(position);
-        notifyItemRemoved(position);
-        notifyDataSetChanged();
-  }
 
     public void addList(ArrayList <LetterItem> list){
         letterItems.addAll(list);

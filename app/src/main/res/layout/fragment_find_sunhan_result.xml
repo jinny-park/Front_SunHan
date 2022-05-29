@@ -41,7 +41,6 @@
             android:id="@+id/find_sunhan_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             app:layout_constrainedHeight="true"/>
 
         <ProgressBar

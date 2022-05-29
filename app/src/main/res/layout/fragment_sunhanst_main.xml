@@ -26,6 +26,8 @@
                 android:id="@+id/img_sunhan_donate"
                 android:layout_width="match_parent"
                 android:layout_height="135dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/sunhan_ad1" />
             <FrameLayout

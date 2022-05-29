@@ -3,22 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/bottom_border"
+    android:clickable="true"
     android:layout_height="wrap_content">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bottom_border"
+        android:background="?selectableItemBackground"
         android:orientation="horizontal">
-
-
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/sunhan_logo_line" />
-
+            app:srcCompat="@drawable/store_main_icon" />
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -63,6 +61,4 @@
                 android:textSize="16dp"/>
         </LinearLayout>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
