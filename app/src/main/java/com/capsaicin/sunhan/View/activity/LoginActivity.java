@@ -11,13 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.TokenResponse;
+import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CommunityAdapter;
 import com.capsaicin.sunhan.View.adapter.MypageAdapter;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.google.gson.Gson;
 import com.kakao.sdk.auth.LoginClient;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -108,6 +111,32 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void requestUserData(){
+        if(LoginActivity.userAccessToken!=null){
+            if(tokenRetrofitInstance!=null){
+                Call<UserResponse> call = RetrofitInstance.getRetrofitService().getUser("Bearer "+LoginActivity.userAccessToken);
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            UserResponse result = response.body();
+                            MyPageFragment.userId = result.getUserItem().get_id();
+                            MyPageFragment.user_id = result.getUserItem().get_id(); //로그인 유저 id 정보 저장
+                            Log.d("성공", new Gson().toJson(response.body()));
+                        } else {
+                            Log.d("REST FAILED MESSAGE", response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Log.d("REST ERROR!", t.getMessage());
+                        Toast.makeText(getApplicationContext(), "네트워크를 확인해주세요!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
     private void sendToken(String token){
         if(tokenRetrofitInstance!=null){
             Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getkakaoToken("Bearer "+token);
@@ -138,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public Unit invoke(User user, Throwable throwable) {
                 if ( user != null) { //로그인 성공 시 화면 이동
+                    requestUserData(); //마이페이지 프로필 세팅
                     Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
                     startActivity(intent);
                     finish();
