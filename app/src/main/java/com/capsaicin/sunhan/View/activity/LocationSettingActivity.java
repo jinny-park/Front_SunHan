@@ -117,6 +117,40 @@ public class LocationSettingActivity extends AppCompatActivity {
 
             }
         });
+
+        /*Button SearchLocationButton = (Button) findViewById(R.id.location_search_btn);
+        SearchLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0)
+            {
+
+                gpsTracker = new GpsTracker(LocationSettingActivity.this);
+
+                double latitude = gpsTracker.getLatitude(); //위도
+                double longitude = gpsTracker.getLongitude(); //경도
+
+                lat = latitude; // 사용자의 위도경도 스태틱으로 넣어줌 -> 위도경도를 api 요청시 필요할 때 사용
+                lng = longitude; // 사용자의 위도경도
+                addressItem = new AddressItem (latitude,longitude);
+
+                String address = getCurrentAddress(latitude, longitude);
+                if(!address.equals("지오코더 서비스 사용불가")){ //네트워크 활성화 됨
+                    textview_address.setText(address);
+                    Toast.makeText(LocationSettingActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), BottomNavigationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{ //네트워크 활성화 안됨
+                    Toast.makeText(LocationSettingActivity.this, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });*/
+
+
+
+
+
     }
 
     /*
