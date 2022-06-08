@@ -37,6 +37,7 @@ import com.capsaicin.sunhan.Model.LetterResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
@@ -86,6 +87,7 @@ public class StoreLetterFragment extends Fragment {
             @Override
             public void onRefresh() {
                 initLetterData(0);
+                page=1;
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -140,7 +142,10 @@ public class StoreLetterFragment extends Fragment {
                         letterRecyclerView.setAdapter(letterAdapter);
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            initLetterData(0);
+                        }
                         Log.d("편지 로딩 실패", response.message());
                     }
                 }
@@ -164,7 +169,10 @@ public class StoreLetterFragment extends Fragment {
 
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            initLetterData(0);
+                        }
                         Log.d("ERROR", response.message());
                     }
                 }
@@ -192,7 +200,10 @@ public class StoreLetterFragment extends Fragment {
                         letterAdapter.addList(result.getData());
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getLetterData(page);
+                        }
                         Log.d("편지실패", response.message());
                     }
                 }
@@ -214,7 +225,10 @@ public class StoreLetterFragment extends Fragment {
                         letterAdapter.addList(result.getData());
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getLetterData(page);
+                        }
                         Log.d("편지실패", response.message());
                     }
                 }
@@ -226,5 +240,26 @@ public class StoreLetterFragment extends Fragment {
                 }
             });
         }
+    }
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 }

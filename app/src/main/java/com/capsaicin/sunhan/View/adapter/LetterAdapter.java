@@ -60,8 +60,12 @@ public class LetterAdapter extends RecyclerView.Adapter<LetterAdapter.ViewHolder
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
         holder.letterContent.setText(letterItems.get(position).getContent());
         holder.letterDate.setText(letterItems.get(position).getCreateAt());
+
         if(letterItems.get(position).getImageUrl()!=null){
+            holder.letterImage.setVisibility(View.VISIBLE);
             Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).into(holder.letterImage);
+        }else{
+            holder.letterImage.setVisibility(View.GONE);
         }
 
         holder.block.setOnClickListener(new View.OnClickListener() {

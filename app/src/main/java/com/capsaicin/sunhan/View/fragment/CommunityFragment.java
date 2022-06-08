@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.capsaicin.sunhan.Model.CommunityResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
@@ -151,13 +152,18 @@ public class CommunityFragment extends Fragment {
                         } else {
                             progressBar.setVisibility(View.GONE);
                             Log.d("REST FAILED MESSAGE", response.message());
-                            Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                initData(0);
+                            }
+
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CommunityResponse> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
                         Log.d("REST ERROR!", t.getMessage());
                     }
                 });
@@ -190,6 +196,10 @@ public class CommunityFragment extends Fragment {
                             });
                         } else {
                             progressBar.setVisibility(View.GONE);
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                getData(page);
+                            }
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }
@@ -213,5 +223,27 @@ public class CommunityFragment extends Fragment {
                 });
         AlertDialog msgDlg = msgBuilder.create();
         msgDlg.show();
+    }
+
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 }

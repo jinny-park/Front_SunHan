@@ -57,8 +57,10 @@ public interface RetrofitServiceApi {
 
     @GET("api/auth/kakao") // 카카오 토큰 인증
     Call<TokenResponse> getkakaoToken(@Header("authorization") String token);
-    @GET("api/auth/google")
-    Call<TokenResponse> getgoogleToken(@Header("authorization") String token);
+
+    @GET("api/auth/refresh") // 리프레시토큰
+    Call<TokenResponse> getRefreshToken(@Header("authorization") String accessToken, @Header("refresh") String refreshToken );
+
     @GET("api/users") // 유저정보 받아오기
     Call<UserResponse> getUser(@Header("authorization") String token);
 

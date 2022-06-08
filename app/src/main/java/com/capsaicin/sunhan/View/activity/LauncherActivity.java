@@ -6,27 +6,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.TokenResponse;
+import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
+import com.capsaicin.sunhan.View.fragment.MyPageFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstCategoryFragment;
+import com.capsaicin.sunhan.View.fragment.SunhanstSunhanFragment;
+import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LauncherActivity extends AppCompatActivity {
     private static int TIME_OUT = 2000;
+    private RetrofitInstance tokenRetrofitInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
-
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        final View myLayout = findViewById(R.id.launch);
+        tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 Intent intent;
                 if(LoginActivity.userAccessToken!=null){
+                    SunhanstSunhanFragment.category="한식";
                     intent = new Intent(LauncherActivity.this, BottomNavigationActivity.class);
                 }
                 else{
@@ -37,4 +47,5 @@ public class LauncherActivity extends AppCompatActivity {
             }
         }, TIME_OUT);
     }
+
 }

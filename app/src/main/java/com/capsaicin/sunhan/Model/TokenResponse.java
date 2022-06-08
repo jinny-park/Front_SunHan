@@ -8,7 +8,18 @@ public class TokenResponse {
     private String message;
 
     @SerializedName("data")
-    TokenItem tokenItem;
+    private TokenItem tokenItem;
+
+    @SerializedName("errors")
+    private Error error;
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
 
     public String getMessage() {
         return message;

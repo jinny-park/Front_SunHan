@@ -43,6 +43,7 @@ import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.SunHanSendLetterItem;
 import com.capsaicin.sunhan.Model.SunHanSendLetterResponse;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.Model.WriterItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.LetterAdapter;
@@ -185,6 +186,10 @@ public class WriteLetterActivity extends AppCompatActivity {
                     ChildrenSendLetterResponse result = response.body();
                     Log.d("아동급식카드편지성공", new Gson().toJson(response.body()));
                 } else {
+                    if(response.message().equals("Unauthorized")){
+                        checkAuthorized();
+                        childrenRetrofitMethod(Lid,letter,filePart);
+                    }
                     Log.d("REST FAILED MESSAGE", response.message());
                 }
             }
@@ -228,6 +233,10 @@ public class WriteLetterActivity extends AppCompatActivity {
                     SunHanSendLetterResponse result = response.body();
                     Log.d("선한편지성공", new Gson().toJson(response.body()));
                 } else {
+                    if(response.message().equals("Unauthorized")){
+                        checkAuthorized();
+                        sunHanRetrofitMethod(Lid,letter,filePart);
+                    }
                     Log.d("REST FAILED MESSAGE", response.message());
                 }
             }
@@ -379,5 +388,26 @@ public class WriteLetterActivity extends AppCompatActivity {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
 
 }

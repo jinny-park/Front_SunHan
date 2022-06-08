@@ -29,6 +29,7 @@ import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.SunHanDetailItem;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
@@ -135,6 +136,29 @@ public class BottomNavigationActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
         ActionBar actionBar = getSupportActionBar (); //앱바 제어를 위해 툴바 액세스
@@ -260,6 +284,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
                             }
                             Toast.makeText(BottomNavigationActivity.this, "현재위치 잡기 성공!", Toast.LENGTH_SHORT).show();
                         } else {
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                            }
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }

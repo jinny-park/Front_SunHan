@@ -32,7 +32,7 @@ public class RetrofitInstance {
         retrofitService = retrofit.create(RetrofitServiceApi.class);
     }
 
-    public static RetrofitInstance getRetrofitInstance() {
+    public static RetrofitInstance getRetrofitInstance() { // 싱글톤
         if (retrofitInstance == null) {
             retrofitInstance = new RetrofitInstance();
         }

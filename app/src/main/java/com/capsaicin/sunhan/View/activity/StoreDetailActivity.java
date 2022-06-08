@@ -37,6 +37,7 @@ import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
 import com.capsaicin.sunhan.Model.ScrapsSunHanItem;
 import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
@@ -271,6 +272,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                             }
 
                         } else {
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                initLikedSunhanData();
+                            }
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }
@@ -305,6 +310,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                                 heart_full_img.setVisibility(View.INVISIBLE);
                             }
                         } else {
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                initLikedChildData();
+                            }
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }
@@ -328,27 +337,14 @@ public class StoreDetailActivity extends AppCompatActivity {
                     public void onResponse(Call<CardStoreDetailResponse> call, Response<CardStoreDetailResponse> response) {
                         if (response.isSuccessful()) {
                             CardStoreDetailResponse result = response.body();
-                            String weektime =result.getCardStoreItem().getWeekdayStartTime()+"-"+result.getCardStoreItem().getWeekdayEndTime();
-                            String weekendtime = result.getCardStoreItem().getWeekendStartTime()+"-"+result.getCardStoreItem().getWeekendEndTime();
-                            String holidaytime = result.getCardStoreItem().getHolydayStartTime()+"-"+result.getCardStoreItem().getHolydayEndTime();
-                            ChildrenStoreInfoFragment.text_name.setText("가게이름: ");
-                            ChildrenStoreInfoFragment.text_address.setText("가게주소: ");
-                            ChildrenStoreInfoFragment.text_phone.setText("가게번호: ");
-                            ChildrenStoreInfoFragment.text_weekday.setText("평일운영: ");
-                            ChildrenStoreInfoFragment.text_weekend.setText("주말운영: ");
-                            ChildrenStoreInfoFragment.text_holiday.setText("공휴일운영: ");
-                            ChildrenStoreInfoFragment.storeName.setText(result.getCardStoreItem().getName());
                             storeName.setText(result.getCardStoreItem().getName());
-                            ChildrenStoreInfoFragment.weekdayTime.setText(weektime);
-                            ChildrenStoreInfoFragment.weekendTime.setText(weekendtime);
-                            ChildrenStoreInfoFragment.holidayTime.setText(holidaytime);
-                            ChildrenStoreInfoFragment.address.setText(result.getCardStoreItem().getAddress());
                             storeAddress.setText(result.getCardStoreItem().getAddress());
-                            ChildrenStoreInfoFragment.phone.setText(result.getCardStoreItem().getPhoneNumber());
-
                             Log.d("성공", new Gson().toJson(response.body()));
                         } else {
-
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                getDetailData();
+                            }
                             Log.d("가맹점상세정보실패", response.message());
                         }
                     }
@@ -365,25 +361,14 @@ public class StoreDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<SunHanStoreDetailResponse> call, Response<SunHanStoreDetailResponse> response) {
                     if (response.isSuccessful()) {
                         SunHanStoreDetailResponse result = response.body();
-
-                        StoreInfoFragment.text_sunhan_offer.setText("제공음식: ");
-                        StoreInfoFragment.text_sunhan_Name.setText("가게이름: ");
-                        StoreInfoFragment.text_sunhan_addr.setText("가게주소: ");
-                        StoreInfoFragment.text_sunhan_target.setText("제공대상: ");
-                        StoreInfoFragment.text_sunhan_time.setText("운영시간: ");
-                        StoreInfoFragment.text_sunhan_phone.setText("가게번호: ");
                         storeName.setText(result.getSunHanDetailItem().getName());
                         storeAddress.setText(result.getSunHanDetailItem().getAddress());
-                        StoreInfoFragment.sunhan_Name.setText(result.getSunHanDetailItem().getName());
-                        StoreInfoFragment.sunhan_addr.setText(result.getSunHanDetailItem().getAddress());
-                        StoreInfoFragment.sunhan_phone.setText(result.getSunHanDetailItem().getPhoneNumber());
-                        StoreInfoFragment.sunhan_time.setText(result.getSunHanDetailItem().getOpeningHours());
-                        StoreInfoFragment.sunhan_target.setText(result.getSunHanDetailItem().getTatget());
-                        StoreInfoFragment.sunhan_offer.setText(result.getSunHanDetailItem().getOffer());
-
                         Log.d("성공", new Gson().toJson(response.body()));
                     } else {
-
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getDetailData();
+                        }
                         Log.d("가맹점상세정보실패", response.message());
                     }
                 }
@@ -397,6 +382,29 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         }
     }
+
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
+    }
+
 
     void setToolbar(){
         setSupportActionBar (toolbar); //액티비티의 앱바(App Bar)로 지정
@@ -504,6 +512,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "찜하기 완료", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 아동 급식 가게 등록", new Gson().toJson(response.body()));
                     } else {
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getHeartOnData();
+                        }
                         Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
@@ -524,6 +536,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "찜하기 완료", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 선한 가게 등록", new Gson().toJson(response.body()));
                     } else {
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getHeartOnData();
+                        }
                         Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
@@ -550,6 +566,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "찜하기 해제", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 아동가맹점 가게 취소", new Gson().toJson(response.body()));
                     } else {
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getHeartOffData();
+                        }
                         Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
@@ -569,6 +589,10 @@ public class StoreDetailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "찜하기 해제", Toast.LENGTH_SHORT).show();
                         Log.d("찜한 선한 가게 취소", new Gson().toJson(response.body()));
                     } else {
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getHeartOffData();
+                        }
                         Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
@@ -582,7 +606,5 @@ public class StoreDetailActivity extends AppCompatActivity {
 
         }
     }
-
-
 
 }

@@ -17,10 +17,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.capsaicin.sunhan.BuildConfig;
 import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
@@ -54,14 +58,19 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyLetterLogsAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         LetterItem item = letterItems.get(position);
         Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getWriterItem().getAvatarUrl()).error(R.drawable.profile).into(holder.userProfile);
         holder.letterName.setText(letterItems.get(position).getWriterItem().getNickname());
         holder.letterContent.setText(letterItems.get(position).getContent());
         holder.letterDate.setText(letterItems.get(position).getCreateAt());
 
-        if(letterItems.get(position).getImageUrl()!=null)
-             Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).error(R.drawable.profile).into(holder.letterImage);
+        if(letterItems.get(position).getImageUrl()!=null){
+            holder.letterImage.setVisibility(View.VISIBLE);
+            Glide.with(context).load("https://sunhan.s3.ap-northeast-2.amazonaws.com/raw/"+letterItems.get(position).getImageUrl()).into(holder.letterImage);
+        }else{
+            holder.letterImage.setVisibility(View.GONE);
+        }
 
         if(letterItems.get(position).getChildrenId()!=null){ //아동급식가맹점
             holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +107,28 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
                             toast.show();
                             Log.d("삭제성공", new Gson().toJson(response.body()));
                         } else {
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                call.enqueue(new Callback<ResultResponse>() {
+                                    @Override
+                                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            ResultResponse result = response.body();
+                                            removeItem(position);
+                                            Toast toast = Toast.makeText(context, "삭제성공",Toast.LENGTH_SHORT);
+                                            toast.show();
+                                            Log.d("삭제성공", new Gson().toJson(response.body()));
+                                        } else {
+                                            Log.d("편지삭제실패", response.message());
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+                                        Log.d("REST ERROR!", t.getMessage());
+                                        Toast.makeText(context, "네트워크를 확인해주세요!", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
                             Log.d("편지삭제실패", response.message());
                         }
                     }
@@ -110,6 +141,28 @@ public class MyLetterLogsAdapter extends RecyclerView.Adapter<MyLetterLogsAdapte
             }
         });
         dlg.show();
+    }
+
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 
     @Override

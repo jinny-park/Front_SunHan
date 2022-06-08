@@ -34,6 +34,7 @@ import com.capsaicin.sunhan.Model.CommunityWritingResponse;
 import com.capsaicin.sunhan.Model.DeleteResponse;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
+import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.CommunityDetailAdapter;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
@@ -205,6 +206,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         commuDetailRecycleView.setAdapter(communityDetailAdapter);
                     } else {
                         progressBar.setVisibility(View.GONE);
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            initComment(0);
+                        }
                         Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
@@ -250,6 +255,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                                                 if (response.isSuccessful()) {
                                                                     communityDetailAdapter.removeItem(position);
                                                                 } else {
+                                                                    if(response.message().equals("Unauthorized")){
+                                                                        checkAuthorized();
+                                                                    }
                                                                     Log.d("REST FAILED MESSAGE", response.message());
                                                                 }
                                                             }
@@ -306,6 +314,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                                                     Toast toast = Toast.makeText(getApplicationContext(), "신고되었습니다.", Toast.LENGTH_SHORT);
                                                                     toast.show();
                                                                 } else {
+                                                                    if(response.message().equals("Unauthorized")){
+                                                                        checkAuthorized();
+                                                                    }
                                                                     Log.d("REST FAILED MESSAGE", response.message());
                                                                 }
                                                             }
@@ -355,6 +366,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         });
                     } else {
                         progressBar.setVisibility(View.GONE);
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getComment(page);
+                        }
                     }
                 }
 
@@ -387,6 +402,12 @@ public class CommunityDetailActivity extends AppCompatActivity {
                             commentNum.setText(result.getCommunityItem().getCommuIsCommentCount());
                         }
                         user_id = result.getCommunityItem().getWriterItem().get_id(); // 글쓴이 id정보 저장
+                    }else {
+                        if(response.message().equals("Unauthorized")){
+                            checkAuthorized();
+                            getData();
+                        }
+                        Log.d("REST FAILED MESSAGE", response.message());
                     }
                 }
 
@@ -420,6 +441,10 @@ public class CommunityDetailActivity extends AppCompatActivity {
                             communityDetailAdapter.addItem(commentItem); //댓글 아이템에 추가 (화면 업데이트)
                             getData(); //상세정보 데이터 불러옴 (화면 업데이트)
                         } else {
+                            if(response.message().equals("Unauthorized")){
+                                checkAuthorized();
+                                saveComment(content);
+                            }
                             Log.d("REST FAILED MESSAGE", response.message());
                         }
                     }
@@ -473,6 +498,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                     });
                                     dlg.show();
                                 } else {
+                                    if(response.message().equals("Unauthorized")){
+                                        checkAuthorized();
+                                    }
                                     Log.d("REST FAILED MESSAGE", response.message());
                                 }
                             }
@@ -511,7 +539,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                     Toast toast = Toast.makeText(getApplicationContext(), "글 신고되었습니다", Toast.LENGTH_SHORT);
                                     toast.show();
                                 } else {
-
+                                    if(response.message().equals("Unauthorized")){
+                                        checkAuthorized();
+                                    }
                                     Log.d("ERROR", response.message());
                                 }
                             }
@@ -545,7 +575,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                     Toast toast = Toast.makeText(getApplicationContext(), "차단되었습니다", Toast.LENGTH_SHORT);
                                     toast.show();
                                 } else {
-
+                                    if(response.message().equals("Unauthorized")){
+                                        checkAuthorized();
+                                    }
                                     Log.d("ERROR", response.message());
                                 }
                             }
@@ -600,6 +632,28 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkAuthorized(){
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.isSuccessful()) {
+                    TokenResponse result = response.body();
+                    LoginActivity.userAccessToken = result.getTokenItem().getAccessToken();
+                    LoginActivity.userRefreshToken = result.getTokenItem().getRefreshToken();
+                    Log.d("리프레시성공", new Gson().toJson(response.body()));
+                } else {
+                    Log.d("리프레시토큰 실패", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("REST ERROR!", t.getMessage());
+            }
+        });
     }
 
 }
