@@ -77,6 +77,7 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onRefresh() {
                 initData(0);
+                page=1;
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

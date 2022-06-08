@@ -101,6 +101,7 @@ public class SunhanstCardFragment extends Fragment{
             @Override // 스와이프 실행 시 새 데이터
             public void onRefresh() {
                 initData(0);
+                page=1;
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
