@@ -146,9 +146,9 @@
 #### 6월 8일
 - [박의진] 리프레시토큰 추가 및 편지 부분 사진 오류 해결
 - [박의진] 스와이프 페이징 오류 해결
-#### 레트로핏 네트워크 통신
+### 레트로핏 네트워크 통신
 ![image](https://user-images.githubusercontent.com/77429906/175981693-4c09be9d-9d22-49a5-bcd1-e2179a9f2c74.png)
-#### 선한 어플리케이션 개발 완성 
+### 선한 어플리케이션 개발 완성 
 ![image](https://user-images.githubusercontent.com/77429906/175980767-e5f41d65-102c-46b2-b209-96c73d3db34a.png)
 ![image](https://user-images.githubusercontent.com/77429906/175980525-ce6987a4-d2f6-4bcb-89ca-64c8331b1a4a.png)
 ![image](https://user-images.githubusercontent.com/77429906/175980617-2ce2deae-c2df-4311-8671-a3203cc01e6f.png)
