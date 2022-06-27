@@ -146,3 +146,14 @@
 #### 6월 8일
 - [박의진] 리프레시토큰 추가 및 편지 부분 사진 오류 해결
 - [박의진] 스와이프 페이징 오류 해결
+#### 선한 어플리케이션 개발 완성 
+![image](https://user-images.githubusercontent.com/77429906/175980767-e5f41d65-102c-46b2-b209-96c73d3db34a.png)
+![image](https://user-images.githubusercontent.com/77429906/175980525-ce6987a4-d2f6-4bcb-89ca-64c8331b1a4a.png)
+![image](https://user-images.githubusercontent.com/77429906/175980617-2ce2deae-c2df-4311-8671-a3203cc01e6f.png)
+![image](https://user-images.githubusercontent.com/77429906/175980919-17da596d-0633-4e63-8d07-a02e5a571495.png)
+![image](https://user-images.githubusercontent.com/77429906/175981011-4c7f90eb-efa0-41d0-bf8c-3d24daee5c2e.png)
+![image](https://user-images.githubusercontent.com/77429906/175981111-b4c41de5-8c43-4256-95b6-4d2b4a65add8.png)
+![image](https://user-images.githubusercontent.com/77429906/175981176-67477032-78cb-44f1-a81c-26cfccd5fb8c.png)
+![image](https://user-images.githubusercontent.com/77429906/175981268-4b075e77-4e03-41b8-bbf3-2240ed3b50f7.png)
+![image](https://user-images.githubusercontent.com/77429906/175981330-1daf998e-69da-4f4a-9b60-1581d8a90de6.png)
+![image](https://user-images.githubusercontent.com/77429906/175981427-85c95682-17ca-4531-84d8-c1ce05d56eb8.png)
