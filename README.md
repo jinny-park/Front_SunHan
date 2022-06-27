@@ -4,6 +4,18 @@
 2. 경기대학교 태형배
 3. 경기대학교 이윤지
 
+### 기술스택 (클라이언트 파트)
+- Android Java
+- MVC 
+
+### 연동 api 
+- 카카오톡 로그인 api 사용
+- 선한 서버 api 연동 (서버 url: https://sunhan.site )
+- 카카오톡 메세지 전송 api 사용 
+
+### api 명세서
+- https://documenter.getpostman.com/view/13091019/UyrEgaLy
+
 ### 개발일지
 #### 4월 7일
 - [박의진] launch.xml, Login.xml, Mypage.xml 초기완성 
