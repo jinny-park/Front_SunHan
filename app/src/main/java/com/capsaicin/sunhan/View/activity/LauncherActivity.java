@@ -6,21 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.TokenResponse;
-import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.fragment.MyPageFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstCategoryFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstSunhanFragment;
-import com.google.gson.Gson;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LauncherActivity extends AppCompatActivity {
     private static int TIME_OUT = 2000;

@@ -24,9 +24,7 @@ import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.adapter.MyCommentLogsAdapter;
-import com.capsaicin.sunhan.View.adapter.MyPostLogsAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentLogsListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickPostLogsListener;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -149,6 +147,7 @@ public class MyLogsCommentFragment extends Fragment {
     {
         if(LoginActivity.userAccessToken!=null){
             if(tokenRetrofitInstance!=null){
+                progressBar.setVisibility(View.VISIBLE);
                 Call<MyCommentLogsResponse> call = RetrofitInstance.getRetrofitService().getMyComments("Bearer "+LoginActivity.userAccessToken,page);
                 call.enqueue(new Callback<MyCommentLogsResponse>() {
                     @Override

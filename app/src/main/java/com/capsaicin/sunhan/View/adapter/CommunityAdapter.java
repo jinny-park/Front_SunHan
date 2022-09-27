@@ -1,7 +1,6 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CommunityItem;
-import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommunityListener;
 

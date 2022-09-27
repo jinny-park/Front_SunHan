@@ -17,18 +17,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.signature.ObjectKey;
-import com.capsaicin.sunhan.BuildConfig;
 import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
-import com.capsaicin.sunhan.View.fragment.MyPageFragment;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

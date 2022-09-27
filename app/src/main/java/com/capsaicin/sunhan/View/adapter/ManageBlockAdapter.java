@@ -2,9 +2,7 @@ package com.capsaicin.sunhan.View.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
-import android.view.Choreographer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.BlockedItem;
@@ -22,7 +19,6 @@ import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
-import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickBlockedItemListener;
 import com.google.gson.Gson;
 

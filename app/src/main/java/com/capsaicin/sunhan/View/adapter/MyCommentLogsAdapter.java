@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.MyCommentLogsItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentLogsListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickPostLogsListener;
 
 import java.util.ArrayList;
 

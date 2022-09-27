@@ -1,55 +1,31 @@
 package com.capsaicin.sunhan.View.fragment;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
-
 import static com.capsaicin.sunhan.View.activity.StoreDetailActivity.whichStore;
-import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
-import com.capsaicin.sunhan.Model.LetterItem;
 import com.capsaicin.sunhan.Model.LetterResponse;
-import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.activity.CommunityDetailActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
-import com.capsaicin.sunhan.View.activity.WriteLetterActivity;
 import com.capsaicin.sunhan.View.adapter.LetterAdapter;
-import com.capsaicin.sunhan.View.adapter.MyCommentLogsAdapter;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickCommentLogsListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

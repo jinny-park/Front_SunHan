@@ -5,9 +5,6 @@ package com.capsaicin.sunhan.View.activity;
 //import static com.capsaicin.sunhan.Model.ScrapChildResponse.getScrapChildItem;
 //import static com.capsaicin.sunhan.Model.ScrapsSunHanResponse.getScrapsItem;
 
-import static com.capsaicin.sunhan.View.fragment.SunhanstMainFragment.storeId;
-
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,10 +28,8 @@ import com.capsaicin.sunhan.Model.CardStoreDetailResponse;
 import com.capsaicin.sunhan.Model.LikedChildItem;
 import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.ScrapChildItem;
 import com.capsaicin.sunhan.Model.ScrapChildResponse;
 import com.capsaicin.sunhan.Model.ScrapOnOffResponse;
-import com.capsaicin.sunhan.Model.ScrapsSunHanItem;
 import com.capsaicin.sunhan.Model.ScrapsSunHanResponse;
 import com.capsaicin.sunhan.Model.SunHanStoreDetailResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
@@ -43,9 +38,6 @@ import com.capsaicin.sunhan.View.fragment.ChildrenStoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreInfoFragment;
 import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
 //import com.capsaicin.sunhan.View.fragment.StoreMenuFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstCategoryFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import com.google.gson.Gson;

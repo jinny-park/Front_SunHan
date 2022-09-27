@@ -1,7 +1,5 @@
 package com.capsaicin.sunhan.View.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;

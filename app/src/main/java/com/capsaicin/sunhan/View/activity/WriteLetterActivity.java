@@ -1,12 +1,9 @@
 package com.capsaicin.sunhan.View.activity;
 
-import static com.capsaicin.sunhan.View.activity.StoreDetailActivity.whichStore;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -27,30 +24,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.capsaicin.sunhan.Model.ChildrenSendLetterItem;
 import com.capsaicin.sunhan.Model.ChildrenSendLetterResponse;
-import com.capsaicin.sunhan.Model.CommunityWritingPost;
-import com.capsaicin.sunhan.Model.LetterItem;
-import com.capsaicin.sunhan.Model.LetterResponse;
-import com.capsaicin.sunhan.Model.ProfileChangeResponse;
-import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.SunHanSendLetterItem;
 import com.capsaicin.sunhan.Model.SunHanSendLetterResponse;
 import com.capsaicin.sunhan.Model.TokenResponse;
-import com.capsaicin.sunhan.Model.WriterItem;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.adapter.LetterAdapter;
-import com.capsaicin.sunhan.View.fragment.CommunityFragment;
-import com.capsaicin.sunhan.View.fragment.MyPageFragment;
-import com.capsaicin.sunhan.View.fragment.StoreLetterFragment;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickLetterListener;
 import com.google.gson.Gson;
 
 import java.io.File;

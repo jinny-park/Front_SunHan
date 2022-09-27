@@ -1,7 +1,6 @@
 package com.capsaicin.sunhan.View.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.CardStoreItem;
-import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.CommunityItem;
 import com.capsaicin.sunhan.Model.MypageItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
@@ -66,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         no_user_login=findViewById(R.id.no_user_login);
         tokenRetrofitInstance=RetrofitInstance.getRetrofitInstance(); //레트로핏 싱글톤
 
+
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -94,9 +94,10 @@ public class LoginActivity extends AppCompatActivity {
                     LoginClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
                 }
 
+
+
             }
         });
-
 
 
         no_user_login.setOnClickListener(new View.OnClickListener() { //비회원 로그인

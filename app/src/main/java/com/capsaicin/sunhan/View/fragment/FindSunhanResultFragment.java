@@ -4,7 +4,6 @@ import static com.capsaicin.sunhan.View.activity.LocationSettingActivity.lat;
 import static com.capsaicin.sunhan.View.activity.LocationSettingActivity.lng;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +16,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.capsaicin.sunhan.Model.CardStoreItem;
-import com.capsaicin.sunhan.Model.CardStoreResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.StoreResponse;
@@ -32,9 +28,7 @@ import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
-import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
 import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
 

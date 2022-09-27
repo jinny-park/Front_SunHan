@@ -9,10 +9,7 @@
             <!-- 테두리 -->
             <stroke android:width="2dp" android:color="#FBE341" />
             <corners
-                android:bottomLeftRadius="10dp"
-                android:bottomRightRadius="10dp"
-                android:topLeftRadius="10dp"
-                android:topRightRadius="10dp" />
+                android:radius="40dp" />
         </shape>
     </item>
     <!-- 클릭했을 때 -->
@@ -24,10 +21,7 @@
             <stroke android:width="2dp" android:color="#FBE341" />
             <!-- 코너 둥근 정도 -->
             <corners
-                android:bottomLeftRadius="10dp"
-                android:bottomRightRadius="10dp"
-                android:topLeftRadius="10dp"
-                android:topRightRadius="10dp" />
+                android:radius="40dp" />
         </shape>
     </item>
 </selector>

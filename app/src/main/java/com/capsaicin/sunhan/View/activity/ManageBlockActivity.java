@@ -1,12 +1,8 @@
 package com.capsaicin.sunhan.View.activity;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,18 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.BlockListResponse;
-import com.capsaicin.sunhan.Model.BlockedItem;
-import com.capsaicin.sunhan.Model.ProfileChangeResponse;
-import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.adapter.ManageBlockAdapter;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickBlockedItemListener;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

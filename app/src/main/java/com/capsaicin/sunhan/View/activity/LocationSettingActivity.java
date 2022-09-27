@@ -26,19 +26,9 @@ import com.capsaicin.sunhan.Model.AddressItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
 
-import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import com.capsaicin.sunhan.Model.ResultResponse;
 
 
 public class LocationSettingActivity extends AppCompatActivity {

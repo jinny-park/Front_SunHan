@@ -1,9 +1,6 @@
 package com.capsaicin.sunhan.View.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,15 +14,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.Model.UserDeleteResponse;
-import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstSunhanFragment;
-import com.google.gson.Gson;
-import com.kakao.sdk.user.UserApiClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;

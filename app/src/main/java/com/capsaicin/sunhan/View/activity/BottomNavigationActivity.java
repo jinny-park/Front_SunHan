@@ -1,7 +1,6 @@
 package com.capsaicin.sunhan.View.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,18 +26,13 @@ import androidx.fragment.app.Fragment;
 import com.capsaicin.sunhan.Model.AddressItem;
 import com.capsaicin.sunhan.Model.ResultResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
-import com.capsaicin.sunhan.Model.SunHanDetailItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
 import com.capsaicin.sunhan.View.fragment.FindStoreFragment;
 import com.capsaicin.sunhan.View.fragment.HeartFragment;
 import com.capsaicin.sunhan.View.fragment.MyPageFragment;
-import com.capsaicin.sunhan.View.fragment.SunhanstCardFragment;
 import com.capsaicin.sunhan.View.fragment.SunhanstMainFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 
@@ -138,7 +132,8 @@ public class BottomNavigationActivity extends AppCompatActivity {
     }
 
     private void checkAuthorized(){
-        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
+        Call<TokenResponse> call = RetrofitInstance.getRetrofitService().
+                getRefreshToken("Bearer "+LoginActivity.userAccessToken,LoginActivity.userRefreshToken );
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {

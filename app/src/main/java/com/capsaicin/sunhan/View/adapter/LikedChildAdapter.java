@@ -10,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capsaicin.sunhan.Model.LikedChildItem;
-import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedChildListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 
 import java.util.ArrayList;
 

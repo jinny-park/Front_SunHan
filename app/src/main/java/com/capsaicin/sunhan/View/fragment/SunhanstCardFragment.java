@@ -17,39 +17,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.capsaicin.sunhan.Model.CardStoreItem;
 import com.capsaicin.sunhan.Model.CardStoreResponse;
-import com.capsaicin.sunhan.Model.LikedChildItem;
-import com.capsaicin.sunhan.Model.LikedSunHanItem;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
-import com.capsaicin.sunhan.Model.Retrofit.RetrofitServiceApi;
-import com.capsaicin.sunhan.Model.ScrapChildResponse;
-import com.capsaicin.sunhan.Model.StoreItem;
 import com.capsaicin.sunhan.Model.TokenResponse;
-import com.capsaicin.sunhan.Model.UserResponse;
 import com.capsaicin.sunhan.R;
-import com.capsaicin.sunhan.View.activity.BottomNavigationActivity;
 import com.capsaicin.sunhan.View.activity.LoginActivity;
 import com.capsaicin.sunhan.View.activity.StoreDetailActivity;
 import com.capsaicin.sunhan.View.adapter.CardStoreAdapter;
-import com.capsaicin.sunhan.View.adapter.LikedChildAdapter;
-import com.capsaicin.sunhan.View.adapter.SunhanStoreAdapter;
 import com.capsaicin.sunhan.View.interfaceListener.OnClickCardStoreItemListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickLikedChildListener;
-import com.capsaicin.sunhan.View.interfaceListener.OnClickStoreItemListener;
 import com.google.gson.Gson;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,7 +89,6 @@ public class SunhanstCardFragment extends Fragment{
         });
 
 
-
         sunhanCardRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             //리사이클러뷰 페이징네이션
             @Override
@@ -115,8 +96,9 @@ public class SunhanstCardFragment extends Fragment{
                 // 리사이클러뷰 스크롤 인지
                 // 스크롤 인지 시 추가데이터 서버에 요청 해서 10개씩 데이터 받아옴
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItemPosition = ((LinearLayoutManager) sunhanCardRecyclerView.getLayoutManager()).
-                        findLastCompletelyVisibleItemPosition();
+                int lastVisibleItemPosition = ((LinearLayoutManager) sunhanCardRecyclerView
+                        .getLayoutManager())
+                        .findLastCompletelyVisibleItemPosition();
                 int itemTotalCount = sunhanCardRecyclerView.getAdapter().getItemCount() - 1;
                 if(lastVisibleItemPosition == itemTotalCount) {
                     progressBar.setVisibility(View.VISIBLE);
@@ -157,7 +139,8 @@ public class SunhanstCardFragment extends Fragment{
 
 
     private void serverInitUserRequest(int page){ // 회원 서버 요청 레트로핏 함수
-        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService().getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
+        Call<CardStoreResponse> call = RetrofitInstance.getRetrofitService()
+                .getChildrenStoreList("Bearer "+LoginActivity.userAccessToken,page,null);
         call.enqueue(new Callback<CardStoreResponse>() {
             @Override
             public void onResponse(Call<CardStoreResponse> call, Response<CardStoreResponse> response) {

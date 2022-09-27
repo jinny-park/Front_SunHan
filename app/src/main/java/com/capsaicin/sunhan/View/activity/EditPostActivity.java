@@ -20,7 +20,6 @@ import com.capsaicin.sunhan.Model.PostChangeResponse;
 import com.capsaicin.sunhan.Model.Retrofit.RetrofitInstance;
 import com.capsaicin.sunhan.R;
 import com.capsaicin.sunhan.View.fragment.CommunityFragment;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
